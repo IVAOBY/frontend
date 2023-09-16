@@ -186,7 +186,7 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
                 <Group spacing={5} className={classes.links}>
                     <Menu radius="lg" shadow="md" width={200}>
                         <Menu.Target>
-                            <Text className={classes.link}>Test</Text>
+                            <Text className={classes.link}>{t('loginButton')}</Text>
                         </Menu.Target>
                         <Menu.Dropdown>
                             <Menu.Item icon={<IconUser size={14} />}>{t("mybook")}</Menu.Item>

@@ -1,6 +1,7 @@
 export interface Translations {
     navbar: {
         division: {
+            index: string,
             about: string,
             faq: string,
             staff: string,
@@ -9,6 +10,7 @@ export interface Translations {
             rules: string
         },
         atc: {
+            index: string,
             start: string,
             fra: string,
             gca: string,
@@ -16,6 +18,7 @@ export interface Translations {
             docs: string
         },
         pilots: {
+            index: string,
             start: string,
             scenarios: string,
             charts: string,
@@ -23,6 +26,7 @@ export interface Translations {
             tours: string
         },
         community: {
+            index: string,
             events: string,
             forum: string,
             webeye: string,
