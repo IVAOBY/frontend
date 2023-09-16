@@ -1,13 +1,14 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import resources from "./locales";
+import translations from './locales';
 
 const storedLanguage = localStorage.getItem("language");
 
 const i18nConfig = {
-    resources: resources,
+    resources: translations,
     lng: storedLanguage || "en",
-    fallbackLng: 'en'
+    fallbackLng: 'en',
+    defaultNS: 'translations'
 }
 
 i18n

@@ -13,21 +13,32 @@ import {
     Transition,
 } from '@mantine/core';
 import {useDisclosure} from '@mantine/hooks';
-import xrlogo from "../assets/image/logo2.svg"
-import {getTokenFromUrl, LogoutButton, removeTokenFromUrl, useAuth} from "./Handler";
+import xrlogo from "../../assets/image/logo2.svg"
+import {getTokenFromUrl, LogoutButton, removeTokenFromUrl, useAuth} from "../Handler";
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
-import {IconLanguage, IconLogout, IconUser} from "@tabler/icons-react";
+import {
+    IconLanguage,
+    IconLogout,
+    IconUser,
+    IconBook,
+    IconMessages,
+    IconUsers,
+    IconUserHeart,
+    IconBrandDiscord,
+    IconMailForward,
+    IconCircleNumber1,
+    IconNumber1, IconHome, IconArrowBadgeUpFilled
+} from "@tabler/icons-react";
+import {HeaderDropdown} from "./header/HeaderDropdown";
+import {HeaderDropdownMobile} from "./header/HeaderDropdownMobile";
 
 const HEADER_HEIGHT = rem(100);
 
 const useStyles = createStyles((theme) => ({
     root: {
-        position: "fixed",
-        left: 0,
-        right: 0,
-        bottom: 0,
-        zIndex: 100,
+        position: "relative",
+        zIndex: 1,
         backgroundColor: theme.colors.brand[0],
         borderBottom: 0,
     },
@@ -160,7 +171,7 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
     const currentLanguage = i18n.language;
 
     const changeLanguage = () => {
-        const newLanguage = currentLanguage === "en" ? "ru" : "en";
+        const newLanguage = currentLanguage === "en" ? "ru" : currentLanguage === "ru" ? "be" : "en";
         i18n.changeLanguage(newLanguage);
         localStorage.setItem("language", newLanguage);
     };
@@ -184,26 +195,17 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
             <Container className={classes.header}>
                 <Image width={140} src={xrlogo} onClick={handleImageClick} style={{ cursor: 'pointer' }}/>
                 <Group spacing={5} className={classes.links}>
-                    <Menu radius="lg" shadow="md" width={200}>
-                        <Menu.Target>
-                            <Text className={classes.link}>{t('loginButton')}</Text>
-                        </Menu.Target>
-                        <Menu.Dropdown>
-                            <Menu.Item icon={<IconUser size={14} />}>{t("mybook")}</Menu.Item>
-                            <Menu.Item color="red" icon={<IconLogout size={14} />}>{t("logoutButton")}</Menu.Item>
-                        </Menu.Dropdown>
-                    </Menu>
+                    <HeaderDropdown />
                     {isAuthenticated ? (
                         <>
                             <LogoutButton />
-                            <IconLanguage className={classes.language} onClick={changeLanguage} size={25} />
                         </>
                     ) : (
                         <>
                             <Text className={classes.link} onClick={handleLogin}>{t('loginButton')}</Text>
-                            <IconLanguage className={classes.language} onClick={changeLanguage} size={25} />
                         </>
                     )}
+                    <IconLanguage className={classes.language} onClick={changeLanguage} size={25} />
                 </Group>
 
                 <Burger opened={opened} onClick={toggle} className={classes.burger} color="#fff" size="sm" />
@@ -211,7 +213,7 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
                 <Transition transition="pop-top-right" duration={200} mounted={opened}>
                     {(styles) => (
                         <Paper className={classes.dropdown} style={styles}>
-                            {items}
+                            <HeaderDropdownMobile/>
                             {isAuthenticated ? <LogoutButton /> : <Text className={classes.link} onClick={handleLogin}>{t('loginButton')}</Text>}
                             <Text className={classes.link} onClick={changeLanguage}><IconLanguage className={classes.language} onClick={changeLanguage} size={25} /></Text>
                         </Paper>

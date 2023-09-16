@@ -8,11 +8,7 @@ const useStyles = createStyles((theme) => ({
         backgroundColor: theme.colors.brand[0],
         borderTop: `${rem(1)} solid ${theme.colors.brand[1]}`,
         textAlign: 'center',
-        position: "fixed",
-        left: 0,
-        right: 0,
-        bottom: 0,
-        zIndex: 100,
+        zIndex: 1,
     },
 
     inner: {
@@ -48,16 +44,6 @@ export function Footer() {
             <Container className={classes.inner}>
                 <Group position="center" spacing="xs" noWrap>
                     <Image width={150} src={xrlogo} />
-                    <Text
-                        id={'titleBig'}
-                        className={classes.titleBig}
-                        component={'div'}
-                        size={'lg'}
-                        color={'white'}
-                        sx={{ fontWeight: 700, flexGrow: 1, margin: '0 1rem' }}
-                    >
-                        Real Flight Event System
-                    </Text>
                     <Text
                         id={'titleSmall'}
                         className={classes.titleSmall}
