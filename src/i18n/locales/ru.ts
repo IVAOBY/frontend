@@ -4,6 +4,7 @@ const ruTranslations: { translations: Translations } = {
     translations: {
         navbar: {
             division: {
+                index: 'Дивизион',
                 about: 'О нас',
                 faq: 'FAQ',
                 staff: 'Руководство дивизиона',
@@ -12,6 +13,7 @@ const ruTranslations: { translations: Translations } = {
                 rules: 'Правила IVAO'
             },
             atc: {
+                index: 'Диспетчеру',
                 start: 'Первые шаги',
                 fra: 'Ограничения (FRAs)',
                 gca: 'GCA Программа',
@@ -19,6 +21,7 @@ const ruTranslations: { translations: Translations } = {
                 docs: 'Документы'
             },
             pilots: {
+                index: 'Пилоту',
                 start: 'Первые шаги',
                 scenarios: 'Сценарии',
                 charts: 'Схемы аэропортов',
@@ -26,6 +29,7 @@ const ruTranslations: { translations: Translations } = {
                 tours: 'Туры'
             },
             community: {
+                index: 'Сообщество',
                 events: 'Ивенты',
                 forum: 'Форум BY',
                 webeye: 'WebEye',

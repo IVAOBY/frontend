@@ -4,6 +4,7 @@ const enTranslations: { translations: Translations } = {
     translations: {
         navbar: {
             division: {
+                index: 'Division',
                 about: 'About us',
                 faq: 'FAQ',
                 staff: 'Division Staff',
@@ -12,6 +13,7 @@ const enTranslations: { translations: Translations } = {
                 rules: 'IVAO rules'
             },
             atc: {
+                index: 'ATC',
                 start: 'First steps',
                 fra: 'FRAs',
                 gca: 'GCA Programme',
@@ -19,6 +21,7 @@ const enTranslations: { translations: Translations } = {
                 docs: 'Documents'
             },
             pilots: {
+                index: 'Pilots',
                 start: 'First steps',
                 scenarios: 'Sceneries',
                 charts: 'Charts',
@@ -26,6 +29,7 @@ const enTranslations: { translations: Translations } = {
                 tours: 'Tours'
             },
             community: {
+                index: 'Community',
                 events: 'Events',
                 forum: 'BY Forum',
                 webeye: 'WebEye',

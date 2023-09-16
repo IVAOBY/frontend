@@ -4,6 +4,7 @@ const beTranslations: { translations: Translations } = {
     translations: {
         navbar: {
             division: {
+                index: 'Дывізіон',
                 about: 'Пра нас',
                 faq: 'FAQ',
                 staff: 'Кіраўніцтва дывізіёна',
@@ -12,6 +13,7 @@ const beTranslations: { translations: Translations } = {
                 rules: 'Правілы IVAO'
             },
             atc: {
+                index: 'Дыспетчару',
                 start: 'Першыя крокі',
                 fra: 'Абмяжаванні (FRAs)',
                 gca: 'GCA Праграма',
@@ -19,6 +21,7 @@ const beTranslations: { translations: Translations } = {
                 docs: 'Дакументы'
             },
             pilots: {
+                index: 'Пілоту',
                 start: 'Першыя крокі',
                 scenarios: 'Сцэнарыі',
                 charts: 'Схемы аэрапортаў',
@@ -26,6 +29,7 @@ const beTranslations: { translations: Translations } = {
                 tours: 'Туры'
             },
             community: {
+                index: 'Супольнасць',
                 events: 'Івэнты',
                 forum: 'Форум BY',
                 webeye: 'WebEye',
