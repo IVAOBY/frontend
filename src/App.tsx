@@ -7,7 +7,7 @@ import {
     Outlet,
 } from "react-router-dom";
 import {I18nextProvider, useTranslation} from "react-i18next";
-import i18n from "./i18n";
+import i18n from "./i18n/i18n";
 import {HeaderResponsive} from "./components/header";
 import {Footer} from "./components/Footer";
 import {MainPage} from "./components/MainPage/MainPage";

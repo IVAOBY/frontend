@@ -1,11 +1,23 @@
 import React, {useState} from 'react';
-import {Burger, Container, createStyles, Group, Header, Image, Paper, rem, Text, Transition,} from '@mantine/core';
+import {
+    Burger,
+    Container,
+    createStyles,
+    Group,
+    Header,
+    Image,
+    Menu,
+    Paper,
+    rem,
+    Text,
+    Transition,
+} from '@mantine/core';
 import {useDisclosure} from '@mantine/hooks';
 import xrlogo from "../assets/image/logo2.svg"
 import {getTokenFromUrl, LogoutButton, removeTokenFromUrl, useAuth} from "./Handler";
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
-import {IconLanguage} from "@tabler/icons-react";
+import {IconLanguage, IconLogout, IconUser} from "@tabler/icons-react";
 
 const HEADER_HEIGHT = rem(100);
 
@@ -172,7 +184,15 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
             <Container className={classes.header}>
                 <Image width={140} src={xrlogo} onClick={handleImageClick} style={{ cursor: 'pointer' }}/>
                 <Group spacing={5} className={classes.links}>
-                    {items}
+                    <Menu radius="lg" shadow="md" width={200}>
+                        <Menu.Target>
+                            <Text className={classes.link}>Test</Text>
+                        </Menu.Target>
+                        <Menu.Dropdown>
+                            <Menu.Item icon={<IconUser size={14} />}>{t("mybook")}</Menu.Item>
+                            <Menu.Item color="red" icon={<IconLogout size={14} />}>{t("logoutButton")}</Menu.Item>
+                        </Menu.Dropdown>
+                    </Menu>
                     {isAuthenticated ? (
                         <>
                             <LogoutButton />
