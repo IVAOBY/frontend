@@ -17,19 +17,7 @@ import xrlogo from "../../assets/image/logo2.svg"
 import {getTokenFromUrl, LogoutButton, removeTokenFromUrl, useAuth} from "../Handler";
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
-import {
-    IconLanguage,
-    IconLogout,
-    IconUser,
-    IconBook,
-    IconMessages,
-    IconUsers,
-    IconUserHeart,
-    IconBrandDiscord,
-    IconMailForward,
-    IconCircleNumber1,
-    IconNumber1, IconHome, IconArrowBadgeUpFilled
-} from "@tabler/icons-react";
+import {IconLanguage} from "@tabler/icons-react";
 import {HeaderDropdown} from "./header/HeaderDropdown";
 import {HeaderDropdownMobile} from "./header/HeaderDropdownMobile";
 

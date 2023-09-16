@@ -23,7 +23,7 @@ const enTranslations: { translations: Translations } = {
             pilots: {
                 index: 'Pilots',
                 start: 'First steps',
-                scenarios: 'Sceneries',
+                scenarios: 'Scenarios',
                 charts: 'Charts',
                 airlines: 'Virtual airlines',
                 tours: 'Tours'

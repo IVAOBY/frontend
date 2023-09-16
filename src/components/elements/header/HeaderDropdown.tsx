@@ -17,7 +17,12 @@ import {
     IconBrandDiscord,
     IconMailForward,
     IconCircleNumber1,
-    IconNumber1
+    IconNumber1,
+    IconLockStar,
+    IconFileInfo, IconArticle, IconWorld, IconPlane, IconPlaneDeparture, IconCalendarEvent,
+    IconMessageCircle2,
+    IconEye,
+    IconFocus2
 } from "@tabler/icons-react";
 
 const useStyles = createStyles((theme) => ({
@@ -76,32 +81,32 @@ export function HeaderDropdown() {
             </Menu.Target>
             <Menu.Dropdown>
                 <Menu.Item icon={<IconNumber1 size={20}/>}>{t("navbar.atc.start")}</Menu.Item>
-                <Menu.Item icon={<IconUser size={20}/>}>{t("navbar.atc.fra")}</Menu.Item>
+                <Menu.Item icon={<IconLockStar size={20}/>}>{t("navbar.atc.fra")}</Menu.Item>
                 <Menu.Item icon={<IconUser size={20}/>}>{t("navbar.atc.gca")}</Menu.Item>
-                <Menu.Item icon={<IconUser size={20}/>}>{t("navbar.atc.charts")}</Menu.Item>
-                <Menu.Item icon={<IconUser size={20}/>}>{t("navbar.atc.docs")}</Menu.Item>
+                <Menu.Item icon={<IconFileInfo size={20}/>}>{t("navbar.atc.charts")}</Menu.Item>
+                <Menu.Item icon={<IconArticle size={20}/>}>{t("navbar.atc.docs")}</Menu.Item>
             </Menu.Dropdown>
         </Menu><Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} width={200}>
             <Menu.Target>
                 <Text className={classes.link}>{t('navbar.pilots.index')}</Text>
             </Menu.Target>
             <Menu.Dropdown>
-                <Menu.Item icon={<IconUser size={20}/>}>{t("navbar.pilots.start")}</Menu.Item>
-                <Menu.Item icon={<IconUser size={20}/>}>{t("navbar.pilots.scenarios")}</Menu.Item>
-                <Menu.Item icon={<IconUser size={20}/>}>{t("navbar.pilots.charts")}</Menu.Item>
-                <Menu.Item icon={<IconUser size={20}/>}>{t("navbar.pilots.airlines")}</Menu.Item>
-                <Menu.Item icon={<IconUser size={20}/>}>{t("navbar.pilots.tours")}</Menu.Item>
+                <Menu.Item icon={<IconNumber1 size={20}/>}>{t("navbar.pilots.start")}</Menu.Item>
+                <Menu.Item icon={<IconPlaneDeparture size={20}/>}>{t("navbar.pilots.scenarios")}</Menu.Item>
+                <Menu.Item icon={<IconFileInfo size={20}/>}>{t("navbar.pilots.charts")}</Menu.Item>
+                <Menu.Item icon={<IconPlane size={20}/>}>{t("navbar.pilots.airlines")}</Menu.Item>
+                <Menu.Item icon={<IconWorld size={20}/>}>{t("navbar.pilots.tours")}</Menu.Item>
             </Menu.Dropdown>
         </Menu><Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} width={200}>
             <Menu.Target>
                 <Text className={classes.link}>{t('navbar.community.index')}</Text>
             </Menu.Target>
             <Menu.Dropdown>
-                <Menu.Item icon={<IconUser size={20}/>}>{t("navbar.community.events")}</Menu.Item>
-                <Menu.Item icon={<IconUser size={20}/>}>{t("navbar.community.forum")}</Menu.Item>
-                <Menu.Item icon={<IconUser size={20}/>}>{t("navbar.community.webeye")}</Menu.Item>
+                <Menu.Item icon={<IconCalendarEvent size={20}/>}>{t("navbar.community.events")}</Menu.Item>
+                <Menu.Item icon={<IconMessageCircle2 size={20}/>}>{t("navbar.community.forum")}</Menu.Item>
+                <Menu.Item icon={<IconEye size={20}/>}>{t("navbar.community.webeye")}</Menu.Item>
                 <Menu.Item icon={<IconUser size={20}/>}>{t("navbar.community.ivao")}</Menu.Item>
-                <Menu.Item icon={<IconUser size={20}/>}>{t("navbar.community.tracker")}</Menu.Item>
+                <Menu.Item icon={<IconFocus2 size={20}/>}>{t("navbar.community.tracker")}</Menu.Item>
             </Menu.Dropdown>
         </Menu></>
 
