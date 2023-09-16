@@ -4,33 +4,33 @@ const enTranslations: { translations: Translations } = {
     translations: {
         navbar: {
             division: {
-                about: 'О нас',
+                about: 'About us',
                 faq: 'FAQ',
-                staff: 'Руководство дивизиона',
-                discord: 'Дискорд',
-                contact: 'Связь с нами',
-                rules: 'Правила IVAO'
+                staff: 'Division Staff',
+                discord: 'Discord',
+                contact: 'Contact us',
+                rules: 'IVAO rules'
             },
             atc: {
-                start: 'Первые шаги',
-                fra: 'Ограничения (FRAs)',
-                gca: 'GCA Программа',
-                charts: 'Схемы аэропортов',
-                docs: 'Документы'
+                start: 'First steps',
+                fra: 'FRAs',
+                gca: 'GCA Programme',
+                charts: 'Charts',
+                docs: 'Documents'
             },
             pilots: {
-                start: 'Первые шаги',
-                scenarios: 'Сценарии',
-                charts: 'Схемы аэропортов',
-                airlines: 'Виртуальные авиакомпании',
-                tours: 'Туры'
+                start: 'First steps',
+                scenarios: 'Sceneries',
+                charts: 'Charts',
+                airlines: 'Virtual airlines',
+                tours: 'Tours'
             },
             community: {
-                events: 'Ивенты',
-                forum: 'Форум BY',
+                events: 'Events',
+                forum: 'BY Forum',
                 webeye: 'WebEye',
-                ivao: 'Сайт IVAO',
-                tracker: 'Трекер'
+                ivao: 'IVAO website',
+                tracker: 'Tracker'
             }
         },
         footer: {
