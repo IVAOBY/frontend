@@ -136,7 +136,7 @@ export function HeaderResponsive() {
     const [showAlert, setShowAlert] = useState(false);
     const isAuthenticated = useAuth();
 
-    const serverUrl = `https://v3.api.xr.ivao.aero/auth/login?goto=${window.location.protocol}//${window.location.hostname}${window.location.port ? ':'+window.location.port : ''}`;
+    const serverUrl = `http://localhost:3001/auth/login?goto=${window.location.protocol}//${window.location.hostname}${window.location.port ? ':'+window.location.port : ''}`;
 
     const handleLogin = () => {
         try {
