@@ -7,7 +7,7 @@ const useStyles = createStyles((theme) => ({
         paddingTop: rem(180),
         paddingBottom: rem(130),
         backgroundImage:
-            'url(https://belavia.by/webroot/delivery/images/company.jpg)',
+            'url(https://cdnn11.img.sputnik.by/img/07e6/07/14/1064956069_0:0:1921:1080_1920x0_80_0_0_6f1ceee4e50c64d1cc577dff0b98031b.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
 

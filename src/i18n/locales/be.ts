@@ -47,6 +47,20 @@ const beTranslations: { translations: Translations } = {
             subtitle: 'Міжнародная арганізацыя віртуальнай авіяцыі, скарочана IVAO, была заснавана ў 1998 годзе, каб даць анлайн-пляцоўку аматарам авіясімулятараў, якія могуць атрымліваць асалоду ад сваім хобі ў імітаванай рэальнай асяроддзі, у кампаніі іншых людзей, якія лятаюць або якія прадстаўляюць паслугі кіравання паветраным рухам.',
             joinbutton: 'Далучыцца!'
         },
+        featuresection: {
+            first: {
+                title: 'ddf',
+                subtitle: 'adf'
+            },
+            second: {
+                title: 'dfsdaf',
+                subtitle: 'asdfsaf'
+            },
+            third: {
+                title: 'asdfasdf',
+                subtitle: 'asdfasdf'
+            }
+        },
         generic: {
             ivao: 'IVAO'
         },

@@ -44,6 +44,20 @@ export interface Translations {
         subtitle: string,
         joinbutton: string
     },
+    featuresection: {
+        first: {
+            title: string,
+            subtitle: string
+        },
+        second: {
+            title: string,
+            subtitle: string
+        },
+        third: {
+            title: string,
+            subtitle: string
+        }
+    },
     generic: {
         ivao: string
     }
@@ -52,6 +66,5 @@ export interface Translations {
         privacyPolicyName: string,
         termsOfUseName: string
     },
-    errors: {
-    }
+    errors: {}
 }

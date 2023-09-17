@@ -9,30 +9,14 @@ import {
     Container,
     rem,
 } from '@mantine/core';
-import { IconGauge, IconUser, IconCookie } from '@tabler/icons-react';
+import { IconGauge,
+         IconUser,
+         IconCookie,
+    IconFileLike
+}
+    from '@tabler/icons-react';
 import {useTranslation} from "react-i18next";
 import {FeatureData} from "../../../types/Feture";
-
-const mockdata = [
-    {
-        title: 'aboba',
-        description:
-            'This dust is actually a powerful poison that will even make a pro wrestler sick, Regice cloaks itself with frigid air of -328 degrees Fahrenheit',
-        icon: IconGauge,
-    },
-    {
-        title: 'Privacy focused',
-        description:
-            'People say it can run at the same speed as lightning striking, Its icy body is so cold, it will not melt even if it is immersed in magma',
-        icon: IconUser,
-    },
-    {
-        title: 'No third parties',
-        description:
-            'They’re popular, but they’re rare. Trainers who show them off recklessly may be targeted by thieves',
-        icon: IconCookie,
-    },
-];
 
 const useStyles = createStyles((theme) => ({
     title: {
@@ -85,13 +69,18 @@ export function FeaturesCards() {
     const { t } = useTranslation();
     const data: FeatureData[] = [
         {
-            title: t('arrivalTitle'),
-            description: t('ap1Title'),
+            title: t('featuresection.first.title'),
+            description: t('featuresection.first.subtitle'),
+            icon: IconFileLike,
+        },
+        {
+            title: t('featuresection.second.title'),
+            description: t('featuresection.second.subtitle'),
             icon: IconCookie,
         },
         {
-            title: t('arrivalTitle'),
-            description: t('ap1Title'),
+            title: t('featuresection.third.title'),
+            description: t('featuresection.third.subtitle'),
             icon: IconCookie,
         },
     ];
@@ -115,7 +104,7 @@ export function FeaturesCards() {
             </Title>
 
             <Text c="dimmed" className={classes.description} ta="center" mt="md">
-                Потому что никита кудрявцев
+                Потому что никита кудрявцев отличный дир (литвы)
             </Text>
 
             <SimpleGrid cols={3} spacing="xl" mt={50} breakpoints={[{ maxWidth: 'md', cols: 1 }]}>
