@@ -6,7 +6,9 @@ import {
     Navigate,
     Outlet,
 } from "react-router-dom";
-import {I18nextProvider, useTranslation} from "react-i18next";
+import {I18nextProvider,
+    //useTranslation
+} from "react-i18next";
 import i18n from "./i18n/i18n";
 import {HeaderResponsive} from "./components/elements/header";
 import {Footer} from "./components/Footer";
@@ -44,7 +46,7 @@ export default function App() {
               xl: '5px 5px 3px rgba(0, 0, 0, .25)',
           },
 
-          globalStyles: (theme) => ({
+/*          globalStyles: (theme) => ({
               '*, *::before, *::after': {
                   boxSizing: 'border-box',
               },
@@ -56,7 +58,7 @@ export default function App() {
               },
 
           }),
-
+*/
           headings: {
               fontFamily: 'Montserrat, sans-serif',
               sizes: {
