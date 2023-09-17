@@ -130,7 +130,7 @@ export function HeaderResponsive() {
     const [showAlert, setShowAlert] = useState(false);
     const isAuthenticated = useAuth();
 
-    const serverUrl = `http://localhost:3001/auth/login?goto=${window.location.protocol}//${window.location.hostname}${window.location.port ? ':'+window.location.port : ''}`;
+    const serverUrl = `http://localhost:3000/auth/login?goto=http://localhost:3001`;
 
     const handleLogin = () => {
         try {
