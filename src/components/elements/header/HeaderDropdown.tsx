@@ -27,6 +27,7 @@ import {
     IconEye,
     IconFocus2,
     IconUser,
+    IconGitPullRequest,
 } from '@tabler/icons-react';
 
 const useStyles = createStyles((theme) => ({
@@ -78,7 +79,7 @@ export function HeaderDropdown() {
             <Menu.Dropdown>
                 <Menu.Item icon={<IconNumber1 size={20}/>}>{t("navbar.atc.start")}</Menu.Item>
                 <Menu.Item icon={<IconLockStar size={20}/>}>{t("navbar.atc.fra")}</Menu.Item>
-                <Menu.Item icon={<IconUser size={20}/>}>{t("navbar.atc.gca")}</Menu.Item>
+                <Menu.Item icon={<IconGitPullRequest size={20}/>}>{t("navbar.atc.gca")}</Menu.Item>
                 <Menu.Item icon={<IconFileInfo size={20}/>}>{t("navbar.atc.charts")}</Menu.Item>
                 <Menu.Item icon={<IconArticle size={20}/>}>{t("navbar.atc.docs")}</Menu.Item>
             </Menu.Dropdown>

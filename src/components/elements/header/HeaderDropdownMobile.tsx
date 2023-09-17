@@ -25,6 +25,7 @@ import {
     IconEye,
     IconFocus2,
     IconUser,
+    IconGitPullRequest,
 } from '@tabler/icons-react';
 import React from "react";
 
@@ -86,7 +87,7 @@ export function HeaderDropdownMobile() {
                 <Menu.Dropdown>
                     <Menu.Item icon={<IconNumber1 size={14} />}>{t("navbar.atc.start")}</Menu.Item>
                     <Menu.Item icon={<IconLockStar size={14} />}>{t("navbar.atc.fra")}</Menu.Item>
-                    <Menu.Item icon={<IconUser size={14} />}>{t("navbar.atc.gca")}</Menu.Item>
+                    <Menu.Item icon={<IconGitPullRequest size={14} />}>{t("navbar.atc.gca")}</Menu.Item>
                     <Menu.Item icon={<IconFileInfo size={14} />}>{t("navbar.atc.charts")}</Menu.Item>
                     <Menu.Item icon={<IconArticle size={14} />}>{t("navbar.atc.docs")}</Menu.Item>
                 </Menu.Dropdown>

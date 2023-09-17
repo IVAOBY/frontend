@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {
     Burger,
     Container,
@@ -17,7 +17,16 @@ import xrlogo from "../../assets/image/logo2.svg"
 import {getTokenFromUrl, LogoutButton, removeTokenFromUrl, useAuth} from "../Handler";
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
-import {IconLanguage} from "@tabler/icons-react";
+import {
+    //IconBook,
+    //IconBrandDiscord,
+    IconLanguage,
+   // IconMailForward,
+   //IconMessages,
+   // IconUserHeart,
+   // IconUsers,
+    IconFlag2
+} from "@tabler/icons-react";
 import {HeaderDropdown} from "./header/HeaderDropdown";
 import {HeaderDropdownMobile} from "./header/HeaderDropdownMobile";
 
@@ -156,13 +165,19 @@ export function HeaderResponsive() {
     };
 
     const { t, i18n } = useTranslation();
-    const currentLanguage = i18n.language;
-
-    const changeLanguage = () => {
-        const newLanguage = currentLanguage === "en" ? "ru" : currentLanguage === "ru" ? "be" : "en";
+    const changeLanguage = useCallback((newLanguage: any) => {
         i18n.changeLanguage(newLanguage);
         localStorage.setItem("language", newLanguage);
-    };
+    }, [i18n]);
+
+
+    const currentLanguage = i18n.language;
+
+    // const changeLanguage = () => {
+    //     const newLanguage = currentLanguage === "en" ? "ru" : currentLanguage === "ru" ? "be" : "en";
+    //     i18n.changeLanguage(newLanguage);
+    //     localStorage.setItem("language", newLanguage);
+    // };
 
     const handleImageClick = () => {
         navigate('/');
@@ -183,7 +198,16 @@ export function HeaderResponsive() {
                             <Text className={classes.link} onClick={handleLogin}>{t('navbar.user.login')}</Text>
                         </>
                     )}
-                    <IconLanguage className={classes.language} onClick={changeLanguage} size={25} />
+                    <Menu trigger="hover" radius="lg">
+                        <Menu.Target>
+                            <IconLanguage className={classes.language} onClick={changeLanguage} size={25} />
+                        </Menu.Target>
+                        <Menu.Dropdown>
+                            <Menu.Item icon={<IconFlag2 size={20}/>} onClick={() => changeLanguage("be")}> {t("navbar.language.be")}</Menu.Item>
+                            <Menu.Item icon={<IconFlag2 size={20}/>} onClick={() => changeLanguage("ru")}> {t("navbar.language.ru")}</Menu.Item>
+                            <Menu.Item icon={<IconFlag2 size={20}/>} onClick={() => changeLanguage("en")}> {t("navbar.language.en")}</Menu.Item>
+                        </Menu.Dropdown>
+                    </Menu>
                 </Group>
 
                 <Burger opened={opened} onClick={toggle} className={classes.burger} color="#fff" size="sm" />

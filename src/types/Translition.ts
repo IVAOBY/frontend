@@ -37,6 +37,11 @@ export interface Translations {
             login: string,
             logout: string,
             profile: string
+        },
+        language: {
+            be: string,
+            ru: string,
+            en: string,
         }
     },
     heropage: {

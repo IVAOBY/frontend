@@ -40,6 +40,11 @@ const beTranslations: { translations: Translations } = {
                 login: 'Увайсці',
                 logout: 'Выйсці',
                 profile: 'Профіль'
+            },
+            language: {
+                be: 'Беларуская',
+                ru: 'Руская',
+                en: 'Англійская'
             }
         },
         heropage: {
