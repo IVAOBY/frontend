@@ -33,7 +33,7 @@ const useStyles = createStyles((theme) => ({
     link: {
         display: 'block',
         lineHeight: 1,
-        padding: `${rem(1)} ${rem(1)}`,
+        padding: `${rem(1)} ${rem(7)}`,
         borderRadius: theme.radius.sm,
         textDecoration: 'none',
         color: '#fff',
@@ -41,7 +41,7 @@ const useStyles = createStyles((theme) => ({
         fontWeight: 700,
         fontFamily: 'Montserrat',
         cursor: 'pointer',
-        '&:hover': { color: theme.colors.brand[2] },
+        '&:hover': { color: theme.colors.gray[3] },
     },
 }));
 
@@ -54,10 +54,11 @@ export function HeaderDropdown() {
         navigate(link);
     };
 
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     return (
-        <><Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} closeDelay={400}>
+        <>
+            <Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} closeDelay={400} withArrow>
             <Menu.Target>
                 <Text className={classes.link}>{t('navbar.division.index')}</Text>
             </Menu.Target>
@@ -69,7 +70,8 @@ export function HeaderDropdown() {
                 <Menu.Item icon={<IconBrandDiscord size={20}/>}>{t("navbar.division.discord")}</Menu.Item>
                 <Menu.Item icon={<IconMailForward size={20}/>}>{t("navbar.division.contact")}</Menu.Item>
             </Menu.Dropdown>
-        </Menu><Menu trigger="hover" radius="lg" shadow={theme.shadows.lg}  width={200}>
+        </Menu>
+            <Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} width={200} withArrow>
             <Menu.Target>
                 <Text className={classes.link}>{t('navbar.atc.index')}</Text>
             </Menu.Target>
@@ -80,7 +82,8 @@ export function HeaderDropdown() {
                 <Menu.Item icon={<IconFileInfo size={20}/>}>{t("navbar.atc.charts")}</Menu.Item>
                 <Menu.Item icon={<IconArticle size={20}/>}>{t("navbar.atc.docs")}</Menu.Item>
             </Menu.Dropdown>
-        </Menu><Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} width={200}>
+        </Menu>
+            <Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} width={200} withArrow>
             <Menu.Target>
                 <Text className={classes.link}>{t('navbar.pilots.index')}</Text>
             </Menu.Target>
@@ -91,7 +94,8 @@ export function HeaderDropdown() {
                 <Menu.Item icon={<IconPlane size={20}/>}>{t("navbar.pilots.airlines")}</Menu.Item>
                 <Menu.Item icon={<IconWorld size={20}/>}>{t("navbar.pilots.tours")}</Menu.Item>
             </Menu.Dropdown>
-        </Menu><Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} width={200}>
+        </Menu>
+            <Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} width={200} withArrow>
             <Menu.Target>
                 <Text className={classes.link}>{t('navbar.community.index')}</Text>
             </Menu.Target>

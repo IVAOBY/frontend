@@ -43,7 +43,7 @@ const useStyles = createStyles((theme) => ({
         cursor: "pointer",
 
         '&:hover': {
-            color: theme.colors.brand[2],
+            color: theme.colors.gray[3],
         },
 
         [theme.fn.smallerThan('sm')]: {
@@ -65,7 +65,8 @@ export function HeaderDropdownMobile() {
 
 
     return (
-        <>                            <Menu radius="lg" shadow="md" width={200}>
+        <>
+            <Menu radius="lg" shadow="md" width={200}>
             <Menu.Target>
                 <Text className={classes.link}>{t('navbar.division.index')}</Text>
             </Menu.Target>

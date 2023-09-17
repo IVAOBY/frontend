@@ -48,7 +48,7 @@ export const logOutButtonStyle = createStyles((theme) => ({
         fontFamily: `Montserrat`,
 
         '&:hover': {
-            color: theme.colors.brand[2],
+            color: theme.colors.gray[3],
             cursor: "pointer",
         },
 

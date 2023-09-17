@@ -1,95 +1,125 @@
-import { createStyles, Title, Text, Button, Container, Image, Group } from '@mantine/core';
-import { IconExternalLink } from '@tabler/icons-react';
-import {useNavigate} from "react-router-dom";
-import { useTranslation } from "react-i18next";
-import home from "../../assets/image/home.png"
+import { Title, Text, Container, Button, Overlay, createStyles, rem } from '@mantine/core';
+import {useTranslation} from "react-i18next";
 
 const useStyles = createStyles((theme) => ({
-    inner: {
-        display: 'flex',
-        justifyContent: 'space-between',
-    },
+    wrapper: {
+        position: 'relative',
+        paddingTop: rem(180),
+        paddingBottom: rem(130),
+        backgroundImage:
+            'url(https://tours.xr.ivao.aero/assets/main_bg-4d095ddc.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
 
-    content: {
-        maxWidth: 480,
-        marginRight: `calc(${theme.spacing.xl} * 3)`,
-
-        [theme.fn.smallerThan('md')]: {
-            maxWidth: '100%',
-            marginRight: 0,
+        [theme.fn.smallerThan('xs')]: {
+            paddingTop: rem(80),
+            paddingBottom: rem(50),
         },
     },
 
+    inner: {
+        position: 'relative',
+        zIndex: 1,
+    },
+
     title: {
-        color: theme.colors.brand[0],
-        fontSize: 45,
-        lineHeight: 1.2,
         fontWeight: 800,
+        fontSize: rem(40),
+        letterSpacing: rem(-1),
+        paddingLeft: theme.spacing.md,
+        paddingRight: theme.spacing.md,
+        color: theme.white,
+        marginBottom: theme.spacing.xs,
+        textAlign: 'center',
+        fontFamily: `Greycliff CF, ${theme.fontFamily}`,
 
         [theme.fn.smallerThan('xs')]: {
-            fontSize: 28,
+            fontSize: rem(28),
+            textAlign: 'left',
+        },
+    },
 
+    highlight: {
+        color: theme.colors.lightBlue[9],
+    },
+
+    description: {
+        color: theme.colors.gray[0],
+        textAlign: 'center',
+
+        [theme.fn.smallerThan('xs')]: {
+            fontSize: theme.fontSizes.md,
+            textAlign: 'left',
+        },
+    },
+
+    controls: {
+        marginTop: `calc(${theme.spacing.xl} * 1.5)`,
+        display: 'flex',
+        justifyContent: 'center',
+        paddingLeft: theme.spacing.md,
+        paddingRight: theme.spacing.md,
+
+        [theme.fn.smallerThan('xs')]: {
+            flexDirection: 'column',
         },
     },
 
     control: {
-        backgroundColor: theme.colors.brand[0],
+        height: rem(42),
+        fontSize: theme.fontSizes.md,
+        backgroundColor: theme.colors.blue[0],
+
+        '&:not(:first-of-type)': {
+            marginLeft: theme.spacing.md,
+        },
+
         [theme.fn.smallerThan('xs')]: {
-            flex: 1,
+            '&:not(:first-of-type)': {
+                marginTop: theme.spacing.md,
+                marginLeft: 0,
+            },
         },
     },
 
-    image: {
-        flex: 1,
-        minWidth: 400,
+    secondaryControl: {
+        color: theme.white,
+        backgroundColor: 'rgba(255, 255, 255, .4)',
 
-        [theme.fn.smallerThan('md')]: {
-            display: 'none',
-        },
-    },
-
-
-    highlight: {
-        position: 'relative',
-        backgroundColor: theme.fn.variant({ variant: 'light', color: theme.primaryColor }).background,
-        borderRadius: theme.radius.sm,
-        padding: '4px 12px',
-    },
-
-    text: {
-        minWidth: '500',
-        [theme.fn.smallerThan('xs')]: {
-            minWidth: '300',
+        '&:hover': {
+            backgroundColor: 'rgba(255, 255, 255, .45) !important',
         },
     },
 }));
 
 export function HeroText() {
-    const { classes } = useStyles();
-    const navigate = useNavigate();
+    const { classes, cx } = useStyles();
     const { t } = useTranslation();
 
     return (
-        <Container>
-            <div className={classes.inner}>
-                <div className={classes.content}>
-                    <Title className={classes.title}>
-                        {t("welcomeTitle")}
-                    </Title>
-                    <Text className={classes.text} color="dimmed" mt="md" size={18}>
-                        {t("welcomeSubtitle")}
-                    </Text>
+        <div className={classes.wrapper}>
+            <Overlay color="#2b2b2c" opacity={0.65} zIndex={1} />
 
-                    <Group mt={30}>
-                        <Button radius="md" size="md" leftIcon={<IconExternalLink strokeWidth={2} />} className={classes.control}
-                                onClick={() => navigate('/booking')}
-                        >
-                            {t("welcomeButton")}
-                        </Button>
-                    </Group>
+            <div className={classes.inner}>
+                <Title className={classes.title}>
+                    {t("heropage.title")}{' '}
+                    <Text component="span" inherit className={classes.highlight}>
+                        {t("generic.ivao")}
+                    </Text>
+                </Title>
+
+                <Container size={640}>
+                    <Text size="lg" className={classes.description}>
+                        {t("heropage.subtitle")}
+                    </Text>
+                </Container>
+
+                <div className={classes.controls}>
+                    <Button className={classes.control} size="lg">
+                        {t("heropage.joinbutton")}
+                    </Button>
                 </div>
-                <Image className={classes.image} src={home} alt="HomeBanner"/>
             </div>
-        </Container>
+        </div>
     );
 }

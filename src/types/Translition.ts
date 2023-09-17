@@ -34,6 +34,14 @@ export interface Translations {
             tracker: string
         }
     },
+    heropage: {
+        title: string,
+        subtitle: string,
+        joinbutton: string
+    },
+    generic: {
+        ivao: string
+    }
     footer: {
         copyrightMessage: string,
         privacyPolicyName: string,

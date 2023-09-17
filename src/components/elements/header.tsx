@@ -26,8 +26,8 @@ const HEADER_HEIGHT = rem(100);
 const useStyles = createStyles((theme) => ({
     root: {
         position: "relative",
-        zIndex: 1,
-        backgroundColor: theme.colors.brand[0],
+        zIndex: 100,
+        backgroundColor: theme.colors.blue[9],
         borderBottom: 0,
     },
 
@@ -41,7 +41,7 @@ const useStyles = createStyles((theme) => ({
         borderTopLeftRadius: 0,
         borderTopWidth: 0,
         overflow: 'hidden',
-        backgroundColor: theme.colors.brand[1],
+        backgroundColor: theme.colors.lightBlue[9],
 
         [theme.fn.largerThan('sm')]: {
             display: 'none',
@@ -63,7 +63,7 @@ const useStyles = createStyles((theme) => ({
     },
 
     burger: {
-        backgroundColor: theme.colors.brand[1],
+        backgroundColor: theme.colors.lightBlue[9],
         [theme.fn.largerThan('sm')]: {
             display: 'none',
         },
@@ -94,7 +94,7 @@ const useStyles = createStyles((theme) => ({
         cursor: "pointer",
 
         '&:hover': {
-            color: theme.colors.brand[2],
+            color: theme.colors.gray[3],
         },
 
         [theme.fn.smallerThan('sm')]: {
@@ -111,7 +111,7 @@ const useStyles = createStyles((theme) => ({
         cursor: "pointer",
 
         '&:hover': {
-            color: theme.colors.brand[2],
+            color: theme.colors.gray[3],
         },
     },
 }));

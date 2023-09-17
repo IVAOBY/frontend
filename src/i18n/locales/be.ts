@@ -37,6 +37,14 @@ const beTranslations: { translations: Translations } = {
                 tracker: 'Трэкер'
             }
         },
+        heropage: {
+            title: 'Добро пожаловать в BY дивизион',
+            subtitle: 'Xz',
+            joinbutton: 'Присоедениться!'
+        },
+        generic: {
+            ivao: 'IVAO'
+        },
         footer: {
             copyrightMessage: '© 2023 International Virtual Aviation Organisation - IVAO Belarus. All Rights Reserved.',
             privacyPolicyName: 'Privacy Policy',

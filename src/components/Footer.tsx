@@ -5,8 +5,8 @@ import React from "react";
 const useStyles = createStyles((theme) => ({
     footer: {
         marginTop: rem(120),
-        backgroundColor: theme.colors.brand[0],
-        borderTop: `${rem(1)} solid ${theme.colors.brand[1]}`,
+        backgroundColor: theme.colors.blue[9],
+        borderTop: `${rem(1)} solid ${theme.colors.lightBlue[9]}`,
         textAlign: 'center',
         zIndex: 1,
     },
@@ -44,16 +44,6 @@ export function Footer() {
             <Container className={classes.inner}>
                 <Group position="center" spacing="xs" noWrap>
                     <Image width={150} src={xrlogo} />
-                    <Text
-                        id={'titleSmall'}
-                        className={classes.titleSmall}
-                        component={'div'}
-                        size={'xl'}
-                        color={'white'}
-                        sx={{ fontWeight: 700, flexGrow: 1, margin: '0 1rem' }}
-                    >
-                        RFES
-                    </Text>
                 </Group>
             </Container>
         </div>
