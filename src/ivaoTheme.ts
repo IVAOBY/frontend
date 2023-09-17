@@ -95,7 +95,7 @@ export const ivaoTheme: MantineThemeOverride = {
 
     components: {
         Button: {
-            styles: (theme, params: ButtonStylesParams, { variant }) => ({
+            styles: (theme, params: ButtonStylesParams, {variant}) => ({
                 root: {
                     transition: "all 0.25s ease",
                     color: "white",
@@ -108,7 +108,7 @@ export const ivaoTheme: MantineThemeOverride = {
                         color: theme.colors.blue,
                         backgroundColor:
                             variant === 'filled'
-                            ? theme.colors[params.color] || theme.colors.yellow[1]
+                                ? theme.colors[params.color] || theme.colors.yellow[1]
                                 : undefined,
                     },
                 },
@@ -117,8 +117,6 @@ export const ivaoTheme: MantineThemeOverride = {
         Menu: {
             styles: {
                 dropdown: {
-                    borderWidth: '0.1rem',
-                    borderColor: "#3C55AC",
                     backgroundColor: "white"
                 },
             },
