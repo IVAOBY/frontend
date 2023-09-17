@@ -104,7 +104,7 @@ export function FeaturesCards() {
             </Title>
 
             <Text c="dimmed" className={classes.description} ta="center" mt="md">
-                Потому что никита кудрявцев отличный дир (литвы)
+                Потому что Mikič Kudrautsau отличный дир (литвы)
             </Text>
 
             <SimpleGrid cols={3} spacing="xl" mt={50} breakpoints={[{ maxWidth: 'md', cols: 1 }]}>
