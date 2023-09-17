@@ -32,6 +32,10 @@ export interface Translations {
             webeye: string,
             ivao: string,
             tracker: string
+        },
+        user: {
+            login: string,
+            logout: string
         }
     },
     heropage: {

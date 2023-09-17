@@ -120,7 +120,7 @@ interface HeaderResponsiveProps {
     links: { link: string; label: string }[];
 }
 
-export function HeaderResponsive({ links }: HeaderResponsiveProps) {
+export function HeaderResponsive() {
     const [opened, { toggle, close }] = useDisclosure(false);
     const { classes } = useStyles();
     const [error, setError] = useState<string | null>(null);
@@ -163,16 +163,6 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
         i18n.changeLanguage(newLanguage);
         localStorage.setItem("language", newLanguage);
     };
-
-    const items = links.map((link) => (
-        <Text
-            className={classes.link}
-            key={link.label}
-            onClick={() => handleNavigate(link.link)}
-        >
-            {t(link.label)}
-        </Text>
-    ));
 
     const handleImageClick = () => {
         navigate('/');

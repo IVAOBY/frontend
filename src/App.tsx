@@ -15,12 +15,6 @@ import { Handler, useAuth } from "./components/Handler";
 import ErrorPage from "./pages/Error404";
 import {ivaoTheme} from "./ivaoTheme";
 
-const linksData=[
-        { link: "/", label: "homeButton" },
-{ link: "/briefing", label: "briefingButton" },
-{ link: "/booking", label: "bookingButton" },
-]
-
 function PrivateOutlet() {
     const auth = useAuth();
     return auth ? <Outlet /> : <Navigate to="/" />;
@@ -32,7 +26,7 @@ export default function App() {
           <I18nextProvider i18n={i18n}>
               <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
                   <BrowserRouter>
-                      <HeaderResponsive links={linksData} />
+                      <HeaderResponsive />
                       <Handler />
                           <Routes>
                               <Route path="/" element={<MainPage />} />

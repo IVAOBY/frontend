@@ -1,4 +1,4 @@
-import {MantineTheme, MantineThemeOverride} from '@mantine/core';
+import {ButtonStylesParams, MantineTheme, MantineThemeOverride} from '@mantine/core';
 
 export const ivaoTheme: MantineThemeOverride = {
     colorScheme: 'light',
@@ -87,7 +87,24 @@ export const ivaoTheme: MantineThemeOverride = {
             lineHeight: theme.lineHeight,
         },
 
+        dropdown: {
+            backgroundColor: "white",
+        }
+
     }),
+
+    components: {
+
+        Menu: {
+            styles: {
+                dropdown: {
+                    borderWidth: '0.1rem',
+                    borderColor: "#3C55AC",
+                    backgroundColor: "white"
+                },
+            },
+        },
+    },
     primaryColor: 'blue',
     primaryShade: 9,
     white: '#fffff',

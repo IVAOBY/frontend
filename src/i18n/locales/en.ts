@@ -35,6 +35,10 @@ const enTranslations: { translations: Translations } = {
                 webeye: 'WebEye',
                 ivao: 'IVAO website',
                 tracker: 'Tracker'
+            },
+            user: {
+                login: 'Войти',
+                logout: 'Выйти'
             }
         },
         heropage: {

@@ -35,6 +35,10 @@ const ruTranslations: { translations: Translations } = {
                 webeye: 'WebEye',
                 ivao: 'Сайт IVAO',
                 tracker: 'Трекер'
+            },
+            user: {
+                login: 'Войти',
+                logout: 'Выйти'
             }
         },
         heropage: {

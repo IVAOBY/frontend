@@ -58,7 +58,7 @@ export function HeaderDropdown() {
 
     return (
         <>
-            <Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} closeDelay={400} withArrow>
+            <Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} withArrow>
             <Menu.Target>
                 <Text className={classes.link}>{t('navbar.division.index')}</Text>
             </Menu.Target>
