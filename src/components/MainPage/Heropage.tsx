@@ -68,7 +68,6 @@ const useStyles = createStyles((theme) => ({
     control: {
         height: rem(42),
         fontSize: theme.fontSizes.md,
-        backgroundColor: theme.colors.blue[0],
 
         '&:not(:first-of-type)': {
             marginLeft: theme.spacing.md,
@@ -115,7 +114,7 @@ export function HeroText() {
                 </Container>
 
                 <div className={classes.controls}>
-                    <Button className={classes.control} size="lg">
+                    <Button className={classes.control} variant="filled" size="lg">
                         {t("heropage.joinbutton")}
                     </Button>
                 </div>

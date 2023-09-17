@@ -94,7 +94,23 @@ export const ivaoTheme: MantineThemeOverride = {
     }),
 
     components: {
-
+        Button: {
+            styles: (theme, params: ButtonStylesParams, { variant }) => ({
+                root: {
+                    color: "white",
+                    backgroundColor:
+                        variant === 'filled'
+                            ? theme.colors[params.color || theme.primaryColor][8]
+                            : undefined,
+                    '&:hover': {
+                        backgroundColor:
+                            variant === 'filled'
+                            ? theme.colors[params.color] || theme.colors.lightBlue[9]
+                                : undefined,
+                    },
+                },
+            }),
+        },
         Menu: {
             styles: {
                 dropdown: {
