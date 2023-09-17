@@ -1,5 +1,5 @@
 const apiURL: { [key: string]: string } = {
-    'v3': 'https://v3.api.xr.ivao.aero'
+    'v3': 'http://localhost:3001'
 };
 
 const api = async (

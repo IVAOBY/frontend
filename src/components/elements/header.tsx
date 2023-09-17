@@ -13,7 +13,7 @@ import {
     Transition,
 } from '@mantine/core';
 import {useDisclosure} from '@mantine/hooks';
-import xrlogo from "../../assets/image/logo2.svg"
+import bylogo from "../../assets/image/Logo_f_w.svg"
 import {getTokenFromUrl, LogoutButton, removeTokenFromUrl, useAuth} from "../Handler";
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
@@ -130,7 +130,7 @@ export function HeaderResponsive() {
     const [showAlert, setShowAlert] = useState(false);
     const isAuthenticated = useAuth();
 
-    const serverUrl = `https://v3.api.xr.ivao.aero/auth/login?goto=${window.location.protocol}//${window.location.hostname}${window.location.port ? ':'+window.location.port : ''}`;
+    const serverUrl = `http://localhost:3001/auth/login?goto=${window.location.protocol}//${window.location.hostname}${window.location.port ? ':'+window.location.port : ''}`;
 
     const handleLogin = () => {
         try {
@@ -174,7 +174,7 @@ export function HeaderResponsive() {
     return (
         <Header height={HEADER_HEIGHT} className={classes.root}>
             <Container className={classes.header}>
-                <Image width={140} src={xrlogo} onClick={handleImageClick} style={{ cursor: 'pointer' }}/>
+                <Image width={140} src={bylogo} onClick={handleImageClick} style={{ cursor: 'pointer' }}/>
                 <Group spacing={5} className={classes.links}>
                     <HeaderDropdown />
                     {isAuthenticated ? (

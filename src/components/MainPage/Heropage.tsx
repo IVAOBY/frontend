@@ -7,7 +7,7 @@ const useStyles = createStyles((theme) => ({
         paddingTop: rem(180),
         paddingBottom: rem(130),
         backgroundImage:
-            'url(https://belavia.by/webroot/delivery/images/new_airplane.jpg)',
+            'url(https://tours.xr.ivao.aero/assets/main_bg-4d095ddc.png)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
 
@@ -40,7 +40,7 @@ const useStyles = createStyles((theme) => ({
     },
 
     highlight: {
-        color: theme.colors.blue
+        color: theme.colors.lightBlue[9],
     },
 
     description: {
