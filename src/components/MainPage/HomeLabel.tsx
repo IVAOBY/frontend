@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     Container,
     Title,
@@ -8,7 +8,7 @@ import {
     createStyles,
     Notification,
 } from '@mantine/core';
-import { api, getTextFromApiResponse } from '../../hooks/api';
+import {api, getTextFromApiResponse} from '../../hooks/api';
 
 const useStyles = createStyles((theme) => ({
     airline: {
@@ -25,7 +25,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export function HomeLabelComponent() {
-    const { classes } = useStyles();
+    const {classes} = useStyles();
 
     const [data, setData] = useState<{ title: string; body: string } | null>(null);
     const [error, setError] = useState<string | null>(null);
@@ -54,10 +54,10 @@ export function HomeLabelComponent() {
 
     return (
         <Container size="lg">
-            <Divider size={3} my="sm" />
+            <Divider size={3} my="sm"/>
             {isLoading ? (
                 <Center>
-                    <Skeleton width="100%" height={300} />
+                    <Skeleton width="100%" height={300}/>
                 </Center>
             ) : (
                 <>
@@ -72,7 +72,7 @@ export function HomeLabelComponent() {
                             <Title size={30} align="center" mt={47.5} c="var(--ivao-light-blue)">
                                 {data?.title || ''}
                             </Title>
-                            <p dangerouslySetInnerHTML={{ __html: data?.body || '' }} />
+                            <p dangerouslySetInnerHTML={{__html: data?.body || ''}}/>
                         </>
                     )}
                 </>

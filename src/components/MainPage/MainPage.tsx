@@ -1,10 +1,10 @@
-import { HeroText } from "./Heropage";
+import {HeroText} from "./Heropage";
 
 export function MainPage() {
 
     return (
         <>
-            <HeroText />
+            <HeroText/>
         </>
     );
 }
