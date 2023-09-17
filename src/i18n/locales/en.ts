@@ -37,8 +37,9 @@ const enTranslations: { translations: Translations } = {
                 tracker: 'Tracker'
             },
             user: {
-                login: 'Войти',
-                logout: 'Выйти'
+                login: 'Login',
+                logout: 'Logout',
+                profile: 'Profile'
             }
         },
         heropage: {

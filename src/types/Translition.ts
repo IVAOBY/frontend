@@ -35,7 +35,8 @@ export interface Translations {
         },
         user: {
             login: string,
-            logout: string
+            logout: string,
+            profile: string
         }
     },
     heropage: {

@@ -97,8 +97,8 @@ function LogoutButton() {
                     <Text className={classes.link}>{decodedToken.userData.name.first} {decodedToken.userData.id}</Text>
                 </Menu.Target>
                 <Menu.Dropdown>
-                    <Menu.Item icon={<IconUser size={14} />} onClick={HandleProfile}>{t("mybook")}</Menu.Item>
-                    <Menu.Item color="red" icon={<IconLogout size={14} />} onClick={HandleLogout}>{t("logoutButton")}</Menu.Item>
+                    <Menu.Item icon={<IconUser size={14} />} onClick={HandleProfile}>{t("navbar.user.profile")}</Menu.Item>
+                    <Menu.Item color="red" icon={<IconLogout size={14} />} onClick={HandleLogout}>{t("navbar.user.logout")}</Menu.Item>
                 </Menu.Dropdown>
             </Menu>
         ) : null

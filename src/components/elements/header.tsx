@@ -180,7 +180,7 @@ export function HeaderResponsive() {
                         </>
                     ) : (
                         <>
-                            <Text className={classes.link} onClick={handleLogin}>{t('loginButton')}</Text>
+                            <Text className={classes.link} onClick={handleLogin}>{t('navbar.user.login')}</Text>
                         </>
                     )}
                     <IconLanguage className={classes.language} onClick={changeLanguage} size={25} />

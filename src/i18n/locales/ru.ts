@@ -38,7 +38,8 @@ const ruTranslations: { translations: Translations } = {
             },
             user: {
                 login: 'Войти',
-                logout: 'Выйти'
+                logout: 'Выйти',
+                profile: 'Профиль'
             }
         },
         heropage: {
