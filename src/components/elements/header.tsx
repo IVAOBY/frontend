@@ -192,7 +192,7 @@ export function HeaderResponsive() {
                     {(styles) => (
                         <Paper className={classes.dropdown} style={styles}>
                             <HeaderDropdownMobile/>
-                            {isAuthenticated ? <LogoutButton /> : <Text className={classes.link} onClick={handleLogin}>{t('loginButton')}</Text>}
+                            {isAuthenticated ? <LogoutButton /> : <Text className={classes.link} onClick={handleLogin}>{t('navbar.user.login')}</Text>}
                             <Text className={classes.link} onClick={changeLanguage}><IconLanguage className={classes.language} onClick={changeLanguage} size={25} /></Text>
                         </Paper>
                     )}

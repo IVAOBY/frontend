@@ -4,7 +4,7 @@ const beTranslations: { translations: Translations } = {
     translations: {
         navbar: {
             division: {
-                index: 'Дывізіон',
+                index: 'Дывізіён',
                 about: 'Пра нас',
                 faq: 'FAQ',
                 staff: 'Кіраўніцтва дывізіёна',
