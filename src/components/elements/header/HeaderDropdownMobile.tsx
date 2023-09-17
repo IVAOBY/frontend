@@ -7,18 +7,25 @@ import {
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import {
-    IconLanguage,
-    IconLogout,
-    IconUser,
     IconBook,
     IconMessages,
     IconUsers,
     IconUserHeart,
     IconBrandDiscord,
     IconMailForward,
-    IconCircleNumber1,
-    IconNumber1
-} from "@tabler/icons-react";
+    IconNumber1,
+    IconLockStar,
+    IconFileInfo,
+    IconArticle,
+    IconWorld,
+    IconPlane,
+    IconPlaneDeparture,
+    IconCalendarEvent,
+    IconMessageCircle2,
+    IconEye,
+    IconFocus2,
+    IconUser,
+} from '@tabler/icons-react';
 import React from "react";
 
 const useStyles = createStyles((theme) => ({
@@ -76,11 +83,11 @@ export function HeaderDropdownMobile() {
                     <Text className={classes.link}>{t('navbar.atc.index')}</Text>
                 </Menu.Target>
                 <Menu.Dropdown>
-                    <Menu.Item icon={<IconUser size={14} />}>{t("navbar.atc.start")}</Menu.Item>
-                    <Menu.Item icon={<IconUser size={14} />}>{t("navbar.atc.fra")}</Menu.Item>
+                    <Menu.Item icon={<IconNumber1 size={14} />}>{t("navbar.atc.start")}</Menu.Item>
+                    <Menu.Item icon={<IconLockStar size={14} />}>{t("navbar.atc.fra")}</Menu.Item>
                     <Menu.Item icon={<IconUser size={14} />}>{t("navbar.atc.gca")}</Menu.Item>
-                    <Menu.Item icon={<IconUser size={14} />}>{t("navbar.atc.charts")}</Menu.Item>
-                    <Menu.Item icon={<IconUser size={14} />}>{t("navbar.atc.docs")}</Menu.Item>
+                    <Menu.Item icon={<IconFileInfo size={14} />}>{t("navbar.atc.charts")}</Menu.Item>
+                    <Menu.Item icon={<IconArticle size={14} />}>{t("navbar.atc.docs")}</Menu.Item>
                 </Menu.Dropdown>
             </Menu>
             <Menu radius="lg" shadow="md" width={200}>
@@ -88,11 +95,11 @@ export function HeaderDropdownMobile() {
                     <Text className={classes.link}>{t('navbar.pilots.index')}</Text>
                 </Menu.Target>
                 <Menu.Dropdown>
-                    <Menu.Item icon={<IconUser size={14} />}>{t("navbar.pilots.start")}</Menu.Item>
-                    <Menu.Item icon={<IconUser size={14} />}>{t("navbar.pilots.scenarios")}</Menu.Item>
-                    <Menu.Item icon={<IconUser size={14} />}>{t("navbar.pilots.charts")}</Menu.Item>
-                    <Menu.Item icon={<IconUser size={14} />}>{t("navbar.pilots.airlines")}</Menu.Item>
-                    <Menu.Item icon={<IconUser size={14} />}>{t("navbar.pilots.tours")}</Menu.Item>
+                    <Menu.Item icon={<IconNumber1 size={14} />}>{t("navbar.pilots.start")}</Menu.Item>
+                    <Menu.Item icon={<IconPlaneDeparture size={14} />}>{t("navbar.pilots.scenarios")}</Menu.Item>
+                    <Menu.Item icon={<IconFileInfo size={14} />}>{t("navbar.pilots.charts")}</Menu.Item>
+                    <Menu.Item icon={<IconPlane size={14} />}>{t("navbar.pilots.airlines")}</Menu.Item>
+                    <Menu.Item icon={<IconWorld size={14} />}>{t("navbar.pilots.tours")}</Menu.Item>
                 </Menu.Dropdown>
             </Menu>
             <Menu radius="lg" shadow="md" width={200}>
@@ -100,11 +107,11 @@ export function HeaderDropdownMobile() {
                     <Text className={classes.link}>{t('navbar.community.index')}</Text>
                 </Menu.Target>
                 <Menu.Dropdown>
-                    <Menu.Item icon={<IconUser size={14} />}>{t("navbar.community.events")}</Menu.Item>
-                    <Menu.Item icon={<IconUser size={14} />}>{t("navbar.community.forum")}</Menu.Item>
-                    <Menu.Item icon={<IconUser size={14} />}>{t("navbar.community.webeye")}</Menu.Item>
+                    <Menu.Item icon={<IconCalendarEvent size={14} />}>{t("navbar.community.events")}</Menu.Item>
+                    <Menu.Item icon={<IconMessageCircle2 size={14} />}>{t("navbar.community.forum")}</Menu.Item>
+                    <Menu.Item icon={<IconEye size={14} />}>{t("navbar.community.webeye")}</Menu.Item>
                     <Menu.Item icon={<IconUser size={14} />}>{t("navbar.community.ivao")}</Menu.Item>
-                    <Menu.Item icon={<IconUser size={14} />}>{t("navbar.community.tracker")}</Menu.Item>
+                    <Menu.Item icon={<IconFocus2 size={14} />}>{t("navbar.community.tracker")}</Menu.Item>
                 </Menu.Dropdown>
             </Menu></>
 

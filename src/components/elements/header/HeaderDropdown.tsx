@@ -1,52 +1,47 @@
+import React from 'react';
 import {
     createStyles,
     Menu,
     rem,
-    Text, useMantineTheme,
+    Text,
+    useMantineTheme,
 } from '@mantine/core';
-import {useNavigate} from "react-router-dom";
-import {useTranslation} from "react-i18next";
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
-    IconLanguage,
-    IconLogout,
-    IconUser,
     IconBook,
     IconMessages,
     IconUsers,
     IconUserHeart,
     IconBrandDiscord,
     IconMailForward,
-    IconCircleNumber1,
     IconNumber1,
     IconLockStar,
-    IconFileInfo, IconArticle, IconWorld, IconPlane, IconPlaneDeparture, IconCalendarEvent,
+    IconFileInfo,
+    IconArticle,
+    IconWorld,
+    IconPlane,
+    IconPlaneDeparture,
+    IconCalendarEvent,
     IconMessageCircle2,
     IconEye,
-    IconFocus2
-} from "@tabler/icons-react";
+    IconFocus2,
+    IconUser,
+} from '@tabler/icons-react';
 
 const useStyles = createStyles((theme) => ({
-
     link: {
         display: 'block',
         lineHeight: 1,
-        padding: `${rem(8)} ${rem(12)}`,
+        padding: `${rem(1)} ${rem(1)}`,
         borderRadius: theme.radius.sm,
         textDecoration: 'none',
         color: '#fff',
         fontSize: theme.fontSizes.sm,
         fontWeight: 700,
-        fontFamily: `Montserrat`,
-        cursor: "pointer",
-
-        '&:hover': {
-            color: theme.colors.brand[2],
-        },
-
-        [theme.fn.smallerThan('sm')]: {
-            borderRadius: 0,
-            padding: theme.spacing.md,
-        },
+        fontFamily: 'Montserrat',
+        cursor: 'pointer',
+        '&:hover': { color: theme.colors.brand[2] },
     },
 }));
 
@@ -60,7 +55,6 @@ export function HeaderDropdown() {
     };
 
     const { t, i18n } = useTranslation();
-
 
     return (
         <><Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} closeDelay={400}>
@@ -109,6 +103,5 @@ export function HeaderDropdown() {
                 <Menu.Item icon={<IconFocus2 size={20}/>}>{t("navbar.community.tracker")}</Menu.Item>
             </Menu.Dropdown>
         </Menu></>
-
     );
 }
