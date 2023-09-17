@@ -95,7 +95,7 @@ export const ivaoTheme: MantineThemeOverride = {
 
     components: {
         Button: {
-            styles: (theme, params: ButtonStylesParams, {variant}) => ({
+            styles: (theme, params: ButtonStylesParams, { variant }) => ({
                 root: {
                     transition: "all 0.25s ease",
                     color: "white",
@@ -105,10 +105,10 @@ export const ivaoTheme: MantineThemeOverride = {
                             : undefined,
                     '&:hover': {
                         transition: "all 0.25s ease",
-                        color: theme.colors.blue,
+                        color: "white",
                         backgroundColor:
                             variant === 'filled'
-                                ? theme.colors[params.color] || theme.colors.yellow[1]
+                            ? theme.colors[params.color] || theme.colors.lightBlue[9]
                                 : undefined,
                     },
                 },

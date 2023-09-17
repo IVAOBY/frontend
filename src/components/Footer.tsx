@@ -1,5 +1,5 @@
 import { createStyles, Container, rem, Image, Text, Group } from '@mantine/core';
-import xrlogo from "../assets/image/logo2.svg";
+import bylogo from "../assets/image/logo30px.svg";
 import React from "react";
 
 const useStyles = createStyles((theme) => ({
@@ -43,7 +43,7 @@ export function Footer() {
         <div className={classes.footer} style={{ marginTop: 'auto' }}>
             <Container className={classes.inner}>
                 <Group position="center" spacing="xs" noWrap>
-                    <Image width={150} src={xrlogo} />
+                    <Image width={150} src={bylogo} />
                 </Group>
             </Container>
         </div>
