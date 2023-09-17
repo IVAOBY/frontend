@@ -23,6 +23,9 @@ import {
 } from "@tabler/icons-react";
 import {HeaderDropdown} from "./header/HeaderDropdown";
 import {HeaderDropdownMobile} from "./header/HeaderDropdownMobile";
+import by from '../../assets/image/by.svg';
+import ru from '../../assets/image/ru.svg';
+import en from '../../assets/image/en.svg';
 
 const HEADER_HEIGHT = rem(100);
 
@@ -191,9 +194,9 @@ export function HeaderResponsive() {
                             <IconLanguage className={classes.language} size={25} />
                         </Menu.Target>
                         <Menu.Dropdown>
-                            <Menu.Item icon={<IconFlag2 size={20}/>} onClick={() => changeLanguage("be")}>{t("Беларуская")}</Menu.Item>
-                            <Menu.Item icon={<IconFlag2 size={20}/>} onClick={() => changeLanguage("ru")}>{t("Русский")}</Menu.Item>
-                            <Menu.Item icon={<IconFlag2 size={20}/>} onClick={() => changeLanguage("en")}>{t("English")}</Menu.Item>
+                            <Menu.Item icon={<Image src={by} radius={3} width={20}/>} onClick={() => changeLanguage("be")}>{t("Беларуская")}</Menu.Item>
+                            <Menu.Item icon={<Image src={ru} radius={3} width={20}/>} onClick={() => changeLanguage("ru")}>{t("Русский")}</Menu.Item>
+                            <Menu.Item icon={<Image src={en} radius={3} width={20}/>} onClick={() => changeLanguage("en")}>{t("English")}</Menu.Item>
                         </Menu.Dropdown>
                     </Menu>
                 </Group>
