@@ -40,11 +40,6 @@ const ruTranslations: { translations: Translations } = {
                 login: 'Войти',
                 logout: 'Выйти',
                 profile: 'Профиль'
-            },
-            language: {
-                be: 'Белорусский',
-                ru: 'Русский',
-                en: 'Английский'
             }
         },
         heropage: {
