@@ -87,7 +87,7 @@ const useStyles = createStyles((theme) => ({
         padding: `${rem(8)} ${rem(12)}`,
         borderRadius: theme.radius.sm,
         textDecoration: 'none',
-        color: '#fff',
+        color: '#ffffff',
         fontSize: theme.fontSizes.sm,
         fontWeight: 700,
         fontFamily: `Montserrat`,
