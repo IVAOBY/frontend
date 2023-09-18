@@ -79,12 +79,12 @@ export function HeaderDropdownMobile() {
                 </UnstyledButton>
             </Menu.Target>
             <Menu.Dropdown>
-                <Menu.Item icon={<IconBook size={14} />}>{t("navbar.division.rules")}</Menu.Item>
-                <Menu.Item icon={<IconMessages size={14} />}>{t("navbar.division.faq")}</Menu.Item>
                 <Menu.Item icon={<IconUsers size={14} />}>{t("navbar.division.about")}</Menu.Item>
                 <Menu.Item icon={<IconIdBadge2 size={14} />}>{t("navbar.division.staff")}</Menu.Item>
                 <Menu.Item icon={<Image src={discord} width={14} />}>{t("navbar.division.discord")}</Menu.Item>
+                <Menu.Item icon={<IconBook size={14} />}>{t("navbar.division.rules")}</Menu.Item>
                 <Menu.Item icon={<IconMailForward size={14} />}>{t("navbar.division.contact")}</Menu.Item>
+                <Menu.Item icon={<IconMessages size={14} />}>{t("navbar.division.faq")}</Menu.Item>
             </Menu.Dropdown>
         </Menu>
             <Menu radius="lg" shadow="md" width={200}>
@@ -97,9 +97,9 @@ export function HeaderDropdownMobile() {
                 <Menu.Dropdown>
                     <Menu.Item icon={<Image src={steps} width={14} />}>{t("navbar.atc.start")}</Menu.Item>
                     <Menu.Item icon={<IconLock size={14} />}>{t("navbar.atc.fra")}</Menu.Item>
-                    <Menu.Item icon={<IconWorld size={14} />}>{t("navbar.atc.gca")}</Menu.Item>
                     <Menu.Item icon={<IconFileInfo size={14} />}>{t("navbar.atc.charts")}</Menu.Item>
                     <Menu.Item icon={<IconArticle size={14} />}>{t("navbar.atc.docs")}</Menu.Item>
+                    <Menu.Item icon={<IconWorld size={14} />}>{t("navbar.atc.gca")}</Menu.Item>
                 </Menu.Dropdown>
             </Menu>
             <Menu radius="lg" shadow="md" width={200}>
