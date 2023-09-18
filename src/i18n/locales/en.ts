@@ -48,6 +48,8 @@ const enTranslations: { translations: Translations } = {
             joinbutton: 'Join!'
         },
         featuresection: {
+            title: 'Наши преимущества',
+            subtitle: 'Потому что Назаренко есть в диве',
             first: {
                 title: 'ddf',
                 subtitle: 'adf'

@@ -45,6 +45,8 @@ export interface Translations {
         joinbutton: string
     },
     featuresection: {
+        title: string,
+        subtitle: string,
         first: {
             title: string,
             subtitle: string

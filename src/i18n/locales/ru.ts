@@ -48,6 +48,8 @@ const ruTranslations: { translations: Translations } = {
             joinbutton: 'Присоедениться!'
         },
         featuresection: {
+            title: 'Наши преимущества',
+            subtitle: 'Потому что Назаренко есть в диве',
             first: {
                 title: 'ddsdafnjklnjfkvlasnfjvklsnvjkslfnvjskvnsjkvnskf',
                 subtitle: 'ddsdafnjklnjfkvlasnfjvklsnvjkslfnvjskvnsjkvnskfddsdafnjklnjfkvlasnfjvklsnvjkslfnvjskvnsjkvnskfddsdafnjklnjfkvlasnfjvklsnvjkslfnvjskvnsjkvnskfddsdafnjklnjfkvlasnfjvklsnvjkslfnvjskvnsjkvnskfddsdafnjklnjfkvlasnfjvklsnvjkslfnvjskvnsjkvnskf'

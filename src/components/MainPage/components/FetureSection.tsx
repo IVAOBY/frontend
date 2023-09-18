@@ -100,11 +100,11 @@ export function FeaturesCards() {
         <Container size="lg" py="xl">
 
             <Title order={2} className={classes.title} ta="center" mt="sm">
-                Почему именно мы?
+                {t('featuresection.title')}
             </Title>
 
             <Text c="dimmed" className={classes.description} ta="center" mt="md">
-                Потому что Mikič Kudrautsau отличный дир (литвы)
+                {t('featuresection.subtitle')}
             </Text>
 
             <SimpleGrid cols={3} spacing="xl" mt={50} breakpoints={[{ maxWidth: 'md', cols: 1 }]}>

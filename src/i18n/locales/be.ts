@@ -48,6 +48,8 @@ const beTranslations: { translations: Translations } = {
             joinbutton: 'Далучыцца!'
         },
         featuresection: {
+            title: 'Наши преимущества',
+            subtitle: 'Потому что Назаренко есть в диве',
             first: {
                 title: 'ddf',
                 subtitle: 'adf'

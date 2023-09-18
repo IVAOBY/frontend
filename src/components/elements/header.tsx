@@ -10,7 +10,7 @@ import {
     Paper,
     rem,
     Text,
-    Transition,
+    Transition, UnstyledButton,
 } from '@mantine/core';
 import {useDisclosure} from '@mantine/hooks';
 import bylogo from "../../assets/image/Logo_f_w.svg";
@@ -20,8 +20,9 @@ import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import {
     IconLanguage,
-    IconFlag2
+    IconLogin
 } from "@tabler/icons-react";
+import { IconLogin2 } from '@tabler/icons-react';
 import {HeaderDropdown} from "./header/HeaderDropdown";
 import {HeaderDropdownMobile} from "./header/HeaderDropdownMobile";
 import by from '../../assets/image/by.svg';
@@ -125,6 +126,7 @@ const useStyles = createStyles((theme) => ({
         fontWeight: 700,
         fontFamily: `Montserrat`,
         cursor: "pointer",
+        paddingLeft: 0,
 
         '&:hover': {
             color: theme.colors.gray[3],
@@ -210,20 +212,24 @@ export function HeaderResponsive() {
             {scrollPosition > 0 ? logoScrolled : logoDefault}
             <Group spacing={5} className={classes.links}>
                     <HeaderDropdown />
-                    {isAuthenticated ? (
-                        <>
-                            <LogoutButton />
-                        </>
-                    ) : (
-                        <>
-                            <Text
-                                className={`${classes.link} ${scrollPosition > 0 ? classes.linkScrolled : ''}`}
-                                onClick={handleLogin}
-                            >
-                                {t('navbar.user.login')}
-                            </Text>
-                        </>
-                    )}
+            </Group>
+
+            <Group position="right">
+                {isAuthenticated ? (
+                    <>
+                        <LogoutButton />
+                    </>
+                ) : (
+                    <UnstyledButton display="flex" className={`${classes.link} ${scrollPosition > 0 ? classes.linkScrolled : ''}`}>
+                        <IconLogin2 size={20}></IconLogin2>
+                        <Text
+                            onClick={handleLogin}
+                            ml={6}
+                        >
+                            {t('navbar.user.login')}
+                        </Text>
+                    </UnstyledButton>
+                )}
                 <Menu trigger="hover" radius="lg">
                     <Menu.Target>
                         <IconLanguage
@@ -254,8 +260,7 @@ export function HeaderResponsive() {
                         </Menu.Item>
                     </Menu.Dropdown>
                 </Menu>
-
-                </Group>
+            </Group>
 
                 <Burger opened={opened} onClick={toggle} className={classes.burger} color="#fff" size="sm" />
                     <Transition transition="pop-top-right" duration={200} mounted={opened}>
