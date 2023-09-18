@@ -164,8 +164,8 @@ export function HeaderResponsive() {
         navigate('/');
     };
 
-    const logoDefault = <Image width={140} src={bylogo} onClick={handleImageClick} style={{ cursor: 'pointer' }} />;
-    const logoScrolled = <Image width={140} src={bylogoblue} onClick={handleImageClick} style={{ cursor: 'pointer' }} />;
+    const logoDefault = <Image width={150} src={bylogo} onClick={handleImageClick} style={{ cursor: 'pointer' }} />;
+    const logoScrolled = <Image width={150} src={bylogoblue} onClick={handleImageClick} style={{ cursor: 'pointer' }} />;
 
 
     const handleLogin = () => {

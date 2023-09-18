@@ -137,10 +137,10 @@ export function HeroText() {
 
                 <div className={classes.controls}>
                     <Group position="center">
-                    <Button className={classes.joinButton} variant="filled" size="lg">
+                    <Button className={classes.joinButton} variant="filled" size="md">
                         {t("heropage.joinbutton")}
                     </Button>
-                        <Button className={classes.transButton} variant="outline" size="lg" onClick={byTransferMail}>
+                        <Button className={classes.transButton} variant="outline" size="md" onClick={byTransferMail}>
                             {t("heropage.transfer")}
                         </Button>
                     </Group>

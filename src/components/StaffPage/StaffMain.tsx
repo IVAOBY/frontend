@@ -13,7 +13,8 @@ import {
     SimpleGrid
 } from '@mantine/core';
 import {IconAdjustments, IconIdBadge2, IconMailOpened} from '@tabler/icons-react';
-import React from "react";
+import React, {useEffect, useState} from "react";
+import {api} from "../../hooks/api";
 
 const useStyles = createStyles((theme) => ({
     card: {
@@ -22,8 +23,31 @@ const useStyles = createStyles((theme) => ({
     },
 }));
 
+interface Department {
+    id: string;
+    name: {
+        en: string;
+        ru: string;
+    };
+}
+
 export function StaffMain() {
     const { classes, theme } = useStyles();
+    const [departments, setDepartments] = useState<Department[]>([]);
+
+    useEffect(() => {
+        api("/staff-departments")
+            .then(response => {
+                if (response && Array.isArray(response)) {
+                    setDepartments(response);
+                } else {
+                    console.error("Error: Unexpected API response structure");
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching data:", error);
+            });
+    }, []);
 
     return (
         <Container size={"lg"}>
@@ -31,7 +55,11 @@ export function StaffMain() {
                 <Title order={1} c={theme.colors.blue[9]} pt={50}>Руководство дивизиона</Title>
             </Container>
             <Container>
-                <Title ta="center" order={2} c={theme.colors.blue[9]} pt={50} >Division HQ</Title>
+                {departments.map((department, index) => (
+                    <Title key={index} ta="center" order={2} c={theme.colors.blue[9]} pt={50}>
+                        {department.name.en}
+                    </Title>
+                ))}
                 <SimpleGrid
                     id="staff-grid"
                     cols={2}
