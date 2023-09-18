@@ -101,23 +101,8 @@ export const ivaoTheme: MantineThemeOverride = {
                     position: 'relative',
                     overflow: 'hidden',
                     transition: 'all 0.4s ease',
-                    color: 'white',
-                    backgroundColor: variant === 'filled' ? theme.colors[params.color || '#ffffff'] : undefined,
                     '&:hover': {
-                        '&::after': {
-                            content: '""',
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            width: '100%',
-                            height: '100%',
-                            transform: 'translate(-120%, -50%) skew(-15deg, 0)',
-                            background: 'linear-gradient(45deg, transparent 50%, rgba(255, 255, 255, 0.2) 50%)',
-                            animation: 'ripple 1s linear infinite',
-                        },
                         transform: 'scale(1.05)',
-                        color: theme.colors.blue,
-                        backgroundColor: variant === 'filled' ? theme.colors[params.color] || '#ffffff' : undefined,
                         boxShadow: '0px 10px 20px rgba(0, 0, 0, 0.2)',
                     },
                     '&:active': {
@@ -125,24 +110,8 @@ export const ivaoTheme: MantineThemeOverride = {
                         boxShadow: 'none',
                     },
                 },
-                '@keyframes ripple': {
-                    '0%': {
-                        transform: 'translate(-120%, -50%) skew(-15deg, 0) scale(1)',
-                        opacity: 1,
-                    },
-                    '100%': {
-                        transform: 'translate(-120%, -50%) skew(-15deg, 0) scale(2.5)',
-                        opacity: 0,
-                    },
-                },
             }),
         },
-
-
-
-
-
-
 
         Menu: {
             styles: {
