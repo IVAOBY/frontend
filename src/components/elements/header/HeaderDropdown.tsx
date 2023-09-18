@@ -122,12 +122,12 @@ export function HeaderDropdown() {
                                onClick={() => menuLink('https://google.com')}>{t("navbar.atc.start")}</Menu.Item>
                     <Menu.Item icon={<IconLock size={20}/>}
                                onClick={() => menuLink('https://ivao.aero/fras/list.asp?id=BY')}>{t("navbar.atc.fra")}</Menu.Item>
-                    <Menu.Item icon={<IconWorld size={20}/>}
-                               onClick={() => menuLink('https://google.com')}>{t("navbar.atc.gca")}</Menu.Item>
                     <Menu.Item icon={<IconFileInfo size={20}/>}
                                onClick={() => menuLink('https://google.com')}>{t("navbar.atc.charts")}</Menu.Item>
                     <Menu.Item icon={<IconArticle size={20}/>}
                                onClick={() => menuLink('https://google.com')}>{t("navbar.atc.docs")}</Menu.Item>
+                    <Menu.Item icon={<IconWorld size={20}/>}
+                               onClick={() => menuLink('https://google.com')}>{t("navbar.atc.gca")}</Menu.Item>
                 </Menu.Dropdown>
             </Menu>
             <Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} width={200} withArrow>
