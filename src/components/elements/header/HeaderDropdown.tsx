@@ -79,7 +79,7 @@ export function HeaderDropdown() {
 
     const {t} = useTranslation();
     const menuLink = useCallback(function (link: any | undefined) {
-            window.location.href = link;
+            window.open(link, '_blank')
         },
         []);
 
@@ -163,13 +163,13 @@ export function HeaderDropdown() {
                     <Menu.Item icon={<IconCalendarEvent size={20}/>}
                                onClick={() => menuLink('https://google.com')}>{t("navbar.community.events")}</Menu.Item>
                     <Menu.Item icon={<IconMessageCircle2 size={20}/>}
-                               onClick={() => menuLink('https://google.com')}>{t("navbar.community.forum")}</Menu.Item>
+                               onClick={() => menuLink('https://forum.ivao.aero')}>{t("navbar.community.forum")}</Menu.Item>
                     <Menu.Item icon={<IconEye size={20}/>}
-                               onClick={() => menuLink('https://google.com')}>{t("navbar.community.webeye")}</Menu.Item>
+                               onClick={() => menuLink('https://webeye.ivao.aero')}>{t("navbar.community.webeye")}</Menu.Item>
                     <Menu.Item icon={<Image src={ivaoLogo} width={20}/>}
-                               onClick={() => menuLink('https://google.com')}>{t("navbar.community.ivao")}</Menu.Item>
+                               onClick={() => menuLink('https://ivao.aero')}>{t("navbar.community.ivao")}</Menu.Item>
                     <Menu.Item icon={<IconFocus2 size={20}/>}
-                               onClick={() => menuLink('https://google.com')}>{t("navbar.community.tracker")}</Menu.Item>
+                               onClick={() => menuLink('https://tracker.ivao.aero')}>{t("navbar.community.tracker")}</Menu.Item>
                 </Menu.Dropdown>
             </Menu></>
     );
