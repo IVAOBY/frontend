@@ -1,5 +1,5 @@
 import {
-    createStyles,
+    createStyles, Image,
     Menu,
     rem,
     Text, UnstyledButton,
@@ -11,10 +11,8 @@ import {
     IconMessages,
     IconUsers,
     IconUserHeart,
-    IconBrandDiscord,
     IconMailForward,
-    IconNumber1,
-    IconLockStar,
+    IconLock,
     IconFileInfo,
     IconArticle,
     IconWorld,
@@ -24,10 +22,16 @@ import {
     IconMessageCircle2,
     IconEye,
     IconFocus2,
-    IconUser,
-    IconGitPullRequest,
+    IconMap2,
+    IconAirTrafficControl,
+    IconUsersGroup,
+    IconPlaneTilt,
+    IconInfoSquareRounded,
 } from '@tabler/icons-react';
 import React from "react";
+import ivaoLogo from '../../../assets/image/logo_s_black.svg';
+import steps from '../../../assets/image/steps.svg';
+import discord from '../../../assets/image/discord.svg';
 
 const useStyles = createStyles((theme) => ({
 
@@ -70,7 +74,7 @@ export function HeaderDropdownMobile() {
             <Menu radius="lg" shadow="md" width={200}>
             <Menu.Target>
                 <UnstyledButton display="flex" className={classes.link}>
-                    <IconUserHeart size={20}></IconUserHeart>
+                    <IconInfoSquareRounded size={20}></IconInfoSquareRounded>
                     <Text ml={6}>{t('navbar.division.index')}</Text>
                 </UnstyledButton>
             </Menu.Target>
@@ -79,21 +83,21 @@ export function HeaderDropdownMobile() {
                 <Menu.Item icon={<IconMessages size={14} />}>{t("navbar.division.faq")}</Menu.Item>
                 <Menu.Item icon={<IconUsers size={14} />}>{t("navbar.division.about")}</Menu.Item>
                 <Menu.Item icon={<IconUserHeart size={14} />}>{t("navbar.division.staff")}</Menu.Item>
-                <Menu.Item icon={<IconBrandDiscord size={14} />}>{t("navbar.division.discord")}</Menu.Item>
+                <Menu.Item icon={<Image src={discord} width={14} />}>{t("navbar.division.discord")}</Menu.Item>
                 <Menu.Item icon={<IconMailForward size={14} />}>{t("navbar.division.contact")}</Menu.Item>
             </Menu.Dropdown>
         </Menu>
             <Menu radius="lg" shadow="md" width={200}>
                 <Menu.Target>
                     <UnstyledButton display="flex" className={classes.link}>
-                        <IconUserHeart size={20}></IconUserHeart>
+                        <IconAirTrafficControl size={20}></IconAirTrafficControl>
                         <Text ml={6}>{t('navbar.atc.index')}</Text>
                     </UnstyledButton>
                 </Menu.Target>
                 <Menu.Dropdown>
-                    <Menu.Item icon={<IconNumber1 size={14} />}>{t("navbar.atc.start")}</Menu.Item>
-                    <Menu.Item icon={<IconLockStar size={14} />}>{t("navbar.atc.fra")}</Menu.Item>
-                    <Menu.Item icon={<IconGitPullRequest size={14} />}>{t("navbar.atc.gca")}</Menu.Item>
+                    <Menu.Item icon={<Image src={steps} width={14} />}>{t("navbar.atc.start")}</Menu.Item>
+                    <Menu.Item icon={<IconLock size={14} />}>{t("navbar.atc.fra")}</Menu.Item>
+                    <Menu.Item icon={<IconWorld size={14} />}>{t("navbar.atc.gca")}</Menu.Item>
                     <Menu.Item icon={<IconFileInfo size={14} />}>{t("navbar.atc.charts")}</Menu.Item>
                     <Menu.Item icon={<IconArticle size={14} />}>{t("navbar.atc.docs")}</Menu.Item>
                 </Menu.Dropdown>
@@ -101,22 +105,22 @@ export function HeaderDropdownMobile() {
             <Menu radius="lg" shadow="md" width={200}>
                 <Menu.Target>
                     <UnstyledButton display="flex" className={classes.link}>
-                        <IconUserHeart size={20}></IconUserHeart>
+                        <IconPlaneTilt size={20}></IconPlaneTilt>
                         <Text ml={6}>{t('navbar.pilots.index')}</Text>
                     </UnstyledButton>
                 </Menu.Target>
                 <Menu.Dropdown>
-                    <Menu.Item icon={<IconNumber1 size={14} />}>{t("navbar.pilots.start")}</Menu.Item>
+                    <Menu.Item icon={<Image src={steps} width={14} />}>{t("navbar.pilots.start")}</Menu.Item>
                     <Menu.Item icon={<IconPlaneDeparture size={14} />}>{t("navbar.pilots.scenarios")}</Menu.Item>
                     <Menu.Item icon={<IconFileInfo size={14} />}>{t("navbar.pilots.charts")}</Menu.Item>
                     <Menu.Item icon={<IconPlane size={14} />}>{t("navbar.pilots.airlines")}</Menu.Item>
-                    <Menu.Item icon={<IconWorld size={14} />}>{t("navbar.pilots.tours")}</Menu.Item>
+                    <Menu.Item icon={<IconMap2 size={14} />}>{t("navbar.pilots.tours")}</Menu.Item>
                 </Menu.Dropdown>
             </Menu>
             <Menu radius="lg" shadow="md" width={200}>
                 <Menu.Target>
                     <UnstyledButton display="flex" className={classes.link}>
-                        <IconUserHeart size={20}></IconUserHeart>
+                        <IconUsersGroup size={20}></IconUsersGroup>
                         <Text ml={6}>{t('navbar.community.index')}</Text>
                     </UnstyledButton>
                 </Menu.Target>
@@ -124,7 +128,7 @@ export function HeaderDropdownMobile() {
                     <Menu.Item icon={<IconCalendarEvent size={14} />}>{t("navbar.community.events")}</Menu.Item>
                     <Menu.Item icon={<IconMessageCircle2 size={14} />}>{t("navbar.community.forum")}</Menu.Item>
                     <Menu.Item icon={<IconEye size={14} />}>{t("navbar.community.webeye")}</Menu.Item>
-                    <Menu.Item icon={<IconUser size={14} />}>{t("navbar.community.ivao")}</Menu.Item>
+                    <Menu.Item icon={<Image src={ivaoLogo} width={14}/>}>{t("navbar.community.ivao")}</Menu.Item>
                     <Menu.Item icon={<IconFocus2 size={14} />}>{t("navbar.community.tracker")}</Menu.Item>
                 </Menu.Dropdown>
             </Menu></>
