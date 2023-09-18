@@ -10,7 +10,7 @@ import {
     IconBook,
     IconMessages,
     IconUsers,
-    IconUserHeart,
+    IconIdBadge2,
     IconMailForward,
     IconLock,
     IconFileInfo,
@@ -82,7 +82,7 @@ export function HeaderDropdownMobile() {
                 <Menu.Item icon={<IconBook size={14} />}>{t("navbar.division.rules")}</Menu.Item>
                 <Menu.Item icon={<IconMessages size={14} />}>{t("navbar.division.faq")}</Menu.Item>
                 <Menu.Item icon={<IconUsers size={14} />}>{t("navbar.division.about")}</Menu.Item>
-                <Menu.Item icon={<IconUserHeart size={14} />}>{t("navbar.division.staff")}</Menu.Item>
+                <Menu.Item icon={<IconIdBadge2 size={14} />}>{t("navbar.division.staff")}</Menu.Item>
                 <Menu.Item icon={<Image src={discord} width={14} />}>{t("navbar.division.discord")}</Menu.Item>
                 <Menu.Item icon={<IconMailForward size={14} />}>{t("navbar.division.contact")}</Menu.Item>
             </Menu.Dropdown>
