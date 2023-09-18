@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     createStyles, Image,
     Menu,
@@ -48,11 +48,29 @@ const useStyles = createStyles((theme) => ({
         cursor: 'pointer',
         '&:hover': { color: theme.colors.gray[3] },
     },
+
+    linkScrolled: {
+        color: theme.colors.blue[9],
+        '&:hover': { color: theme.colors.lightBlue[8] },
+    },
 }));
 
 export function HeaderDropdown() {
     const { classes } = useStyles();
     const theme = useMantineTheme();
+
+    const [scrollPosition, setScrollPosition] = useState(0);
+
+    //Скролл хедера
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrollPosition(window.scrollY);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
 
     const navigate = useNavigate();
     const handleNavigate = (link: string) => {
@@ -65,7 +83,7 @@ export function HeaderDropdown() {
         <>
             <Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} withArrow>
             <Menu.Target>
-                <Text className={classes.link}>{t('navbar.division.index')}</Text>
+                <Text className={`${classes.link} ${scrollPosition > 0 ? classes.linkScrolled : ''}`}>{t('navbar.division.index')}</Text>
             </Menu.Target>
             <Menu.Dropdown>
                 <Menu.Item icon={<IconUsers size={20}/>}>{t("navbar.division.about")}</Menu.Item>
@@ -78,7 +96,7 @@ export function HeaderDropdown() {
         </Menu>
             <Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} width={200} withArrow>
             <Menu.Target>
-                <Text className={classes.link}>{t('navbar.atc.index')}</Text>
+                <Text className={`${classes.link} ${scrollPosition > 0 ? classes.linkScrolled : ''}`}>{t('navbar.atc.index')}</Text>
             </Menu.Target>
             <Menu.Dropdown>
                 <Menu.Item icon={<Image src={steps} width={20}/>}>{t("navbar.atc.start")}</Menu.Item>
@@ -90,7 +108,7 @@ export function HeaderDropdown() {
         </Menu>
             <Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} width={200} withArrow>
             <Menu.Target>
-                <Text className={classes.link}>{t('navbar.pilots.index')}</Text>
+                <Text className={`${classes.link} ${scrollPosition > 0 ? classes.linkScrolled : ''}`}>{t('navbar.pilots.index')}</Text>
             </Menu.Target>
             <Menu.Dropdown>
                 <Menu.Item icon={<Image src={steps} width={20}/>}>{t("navbar.pilots.start")}</Menu.Item>
@@ -102,7 +120,7 @@ export function HeaderDropdown() {
         </Menu>
             <Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} width={200} withArrow>
             <Menu.Target>
-                <Text className={classes.link}>{t('navbar.community.index')}</Text>
+                <Text className={`${classes.link} ${scrollPosition > 0 ? classes.linkScrolled : ''}`}>{t('navbar.community.index')}</Text>
             </Menu.Target>
             <Menu.Dropdown>
                 <Menu.Item icon={<IconCalendarEvent size={20}/>}>{t("navbar.community.events")}</Menu.Item>

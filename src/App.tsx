@@ -1,4 +1,4 @@
-import {Container, MantineProvider} from '@mantine/core';
+import {AppShell, Container, MantineProvider} from '@mantine/core';
 import {
     Route,
     BrowserRouter,
@@ -24,18 +24,20 @@ export default function App() {
   return (
       <MantineProvider withCSSVariables withGlobalStyles withNormalizeCSS theme={ivaoTheme}>
           <I18nextProvider i18n={i18n}>
-              <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
                   <BrowserRouter>
-                      <HeaderResponsive />
-                      <Handler />
+                      <AppShell
+                          padding={0}
+                          navbar={<HeaderResponsive />}
+                          footer={<Footer />}
+                      >
+                          <Handler />
                           <Routes>
                               <Route path="/" element={<MainPage />} />
                               <Route path="/404" element={<ErrorPage />} />
                               <Route path="*" element={<Navigate to="/404" />} />
                           </Routes>
-                      <Footer />
+                      </AppShell>
                   </BrowserRouter>
-              </div>
           </I18nextProvider>
       </MantineProvider>
   );

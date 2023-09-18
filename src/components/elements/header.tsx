@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
     Burger,
     Container,
@@ -13,7 +13,8 @@ import {
     Transition,
 } from '@mantine/core';
 import {useDisclosure} from '@mantine/hooks';
-import bylogo from "../../assets/image/Logo_f_w.svg"
+import bylogo from "../../assets/image/Logo_f_w.svg";
+import bylogoblue from "../../assets/image/logobyblue.svg";
 import {getTokenFromUrl, LogoutButton, removeTokenFromUrl, useAuth} from "../Handler";
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
@@ -31,11 +32,20 @@ const HEADER_HEIGHT = rem(100);
 
 const useStyles = createStyles((theme) => ({
     root: {
-        position: "relative",
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
         zIndex: 100,
-        backgroundColor: theme.colors.blue[9],
+        backgroundColor: theme.colors.blue,
         borderBottom: 0,
+        transition: 'background-color 0.3s ease-in-out',
     },
+
+    scrolled: {
+        backgroundColor: '#fff',
+    },
+
 
     dropdown: {
         position: 'absolute',
@@ -109,6 +119,11 @@ const useStyles = createStyles((theme) => ({
         },
     },
 
+    linkScrolled: {
+        color: theme.colors.blue[9],
+        '&:hover': { color: theme.colors.lightBlue[8] },
+    },
+
     language: {
         color: '#fff',
         fontSize: theme.fontSizes.sm,
@@ -120,11 +135,12 @@ const useStyles = createStyles((theme) => ({
             color: theme.colors.gray[3],
         },
     },
-}));
 
-interface HeaderResponsiveProps {
-    links: { link: string; label: string }[];
-}
+    languageScrolled: {
+        color: theme.colors.blue[9],
+        '&:hover': { color: theme.colors.lightBlue[8] },
+    },
+}));
 
 export function HeaderResponsive() {
     const [opened, { toggle, close }] = useDisclosure(false);
@@ -133,7 +149,28 @@ export function HeaderResponsive() {
     const [showAlert, setShowAlert] = useState(false);
     const isAuthenticated = useAuth();
 
+    const [scrollPosition, setScrollPosition] = useState(0);
+
     const serverUrl = `http://localhost:3000/auth/login?goto=http://localhost:3001`;
+
+    //Скролл хедера
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrollPosition(window.scrollY);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
+    const handleImageClick = () => {
+        navigate('/');
+    };
+
+    const logoDefault = <Image width={140} src={bylogo} onClick={handleImageClick} style={{ cursor: 'pointer' }} />;
+    const logoScrolled = <Image width={140} src={bylogoblue} onClick={handleImageClick} style={{ cursor: 'pointer' }} />;
+
 
     const handleLogin = () => {
         try {
@@ -170,15 +207,14 @@ export function HeaderResponsive() {
 
     const currentLanguage = i18n.language;
 
-    const handleImageClick = () => {
-        navigate('/');
-    };
-
     return (
-        <Header height={HEADER_HEIGHT} className={classes.root}>
-            <Container className={classes.header}>
-                <Image width={140} src={bylogo} onClick={handleImageClick} style={{ cursor: 'pointer' }}/>
-                <Group spacing={5} className={classes.links}>
+        <Header
+            height={HEADER_HEIGHT}
+            className={`${classes.root} ${scrollPosition > 0 ? classes.scrolled : ''}`}
+        >
+        <Container className={classes.header}>
+            {scrollPosition > 0 ? logoScrolled : logoDefault}
+            <Group spacing={5} className={classes.links}>
                     <HeaderDropdown />
                     {isAuthenticated ? (
                         <>
@@ -186,12 +222,17 @@ export function HeaderResponsive() {
                         </>
                     ) : (
                         <>
-                            <Text className={classes.link} onClick={handleLogin}>{t('navbar.user.login')}</Text>
+                            <Text
+                                className={`${classes.link} ${scrollPosition > 0 ? classes.linkScrolled : ''}`}
+                                onClick={handleLogin}
+                            >
+                                {t('navbar.user.login')}
+                            </Text>
                         </>
                     )}
                     <Menu trigger="hover" radius="lg">
                         <Menu.Target>
-                            <IconLanguage className={classes.language} size={25} />
+                            <IconLanguage className={`${classes.language} ${scrollPosition > 0 ? classes.languageScrolled : ''}`} size={25} />
                         </Menu.Target>
                         <Menu.Dropdown>
                             <Menu.Item icon={<Image src={by} radius={3} width={20}/>} onClick={() => changeLanguage("be")}>{t("Беларуская")}</Menu.Item>

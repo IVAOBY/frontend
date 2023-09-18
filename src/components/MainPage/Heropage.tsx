@@ -23,7 +23,7 @@ const useStyles = createStyles((theme) => ({
     },
 
     title: {
-        fontWeight: 800,
+        fontWeight: 700,
         fontSize: rem(40),
         letterSpacing: rem(-1),
         paddingLeft: theme.spacing.md,
@@ -40,7 +40,7 @@ const useStyles = createStyles((theme) => ({
     },
 
     highlight: {
-        color: "#0D2C99",
+        fontWeight: 800,
         },
 
 
