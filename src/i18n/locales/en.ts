@@ -45,7 +45,8 @@ const enTranslations: { translations: Translations } = {
         heropage: {
             title: 'Welcome to the BY Division of',
             subtitle: 'The International Virtual Aviation Organisation, IVAO for short, was founded in 1998 to provide an online platform for flight simulation enthusiasts to enjoy their hobby in a simulated real-world environment, in company of other people, flying or providing Air Traffic Control services.',
-            joinbutton: 'Join!'
+            joinbutton: 'Join!',
+            transfer: 'Transfer to BY division!'
         },
         featuresection: {
             title: 'Наши преимущества',
