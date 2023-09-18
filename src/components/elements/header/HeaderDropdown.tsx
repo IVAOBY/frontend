@@ -102,7 +102,7 @@ export function HeaderDropdown() {
                     <Menu.Item icon={<Image src={discord} width={19}/>}
                                onClick={() => menuLink('https://google.com')}>{t("navbar.division.discord")}</Menu.Item>
                     <Menu.Item icon={<IconBook size={20}/>}
-                               onClick={() => menuLink('https://wiki.ivao.aero/en/home/ivao/rules')}>{t("navbar.division.rules")}</Menu.Item>
+                               onClick={() => menuLink('https://wiki.ivao.aero/en/home/ivao/information')}>{t("navbar.division.rules")}</Menu.Item>
                     <Menu.Item icon={<IconMailForward size={20}/>}
                                onClick={() => menuLink('https://google.com')}>{t("navbar.division.contact")}</Menu.Item>
                     <Menu.Item icon={<IconMessages size={20}/>}

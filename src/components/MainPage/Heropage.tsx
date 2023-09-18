@@ -7,9 +7,9 @@ const useStyles = createStyles((theme) => ({
         paddingTop: rem(180),
         paddingBottom: rem(130),
         backgroundImage:
-            'url(https://cdn.discordapp.com/attachments/757343581408329729/1153311435825348628/home.jpg)',
+            'url(https://cdn.discordapp.com/attachments/1091120742059491439/1153365379196915762/orsha.jpg)',
         backgroundSize: 'cover',
-        backgroundPosition: 'top',
+        backgroundPosition: 'center',
 
         [theme.fn.smallerThan('xs')]: {
             paddingTop: rem(80),
