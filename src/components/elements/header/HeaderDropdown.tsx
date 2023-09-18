@@ -12,7 +12,7 @@ import {
     IconBook,
     IconMessages,
     IconUsers,
-    IconUserHeart,
+    IconIdBadge2,
     IconMailForward,
     IconLock,
     IconFileInfo,
@@ -97,7 +97,7 @@ export function HeaderDropdown() {
                 <Menu.Dropdown>
                     <Menu.Item icon={<IconUsers size={20}/>}
                                onClick={() => menuLink('https://google.com')}>{t("navbar.division.about")}</Menu.Item>
-                    <Menu.Item icon={<IconUserHeart size={20}/>}
+                    <Menu.Item icon={<IconIdBadge2 size={20}/>}
                                onClick={() => navigate('staff')}>{t("navbar.division.staff")}</Menu.Item>
                     <Menu.Item icon={<Image src={discord} width={19}/>}
                                onClick={() => menuLink('https://google.com')}>{t("navbar.division.discord")}</Menu.Item>
