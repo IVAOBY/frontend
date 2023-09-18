@@ -119,11 +119,6 @@ const useStyles = createStyles((theme) => ({
         },
     },
 
-    linkScrolled: {
-        color: theme.colors.blue[9],
-        '&:hover': { color: theme.colors.lightBlue[8] },
-    },
-
     language: {
         color: '#fff',
         fontSize: theme.fontSizes.sm,
@@ -135,8 +130,7 @@ const useStyles = createStyles((theme) => ({
             color: theme.colors.gray[3],
         },
     },
-
-    languageScrolled: {
+    linkScrolled: {
         color: theme.colors.blue[9],
         '&:hover': { color: theme.colors.lightBlue[8] },
     },
@@ -230,16 +224,37 @@ export function HeaderResponsive() {
                             </Text>
                         </>
                     )}
-                    <Menu trigger="hover" radius="lg">
-                        <Menu.Target>
-                            <IconLanguage className={`${classes.language} ${scrollPosition > 0 ? classes.languageScrolled : ''}`} size={25} />
-                        </Menu.Target>
-                        <Menu.Dropdown>
-                            <Menu.Item icon={<Image src={by} radius={3} width={20}/>} onClick={() => changeLanguage("be")}>{t("Беларуская")}</Menu.Item>
-                            <Menu.Item icon={<Image src={ru} radius={3} width={20}/>} onClick={() => changeLanguage("ru")}>{t("Русский")}</Menu.Item>
-                            <Menu.Item icon={<Image src={en} radius={3} width={20}/>} onClick={() => changeLanguage("en")}>{t("English")}</Menu.Item>
-                        </Menu.Dropdown>
-                    </Menu>
+                <Menu trigger="hover" radius="lg">
+                    <Menu.Target>
+                        <IconLanguage
+                            className={`${classes.language} ${
+                                scrollPosition > 0 ? classes.linkScrolled : ''
+                            }`}
+                            size={25}
+                        />
+                    </Menu.Target>
+                    <Menu.Dropdown>
+                        <Menu.Item
+                            icon={<Image src={by} radius={3} width={20} />}
+                            onClick={() => changeLanguage('be')}
+                        >
+                            {t('Беларуская')}
+                        </Menu.Item>
+                        <Menu.Item
+                            icon={<Image src={ru} radius={3} width={20} />}
+                            onClick={() => changeLanguage('ru')}
+                        >
+                            {t('Русский')}
+                        </Menu.Item>
+                        <Menu.Item
+                            icon={<Image src={en} radius={3} width={20} />}
+                            onClick={() => changeLanguage('en')}
+                        >
+                            {t('English')}
+                        </Menu.Item>
+                    </Menu.Dropdown>
+                </Menu>
+
                 </Group>
 
                 <Burger opened={opened} onClick={toggle} className={classes.burger} color="#fff" size="sm" />

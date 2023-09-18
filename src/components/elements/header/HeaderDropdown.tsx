@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
-    createStyles, Image,
+    createStyles, Group, Image,
     Menu,
     rem,
     Text, UnstyledButton,
@@ -83,7 +83,10 @@ export function HeaderDropdown() {
         <>
             <Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} withArrow>
             <Menu.Target>
-                <Text className={`${classes.link} ${scrollPosition > 0 ? classes.linkScrolled : ''}`}>{t('navbar.division.index')}</Text>
+                <UnstyledButton display="flex" className={`${classes.link} ${scrollPosition > 0 ? classes.linkScrolled : ''}`}>
+                    <IconUserHeart size={20}></IconUserHeart>
+                    <Text ml={6}>{t('navbar.division.index')}</Text>
+                </UnstyledButton>
             </Menu.Target>
             <Menu.Dropdown>
                 <Menu.Item icon={<IconUsers size={20}/>}>{t("navbar.division.about")}</Menu.Item>
@@ -96,7 +99,10 @@ export function HeaderDropdown() {
         </Menu>
             <Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} width={200} withArrow>
             <Menu.Target>
-                <Text className={`${classes.link} ${scrollPosition > 0 ? classes.linkScrolled : ''}`}>{t('navbar.atc.index')}</Text>
+                <UnstyledButton display="flex" className={`${classes.link} ${scrollPosition > 0 ? classes.linkScrolled : ''}`}>
+                    <IconUserHeart size={20}></IconUserHeart>
+                    <Text ml={6}>{t('navbar.atc.index')}</Text>
+                </UnstyledButton>
             </Menu.Target>
             <Menu.Dropdown>
                 <Menu.Item icon={<Image src={steps} width={20}/>}>{t("navbar.atc.start")}</Menu.Item>
@@ -108,7 +114,10 @@ export function HeaderDropdown() {
         </Menu>
             <Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} width={200} withArrow>
             <Menu.Target>
-                <Text className={`${classes.link} ${scrollPosition > 0 ? classes.linkScrolled : ''}`}>{t('navbar.pilots.index')}</Text>
+                <UnstyledButton display="flex" className={`${classes.link} ${scrollPosition > 0 ? classes.linkScrolled : ''}`}>
+                    <IconUserHeart size={20}></IconUserHeart>
+                    <Text ml={6}>{t('navbar.pilots.index')}</Text>
+                </UnstyledButton>
             </Menu.Target>
             <Menu.Dropdown>
                 <Menu.Item icon={<Image src={steps} width={20}/>}>{t("navbar.pilots.start")}</Menu.Item>
@@ -120,7 +129,10 @@ export function HeaderDropdown() {
         </Menu>
             <Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} width={200} withArrow>
             <Menu.Target>
-                <Text className={`${classes.link} ${scrollPosition > 0 ? classes.linkScrolled : ''}`}>{t('navbar.community.index')}</Text>
+                <UnstyledButton display="flex" className={`${classes.link} ${scrollPosition > 0 ? classes.linkScrolled : ''}`}>
+                    <IconUserHeart size={20}></IconUserHeart>
+                    <Text ml={6}>{t('navbar.community.index')}</Text>
+                </UnstyledButton>
             </Menu.Target>
             <Menu.Dropdown>
                 <Menu.Item icon={<IconCalendarEvent size={20}/>}>{t("navbar.community.events")}</Menu.Item>

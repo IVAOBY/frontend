@@ -2,7 +2,7 @@ import {
     createStyles,
     Menu,
     rem,
-    Text,
+    Text, UnstyledButton,
 } from '@mantine/core';
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
@@ -69,7 +69,10 @@ export function HeaderDropdownMobile() {
         <>
             <Menu radius="lg" shadow="md" width={200}>
             <Menu.Target>
-                <Text className={classes.link}>{t('navbar.division.index')}</Text>
+                <UnstyledButton display="flex" className={classes.link}>
+                    <IconUserHeart size={20}></IconUserHeart>
+                    <Text ml={6}>{t('navbar.division.index')}</Text>
+                </UnstyledButton>
             </Menu.Target>
             <Menu.Dropdown>
                 <Menu.Item icon={<IconBook size={14} />}>{t("navbar.division.rules")}</Menu.Item>
@@ -82,7 +85,10 @@ export function HeaderDropdownMobile() {
         </Menu>
             <Menu radius="lg" shadow="md" width={200}>
                 <Menu.Target>
-                    <Text className={classes.link}>{t('navbar.atc.index')}</Text>
+                    <UnstyledButton display="flex" className={classes.link}>
+                        <IconUserHeart size={20}></IconUserHeart>
+                        <Text ml={6}>{t('navbar.atc.index')}</Text>
+                    </UnstyledButton>
                 </Menu.Target>
                 <Menu.Dropdown>
                     <Menu.Item icon={<IconNumber1 size={14} />}>{t("navbar.atc.start")}</Menu.Item>
@@ -94,7 +100,10 @@ export function HeaderDropdownMobile() {
             </Menu>
             <Menu radius="lg" shadow="md" width={200}>
                 <Menu.Target>
-                    <Text className={classes.link}>{t('navbar.pilots.index')}</Text>
+                    <UnstyledButton display="flex" className={classes.link}>
+                        <IconUserHeart size={20}></IconUserHeart>
+                        <Text ml={6}>{t('navbar.pilots.index')}</Text>
+                    </UnstyledButton>
                 </Menu.Target>
                 <Menu.Dropdown>
                     <Menu.Item icon={<IconNumber1 size={14} />}>{t("navbar.pilots.start")}</Menu.Item>
@@ -106,7 +115,10 @@ export function HeaderDropdownMobile() {
             </Menu>
             <Menu radius="lg" shadow="md" width={200}>
                 <Menu.Target>
-                    <Text className={classes.link}>{t('navbar.community.index')}</Text>
+                    <UnstyledButton display="flex" className={classes.link}>
+                        <IconUserHeart size={20}></IconUserHeart>
+                        <Text ml={6}>{t('navbar.community.index')}</Text>
+                    </UnstyledButton>
                 </Menu.Target>
                 <Menu.Dropdown>
                     <Menu.Item icon={<IconCalendarEvent size={14} />}>{t("navbar.community.events")}</Menu.Item>
