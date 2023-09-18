@@ -13,9 +13,7 @@ import {
     IconMessages,
     IconUsers,
     IconUserHeart,
-    IconBrandDiscord,
     IconMailForward,
-    IconNumber1,
     IconLock,
     IconFileInfo,
     IconArticle,
@@ -26,9 +24,11 @@ import {
     IconMessageCircle2,
     IconEye,
     IconFocus2,
-    IconUser,
-    IconGitPullRequest,
     IconMap2,
+    IconAirTrafficControl,
+    IconUsersGroup,
+    IconPlaneTilt,
+    IconInfoSquareRounded,
 } from '@tabler/icons-react';
 import ivaoLogo from '../../../assets/image/logo_s_black.svg';
 import steps from '../../../assets/image/steps.svg';
@@ -84,7 +84,7 @@ export function HeaderDropdown() {
             <Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} withArrow>
             <Menu.Target>
                 <UnstyledButton display="flex" className={`${classes.link} ${scrollPosition > 0 ? classes.linkScrolled : ''}`}>
-                    <IconUserHeart size={20}></IconUserHeart>
+                    <IconInfoSquareRounded size={20}></IconInfoSquareRounded>
                     <Text ml={6}>{t('navbar.division.index')}</Text>
                 </UnstyledButton>
             </Menu.Target>
@@ -100,7 +100,7 @@ export function HeaderDropdown() {
             <Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} width={200} withArrow>
             <Menu.Target>
                 <UnstyledButton display="flex" className={`${classes.link} ${scrollPosition > 0 ? classes.linkScrolled : ''}`}>
-                    <IconUserHeart size={20}></IconUserHeart>
+                    <IconAirTrafficControl size={20}></IconAirTrafficControl>
                     <Text ml={6}>{t('navbar.atc.index')}</Text>
                 </UnstyledButton>
             </Menu.Target>
@@ -115,7 +115,7 @@ export function HeaderDropdown() {
             <Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} width={200} withArrow>
             <Menu.Target>
                 <UnstyledButton display="flex" className={`${classes.link} ${scrollPosition > 0 ? classes.linkScrolled : ''}`}>
-                    <IconUserHeart size={20}></IconUserHeart>
+                    <IconPlaneTilt size={20}></IconPlaneTilt>
                     <Text ml={6}>{t('navbar.pilots.index')}</Text>
                 </UnstyledButton>
             </Menu.Target>
@@ -130,7 +130,7 @@ export function HeaderDropdown() {
             <Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} width={200} withArrow>
             <Menu.Target>
                 <UnstyledButton display="flex" className={`${classes.link} ${scrollPosition > 0 ? classes.linkScrolled : ''}`}>
-                    <IconUserHeart size={20}></IconUserHeart>
+                    <IconUsersGroup size={20}></IconUsersGroup>
                     <Text ml={6}>{t('navbar.community.index')}</Text>
                 </UnstyledButton>
             </Menu.Target>
