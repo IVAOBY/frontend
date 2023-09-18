@@ -1,5 +1,6 @@
-import { Title, Text, Container, Button, Overlay, createStyles, rem } from '@mantine/core';
+import { Title, Text, Group, Container, Button, Overlay, createStyles, rem } from '@mantine/core';
 import {useTranslation} from "react-i18next";
+import {useCallback} from "react";
 
 const useStyles = createStyles((theme) => ({
     wrapper: {
@@ -91,11 +92,30 @@ const useStyles = createStyles((theme) => ({
             backgroundColor: 'rgba(255, 255, 255, .45) !important',
         },
     },
+
+    joinButton: {
+        color: '#fff',
+'&:hover': {
+  backgroundColor: '#fff',
+  color: '#0D2C99',
+},
+    },
+    transButton: {
+          color: '#fff',
+        borderColor: '#fff',
+        '&:hover': {
+            backgroundColor: '#fff',
+            color: '#0D2C99',
+        },
+    },
+
 }));
 
 export function HeroText() {
     const { classes, cx } = useStyles();
     const { t } = useTranslation();
+    const byTransferMail = useCallback((event: React.MouseEvent<HTMLButtonElement>) => { window.open( 'mailto: by-hq@ivao.aero,xr-hq@ivao.aero?cc=members@ivao.aero&subject=Division%20transfer%20VID&body=Dear%20HQs%20and%20Membership%20Department!%0A%0AI%20request%20to%20transfer%20me%20from%20{}%20division%20to%20BY%20division.%0A%0ABest%20wishes,%0A{Name}%20{Surname}', '_blank') }, []);
+
 
     return (
         <div className={classes.wrapper}>
@@ -116,9 +136,14 @@ export function HeroText() {
                 </Container>
 
                 <div className={classes.controls}>
-                    <Button className={classes.control} variant="filled" size="lg">
+                    <Group position="center">
+                    <Button className={classes.joinButton} variant="filled" size="lg">
                         {t("heropage.joinbutton")}
                     </Button>
+                        <Button className={classes.transButton} variant="outline" size="lg" onClick={byTransferMail}>
+                            {t("heropage.transfer")}
+                        </Button>
+                    </Group>
                 </div>
             </div>
         </div>

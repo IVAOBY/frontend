@@ -42,7 +42,8 @@ export interface Translations {
     heropage: {
         title: string,
         subtitle: string,
-        joinbutton: string
+        joinbutton: string,
+        transfer: string
     },
     featuresection: {
         title: string,
