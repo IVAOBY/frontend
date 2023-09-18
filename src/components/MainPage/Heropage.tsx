@@ -114,7 +114,7 @@ const useStyles = createStyles((theme) => ({
 export function HeroText() {
     const { classes, cx } = useStyles();
     const { t } = useTranslation();
-    const byTransferMail = useCallback((event: React.MouseEvent<HTMLButtonElement>) => { window.open( 'mailto: by-hq@ivao.aero,xr-hq@ivao.aero?cc=members@ivao.aero&subject=Division%20transfer%20VID&body=Dear%20HQs%20and%20Membership%20Department!%0A%0AI%20request%20to%20transfer%20me%20from%20{}%20division%20to%20BY%20division.%0A%0ABest%20wishes,%0A{Name}%20{Surname}', '_blank') }, []);
+    const byTransferMail = useCallback((event: React.MouseEvent<HTMLButtonElement>) => { window.open( 'mailto: by-hq@ivao.aero,xr-hq@ivao.aero?cc=members@ivao.aero&subject=Division%20transfer%20VID&body=Dear%20HQs%20and%20Membership%20Department!%0A%0AI%20request%20to%20transfer%20me%20from%20the%20{}%20division%20to%20the%20BY%20division.%0A%0ABest%20wishes,%0A{Name}%20{Surname}', '_blank') }, []);
 
 
     return (
