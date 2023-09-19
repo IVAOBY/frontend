@@ -98,7 +98,7 @@ export function HeaderDropdown() {
                     <Menu.Item icon={<IconUsers size={20}/>}
                                onClick={() => menuLink('https://google.com')}>{t("navbar.division.about")}</Menu.Item>
                     <Menu.Item icon={<IconIdBadge2 size={20}/>}
-                               onClick={() => menuLink('https://www.ivao.aero/divisions/division.asp?Id=BY')}>{t("navbar.division.staff")}</Menu.Item>
+                               onClick={() => navigate('staff')}>{t("navbar.division.staff")}</Menu.Item>
                     <Menu.Item icon={<Image src={discord} width={19}/>}
                                onClick={() => menuLink('https://google.com')}>{t("navbar.division.discord")}</Menu.Item>
                     <Menu.Item icon={<IconBook size={20}/>}
@@ -142,7 +142,7 @@ export function HeaderDropdown() {
                     <Menu.Item icon={<Image src={steps} width={20}/>}
                                onClick={() => menuLink('https://google.com')}>{t("navbar.pilots.start")}</Menu.Item>
                     <Menu.Item icon={<IconPlaneDeparture size={20}/>}
-                               onClick={() => menuLink('https://google.com')}>{t("navbar.pilots.scenarios")}</Menu.Item>
+                               onClick={() => navigate('scenery')}>{t("navbar.pilots.scenarios")}</Menu.Item>
                     <Menu.Item icon={<IconFileInfo size={20}/>}
                                onClick={() => menuLink('https://google.com')}>{t("navbar.pilots.charts")}</Menu.Item>
                     <Menu.Item icon={<IconPlane size={20}/>}
