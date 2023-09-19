@@ -15,6 +15,7 @@ import {
 import {IconAdjustments, IconIdBadge2, IconMailOpened} from '@tabler/icons-react';
 import React, {useEffect, useState} from "react";
 import {api} from "../../hooks/api";
+import AuthGuard from "../../hooks/AuthGuard";
 
 const useStyles = createStyles((theme) => ({
     card: {
@@ -88,6 +89,7 @@ export function StaffMain() {
     }, []);
 
     return (
+        <AuthGuard>
         <Container size={"xl"}>
             <Container>
                 <Title order={1} c={theme.colors.blue[9]} pt={50}>Руководство дивизиона</Title>
@@ -188,6 +190,7 @@ export function StaffMain() {
             </Container>
 
         </Container>
+        </AuthGuard>
 
     );
 }

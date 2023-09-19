@@ -5,14 +5,44 @@ import jwtDecode from 'jwt-decode';
 import {DecodedTokenInt} from "../hooks/types";
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
+import {api} from "../hooks/api";
 
 function useAuth() {
     const authToken = localStorage.getItem('authToken');
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
-    return useMemo(() => {
-        return authToken !== null;
+    useEffect(() => {
+        if (!authToken) {
+            setIsAuthenticated(false);
+        } else {
+            const urlWithToken = `/auth/verify-token?token=${encodeURIComponent(authToken)}`;
+
+            // Make an API request to validate the token
+            api(urlWithToken, 'v3', 'GET')
+                .then((data) => {
+                    if (typeof data === 'string' && data.trim().toLowerCase() === '<body>false</body>') {
+                        setIsAuthenticated(false);
+
+                        localStorage.removeItem('authToken');
+                        localStorage.removeItem('authTokenExpiration');
+                        setIsAuthenticated(false);
+                    } else {
+                        setIsAuthenticated(true);
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error while validating token:', error);
+                    setIsAuthenticated(false);
+
+                    // над ошибку добавить. Сам сделаю, НАЦЕВСКИЙ НЕ ТРОГАТЬ
+                });
+        }
     }, [authToken]);
+
+    return isAuthenticated;
 }
+
+
 
 function getTokenFromUrl() {
     const urlParams = new URLSearchParams(window.location.search);
