@@ -1,5 +1,5 @@
 const apiURL: { [key: string]: string } = {
-    'v3': 'http://localhost:3001'
+    'v3': 'http://localhost:3000'
 };
 
 const api = async (

@@ -142,7 +142,7 @@ export function HeaderDropdown() {
                     <Menu.Item icon={<Image src={steps} width={20}/>}
                                onClick={() => menuLink('https://google.com')}>{t("navbar.pilots.start")}</Menu.Item>
                     <Menu.Item icon={<IconPlaneDeparture size={20}/>}
-                               onClick={() => menuLink('https://google.com')}>{t("navbar.pilots.scenarios")}</Menu.Item>
+                               onClick={() => navigate('scenery')}>{t("navbar.pilots.scenarios")}</Menu.Item>
                     <Menu.Item icon={<IconFileInfo size={20}/>}
                                onClick={() => menuLink('https://google.com')}>{t("navbar.pilots.charts")}</Menu.Item>
                     <Menu.Item icon={<IconPlane size={20}/>}
