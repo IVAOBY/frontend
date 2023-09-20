@@ -64,6 +64,10 @@ const ruTranslations: { translations: Translations } = {
                 subtitle: 'asdfasdf'
             }
         },
+        news: {
+            title: 'Новости',
+            button: 'Читать больше'
+        },
         generic: {
             ivao: 'IVAO'
         },

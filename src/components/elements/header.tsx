@@ -220,56 +220,53 @@ export function HeaderResponsive() {
                 {scrollPosition > 0 ? logoScrolled : logoDefault}
                 <Group spacing={5} className={classes.links}>
                     <HeaderDropdown />
-                </Group>
-
-                <Group position="right">
-                    {isAuthenticated ? (
-                        <>
-                            <LogoutButton />
-                        </>
-                    ) : (
-                        <UnstyledButton
-                            display="flex"
-                            className={`${classes.link} ${
-                                scrollPosition > 0 ? classes.linkScrolled : ''
-                            }`}
-                        >
-                            <IconLogin2 size={20}></IconLogin2>
-                            <Text onClick={handleLogin} ml={6}>
-                                {t('navbar.user.login')}
-                            </Text>
-                        </UnstyledButton>
-                    )}
-                    <Menu trigger="hover" radius="lg">
-                        <Menu.Target>
-                            <IconLanguage
-                                className={`${classes.language} ${
+                        {isAuthenticated ? (
+                            <>
+                                <LogoutButton />
+                            </>
+                        ) : (
+                            <UnstyledButton
+                                display="flex"
+                                className={`${classes.link} ${
                                     scrollPosition > 0 ? classes.linkScrolled : ''
                                 }`}
-                                size={25}
-                            />
-                        </Menu.Target>
-                        <Menu.Dropdown>
-                            <Menu.Item
-                                icon={<Image src={by} radius={3} width={20} />}
-                                onClick={() => changeLanguage('be')}
                             >
-                                {t('Беларуская')}
-                            </Menu.Item>
-                            <Menu.Item
-                                icon={<Image src={ru} radius={3} width={20} />}
-                                onClick={() => changeLanguage('ru')}
-                            >
-                                {t('Русский')}
-                            </Menu.Item>
-                            <Menu.Item
-                                icon={<Image src={en} radius={3} width={20} />}
-                                onClick={() => changeLanguage('en')}
-                            >
-                                {t('English')}
-                            </Menu.Item>
-                        </Menu.Dropdown>
-                    </Menu>
+                                <IconLogin2 size={20}></IconLogin2>
+                                <Text onClick={handleLogin} ml={6}>
+                                    {t('navbar.user.login')}
+                                </Text>
+                            </UnstyledButton>
+                        )}
+                        <Menu trigger="hover" radius="lg">
+                            <Menu.Target>
+                                <IconLanguage
+                                    className={`${classes.language} ${
+                                        scrollPosition > 0 ? classes.linkScrolled : ''
+                                    }`}
+                                    size={25}
+                                />
+                            </Menu.Target>
+                            <Menu.Dropdown>
+                                <Menu.Item
+                                    icon={<Image src={by} radius={3} width={20} />}
+                                    onClick={() => changeLanguage('be')}
+                                >
+                                    {t('Беларуская')}
+                                </Menu.Item>
+                                <Menu.Item
+                                    icon={<Image src={ru} radius={3} width={20} />}
+                                    onClick={() => changeLanguage('ru')}
+                                >
+                                    {t('Русский')}
+                                </Menu.Item>
+                                <Menu.Item
+                                    icon={<Image src={en} radius={3} width={20} />}
+                                    onClick={() => changeLanguage('en')}
+                                >
+                                    {t('English')}
+                                </Menu.Item>
+                            </Menu.Dropdown>
+                        </Menu>
                 </Group>
 
                 <Burger

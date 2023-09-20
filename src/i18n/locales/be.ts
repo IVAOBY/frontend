@@ -64,6 +64,10 @@ const beTranslations: { translations: Translations } = {
                 subtitle: 'asdfasdf'
             }
         },
+        news: {
+            title: 'Навины',
+            button: 'Чытать большь'
+        },
         generic: {
             ivao: 'IVAO'
         },

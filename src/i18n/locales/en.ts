@@ -64,6 +64,10 @@ const enTranslations: { translations: Translations } = {
                 subtitle: 'asdfasdf'
             }
         },
+        news: {
+            title: 'News',
+            button: 'Read more'
+        },
         generic: {
             ivao: 'IVAO'
         },
