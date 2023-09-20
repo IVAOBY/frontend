@@ -8,6 +8,7 @@ import {
     Image,
 } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
+import baner from '../assets/image/joinbaner.png';
 
 const useStyles = createStyles((theme) => ({
     title: {
@@ -40,7 +41,7 @@ export function AboutUs() {
                 {t('AboutUs.title')}
             </Title>
             <Text color={theme.colors.blue[9]} fw={600} mt={rem(12)}>{t('AboutUs.text')}</Text>
-            <Image src="https://pl.ivao.aero/wp-content/uploads/2022/08/Web-banner.png" pt={20} radius={"lg"}></Image>
+            <Image src={baner} pt={20} radius={"lg"}></Image>
         </Container>
     );
 }

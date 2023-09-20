@@ -135,7 +135,10 @@ export function HeroText() {
 
                 <Container size={640}>
                     <Text size="lg" className={`${classes.description}`}>
-                        <Typed strings={[t("heropage.subtitle")]} typeSpeed={100} />
+                        <Typed strings={[
+                            t("heropage.subtitle"),
+                            t("heropage.subtitle2")
+                        ]} typeSpeed={90} backSpeed={15} loop/>
                     </Text>
                 </Container>
 
