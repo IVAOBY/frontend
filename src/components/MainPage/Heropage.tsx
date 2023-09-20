@@ -1,6 +1,7 @@
 import { Title, Text, Group, Container, Button, Overlay, createStyles, rem } from '@mantine/core';
 import {useTranslation} from "react-i18next";
 import {useCallback} from "react";
+import Typed from 'react-typed';
 
 const useStyles = createStyles((theme) => ({
     wrapper: {
@@ -133,8 +134,8 @@ export function HeroText() {
                 </Title>
 
                 <Container size={640}>
-                    <Text size="lg" className={classes.description}>
-                        {t("heropage.subtitle")}
+                    <Text size="lg" className={`${classes.description}`}>
+                        <Typed strings={[t("heropage.subtitle")]} typeSpeed={100} />
                     </Text>
                 </Container>
 

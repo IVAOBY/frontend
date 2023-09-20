@@ -61,6 +61,14 @@ export interface Translations {
             subtitle: string
         }
     },
+    news: {
+        title: string,
+        button: string
+    },
+    AboutUs: {
+        title: string,
+        text: string
+    },
     generic: {
         ivao: string
     }

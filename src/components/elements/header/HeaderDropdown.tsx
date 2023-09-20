@@ -96,7 +96,7 @@ export function HeaderDropdown() {
                 </Menu.Target>
                 <Menu.Dropdown>
                     <Menu.Item icon={<IconUsers size={20}/>}
-                               onClick={() => menuLink('https://google.com')}>{t("navbar.division.about")}</Menu.Item>
+                               onClick={() => navigate('about-us')}>{t("navbar.division.about")}</Menu.Item>
                     <Menu.Item icon={<IconIdBadge2 size={20}/>}
                                onClick={() => menuLink('https://www.ivao.aero/divisions/division.asp?Id=BY')}>{t("navbar.division.staff")}</Menu.Item>
                     <Menu.Item icon={<Image src={discord} width={19}/>}
