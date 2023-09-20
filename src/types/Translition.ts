@@ -65,6 +65,10 @@ export interface Translations {
         title: string,
         button: string
     },
+    AboutUs: {
+        title: string,
+        text: string
+    },
     generic: {
         ivao: string
     }
