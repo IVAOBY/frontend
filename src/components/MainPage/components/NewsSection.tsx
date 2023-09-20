@@ -38,20 +38,20 @@ const useStyles = createStyles((theme) => ({
     },
     cardTitle: {
         color: theme.colors.blue[9],
-        marginLeft: rem(10),
+        marginLeft: rem(20),
     },
     cardDescription: {
         marginTop: rem(20),
         marginBottom: rem(20),
         color: theme.colors.gray[6],
-        marginLeft: rem(10),
+        marginLeft: rem(20),
     },
     cardAuthorDate: {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
         marginTop: rem(20),
-        marginLeft: rem(10),
+        marginLeft: rem(20),
         color: theme.colors.gray[6],
     },
     cardContent: {
@@ -87,15 +87,15 @@ export function NewsSection() {
                     <Flex className={classes.cardContent}>
                         <div className={classes.cardImage}>
                             <Image
-                                src="https://pl.ivao.aero/wp-content/uploads/2023/08/Igor_Robert.png"
+                                src="https://sun9-27.userapi.com/impg/JpZepO9lnr9kSsLZogvV20N2P2OnFODk1pk4pw/ADO99nQkriI.jpg?size=1200x800&quality=95&sign=356a7c6acaa52e7b680a596ec3b50ee6&type=album"
                                 alt="newsimage"
                                 radius={"lg"}
                             />
                         </div>
                         <div>
-                            <Title className={classes.cardTitle}>Congratulations for Igor and Robert</Title>
+                            <Title className={classes.cardTitle}>Congratulations for Serafim and Nikita</Title>
                             <Text className={classes.cardDescription}>
-                                Congratulations for Igor & Robert for achieving Voice Level 1 during our previous event. Keep the spirit, guys!
+                                Congratulations for Serafim & Nikita for achieving Aerodrome Controller rating. Keep the spirit, guys!
                             </Text>
                             <div className={classes.cardAuthorDate}>
                                 <Text size="md" fw={"bold"} c={theme.colors.blue[9]}>XR-WM</Text>
@@ -111,15 +111,15 @@ export function NewsSection() {
                     <Flex className={classes.cardContent}>
                         <div className={classes.cardImage}>
                             <Image
-                                src="https://pl.ivao.aero/wp-content/uploads/2023/08/Igor_Robert.png"
+                                src="https://sun9-27.userapi.com/impg/JpZepO9lnr9kSsLZogvV20N2P2OnFODk1pk4pw/ADO99nQkriI.jpg?size=1200x800&quality=95&sign=356a7c6acaa52e7b680a596ec3b50ee6&type=album"
                                 alt="newsimage"
                                 radius={"lg"}
                             />
                         </div>
                         <div>
-                            <Title className={classes.cardTitle}>Congratulations for Igor and Robert</Title>
+                            <Title className={classes.cardTitle}>Congratulations for Serafim and Nikita</Title>
                             <Text className={classes.cardDescription}>
-                                Congratulations for Igor & Robert for achieving Voice Level 1 during our previous event. Keep the spirit, guys!
+                                Congratulations for Serafim & Nikita for achieving Aerodrome Controller rating. Keep the spirit, guys!
                             </Text>
                             <div className={classes.cardAuthorDate}>
                                 <Text size="md" fw={"bold"} c={theme.colors.blue[9]}>XR-WM</Text>

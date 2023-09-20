@@ -12,10 +12,12 @@ const useStyles = createStyles((theme) => ({
             'url(https://cdn.discordapp.com/attachments/1091120742059491439/1153365379196915762/orsha.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
+        height: 550,
 
         [theme.fn.smallerThan('xs')]: {
             paddingTop: rem(80),
             paddingBottom: rem(50),
+            height: 350,
         },
     },
 
@@ -26,7 +28,7 @@ const useStyles = createStyles((theme) => ({
 
     title: {
         fontWeight: 700,
-        fontSize: rem(40),
+        fontSize: rem(50),
         letterSpacing: rem(-1),
         paddingLeft: theme.spacing.md,
         paddingRight: theme.spacing.md,
@@ -50,6 +52,7 @@ const useStyles = createStyles((theme) => ({
     description: {
         color: theme.colors.gray[0],
         textAlign: 'center',
+        fontSize: 30,
 
         [theme.fn.smallerThan('xs')]: {
             fontSize: theme.fontSizes.md,

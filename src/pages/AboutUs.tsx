@@ -5,7 +5,7 @@ import {
     Text,
     Container,
     rem,
-    Image,
+    Image, Paper,
 } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
 import baner from '../assets/image/joinbaner.png';
@@ -29,6 +29,8 @@ const useStyles = createStyles((theme) => ({
             marginRight: 'auto',
         },
     },
+    image: {
+    },
 }));
 
 export function AboutUs() {
@@ -41,7 +43,9 @@ export function AboutUs() {
                 {t('AboutUs.title')}
             </Title>
             <Text color={theme.colors.blue[9]} fw={600} mt={rem(12)}>{t('AboutUs.text')}</Text>
-            <Image src={baner} pt={20} radius={"lg"}></Image>
+            <Paper shadow={"lg"} radius={"lg"}>
+                <Image className={classes.image} src={baner} mt={20} radius={"lg"}></Image>
+            </Paper>
         </Container>
     );
 }
