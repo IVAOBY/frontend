@@ -1,4 +1,4 @@
-import { Title, Text, Group, Container, Button, Overlay, createStyles, rem } from '@mantine/core';
+import { Title, Text, Group, Container, Flex, Button, Overlay, createStyles, rem } from '@mantine/core';
 import {useTranslation} from "react-i18next";
 import {useCallback} from "react";
 import Typed from 'react-typed';
@@ -12,7 +12,7 @@ const useStyles = createStyles((theme) => ({
             'url(https://cdn.discordapp.com/attachments/1091120742059491439/1153365379196915762/orsha.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        height: 550,
+        height: 620,
 
         [theme.fn.smallerThan('xs')]: {
             paddingTop: rem(80),
@@ -50,7 +50,7 @@ const useStyles = createStyles((theme) => ({
 
 
     description: {
-        color: theme.colors.gray[0],
+        color: theme.white,
         textAlign: 'center',
         fontSize: 30,
 
@@ -125,9 +125,17 @@ export function HeroText() {
         []);
 
     return (
+
         <div className={classes.wrapper}>
             <Overlay color="#00000" opacity={0.45} zIndex={1} />
-
+            <Flex
+                mih={50}
+                gap="md"
+                justify="center"
+                align="center"
+                direction="row"
+                wrap="wrap"
+            >
             <div className={classes.inner}>
                 <Title className={classes.title}>
                     {t("heropage.title")}{' '}
@@ -156,6 +164,7 @@ export function HeroText() {
                     </Group>
                 </div>
             </div>
+            </Flex>
         </div>
     );
 }
