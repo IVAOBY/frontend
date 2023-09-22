@@ -1,17 +1,126 @@
-import {MessageOverlay} from "../components/MessageOverlay";
-import {Container} from "@mantine/core";
-import {useTranslation} from "react-i18next";
+import React, { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import {Box, Card, Center, Container, Flex, Group, Text} from '@mantine/core';
+import {IconAlertTriangle} from "@tabler/icons-react";
 
-function ErrorPage() {
+const StarrySky: React.FC = () => {
+    const containerRef = useRef<HTMLDivElement | null>(null);
+
+    useEffect(() => {
+        let stars: HTMLDivElement[] = [];
+        let animationFrameId: number;
+        const header = document.querySelector('header');
+        if (header) {
+            header.style.background = 'transparent';
+        }
+        const createStar = () => {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.animationDuration = `${Math.random() * 3 + 2}s`;
+            star.style.animationDelay = `${Math.random() * 2}s`;
+            containerRef.current?.appendChild(star);
+            stars.push(star);
+        };
+
+        const createStars = () => {
+            for (let i = 0; i < 1500; i++) {
+                createStar();
+                setTimeout(createStar, 5000);
+            }
+        };
+
+        const animateStars = () => {
+            stars.forEach((star) => {
+                star.addEventListener('animationiteration', () => {
+                    star.style.left = `${Math.random() * 100}%`;
+                    star.style.top = '-10%';
+                });
+            });
+        };
+
+        const init = () => {
+            createStars();
+            animateStars();
+        };
+
+        init();
+
+        return () => {
+            stars.forEach((star) => {
+                containerRef.current?.removeChild(star);
+            });
+            cancelAnimationFrame(animationFrameId);
+        };
+    }, []);
+
+    return (
+        <div
+            ref={containerRef}
+            style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                zIndex: -1,
+                pointerEvents: 'none',
+                background: 'black',
+            }}
+        >
+            <style>
+                {`
+          .star {
+            position: absolute;
+            background: white;
+            width: 2px;
+            height: 2px;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: twinkling 3s infinite; // Уменьшаем продолжительность мерцания
+            opacity: 1; // Устанавливаем начальную максимальную яркость
+          }
+
+          @keyframes twinkling {
+            0% {
+              opacity: 1;
+            }
+            50% {
+              opacity: 0;
+            }
+            100% {
+              opacity: 1;
+            }
+          }
+        `}
+            </style>
+        </div>
+    );
+};
+
+const NotFound: React.FC = () => {
     const { t } = useTranslation();
 
     return (
-        <>
-            <Container size="lg">
-                <MessageOverlay title={t("error")} message={t("notfound")} link="/" linkTitle={t("retmain")}></MessageOverlay>
-            </Container>
-        </>
-    );
-}
+        <div style={{ position: 'relative' }}>
+            <StarrySky />
+            <Container size="sm">
+                <Center h="50%" mt="50%">
+                    <Card bg="#fff" radius="md" style={{ padding: '20px', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)' }}>
+                        <Card.Section style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
+                            <IconAlertTriangle color="#ff0000" size={24} style={{ marginRight: '10px' }} />
+                            <Text size="lg" weight={700}>Произошла ошибка!</Text>
+                        </Card.Section>
 
-export default ErrorPage;
+                        <Text size="sm" color="dimmed">
+                            Так не КАНает, нужно исправлять
+                        </Text>
+                    </Card>
+                </Center>
+            </Container>
+        </div>
+    );
+};
+
+export default NotFound;

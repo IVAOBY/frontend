@@ -83,7 +83,6 @@ export function HeaderDropdown() {
         },
         []);
 
-
     return (
         <>
             <Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} withArrow>
@@ -100,7 +99,7 @@ export function HeaderDropdown() {
                     <Menu.Item icon={<IconIdBadge2 size={20}/>}
                                onClick={() => navigate('staff')}>{t("navbar.division.staff")}</Menu.Item>
                     <Menu.Item icon={<Image src={discord} width={19}/>}
-                               onClick={() => menuLink('https://google.com')}>{t("navbar.division.discord")}</Menu.Item>
+                               onClick={() => navigate('/404')}>{t("navbar.division.discord")}</Menu.Item>
                     <Menu.Item icon={<IconBook size={20}/>}
                                onClick={() => menuLink('https://wiki.ivao.aero/en/home/ivao/information')}>{t("navbar.division.rules")}</Menu.Item>
                     <Menu.Item icon={<IconMailForward size={20}/>}
