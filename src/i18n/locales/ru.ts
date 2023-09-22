@@ -42,6 +42,10 @@ const ruTranslations: { translations: Translations } = {
                 profile: 'Профиль'
             }
         },
+        errorpage: {
+            notfoundtext: 'Добро пожаловать в BY дивизион',
+            notfoundsubtext: 'Добро пожаловать в BY дивизион'
+        },
         heropage: {
             title: 'Добро пожаловать в BY дивизион',
             subtitle: 'Самый современный дивизион в IVAO.',

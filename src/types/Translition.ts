@@ -39,6 +39,10 @@ export interface Translations {
             profile: string
         }
     },
+    errorpage: {
+        notfoundtext: string,
+        notfoundsubtext: string
+    },
     heropage: {
         title: string,
         subtitle: string,

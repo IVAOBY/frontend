@@ -1,11 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React, {useEffect, useRef} from 'react';
 import { useTranslation } from 'react-i18next';
-import { Container, Center, Card, Text, Group } from '@mantine/core';
+import {Container, Center, Card, Text, Group, useMantineTheme} from '@mantine/core';
 import { IconAlertTriangle } from "@tabler/icons-react";
 
 const StarrySky: React.FC = () => {
     const containerRef = useRef<HTMLDivElement | null>(null);
-
     useEffect(() => {
         let stars: HTMLDivElement[] = [];
         const header = document.querySelector('header');
@@ -96,7 +95,7 @@ const NotFound: React.FC = () => {
                 <Center h="50%" mt="50%">
                     <Card bg="#fff" radius="md" style={{ padding: '20px', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)' }}>
                         <Card.Section style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                            <Group position="center" spacing="xl" grow>
+                            <Group position="center" grow>
                                 <IconAlertTriangle color="#ff0000" size={24} style={{ marginRight: '10px' }} />
                                 <Text size="lg" weight={700}>Произошла ошибка!</Text>
                             </Group>

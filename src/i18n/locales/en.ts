@@ -42,6 +42,10 @@ const enTranslations: { translations: Translations } = {
                 profile: 'Profile'
             }
         },
+        errorpage: {
+            notfoundtext: 'Добро пожаловать в BY дивизион',
+            notfoundsubtext: 'Добро пожаловать в BY дивизион'
+        },
         heropage: {
             title: 'Welcome to the BY Division of',
             subtitle: 'Most moder division in IVAO.',
