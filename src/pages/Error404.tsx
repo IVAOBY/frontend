@@ -1,18 +1,18 @@
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import {Box, Card, Center, Container, Flex, Group, Text} from '@mantine/core';
-import {IconAlertTriangle} from "@tabler/icons-react";
+import { Container, Center, Card, Text, Group } from '@mantine/core';
+import { IconAlertTriangle } from "@tabler/icons-react";
 
 const StarrySky: React.FC = () => {
     const containerRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
         let stars: HTMLDivElement[] = [];
-        let animationFrameId: number;
         const header = document.querySelector('header');
         if (header) {
             header.style.background = 'transparent';
         }
+
         const createStar = () => {
             const star = document.createElement('div');
             star.classList.add('star');
@@ -25,24 +25,13 @@ const StarrySky: React.FC = () => {
         };
 
         const createStars = () => {
-            for (let i = 0; i < 1500; i++) {
+            for (let i = 0; i < 500; i++) {
                 createStar();
-                setTimeout(createStar, 5000);
             }
-        };
-
-        const animateStars = () => {
-            stars.forEach((star) => {
-                star.addEventListener('animationiteration', () => {
-                    star.style.left = `${Math.random() * 100}%`;
-                    star.style.top = '-10%';
-                });
-            });
         };
 
         const init = () => {
             createStars();
-            animateStars();
         };
 
         init();
@@ -51,7 +40,6 @@ const StarrySky: React.FC = () => {
             stars.forEach((star) => {
                 containerRef.current?.removeChild(star);
             });
-            cancelAnimationFrame(animationFrameId);
         };
     }, []);
 
@@ -78,19 +66,18 @@ const StarrySky: React.FC = () => {
             height: 2px;
             border-radius: 50%;
             pointer-events: none;
-            animation: twinkling 3s infinite; // Уменьшаем продолжительность мерцания
-            opacity: 1; // Устанавливаем начальную максимальную яркость
+            opacity: 1;
+            transform: translateX(-50%) translateY(-50%);
+            animation: twinkling 3s infinite;
           }
 
           @keyframes twinkling {
-            0% {
+            0%, 100% {
               opacity: 1;
             }
             50% {
               opacity: 0;
-            }
-            100% {
-              opacity: 1;
+              transform: translateX(-50%) translateY(-50%);
             }
           }
         `}
@@ -109,12 +96,16 @@ const NotFound: React.FC = () => {
                 <Center h="50%" mt="50%">
                     <Card bg="#fff" radius="md" style={{ padding: '20px', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)' }}>
                         <Card.Section style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                            <IconAlertTriangle color="#ff0000" size={24} style={{ marginRight: '10px' }} />
-                            <Text size="lg" weight={700}>Произошла ошибка!</Text>
+                            <Group position="center" spacing="xl" grow>
+                                <IconAlertTriangle color="#ff0000" size={24} style={{ marginRight: '10px' }} />
+                                <Text size="lg" weight={700}>Произошла ошибка!</Text>
+                            </Group>
                         </Card.Section>
-
                         <Text size="sm" color="dimmed">
-                            Так не КАНает, нужно исправлять
+                            Мы не смогли отыскать запрашиваемый ресурс :(
+                        </Text>
+                        <Text fw="400" size="sm" color="dimmed">
+                            Может, вы ошиблись?
                         </Text>
                     </Card>
                 </Center>
