@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     createStyles,
     Title,
@@ -12,7 +12,9 @@ import {
     Flex, Group,
 } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
-import { IconCalendarTime } from '@tabler/icons-react';
+import {IconCalendarTime, IconUser} from '@tabler/icons-react';
+import {api} from "../../../hooks/api";
+import { format } from 'date-fns';
 
 const useStyles = createStyles((theme) => ({
     title: {
@@ -52,19 +54,21 @@ const useStyles = createStyles((theme) => ({
         alignItems: 'center',
         marginTop: rem(20),
         marginLeft: rem(20),
-        color: theme.colors.gray[6],
+        color: theme.colors.gray,
     },
     cardContent: {
         [theme.fn.smallerThan('sm')]: {
             flexDirection: 'column',
             alignItems: 'center',
         },
+        wordBreak: "break-word",
     },
     cardImage: {
         [theme.fn.smallerThan('md')]: {
             marginBottom: rem(20),
         },
         maxWidth: '100%',
+        minWidth: '50%',
         height: 'auto',
         [theme.fn.largerThan('md')]: {
             maxWidth: '50%',
@@ -72,65 +76,74 @@ const useStyles = createStyles((theme) => ({
     },
 }));
 
+interface News {
+    id: number;
+    userId: number;
+    image_url: string;
+    name: {
+        [key: string]: string;
+    };
+    description: {
+        [key: string]: string;
+    };
+    publishedAt: any;
+}
+
 export function NewsSection() {
     const { classes, theme } = useStyles();
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    const [news, setNews] = useState<News[]>([]);
+
+    useEffect(() => {
+        api('/news')
+            .then((response) => {
+                if (response && Array.isArray(response)) {
+                    setNews(response);
+                }
+            })
+            .catch((error) => {
+                console.error('Error fetching news:', error);
+            });
+    }, []);
 
     return (
         <Container size="lg" py="xl">
             <Title order={2} className={classes.title} ta="center" mt="sm">
                 {t('news.title')}
             </Title>
-
             <SimpleGrid cols={1} spacing="xl" mt={50} breakpoints={[{ maxWidth: 'md', cols: 1 }]}>
-                <Paper className={classes.card} p="xl" radius="lg" shadow="lg">
-                    <Flex className={classes.cardContent}>
-                        <div className={classes.cardImage}>
-                            <Image
-                                src="https://sun9-27.userapi.com/impg/JpZepO9lnr9kSsLZogvV20N2P2OnFODk1pk4pw/ADO99nQkriI.jpg?size=1200x800&quality=95&sign=356a7c6acaa52e7b680a596ec3b50ee6&type=album"
-                                alt="newsimage"
-                                radius={"lg"}
-                            />
-                        </div>
-                        <div>
-                            <Title className={classes.cardTitle}>Congratulations for Serafim and Nikita</Title>
-                            <Text className={classes.cardDescription}>
-                                Congratulations for Serafim & Nikita for achieving Aerodrome Controller rating. Keep the spirit, guys!
-                            </Text>
-                            <div className={classes.cardAuthorDate}>
-                                <Text size="md" fw={"bold"} c={theme.colors.blue[9]}>XR-WM</Text>
-                                <Group>
-                                    <IconCalendarTime size={18} color={theme.colors.blue[9]} />
-                                    <Text size="md" c={theme.colors.blue[9]}>2023-09-20</Text>
-                                </Group>
+                {news.map((newsItem) => (
+                    <Paper key={newsItem.id} className={classes.card} p="xl" radius="lg" shadow="lg">
+                        <Flex className={classes.cardContent}>
+                            <div className={classes.cardImage}>
+                                <Image src={newsItem.image_url} alt="newsimage" radius="lg" />
                             </div>
-                        </div>
-                    </Flex>
-                </Paper>
-                <Paper className={classes.card} p="xl" radius="lg" shadow="lg">
-                    <Flex className={classes.cardContent}>
-                        <div className={classes.cardImage}>
-                            <Image
-                                src="https://sun9-27.userapi.com/impg/JpZepO9lnr9kSsLZogvV20N2P2OnFODk1pk4pw/ADO99nQkriI.jpg?size=1200x800&quality=95&sign=356a7c6acaa52e7b680a596ec3b50ee6&type=album"
-                                alt="newsimage"
-                                radius={"lg"}
-                            />
-                        </div>
-                        <div>
-                            <Title className={classes.cardTitle}>Congratulations for Serafim and Nikita</Title>
-                            <Text className={classes.cardDescription}>
-                                Congratulations for Serafim & Nikita for achieving Aerodrome Controller rating. Keep the spirit, guys!
-                            </Text>
-                            <div className={classes.cardAuthorDate}>
-                                <Text size="md" fw={"bold"} c={theme.colors.blue[9]}>XR-WM</Text>
-                                <Group>
-                                    <IconCalendarTime size={18} color={theme.colors.blue[9]} />
-                                    <Text size="md" c={theme.colors.blue[9]}>2023-09-20</Text>
-                                </Group>
+                            <div>
+                                <Title className={classes.cardTitle}>{newsItem.name[i18n.language]}</Title>
+                                <Text className={classes.cardDescription}>
+                                    {newsItem.description[i18n.language].length > 300
+                                        ? `${newsItem.description[i18n.language].slice(0, 300)}...`
+                                        : newsItem.description[i18n.language]}
+                                </Text>
+
+                                <div className={classes.cardAuthorDate}>
+                                    <Group>
+                                        <IconUser size={18} color={theme.colors.blue[9]}></IconUser>
+                                        <Text size="md" fw="bold" color={theme.colors.blue[9]}>
+                                            {newsItem.userId}
+                                        </Text>
+                                    </Group>
+                                    <Group position={"right"}>
+                                        <IconCalendarTime size={18} color={theme.colors.blue[9]} />
+                                        <Text size="md" c={theme.colors.blue[9]}>
+                                            {format(new Date(newsItem.publishedAt), 'yyyy-MM-dd')}
+                                        </Text>
+                                    </Group>
+                                </div>
                             </div>
-                        </div>
-                    </Flex>
-                </Paper>
+                        </Flex>
+                    </Paper>
+                ))}
             </SimpleGrid>
         </Container>
     );
