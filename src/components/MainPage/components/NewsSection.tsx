@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     createStyles,
     Title,
@@ -9,11 +9,12 @@ import {
     rem,
     Paper,
     Image,
-    Flex, Group,
+    Flex,
+    Group, Pagination,
 } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
-import {IconCalendarTime, IconUser} from '@tabler/icons-react';
-import {api} from "../../../hooks/api";
+import { IconCalendarTime, IconUser } from '@tabler/icons-react';
+import { api } from '../../../hooks/api';
 import { format } from 'date-fns';
 
 const useStyles = createStyles((theme) => ({
@@ -61,7 +62,7 @@ const useStyles = createStyles((theme) => ({
             flexDirection: 'column',
             alignItems: 'center',
         },
-        wordBreak: "break-word",
+        wordBreak: 'break-word',
     },
     cardImage: {
         [theme.fn.smallerThan('md')]: {
@@ -72,6 +73,11 @@ const useStyles = createStyles((theme) => ({
         height: 'auto',
         [theme.fn.largerThan('md')]: {
             maxWidth: '50%',
+        },
+    },
+    pagination: {
+        '[data-active]': {
+            color: "#fff!important"
         },
     },
 }));
@@ -106,13 +112,19 @@ export function NewsSection() {
             });
     }, []);
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 2;
+
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+
     return (
         <Container size="lg" py="xl">
             <Title order={2} className={classes.title} ta="center" mt="sm">
                 {t('news.title')}
             </Title>
             <SimpleGrid cols={1} spacing="xl" mt={50} breakpoints={[{ maxWidth: 'md', cols: 1 }]}>
-                {news.map((newsItem) => (
+                {news.slice(startIndex, endIndex).map((newsItem) => (
                     <Paper key={newsItem.id} className={classes.card} p="xl" radius="lg" shadow="lg">
                         <Flex className={classes.cardContent}>
                             <div className={classes.cardImage}>
@@ -133,7 +145,7 @@ export function NewsSection() {
                                             {newsItem.userId}
                                         </Text>
                                     </Group>
-                                    <Group position={"right"}>
+                                    <Group position="right">
                                         <IconCalendarTime size={18} color={theme.colors.blue[9]} />
                                         <Text size="md" c={theme.colors.blue[9]}>
                                             {format(new Date(newsItem.publishedAt), 'yyyy-MM-dd')}
@@ -145,6 +157,15 @@ export function NewsSection() {
                     </Paper>
                 ))}
             </SimpleGrid>
+            <Pagination
+                    value={currentPage}
+                    onChange={setCurrentPage}
+                    total={Math.ceil(news.length / itemsPerPage)}
+                    mt={10}
+                    position={"center"}
+                    radius={"lg"}
+                    className={classes.pagination}
+            />
         </Container>
     );
 }
