@@ -40,7 +40,7 @@ export function Footer() {
     const { classes } = useStyles();
 
     return (
-        <div className={classes.footer} style={{ marginTop: 'auto' }}>
+        <div className={classes.footer} style={{ marginTop: '3.125rem' }}>
             <Container className={classes.inner}>
                 <Group position="center" spacing="xs" noWrap>
                     <Image width={150} src={bylogo} />

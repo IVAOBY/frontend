@@ -83,7 +83,6 @@ export function HeaderDropdown() {
         },
         []);
 
-
     return (
         <>
             <Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} withArrow>
@@ -96,17 +95,17 @@ export function HeaderDropdown() {
                 </Menu.Target>
                 <Menu.Dropdown>
                     <Menu.Item icon={<IconUsers size={20}/>}
-                               onClick={() => menuLink('https://google.com')}>{t("navbar.division.about")}</Menu.Item>
+                               onClick={() => navigate('about-us')}>{t("navbar.division.about")}</Menu.Item>
                     <Menu.Item icon={<IconIdBadge2 size={20}/>}
                                onClick={() => navigate('staff')}>{t("navbar.division.staff")}</Menu.Item>
                     <Menu.Item icon={<Image src={discord} width={19}/>}
-                               onClick={() => menuLink('https://google.com')}>{t("navbar.division.discord")}</Menu.Item>
+                               onClick={() => navigate('/404')}>{t("navbar.division.discord")}</Menu.Item>
                     <Menu.Item icon={<IconBook size={20}/>}
                                onClick={() => menuLink('https://wiki.ivao.aero/en/home/ivao/information')}>{t("navbar.division.rules")}</Menu.Item>
                     <Menu.Item icon={<IconMailForward size={20}/>}
-                               onClick={() => menuLink('https://google.com')}>{t("navbar.division.contact")}</Menu.Item>
+                               onClick={() => navigate('contact-us')}>{t("navbar.division.contact")}</Menu.Item>
                     <Menu.Item icon={<IconMessages size={20}/>}
-                               onClick={() => menuLink('https://google.com')}>{t("navbar.division.faq")}</Menu.Item>
+                               onClick={() => navigate('faq')}>{t("navbar.division.faq")}</Menu.Item>
                 </Menu.Dropdown>
             </Menu>
             <Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} width={200} withArrow>

@@ -42,9 +42,14 @@ const enTranslations: { translations: Translations } = {
                 profile: 'Profile'
             }
         },
+        errorpage: {
+            notfoundtext: 'Добро пожаловать в BY дивизион',
+            notfoundsubtext: 'Добро пожаловать в BY дивизион'
+        },
         heropage: {
             title: 'Welcome to the BY Division of',
-            subtitle: 'The International Virtual Aviation Organisation, IVAO for short, was founded in 1998 to provide an online platform for flight simulation enthusiasts to enjoy their hobby in a simulated real-world environment, in company of other people, flying or providing Air Traffic Control services.',
+            subtitle: 'Most moder division in IVAO.',
+            subtitle2: 'Join now!',
             joinbutton: 'Join!',
             transfer: 'Transfer to BY division!'
         },
@@ -63,6 +68,14 @@ const enTranslations: { translations: Translations } = {
                 title: 'asdfasdf',
                 subtitle: 'asdfasdf'
             }
+        },
+        news: {
+            title: 'News',
+            button: 'Read more'
+        },
+        AboutUs: {
+            title: 'About us',
+            text: 'The International Virtual Aviation Organisation, IVAO for short, was founded in 1998 to provide an online platform for flight simulation enthusiasts to enjoy their hobby in a simulated real-world environment, in company of other people, flying or providing Air Traffic Control services.'
         },
         generic: {
             ivao: 'IVAO'

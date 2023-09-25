@@ -1,18 +1,48 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {createStyles, Menu, rem, Text} from "@mantine/core";
+import {createStyles, Menu, rem, Text, UnstyledButton} from "@mantine/core";
 import { IconLogout, IconUser} from "@tabler/icons-react";
 import jwtDecode from 'jwt-decode';
 import {DecodedTokenInt} from "../hooks/types";
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
+import {api} from "../hooks/api";
 
 function useAuth() {
     const authToken = localStorage.getItem('authToken');
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
-    return useMemo(() => {
-        return authToken !== null;
+    useEffect(() => {
+        if (!authToken) {
+            setIsAuthenticated(false);
+        } else {
+            const urlWithToken = `/auth/verify-token?token=${encodeURIComponent(authToken)}`;
+
+            // Make an API request to validate the token
+            api(urlWithToken, 'v3', 'GET')
+                .then((data) => {
+                    if (typeof data === 'string' && data.trim().toLowerCase() === '<body>false</body>') {
+                        setIsAuthenticated(false);
+
+                        localStorage.removeItem('authToken');
+                        localStorage.removeItem('authTokenExpiration');
+                        setIsAuthenticated(false);
+                    } else {
+                        setIsAuthenticated(true);
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error while validating token:', error);
+                    setIsAuthenticated(false);
+
+                    // над ошибку добавить. Сам сделаю, НАЦЕВСКИЙ НЕ ТРОГАТЬ
+                });
+        }
     }, [authToken]);
+
+    return isAuthenticated;
 }
+
+
 
 function getTokenFromUrl() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -39,23 +69,20 @@ export const logOutButtonStyle = createStyles((theme) => ({
     link: {
         display: 'block',
         lineHeight: 1,
-        padding: `${rem(8)} ${rem(12)}`,
+        padding: `${rem(1)} ${rem(7)}`,
         borderRadius: theme.radius.sm,
         textDecoration: 'none',
         color: '#fff',
         fontSize: theme.fontSizes.sm,
         fontWeight: 700,
-        fontFamily: `Montserrat`,
+        fontFamily: 'Montserrat',
+        cursor: 'pointer',
+        '&:hover': {color: theme.colors.gray[3]},
+    },
 
-        '&:hover': {
-            color: theme.colors.gray[3],
-            cursor: "pointer",
-        },
-
-        [theme.fn.smallerThan('sm')]: {
-            borderRadius: 0,
-            padding: theme.spacing.md,
-        },
+    linkScrolled: {
+        color: theme.colors.blue[9],
+        '&:hover': {color: theme.colors.lightBlue[8]},
     },
 }));
 
@@ -64,6 +91,7 @@ function LogoutButton() {
     const { classes } = logOutButtonStyle();
     const [decodedToken, setDecodedToken] = useState<DecodedTokenInt | null>(null);
     const navigate = useNavigate();
+    const [scrollPosition, setScrollPosition] = useState(0);
 
     const HandleLogout = () => {
         localStorage.removeItem('authToken');
@@ -88,13 +116,23 @@ function LogoutButton() {
         }
     }, []);
 
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrollPosition(window.scrollY);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
     const { t } = useTranslation();
 
     return (
         decodedToken ? (
             <Menu radius="lg" shadow="md" width={200}>
                 <Menu.Target>
-                    <Text className={classes.link}>{decodedToken.userData.name.first} {decodedToken.userData.id}</Text>
+                    <UnstyledButton className={`${classes.link} ${scrollPosition > 0 ? classes.linkScrolled : ''}`}>{decodedToken.userData.name.first} {decodedToken.userData.id}</UnstyledButton>
                 </Menu.Target>
                 <Menu.Dropdown>
                     <Menu.Item icon={<IconUser size={14} />} onClick={HandleProfile}>{t("navbar.user.profile")}</Menu.Item>

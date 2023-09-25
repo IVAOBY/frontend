@@ -14,15 +14,13 @@ import {MainPage} from "./components/MainPage/MainPage";
 import {StaffMain} from "./components/StaffPage/StaffMain";
 import {Airport} from "./components/AirportPage/Airport";
 import { Handler, useAuth } from "./components/Handler";
-import ErrorPage from "./pages/Error404";
+import NotFound from "./pages/Error404";
 import {ivaoTheme} from "./ivaoTheme";
-
-function PrivateOutlet() {
-    const auth = useAuth();
-    return auth ? <Outlet /> : <Navigate to="/" />;
-}
-
+import AuthGuard from '../src/hooks/AuthGuard';
+import {AboutUs} from "./pages/AboutUs";
+import {FAQ} from "./pages/FAQ";
 export default function App() {
+    const isAuthenticated = !!localStorage.getItem('authToken');
   return (
       <MantineProvider withCSSVariables withGlobalStyles withNormalizeCSS theme={ivaoTheme}>
           <I18nextProvider i18n={i18n}>
@@ -37,7 +35,9 @@ export default function App() {
                               <Route path="/" element={<MainPage />} />
                               <Route path="/staff" element={<StaffMain />}></Route>
                               <Route path="/airport" element={<Airport />}></Route>
-                              <Route path="/404" element={<ErrorPage />} />
+                              <Route path="/about-us" element={<AboutUs />}></Route>
+                              <Route path="/faq" element={<FAQ></FAQ>}></Route>
+                              <Route path="/404" element={<NotFound />} />
                               <Route path="*" element={<Navigate to="/404" />} />
                           </Routes>
                       </AppShell>

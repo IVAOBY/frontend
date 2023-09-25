@@ -39,9 +39,14 @@ export interface Translations {
             profile: string
         }
     },
+    errorpage: {
+        notfoundtext: string,
+        notfoundsubtext: string
+    },
     heropage: {
         title: string,
         subtitle: string,
+        subtitle2: string,
         joinbutton: string,
         transfer: string
     },
@@ -60,6 +65,14 @@ export interface Translations {
             title: string,
             subtitle: string
         }
+    },
+    news: {
+        title: string,
+        button: string
+    },
+    AboutUs: {
+        title: string,
+        text: string
     },
     generic: {
         ivao: string
