@@ -12,6 +12,7 @@ import {HeaderResponsive} from "./components/elements/header";
 import {Footer} from "./components/Footer";
 import {MainPage} from "./components/MainPage/MainPage";
 import {StaffMain} from "./components/StaffPage/StaffMain";
+import {Airport} from "./components/AirportPage/Airport";
 import { Handler, useAuth } from "./components/Handler";
 import NotFound from "./pages/Error404";
 import {ivaoTheme} from "./ivaoTheme";
@@ -33,6 +34,7 @@ export default function App() {
                           <Routes>
                               <Route path="/" element={<MainPage />} />
                               <Route path="/staff" element={<StaffMain />}></Route>
+                              <Route path="/airport" element={<Airport />}></Route>
                               <Route path="/about-us" element={<AboutUs />}></Route>
                               <Route path="/faq" element={<FAQ></FAQ>}></Route>
                               <Route path="/404" element={<NotFound />} />
