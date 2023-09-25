@@ -101,10 +101,10 @@ const NotFound: React.FC = () => {
                             </Group>
                         </Card.Section>
                         <Text size="sm" color="dimmed">
-                            Мы не смогли отыскать запрашиваемый ресурс :(
+                            Такой страницы нету
                         </Text>
                         <Text fw="400" size="sm" color="dimmed">
-                            Может, вы ошиблись?
+                            Хорошо, что у нас их ещё много
                         </Text>
                     </Card>
                 </Center>
