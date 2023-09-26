@@ -15,11 +15,13 @@ jobs:
         node-version: '14.x'
         cache: 'npm'
 
-    - name: Install dependencies
-      run: npm install --frozen-lockfile
+    - name: 🔨 Build Project
+      run: |
+        npm install
+        npm run build
 
-    - name: Build Project
-      run: npm build
+    - name: List output files
+      run: find build/ -print
 
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@4.1.0
@@ -27,3 +29,4 @@ jobs:
         server: ${{ secrets.PRODUCTION_FTP_HOST }}
         username: ${{ secrets.PRODUCTION_FTP_USER }}
         password: ${{ secrets.PRODUCTION_FTP_PASSWORD }}
+        local-dir: build/
