@@ -27,5 +27,5 @@ jobs:
         server: ${{ secrets.PRODUCTION_FTP_HOST }}
         username: ${{ secrets.PRODUCTION_FTP_USER }}
         password: ${{ secrets.PRODUCTION_FTP_PASSWORD }}
-        local-dir: build/
+        local-dir: /
         server-dir: /
