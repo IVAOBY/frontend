@@ -2,6 +2,7 @@ import { Title, Text, Group, Container, Flex, Button, Overlay, createStyles, rem
 import {useTranslation} from "react-i18next";
 import {useCallback} from "react";
 import Typed from 'react-typed';
+import {useMediaQuery} from "@mantine/hooks";
 
 const useStyles = createStyles((theme) => ({
     wrapper: {
@@ -39,7 +40,6 @@ const useStyles = createStyles((theme) => ({
 
         [theme.fn.smallerThan('xs')]: {
             fontSize: rem(28),
-            textAlign: 'left',
         },
     },
 
@@ -56,7 +56,6 @@ const useStyles = createStyles((theme) => ({
 
         [theme.fn.smallerThan('xs')]: {
             fontSize: theme.fontSizes.md,
-            textAlign: 'left',
         },
     },
 
@@ -99,10 +98,10 @@ const useStyles = createStyles((theme) => ({
 
     joinButton: {
         color: '#fff',
-'&:hover': {
-  backgroundColor: '#fff',
-  color: '#0D2C99',
-},
+    '&:hover': {
+      backgroundColor: '#fff',
+      color: '#0D2C99',
+    },
     },
     transButton: {
           color: '#fff',
@@ -118,52 +117,56 @@ const useStyles = createStyles((theme) => ({
 export function HeroText() {
     const { classes, cx } = useStyles();
     const { t } = useTranslation();
-    const byTransferMail = useCallback((event: React.MouseEvent<HTMLButtonElement>) => { window.open( 'mailto: by-hq@ivao.aero,xr-hq@ivao.aero?cc=members@ivao.aero&subject=Division%20transfer%20VID&body=Dear%20HQs%20and%20Membership%20Department!%0A%0AI%20request%20to%20transfer%20me%20from%20the%20{}%20division%20to%20the%20BY%20division.%0A%0ABest%20wishes,%0A{Name}%20{Surname}', '_blank') }, []);
+    const isSmallScreen = useMediaQuery('(max-width: 575px)');
+
+    const byTransferMail = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+        window.open(
+            'mailto: by-hq@ivao.aero,xr-hq@ivao.aero?cc=members@ivao.aero&subject=Division%20transfer%20VID&body=Dear%20HQs%20and%20Membership%20Department!%0A%0AI%20request%20to%20transfer%20me%20from%20the%20{}%20division%20to%20the%20BY%20division.%0A%0ABest%20wishes,%0A{Name}%20{Surname}',
+            '_blank'
+        )
+    }, []);
+
     const openLink = useCallback(function (link: any | undefined) {
-            window.open(link, '_blank')
-        },
-        []);
+        window.open(link, '_blank')
+    }, []);
 
     return (
-
         <div className={classes.wrapper}>
             <Overlay color="#00000" opacity={0.45} zIndex={1} />
-            <Flex
-                mih={50}
-                gap="md"
-                justify="center"
-                align="center"
-                direction="row"
-                wrap="wrap"
-            >
-            <div className={classes.inner}>
-                <Title className={classes.title}>
-                    {t("heropage.title")}{' '}
-                    <Text component="span" inherit className={classes.highlight}>
-                        {t("generic.ivao")}
-                    </Text>
-                </Title>
-
-                <Container size={640}>
-                    <Text size="lg" className={`${classes.description}`}>
-                        <Typed strings={[
-                            t("heropage.subtitle"),
-                            t("heropage.subtitle2")
-                        ]} typeSpeed={90} backSpeed={15} loop/>
-                    </Text>
-                </Container>
-
-                <div className={classes.controls}>
-                    <Group position="center">
-                    <Button className={classes.joinButton} variant="filled" size="md" onClick={() => openLink('https://ivao.aero/members/person/register.htm')}>
-                        {t("heropage.joinbutton")}
-                    </Button>
-                        <Button className={classes.transButton} variant="outline" size="md" onClick={byTransferMail}>
-                            {t("heropage.transfer")}
-                        </Button>
-                    </Group>
+            <Flex mih={50} gap="md" justify="center" align="center" direction="row" wrap="wrap" >
+                <div className={classes.inner}>
+                    <Title className={classes.title}>
+                        {t("heropage.title")}{' '}
+                        <Text component="span" inherit className={classes.highlight}>
+                            {t("generic.ivao")}
+                        </Text>
+                    </Title>
+                    <Container size={640}>
+                        <Text size="lg" className={`${classes.description}`}>
+                            <Typed strings={[t("heropage.subtitle"), t("heropage.subtitle2")]} typeSpeed={90} backSpeed={15} loop />
+                        </Text>
+                    </Container>
+                    <div className={classes.controls}>
+                        <Group position="center">
+                            <Button
+                                className={classes.joinButton}
+                                variant="filled"
+                                size={isSmallScreen ? "sm" : "md"}
+                                onClick={() => openLink('https://ivao.aero/members/person/register.htm')}
+                            >
+                                {t("heropage.joinbutton")}
+                            </Button>
+                            <Button
+                                className={classes.transButton}
+                                variant="outline"
+                                size={isSmallScreen ? "sm" : "md"}
+                                onClick={byTransferMail}
+                            >
+                                {t("heropage.transfer")}
+                            </Button>
+                        </Group>
+                    </div>
                 </div>
-            </div>
             </Flex>
         </div>
     );
