@@ -54,7 +54,7 @@ const enTranslations: { translations: Translations } = {
             transfer: 'Transfer to BY division!'
         },
         featuresection: {
-            title: 'Наши преимущества',
+            title: 'Our advantages',
             subtitle: 'Потому что Назаренко есть в диве',
             first: {
                 title: 'ddf',
