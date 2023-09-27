@@ -54,7 +54,7 @@ const beTranslations: { translations: Translations } = {
             transfer: 'Перайсці ў BY дывізіён!'
         },
         featuresection: {
-            title: 'Наши преимущества',
+            title: 'Нашы перавагі',
             subtitle: 'Потому что Назаренко есть в диве',
             first: {
                 title: 'ddf',
