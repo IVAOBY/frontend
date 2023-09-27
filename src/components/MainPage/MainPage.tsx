@@ -8,7 +8,6 @@ export function MainPage() {
         <>
             <HeroText/>
             <NewsSection></NewsSection>
-            <FeaturesCards></FeaturesCards>
         </>
     );
 }
