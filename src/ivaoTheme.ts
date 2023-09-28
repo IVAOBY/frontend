@@ -115,10 +115,10 @@ export const ivaoTheme: MantineThemeOverride = {
                     transition: 'all 0.1s ease',
                 },
                 item: {
-                    backgroundColor: 'white',
-                    '&:hover': {
+                    '&[data-hovered]': {
+                        backgroundColor: '#c2c2c6',
                         transition: 'all 0.1s ease',
-                        //backgroundColor: '#f6f5f5',
+                        color: '#fff,'
                     },
                 },
             },
