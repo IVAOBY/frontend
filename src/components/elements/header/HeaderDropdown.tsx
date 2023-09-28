@@ -41,12 +41,16 @@ const useStyles = createStyles((theme) => ({
         padding: `${rem(1)} ${rem(7)}`,
         borderRadius: theme.radius.sm,
         textDecoration: 'none',
+        transition: 'color 0.3s ease',
         color: '#fff',
         fontSize: theme.fontSizes.sm,
         fontWeight: 700,
         fontFamily: 'Montserrat',
         cursor: 'pointer',
-        '&:hover': {color: theme.colors.gray[3]},
+        '&:hover': {
+            color: theme.colors.gray[3],
+            transition: 'color 0.3s ease',
+        },
     },
 
     linkScrolled: {
