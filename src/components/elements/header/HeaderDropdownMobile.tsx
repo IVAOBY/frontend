@@ -67,7 +67,10 @@ export function HeaderDropdownMobile() {
     };
 
     const { t, i18n } = useTranslation();
-
+    const menuLink = useCallback(function (link: any | undefined) {
+            window.open(link, '_blank')
+        },
+        []);
 
     return (
         <>
