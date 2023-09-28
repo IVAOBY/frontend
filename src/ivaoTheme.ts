@@ -112,11 +112,13 @@ export const ivaoTheme: MantineThemeOverride = {
             styles: {
                 dropdown: {
                     backgroundColor: "white",
+                    transition: 'all 0.1s ease',
                 },
                 item: {
                     backgroundColor: 'white',
                     '&:hover': {
-                        backgroundColor: '#f6f5f5',
+                        transition: 'all 0.1s ease',
+                        //backgroundColor: '#f6f5f5',
                     },
                 },
             },
