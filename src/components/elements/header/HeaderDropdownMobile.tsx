@@ -3,7 +3,6 @@ import {
     Menu,
     rem,
     Text, UnstyledButton,
-useCallback,
 } from '@mantine/core';
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
@@ -29,7 +28,7 @@ import {
     IconPlaneTilt,
     IconInfoSquareRounded,
 } from '@tabler/icons-react';
-import React from "react";
+import React, useCallback from "react";
 import ivaoLogo from '../../../assets/image/logo_s_black.svg';
 import steps from '../../../assets/image/steps.svg';
 import discord from '../../../assets/image/discord.svg';
