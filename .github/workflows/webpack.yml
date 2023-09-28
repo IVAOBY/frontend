@@ -35,5 +35,5 @@ jobs:
         remote_folder: ./
  # optional, local path, default is: dist
         cleanup: true # optional, remove existing files inside FTP remote folder
-        exclude: "[*.httpauth]"
+        exclude: '["*.httpauth"]
         passive: true # optional
