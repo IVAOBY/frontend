@@ -82,12 +82,18 @@ export function HeaderDropdownMobile() {
                 </UnstyledButton>
             </Menu.Target>
             <Menu.Dropdown>
-                <Menu.Item icon={<IconUsers size={14} />}>{t("navbar.division.about")}</Menu.Item>
-                <Menu.Item icon={<IconIdBadge2 size={14} />}>{t("navbar.division.staff")}</Menu.Item>
-                <Menu.Item icon={<Image src={discord} width={14} />}>{t("navbar.division.discord")}</Menu.Item>
-                <Menu.Item icon={<IconBook size={14} />}>{t("navbar.division.rules")}</Menu.Item>
-                <Menu.Item icon={<IconMailForward size={14} />}>{t("navbar.division.contact")}</Menu.Item>
-                <Menu.Item icon={<IconMessages size={14} />}>{t("navbar.division.faq")}</Menu.Item>
+                <Menu.Item icon={<IconUsers size={14} />}
+                           onClick={() => navigate('about-us')}>{t("navbar.division.about")}</Menu.Item>
+                <Menu.Item icon={<IconIdBadge2 size={14} />}
+                           onClick={() => navigate('staff')}>{t("navbar.division.staff")}</Menu.Item>
+                <Menu.Item icon={<Image src={discord} width={14} />}
+                           onClick={() => menuLink('https://discord.gg')}>{t("navbar.division.discord")}</Menu.Item>
+                <Menu.Item icon={<IconBook size={14} />}
+                           onClick={() => menuLink('https://google.com')}>{t("navbar.division.rules")}</Menu.Item>
+                <Menu.Item icon={<IconMailForward size={14} />}
+                           onClick={() => menuLink('https://google.com')}>{t("navbar.division.contact")}</Menu.Item>
+                <Menu.Item icon={<IconMessages size={14} />}
+                           onClick={() => navigate('faq')}>{t("navbar.division.faq")}</Menu.Item>
             </Menu.Dropdown>
         </Menu>
             <Menu radius="lg" shadow="md" width={200}>
@@ -98,11 +104,16 @@ export function HeaderDropdownMobile() {
                     </UnstyledButton>
                 </Menu.Target>
                 <Menu.Dropdown>
-                    <Menu.Item icon={<Image src={steps} width={14} />}>{t("navbar.atc.start")}</Menu.Item>
-                    <Menu.Item icon={<IconLock size={14} />}>{t("navbar.atc.fra")}</Menu.Item>
-                    <Menu.Item icon={<IconFileInfo size={14} />}>{t("navbar.atc.charts")}</Menu.Item>
-                    <Menu.Item icon={<IconArticle size={14} />}>{t("navbar.atc.docs")}</Menu.Item>
-                    <Menu.Item icon={<IconWorld size={14} />}>{t("navbar.atc.gca")}</Menu.Item>
+                    <Menu.Item icon={<Image src={steps} width={14} />}
+                               onClick={() => menuLink('https://wiki.ivao.aero/en/home/ivao/information')}>{t("navbar.atc.start")}</Menu.Item>
+                    <Menu.Item icon={<IconLock size={14} />}
+                               onClick={() => menuLink('https://wiki.ivao.aero/en/home/ivao/information')}>{t("navbar.atc.fra")}</Menu.Item>
+                    <Menu.Item icon={<IconFileInfo size={14} />}
+                               onClick={() => menuLink('https://wiki.ivao.aero/en/home/ivao/information')}>{t("navbar.atc.charts")}</Menu.Item>
+                    <Menu.Item icon={<IconArticle size={14} />}
+                               onClick={() => menuLink('https://wiki.ivao.aero/en/home/ivao/information')}>{t("navbar.atc.docs")}</Menu.Item>
+                    <Menu.Item icon={<IconWorld size={14} />}
+                               onClick={() => menuLink('https://wiki.ivao.aero/en/home/ivao/information')}>{t("navbar.atc.gca")}</Menu.Item>
                 </Menu.Dropdown>
             </Menu>
             <Menu radius="lg" shadow="md" width={200}>
@@ -113,11 +124,16 @@ export function HeaderDropdownMobile() {
                     </UnstyledButton>
                 </Menu.Target>
                 <Menu.Dropdown>
-                    <Menu.Item icon={<Image src={steps} width={14} />}>{t("navbar.pilots.start")}</Menu.Item>
-                    <Menu.Item icon={<IconPlaneDeparture size={14} />}>{t("navbar.pilots.scenarios")}</Menu.Item>
-                    <Menu.Item icon={<IconFileInfo size={14} />}>{t("navbar.pilots.charts")}</Menu.Item>
-                    <Menu.Item icon={<IconPlane size={14} />}>{t("navbar.pilots.airlines")}</Menu.Item>
-                    <Menu.Item icon={<IconMap2 size={14} />}>{t("navbar.pilots.tours")}</Menu.Item>
+                    <Menu.Item icon={<Image src={steps} width={14} />}
+                               onClick={() => menuLink('https://wiki.ivao.aero/en/home/ivao/information')}>{t("navbar.pilots.start")}</Menu.Item>
+                    <Menu.Item icon={<IconPlaneDeparture size={14} />}
+                               onClick={() => menuLink('https://wiki.ivao.aero/en/home/ivao/information')}>{t("navbar.pilots.scenarios")}</Menu.Item>
+                    <Menu.Item icon={<IconFileInfo size={14} />}
+                               onClick={() => menuLink('https://wiki.ivao.aero/en/home/ivao/information')}>{t("navbar.pilots.charts")}</Menu.Item>
+                    <Menu.Item icon={<IconPlane size={14} />}
+                               onClick={() => menuLink('https://wiki.ivao.aero/en/home/ivao/information')}>{t("navbar.pilots.airlines")}</Menu.Item>
+                    <Menu.Item icon={<IconMap2 size={14} />}
+                               onClick={() => menuLink('https://wiki.ivao.aero/en/home/ivao/information')}>{t("navbar.pilots.tours")}</Menu.Item>
                 </Menu.Dropdown>
             </Menu>
             <Menu radius="lg" shadow="md" width={200}>
@@ -128,11 +144,16 @@ export function HeaderDropdownMobile() {
                     </UnstyledButton>
                 </Menu.Target>
                 <Menu.Dropdown>
-                    <Menu.Item icon={<IconCalendarEvent size={14} />}>{t("navbar.community.events")}</Menu.Item>
-                    <Menu.Item icon={<IconMessageCircle2 size={14} />}>{t("navbar.community.forum")}</Menu.Item>
-                    <Menu.Item icon={<IconEye size={14} />}>{t("navbar.community.webeye")}</Menu.Item>
-                    <Menu.Item icon={<Image src={ivaoLogo} width={14}/>}>{t("navbar.community.ivao")}</Menu.Item>
-                    <Menu.Item icon={<IconFocus2 size={14} />}>{t("navbar.community.tracker")}</Menu.Item>
+                    <Menu.Item icon={<IconCalendarEvent size={14} />}
+                               onClick={() => menuLink('https://wiki.ivao.aero/en/home/ivao/information')}>{t("navbar.community.events")}</Menu.Item>
+                    <Menu.Item icon={<IconMessageCircle2 size={14} />}
+                               onClick={() => menuLink('https://forum.ivao.aero')}>{t("navbar.community.forum")}</Menu.Item>
+                    <Menu.Item icon={<IconEye size={14} />}>
+                        onClick={() => menuLink('https://webeye.ivao.aero')}{t("navbar.community.webeye")}</Menu.Item>
+                    <Menu.Item icon={<Image src={ivaoLogo} width={14}/>}
+                               onClick={() => menuLink('https://ivao.aero/')}>{t("navbar.community.ivao")}</Menu.Item>
+                    <Menu.Item icon={<IconFocus2 size={14} />}
+                               onClick={() => menuLink('https://tracker.ivao.aero/')}>{t("navbar.community.tracker")}</Menu.Item>
                 </Menu.Dropdown>
             </Menu></>
 
