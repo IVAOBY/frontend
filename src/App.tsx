@@ -19,6 +19,7 @@ import {ivaoTheme} from "./ivaoTheme";
 import AuthGuard from '../src/hooks/AuthGuard';
 import {AboutUs} from "./pages/AboutUs";
 import {FAQ} from "./pages/FAQ";
+import {ScenaryPage} from "./pages/Scenary";
 export default function App() {
     const isAuthenticated = !!localStorage.getItem('authToken');
   return (
@@ -36,7 +37,9 @@ export default function App() {
                               <Route path="/staff" element={<StaffMain />}></Route>
                               <Route path="/airport" element={<Airport />}></Route>
                               <Route path="/about-us" element={<AboutUs />}></Route>
-                              <Route path="/faq" element={<FAQ></FAQ>}></Route>
+                              <Route path="/faq" element={<FAQ />}></Route>
+                              <Route path="/scenery" element={<ScenaryPage />}></Route>
+                              <Route path="/scenery/:id" element={<ScenaryPage />}></Route>
                               <Route path="/404" element={<NotFound />} />
                               <Route path="*" element={<Navigate to="/404" />} />
                           </Routes>
