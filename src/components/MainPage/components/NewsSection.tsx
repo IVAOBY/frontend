@@ -148,7 +148,7 @@ export function NewsSection() {
                                     <Group position="right">
                                         <IconCalendarTime size={18} color={theme.colors.blue[9]} />
                                         <Text size="md" c={theme.colors.blue[9]}>
-                                            {format(new Date(newsItem.publishedAt), 'yyyy-MM-dd')}
+                                            {format(new Date(newsItem.publishedAt), 'dd-MM-yyyy')}
                                         </Text>
                                     </Group>
                                 </div>
