@@ -148,8 +148,8 @@ export function HeaderDropdownMobile() {
                                onClick={() => menuLink('https://wiki.ivao.aero/en/home/ivao/information')}>{t("navbar.community.events")}</Menu.Item>
                     <Menu.Item icon={<IconMessageCircle2 size={14} />}
                                onClick={() => menuLink('https://forum.ivao.aero')}>{t("navbar.community.forum")}</Menu.Item>
-                    <Menu.Item icon={<IconEye size={14} />}>
-                        onClick={() => menuLink('https://webeye.ivao.aero')}{t("navbar.community.webeye")}</Menu.Item>
+                    <Menu.Item icon={<IconEye size={14} />}
+                        onClick={() => menuLink('https://webeye.ivao.aero')}>{t("navbar.community.webeye")}</Menu.Item>
                     <Menu.Item icon={<Image src={ivaoLogo} width={14}/>}
                                onClick={() => menuLink('https://ivao.aero/')}>{t("navbar.community.ivao")}</Menu.Item>
                     <Menu.Item icon={<IconFocus2 size={14} />}

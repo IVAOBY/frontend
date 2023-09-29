@@ -1,6 +1,7 @@
 # IVAO BY FRONTEND
 
-![изображение](https://github.com/IVAOBY/frontend/assets/91136018/3c0e96db-9b07-46d0-8c1d-65f121a0fcf9)
+![изображение](https://github.com/IVAOBY/frontend/assets/108727970/41a6618a-a193-4b31-9977-6b10c1e3d29d)
+
 
 
 > [!WARNING]
