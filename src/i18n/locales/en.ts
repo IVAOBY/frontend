@@ -48,7 +48,7 @@ const enTranslations: { translations: Translations } = {
         },
         heropage: {
             title: 'Welcome to the BY Division of',
-            subtitle: 'Most moder division in IVAO.',
+            subtitle: 'The most modern division in IVAO.',
             subtitle2: 'Join now!',
             joinbutton: 'Join!',
             transfer: 'Transfer to BY division!'

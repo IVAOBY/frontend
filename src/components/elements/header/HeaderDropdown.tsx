@@ -42,16 +42,22 @@ const useStyles = createStyles((theme) => ({
         borderRadius: theme.radius.sm,
         textDecoration: 'none',
         color: '#fff',
+        transition: 'color 0.3s ease',
         fontSize: theme.fontSizes.sm,
         fontWeight: 700,
         fontFamily: 'Montserrat',
-        cursor: 'pointer',
-        '&:hover': {color: theme.colors.gray[3]},
+        '&:hover': {
+            color: theme.colors.gray[3],
+            transition: 'color 0.1s ease',
+        },
     },
 
     linkScrolled: {
         color: theme.colors.blue[9],
-        '&:hover': {color: theme.colors.lightBlue[8]},
+        '&:hover': {
+            color: theme.colors.lightBlue[8],
+            transition: 'color 0.1s ease',
+        },
     },
 }));
 

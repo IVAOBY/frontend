@@ -1,8 +1,8 @@
 on: 
  push:
-  branches: dev
+  branches: main
   pull_request:
-    branches: dev
+    branches: main
 
 name: 🚀 Deploy website on push
 jobs:
@@ -22,3 +22,18 @@ jobs:
       run: |
         npm install --force --legacy-peer-deps
         CI=false npm run build
+
+    - name: 📂 Sync files
+      uses: sand4rt/ftp-deployer@v1.7
+      with:
+        sftp: false # optional
+        host: ${{ secrets.PRODUCTION_FTP_HOST }} # e.g. ftp.host.com or sftp.host.com (without ftp:// or ftps://)
+        port: 21 # optional, default is: 21
+        username: ${{ secrets.PRODUCTION_FTP_USER }} # FTP username
+        password: ${{ secrets.PRODUCTION_FTP_PASSWORD }} # FTP password
+        local_folder: build
+        remote_folder: ./
+ # optional, local path, default is: dist
+        cleanup: false # optional, remove existing files inside FTP remote folder
+        exclude: '[]' # optional, e.g. '['node_modules/**', '.git/**', '*.env']'
+        passive: true # optional

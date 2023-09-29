@@ -1,5 +1,4 @@
 import {HeroText} from "./Heropage";
-import {FeaturesCards} from "./components/FetureSection";
 import {NewsSection} from "./components/NewsSection";
 
 export function MainPage() {
@@ -8,7 +7,6 @@ export function MainPage() {
         <>
             <HeroText/>
             <NewsSection></NewsSection>
-            <FeaturesCards></FeaturesCards>
         </>
     );
 }
