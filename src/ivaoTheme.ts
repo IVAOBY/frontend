@@ -108,6 +108,14 @@ export const ivaoTheme: MantineThemeOverride = {
             }),
         },
 
+        Select: {
+            styles: {
+                dropdown: {
+                    backgroundColor: "white"
+                },
+            }
+        },
+
         Menu: {
             styles: {
                 dropdown: {
