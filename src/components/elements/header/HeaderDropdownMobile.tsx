@@ -126,8 +126,7 @@ export function HeaderDropdownMobile() {
                 <Menu.Dropdown>
                     <Menu.Item icon={<Image src={steps} width={14} />}
                                onClick={() => menuLink('https://wiki.ivao.aero/en/home/ivao/information')}>{t("navbar.pilots.start")}</Menu.Item>
-                    <Menu.Item icon={<IconPlaneDeparture size={14} />}
-                               onClick={() => menuLink('https://wiki.ivao.aero/en/home/ivao/information')}>{t("navbar.pilots.scenarios")}</Menu.Item>
+                    <Menu.Item icon={<IconPlaneDeparture size={14}/>} onClick={() => navigate('scenery')} >{t("navbar.pilots.scenarios")}</Menu.Item>
                     <Menu.Item icon={<IconFileInfo size={14} />}
                                onClick={() => menuLink('https://wiki.ivao.aero/en/home/ivao/information')}>{t("navbar.pilots.charts")}</Menu.Item>
                     <Menu.Item icon={<IconPlane size={14} />}
