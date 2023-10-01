@@ -21,6 +21,7 @@ import {AboutUs} from "./pages/AboutUs";
 import {FAQ} from "./pages/FAQ";
 import {ScenaryPage} from "./pages/Scenary";
 import {GetInTouchSimple} from "./pages/contact-us/ContactUs";
+import {FirstStepP} from "./pages/FirstStepPilot";
 export default function App() {
     const isAuthenticated = !!localStorage.getItem('authToken');
   return (
@@ -42,6 +43,7 @@ export default function App() {
                               <Route path="/scenery" element={<ScenaryPage />}></Route>
                               <Route path="/scenery/:id" element={<ScenaryPage />}></Route>
                               <Route path="/contact-us" element={<GetInTouchSimple></GetInTouchSimple>}></Route>
+                              <Route path="/pilot/first-step" element={<FirstStepP></FirstStepP>}></Route>
                               <Route path="/404" element={<NotFound />} />
                               <Route path="*" element={<Navigate to="/404" />} />
                           </Routes>
