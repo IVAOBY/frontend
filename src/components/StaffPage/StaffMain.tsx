@@ -141,7 +141,7 @@ export function StaffMain() {
                                         }
                                     })
                                     .map((position, positionIndex) => (
-                                        <Paper className={classes.card} shadow={"lg"} p={"xl"} radius="lg" key={positionIndex}>
+                                        <Paper className={classes.card} shadow={"lg"} p={"xl"} radius="lg" key={positionIndex} bg="#fff">
                                             <Flex
                                                 direction={"column"}
                                                 justify={"center"}
