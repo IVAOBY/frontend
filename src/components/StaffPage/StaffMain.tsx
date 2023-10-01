@@ -27,6 +27,7 @@ const useStyles = createStyles((theme) => ({
 interface Department {
     id: string;
     name: string;
+    email: string;
 }
 
 interface Position {
@@ -51,6 +52,10 @@ export function StaffMain() {
     const {classes, theme} = useStyles();
     const [departments, setDepartments] = useState<Department[]>([]);
     const [positions, setPositions] = useState<Position[]>([]);
+
+    const handleEmailClick = (email: string) => {
+        window.location.href = `mailto:${email}`;
+    };
 
     useEffect(() => {
         api("/staff-departments")
@@ -89,7 +94,6 @@ export function StaffMain() {
     }, []);
 
     return (
-        <AuthGuard>
         <Container size={"xl"}>
             <Container>
                 <Title order={1} c={theme.colors.blue[9]} pt={50}>Руководство дивизиона</Title>
@@ -97,100 +101,100 @@ export function StaffMain() {
             <Container size={"xl"}>
                 {departments.map((department, index) => (
                     <div key={index}>
-                        <Title key={index} ta="center" order={2} c={theme.colors.blue[9]} pt={50}>
-                            {department.name}
-                        </Title>
-                        <Flex
-                            id="staff-grid"
-                            mt={40}
-                            gap="md"
-                            justify="center"
-                            align="center"
-                            direction="row"
-                            wrap="wrap"
-                        >
-                            {positions
-                                .filter(
-                                    (position) =>
-                                        position.departmentId === department.id &&
-                                        (position.userId !== null || position.is_vacant === 1)
-                                )
-                                .sort((a, b) => {
-                                    if (a.userId === null && b.userId !== null) {
-                                        return 1;
-                                    } else if (a.userId !== null && b.userId === null) {
-                                        return -1;
-                                    } else {
-                                        return a.order - b.order;
-                                    }
-                                })
-                                .map((position, positionIndex) => (
-                                    <Paper className={classes.card} shadow={"lg"} p={"xl"} radius="lg"
-                                           key={positionIndex}>
-                                        <Flex
-                                            direction={"column"}
-                                            justify={"center"}
-                                            align={"center"}
-                                        >
-                                            <Image
-                                                radius={100}
-                                                maw={150}
-                                                src={position.userId ? `https://xr.ivao.aero/images/staff_photo/${position.userId}.jpg` : 'https://xr.ivao.aero/images/staff_photo/vacant.png'}
-                                            />
-                                            <Title order={3} color={theme.colors.blue[9]} mt={20}>
-                                                {position.userId ? position.userId : "Вакантно"}
-                                            </Title>
-                                            <Text size={14} fw={600} c={theme.colors.gray[7]}>
-                                                {position.prefix}-{position.id}
-                                            </Text>
-                                            <Flex
-                                                gap={10}
-                                                mt={40}
-                                            >
-                                                <ActionIcon
-                                                    component="a"
-                                                    variant="filled"
-                                                    color={theme.colors.blue[9]}
-                                                    size="lg"
-                                                    radius="xl"
-                                                    aria-label="MAIL IVAO"
-                                                    href={`mailto:${position.prefix}-${position.id}@ivao.aero`}
-                                                    target="_blank"
-                                                >
-                                                    <IconMailOpened
-                                                        style={{ width: "60%", height: "60%" }}
-                                                        color="white"
-                                                        stroke={1.5}
-                                                    />
-                                                </ActionIcon>
-                                                <ActionIcon
-                                                    component="a"
-                                                    variant="filled"
-                                                    color={theme.colors.blue[9]}
-                                                    size="lg"
-                                                    radius="xl"
-                                                    aria-label="IVAO"
-                                                    href={`https://www.ivao.aero/staff/details.asp?Id=${position.prefix}-${position.id}`}
-                                                    target="_blank"
-                                                >
-                                                    <IconIdBadge2
-                                                        style={{ width: "60%", height: "60%" }}
-                                                        color="white"
-                                                        stroke={1.5}
-                                                    />
-                                                </ActionIcon>
+                        <Flex direction="column" align="center">
+                            <Title key={index} ta="center" order={2} c={theme.colors.blue[9]} pt={40}>
+                                {department.name}
+                            </Title>
+                            <ActionIcon
+                                variant="filled"
+                                color={theme.colors.blue[9]}
+                                size="lg"
+                                aria-label="Send Email"
+                                onClick={() => handleEmailClick(department.email)}
+                                mt={10}
+                            >
+                                <IconMailOpened style={{ width: "60%", height: "60%" }} color="white" stroke={1.5} />
+                            </ActionIcon>
 
+                            <Flex
+                                id="staff-grid"
+                                mt={40}
+                                gap="md"
+                                justify="center"
+                                align="center"
+                                direction="row"
+                                wrap="wrap"
+                            >
+                                {positions
+                                    .filter(
+                                        (position) =>
+                                            position.departmentId === department.id &&
+                                            (position.userId !== null || position.is_vacant === 1)
+                                    )
+                                    .sort((a, b) => {
+                                        if (a.userId === null && b.userId !== null) {
+                                            return 1;
+                                        } else if (a.userId !== null && b.userId === null) {
+                                            return -1;
+                                        } else {
+                                            return a.order - b.order;
+                                        }
+                                    })
+                                    .map((position, positionIndex) => (
+                                        <Paper className={classes.card} shadow={"lg"} p={"xl"} radius="lg" key={positionIndex}>
+                                            <Flex
+                                                direction={"column"}
+                                                justify={"center"}
+                                                align={"center"}
+                                            >
+                                                <Image
+                                                    radius={100}
+                                                    maw={150}
+                                                    src={position.userId ? `https://xr.ivao.aero/images/staff_photo/${position.userId}.jpg` : 'https://xr.ivao.aero/images/staff_photo/vacant.png'}
+                                                />
+                                                <Title order={3} color={theme.colors.blue[9]} mt={20}>
+                                                    {position.userId ? position.userId : "Вакантно"}
+                                                </Title>
+                                                <Text size={14} fw={600} c={theme.colors.gray[7]}>
+                                                    {position.prefix}-{position.id}
+                                                </Text>
+                                                <Flex
+                                                    gap={10}
+                                                    mt={40}
+                                                >
+                                                    <ActionIcon
+                                                        component="a"
+                                                        variant="filled"
+                                                        color={theme.colors.blue[9]}
+                                                        size="lg"
+                                                        radius="xl"
+                                                        aria-label="MAIL IVAO"
+                                                        href={`mailto:${position.prefix}-${position.id}@ivao.aero`}
+                                                        target="_blank"
+                                                    >
+                                                        <IconMailOpened style={{ width: "60%", height: "60%" }} color="white" stroke={1.5} />
+                                                    </ActionIcon>
+                                                    <ActionIcon
+                                                        component="a"
+                                                        variant="filled"
+                                                        color={theme.colors.blue[9]}
+                                                        size="lg"
+                                                        radius="xl"
+                                                        aria-label="IVAO"
+                                                        href={`https://www.ivao.aero/staff/details.asp?Id=${position.prefix}-${position.id}`}
+                                                        target="_blank"
+                                                    >
+                                                        <IconIdBadge2 style={{ width: "60%", height: "60%" }} color="white" stroke={1.5} />
+                                                    </ActionIcon>
+                                                </Flex>
                                             </Flex>
-                                        </Flex>
-                                    </Paper>
-                                ))}
+                                        </Paper>
+                                    ))}
+                            </Flex>
                         </Flex>
                     </div>
                 ))}
             </Container>
-
         </Container>
-        </AuthGuard>
-
     );
 }
