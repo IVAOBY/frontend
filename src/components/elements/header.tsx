@@ -163,10 +163,10 @@ export function HeaderResponsive() {
     };
 
     const logoDefault = (
-        <Image width={150} src={bylogo} onClick={handleImageClick} style={{ cursor: 'pointer' }} />
+        <Image height={60} width={180} src={bylogo} onClick={handleImageClick} style={{ cursor: 'pointer' }} />
     );
     const logoScrolled = (
-        <Image width={150} src={bylogoblue} onClick={handleImageClick} style={{ cursor: 'pointer' }} />
+        <Image height={60} width={180} src={bylogoblue} onClick={handleImageClick} style={{ cursor: 'pointer' }} />
     );
 
     const handleLogin = () => {
