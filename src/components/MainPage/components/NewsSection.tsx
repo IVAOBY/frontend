@@ -124,7 +124,7 @@ export function NewsSection() {
                 {t('news.title')}
             </Title>
             <SimpleGrid cols={1} spacing="xl" mt={50} breakpoints={[{ maxWidth: 'md', cols: 1 }]}>
-                {news.slice(startIndex, endIndex).map((newsItem) => (
+                {news.slice().reverse().map((newsItem) => (
                     <Paper key={newsItem.id} className={classes.card} p="xl" radius="lg" shadow="lg">
                         <Flex className={classes.cardContent}>
                             <div className={classes.cardImage}>
