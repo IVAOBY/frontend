@@ -3,7 +3,6 @@ import {
     createStyles,
     Title,
     Text,
-    Card,
     SimpleGrid,
     Container,
     rem,
@@ -117,7 +116,6 @@ export function NewsSection() {
 
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-
     return (
         <Container size="lg" py="xl">
             <Title order={2} className={classes.title} ta="center" mt="sm">

@@ -70,8 +70,8 @@ const beTranslations: { translations: Translations } = {
             }
         },
         news: {
-            title: 'Навины',
-            button: 'Чытать большь'
+            title: 'Навіны',
+            button: 'Чытать больш'
         },
         AboutUs: {
             title: 'Пра нас',
