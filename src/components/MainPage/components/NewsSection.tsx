@@ -9,7 +9,7 @@ import {
     Paper,
     Image,
     Flex,
-    Group, Pagination, Button, Modal, ModalProps,
+    Group, Pagination, Button, Modal, ModalProps, UnstyledButton,
 } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
 import { IconCalendarTime, IconUser } from '@tabler/icons-react';
@@ -79,6 +79,31 @@ const useStyles = createStyles((theme) => ({
             color: "#fff!important"
         },
     },
+    button: {
+        position: 'relative',
+        borderRadius: theme.radius.lg,
+        overflow: 'hidden',
+        transition: 'transform 0.4s ease, box-shadow 0.4s ease',
+        '&.active': { // Новый класс для активной кнопки
+            transform: 'scale(1.01)',
+            boxShadow: '0px 50px 50px rgba(0, 0, 0, 0.2)',
+        },
+        '&:hover': {
+            transform: 'scale(1.01)',
+            boxShadow: '0px 50px 50px rgba(0, 0, 0, 0.2)',
+        },
+    },
+    NewsImage: {
+        [theme.fn.smallerThan('md')]: {
+            marginBottom: rem(20),
+        },
+        maxWidth: '80%',
+        minWidth: '20%',
+        height: 'auto',
+        [theme.fn.largerThan('md')]: {
+            maxWidth: '50%',
+        },
+    },
 }));
 
 interface News {
@@ -140,6 +165,7 @@ export function NewsSection() {
             </Title>
             <SimpleGrid cols={1} spacing="xl" mt={50} breakpoints={[{ maxWidth: 'md', cols: 1 }]}>
                 {news.slice(startIndex, endIndex).map((newsItem) => (
+                    <UnstyledButton className={classes.button} style={{width: 'auto', height: 'auto'}} onClick={() => openModal(newsItem)}>
                     <Paper key={newsItem.id} className={classes.card} p="xl" radius="lg" shadow="lg">
                         <Flex className={classes.cardContent}>
                             <div className={classes.cardImage}>
@@ -167,11 +193,10 @@ export function NewsSection() {
                                         </Text>
                                     </Group>
                                 </div>
-
-                                <Button onClick={() => openModal(newsItem)}>Читать далее</Button>
                             </div>
                         </Flex>
                     </Paper>
+                    </UnstyledButton>
                 ))}
             </SimpleGrid>
             <Pagination
@@ -188,8 +213,20 @@ export function NewsSection() {
                 opened={isModalOpen}
                 onClose={closeModal}
                 title={currentNewsItem?.name[i18n.language]}
+                radius={"lg"}
+                size={"80%"}
+                overlayProps={{
+                    opacity: 0.4,
+                    blur: 4.5,
+                    style: {
+                        transition: 'all 0.5s ease'
+                    }
+                }}
                 centered
             >
+               <div className={classes.NewsImage}>
+                <Image src={currentNewsItem && currentNewsItem?.image_url} alt="newsimage" radius="lg" />
+               </div>
                 <Text>
                     {currentNewsItem && currentNewsItem?.description[i18n.language]}
                 </Text>

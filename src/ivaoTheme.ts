@@ -116,6 +116,17 @@ export const ivaoTheme: MantineThemeOverride = {
             }
         },
 
+        Modal: {
+            styles: {
+                content: {
+                    backgroundColor: "white",
+                },
+                header: {
+
+                }
+            }
+        },
+
         Menu: {
             styles: {
                 dropdown: {
