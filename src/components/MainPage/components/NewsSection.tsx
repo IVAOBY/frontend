@@ -9,7 +9,7 @@ import {
     Paper,
     Image,
     Flex,
-    Group, Pagination,
+    Group, Pagination, Button, Modal, ModalProps,
 } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
 import { IconCalendarTime, IconUser } from '@tabler/icons-react';
@@ -94,10 +94,26 @@ interface News {
     publishedAt: any;
 }
 
+interface MyModalProps extends ModalProps {
+    isOpen: boolean;
+}
+
 export function NewsSection() {
     const { classes, theme } = useStyles();
     const { t, i18n } = useTranslation();
     const [news, setNews] = useState<News[]>([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [currentNewsItem, setCurrentNewsItem] = useState<News | null>(null);
+
+    const openModal = (newsItem: News) => {
+        setIsModalOpen(true);
+        setCurrentNewsItem(newsItem);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setCurrentNewsItem(null);
+    };
 
     useEffect(() => {
         api('/news')
@@ -151,20 +167,34 @@ export function NewsSection() {
                                         </Text>
                                     </Group>
                                 </div>
+
+                                <Button onClick={() => openModal(newsItem)}>Читать далее</Button>
                             </div>
                         </Flex>
                     </Paper>
                 ))}
             </SimpleGrid>
             <Pagination
-                    value={currentPage}
-                    onChange={setCurrentPage}
-                    total={Math.ceil(news.length / itemsPerPage)}
-                    mt={10}
-                    position={"center"}
-                    radius={"lg"}
-                    className={classes.pagination}
+                value={currentPage}
+                onChange={setCurrentPage}
+                total={Math.ceil(news.length / itemsPerPage)}
+                mt={10}
+                position={"center"}
+                radius={"lg"}
+                className={classes.pagination}
             />
+
+            <Modal
+                opened={isModalOpen}
+                onClose={closeModal}
+                title={currentNewsItem?.name[i18n.language]}
+                centered
+            >
+                <Text>
+                    {currentNewsItem && currentNewsItem?.description[i18n.language]}
+                </Text>
+            </Modal>
+
         </Container>
     );
-}
+};
