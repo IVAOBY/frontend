@@ -73,6 +73,9 @@ const enTranslations: { translations: Translations } = {
             title: 'News',
             button: 'Read more'
         },
+        staff: {
+            name: 'Division Staff',
+        },
         AboutUs: {
             title: 'About us',
             text: 'The International Virtual Aviation Organisation, IVAO for short, was founded in 1998 to provide an online platform for flight simulation enthusiasts to enjoy their hobby in a simulated real-world environment, in company of other people, flying or providing Air Traffic Control services.'
@@ -85,7 +88,19 @@ const enTranslations: { translations: Translations } = {
             privacyPolicyName: 'Privacy Policy',
             termsOfUseName: 'Terms of Use',
         },
-        errors: {
+        notif: {
+            loading: {
+                name: "Loading your data",
+                descritpion: "Data will be loaded in 3 seconds, you cannot close this yet",
+            },
+            loaded: {
+                name: "Data was loaded",
+                descritpion: "Data is loaded, notification will close in 3 seconds"
+            },
+            server: {
+                name: "Server error",
+                descritpion: "Error receiving data from the server",
+            }
         }
     },
 };

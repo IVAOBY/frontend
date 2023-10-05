@@ -22,6 +22,7 @@ import {FAQ} from "./pages/FAQ";
 import {ScenaryPage} from "./pages/Scenary";
 import {GetInTouchSimple} from "./pages/contact-us/ContactUs";
 import {FirstStepP} from "./pages/FirstStepPilot";
+import { Notifications } from '@mantine/notifications';
 export default function App() {
     const isAuthenticated = !!localStorage.getItem('authToken');
   return (
@@ -33,6 +34,7 @@ export default function App() {
                           navbar={<HeaderResponsive />}
                           footer={<Footer />}
                       >
+                          <Notifications />
                           <Handler />
                           <Routes>
                               <Route path="/" element={<MainPage />} />

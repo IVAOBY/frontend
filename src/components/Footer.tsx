@@ -43,7 +43,7 @@ export function Footer() {
         <div className={classes.footer} style={{ marginTop: '3.125rem' }}>
             <Container className={classes.inner}>
                 <Group position="center" spacing="xs" noWrap>
-                    <Image width={150} src={bylogo} />
+                    <Image width={200} src={bylogo} />
                 </Group>
             </Container>
         </div>

@@ -12,9 +12,10 @@ import {
     Group, Pagination, Button, Modal, ModalProps, UnstyledButton,
 } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
-import { IconCalendarTime, IconUser } from '@tabler/icons-react';
+import {IconCalendarTime, IconCircleCheck, IconCircleX, IconUser} from '@tabler/icons-react';
 import { api } from '../../../hooks/api';
 import { format } from 'date-fns';
+import {notifications} from "@mantine/notifications";
 
 const useStyles = createStyles((theme) => ({
     title: {
@@ -100,9 +101,23 @@ const useStyles = createStyles((theme) => ({
         maxWidth: '80%',
         minWidth: '20%',
         height: 'auto',
-        [theme.fn.largerThan('md')]: {
-            maxWidth: '50%',
-        },
+    },
+    modal: {
+        backgroundColor: '#fff',
+        border: '1px solid #ccc',
+        borderRadius: theme.radius.lg,
+        boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
+        padding: '20px',
+        minWidth: '600px',
+        maxWidth: '40%',
+        position: 'relative',
+        zIndex: 1000,
+    },
+    modalTitle: {
+        fontSize: rem(24),
+        fontWeight: 800,
+        color: theme.colors.blue[9],
+        margin: 0,
     },
 }));
 
@@ -117,10 +132,6 @@ interface News {
         [key: string]: string;
     };
     publishedAt: any;
-}
-
-interface MyModalProps extends ModalProps {
-    isOpen: boolean;
 }
 
 export function NewsSection() {
@@ -141,15 +152,54 @@ export function NewsSection() {
     };
 
     useEffect(() => {
+        notifications.show({
+            id: 'load-data',
+            loading: true,
+            title: t("notif.loading.name"),
+            message: t("notif.loading.descritpion"),
+            radius: "lg",
+            autoClose: false,
+            withCloseButton: false,
+        });
         api('/news')
             .then((response) => {
                 if (response && Array.isArray(response)) {
                     response.sort((a, b) => b.id - a.id);
                     setNews(response);
+                    notifications.update({
+                        id: 'load-data',
+                        color: 'green',
+                        title: t("notif.loaded.name"),
+                        message: t("notif.loaded.descritpion"),
+                        radius: "lg",
+                        icon: <IconCircleCheck />,
+                        autoClose: 1000,
+                    });
+                } else {
+                    notifications.update({
+                        id: 'load-data',
+                        color: 'red',
+                        title: t("notif.server.name"),
+                        message: t("notif.server.descritpion"),
+                        radius: "lg",
+                        icon: <IconCircleX />,
+                        withCloseButton: false,
+                        autoClose: false,
+                    });
                 }
             })
             .catch((error) => {
                 console.error('Error fetching news:', error);
+                notifications.update({
+                    id: 'load-data',
+                    color: 'red',
+                    title: t("notif.server.name"),
+                    message: t("notif.server.descritpion"),
+                    radius: "lg",
+                    icon: <IconCircleX />,
+                    withCloseButton: false,
+                    autoClose: false,
+                });
             });
     }, []);
 
@@ -165,7 +215,7 @@ export function NewsSection() {
             </Title>
             <SimpleGrid cols={1} spacing="xl" mt={50} breakpoints={[{ maxWidth: 'md', cols: 1 }]}>
                 {news.slice(startIndex, endIndex).map((newsItem) => (
-                    <UnstyledButton className={classes.button} style={{width: 'auto', height: 'auto'}} onClick={() => openModal(newsItem)}>
+                    <UnstyledButton key={newsItem.id} className={classes.button} style={{width: 'auto', height: 'auto'}} onClick={() => openModal(newsItem)}>
                     <Paper key={newsItem.id} className={classes.card} p="xl" radius="lg" shadow="lg">
                         <Flex className={classes.cardContent}>
                             <div className={classes.cardImage}>
@@ -209,28 +259,38 @@ export function NewsSection() {
                 className={classes.pagination}
             />
 
-            <Modal
-                opened={isModalOpen}
-                onClose={closeModal}
-                title={currentNewsItem?.name[i18n.language]}
-                radius={"lg"}
-                size={"80%"}
-                overlayProps={{
-                    opacity: 0.4,
-                    blur: 4.5,
-                    style: {
-                        transition: 'all 0.5s ease'
-                    }
-                }}
-                centered
-            >
-               <div className={classes.NewsImage}>
-                <Image src={currentNewsItem && currentNewsItem?.image_url} alt="newsimage" radius="lg" />
-               </div>
-                <Text>
-                    {currentNewsItem && currentNewsItem?.description[i18n.language]}
-                </Text>
-            </Modal>
+            {isModalOpen && (
+                <Modal
+                    opened={isModalOpen}
+                    onClose={closeModal}
+                    title={currentNewsItem?.name[i18n.language]}
+                    size={"60%"}
+                    overlayProps={{
+                        opacity: 0.4,
+                        blur: 4.5,
+                        style: {
+                            transition: 'all 0.5s ease'
+                        }
+                    }}
+                    p="xl"
+                    radius="lg"
+                    shadow="lg"
+                    centered
+                    className={classes.modal}
+                >
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <div className={classes.NewsImage}>
+                            <Image src={currentNewsItem && currentNewsItem?.image_url} alt="newsimage" radius="lg" />
+                        </div>
+                        <Text className={classes.modalTitle} size="lg" fw="bold" mt={20}>
+                            {currentNewsItem && currentNewsItem?.name[i18n.language]}
+                        </Text>
+                        <Text mt={10}>
+                            {currentNewsItem && currentNewsItem?.description[i18n.language]}
+                        </Text>
+                    </div>
+                </Modal>
+            )}
 
         </Container>
     );

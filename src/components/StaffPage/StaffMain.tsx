@@ -10,14 +10,41 @@ import {
     Flex,
     Group,
     ActionIcon,
-    SimpleGrid
+    SimpleGrid, Tooltip
 } from '@mantine/core';
-import {IconAdjustments, IconIdBadge2, IconMailOpened} from '@tabler/icons-react';
+import {
+    IconAdjustments,
+    IconCircleCheck,
+    IconCircleX,
+    IconIdBadge2,
+    IconMailOpened,
+    IconMoodSad
+} from '@tabler/icons-react';
 import React, {useEffect, useState} from "react";
 import {api} from "../../hooks/api";
 import AuthGuard from "../../hooks/AuthGuard";
+import {useTranslation} from "react-i18next";
+import {notifications} from "@mantine/notifications";
 
 const useStyles = createStyles((theme) => ({
+    title: {
+        fontSize: rem(34),
+        fontWeight: 800,
+        color: theme.colors.blue[9],
+        [theme.fn.smallerThan('sm')]: {
+            fontSize: rem(24),
+        },
+        '&::after': {
+            content: '""',
+            display: 'block',
+            backgroundColor: theme.fn.primaryColor(),
+            width: rem(45),
+            height: rem(2),
+            marginTop: theme.spacing.sm,
+            marginLeft: 'auto',
+            marginRight: 'auto',
+        },
+    },
     card: {
         minWidth: rem(300),
         minHeight: rem(300)
@@ -52,6 +79,7 @@ export function StaffMain() {
     const {classes, theme} = useStyles();
     const [departments, setDepartments] = useState<Department[]>([]);
     const [positions, setPositions] = useState<Position[]>([]);
+    const { t, i18n } = useTranslation();
 
     const handleEmailClick = (email: string) => {
         window.location.href = `mailto:${email}`;
@@ -70,6 +98,16 @@ export function StaffMain() {
                 console.error("Error fetching data:", error);
             });
 
+        notifications.show({
+            id: 'load-data',
+            loading: true,
+            title: t("notif.loading.name"),
+            message: t("notif.loading.descritpion"),
+            radius: "lg",
+            autoClose: false,
+            withCloseButton: false,
+        });
+
         api('/staff-positions')
             .then((response) => {
                 if (response && Array.isArray(response)) {
@@ -84,25 +122,60 @@ export function StaffMain() {
                         is_vacant: positionData.is_vacant,
                     }));
                     setPositions(positions);
+
+                    notifications.update({
+                        id: 'load-data',
+                        color: 'green',
+                        title: t("notif.loaded.name"),
+                        message: t("notif.loaded.descritpion"),
+                        radius: "lg",
+                        icon: <IconCircleCheck />,
+                        autoClose: 1500,
+                    });
                 } else {
                     console.error('Error: Unexpected API response structure');
+                    notifications.update({
+                        id: 'load-data',
+                        color: 'red',
+                        title: t("notif.server.name"),
+                        message: t("notif.server.descritpion"),
+                        radius: "lg",
+                        icon: <IconCircleX />,
+                        withCloseButton: false,
+                        autoClose: false,
+                    });
                 }
             })
             .catch((error) => {
-                console.error('Error fetching job positions:', error);
+                console.error('Error fetching staff positions:', error);
+                notifications.update({
+                    id: 'load-data',
+                    color: 'red',
+                    title: t("notif.server.name"),
+                    message: t("notif.server.descritpion"),
+                    radius: "lg",
+                    icon: <IconCircleX />,
+                    withCloseButton: false,
+                    autoClose: false,
+                });
             });
     }, []);
 
     return (
-        <Container size={"xl"}>
-            <Container>
-                <Title order={1} c={theme.colors.blue[9]} pt={50}>Руководство дивизиона</Title>
-            </Container>
-            <Container size={"xl"}>
+        <Container size={"xl"} py={"xl"}>
+            <Title order={2} className={classes.title} ta="center" mt="sm">
+                {t('staff.name')}
+            </Title>
                 {departments.map((department, index) => (
                     <div key={index}>
                         <Flex direction="column" align="center">
-                            <Title key={index} ta="center" order={2} c={theme.colors.blue[9]} pt={40}>
+                            <Title
+                                key={index}
+                                ta="center"
+                                order={2}
+                                c={theme.colors.blue[9]}
+                                pt={index === 0 ? 13 : 40}
+                            >
                                 {department.name}
                             </Title>
                             <ActionIcon
@@ -155,9 +228,11 @@ export function StaffMain() {
                                                 <Title order={3} color={theme.colors.blue[9]} mt={20}>
                                                     {position.userId ? position.userId : "Вакантно"}
                                                 </Title>
-                                                <Text size={14} fw={600} c={theme.colors.gray[7]}>
-                                                    {position.prefix}-{position.id}
-                                                </Text>
+                                                <Tooltip label={position.name.en} position={"bottom"} radius={"lg"} withArrow>
+                                                    <Text size={14} fw={600} c={theme.colors.gray[7]}>
+                                                        {position.prefix}-{position.id}
+                                                    </Text>
+                                                </Tooltip>
                                                 <Flex
                                                     gap={10}
                                                     mt={40}
@@ -195,6 +270,5 @@ export function StaffMain() {
                     </div>
                 ))}
             </Container>
-        </Container>
     );
 }

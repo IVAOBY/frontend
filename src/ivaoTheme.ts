@@ -1,4 +1,4 @@
-import {ButtonStylesParams, MantineTheme, MantineThemeOverride, useMantineTheme} from '@mantine/core';
+import {ButtonStylesParams, MantineTheme, MantineThemeOverride, rem, useMantineTheme} from '@mantine/core';
 
 export const ivaoTheme: MantineThemeOverride = {
     colorScheme: 'light',
@@ -116,13 +116,43 @@ export const ivaoTheme: MantineThemeOverride = {
             }
         },
 
+        Tooltip: {
+            styles:{
+                tooltip:{
+                    color: "white"
+                }
+            }
+        },
+
+        Notification: {
+            styles: {
+                root: {
+                    backgroundColor: "white"
+                }
+            }
+        },
+
         Modal: {
             styles: {
                 content: {
                     backgroundColor: "white",
                 },
-                header: {
-
+                title: {
+                    color: "#0D2C99",
+                    fontWeight: 700,
+                    fontSize: 20
+                },
+                close: {
+                    fontSize: rem(16),
+                    fontWeight: 400,
+                    cursor: 'pointer',
+                    color: "#fff",
+                    backgroundColor: '#3C55AC',
+                    '&:hover': {
+                        backgroundColor: '#3C55AC',
+                        transform: 'scale(1.05)',
+                        boxShadow: '0px 10px 20px rgba(0, 0, 0, 0.2)',
+                    },
                 }
             }
         },

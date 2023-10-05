@@ -70,6 +70,9 @@ export interface Translations {
         title: string,
         button: string
     },
+    staff: {
+      name: string,
+    },
     AboutUs: {
         title: string,
         text: string
@@ -82,5 +85,18 @@ export interface Translations {
         privacyPolicyName: string,
         termsOfUseName: string
     },
-    errors: {}
+    notif: {
+        loading: {
+            name: string,
+            descritpion: string
+        },
+        loaded: {
+            name: string,
+            descritpion: string
+        },
+        server: {
+            name: string,
+            descritpion: string,
+        }
+    }
 }
