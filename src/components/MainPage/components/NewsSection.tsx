@@ -160,15 +160,7 @@ export function NewsSection() {
                 if (response && Array.isArray(response)) {
                     response.sort((a, b) => b.id - a.id);
                     setNews(response);
-                    notifications.update({
-                        id: 'load-data',
-                        color: 'green',
-                        title: t("notif.loaded.name"),
-                        message: t("notif.loaded.descritpion"),
-                        radius: "lg",
-                        icon: <IconCircleCheck />,
-                        autoClose: 1000,
-                    });
+                    notifications.hide('load-data')
                 } else {
                     notifications.update({
                         id: 'load-data',
@@ -207,7 +199,7 @@ export function NewsSection() {
             <Title order={2} className={classes.title} ta="center" mt="sm">
                 {t('news.title')}
             </Title>
-            <SimpleGrid cols={1} spacing="xl" mt={50} breakpoints={[{ maxWidth: 'md', cols: 1 }]}>
+            <SimpleGrid cols={1} spacing="xl" mt={rem(13)} breakpoints={[{ maxWidth: 'md', cols: 1 }]}>
                 {news.slice(startIndex, endIndex).map((newsItem) => (
                     <UnstyledButton key={newsItem.id} className={classes.button} style={{width: 'auto', height: 'auto'}} onClick={() => newsRedirect(newsItem)}>
                     <Paper key={newsItem.id} className={classes.card} p="xl" radius="lg" shadow="lg">

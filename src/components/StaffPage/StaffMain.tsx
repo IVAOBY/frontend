@@ -123,15 +123,7 @@ export function StaffMain() {
                     }));
                     setPositions(positions);
 
-                    notifications.update({
-                        id: 'load-data',
-                        color: 'green',
-                        title: t("notif.loaded.name"),
-                        message: t("notif.loaded.descritpion"),
-                        radius: "lg",
-                        icon: <IconCircleCheck />,
-                        autoClose: 1500,
-                    });
+                    notifications.hide('load-data')
                 } else {
                     console.error('Error: Unexpected API response structure');
                     notifications.update({
