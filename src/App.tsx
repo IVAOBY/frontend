@@ -23,6 +23,7 @@ import {ScenaryPage} from "./pages/Scenary";
 import {GetInTouchSimple} from "./pages/contact-us/ContactUs";
 import {FirstStepP} from "./pages/FirstStepPilot";
 import { Notifications } from '@mantine/notifications';
+import {NewsPage} from "./pages/News";
 export default function App() {
     const isAuthenticated = !!localStorage.getItem('authToken');
   return (
@@ -46,6 +47,7 @@ export default function App() {
                               <Route path="/scenery/:id" element={<ScenaryPage />}></Route>
                               <Route path="/contact-us" element={<GetInTouchSimple></GetInTouchSimple>}></Route>
                               <Route path="/pilot/first-step" element={<FirstStepP></FirstStepP>}></Route>
+                              <Route path="/news/:id" element={<NewsPage></NewsPage>}></Route>
                               <Route path="/404" element={<NotFound />} />
                               <Route path="*" element={<Navigate to="/404" />} />
                           </Routes>

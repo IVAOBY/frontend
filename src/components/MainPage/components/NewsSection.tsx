@@ -16,6 +16,7 @@ import {IconCalendarTime, IconCircleCheck, IconCircleX, IconUser} from '@tabler/
 import { api } from '../../../hooks/api';
 import { format } from 'date-fns';
 import {notifications} from "@mantine/notifications";
+import {useNavigate} from "react-router-dom";
 
 const useStyles = createStyles((theme) => ({
     title: {
@@ -109,7 +110,7 @@ const useStyles = createStyles((theme) => ({
         boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
         padding: '20px',
         minWidth: '600px',
-        maxWidth: '40%',
+        maxWidth: '100%',
         position: 'relative',
         zIndex: 1000,
     },
@@ -138,17 +139,10 @@ export function NewsSection() {
     const { classes, theme } = useStyles();
     const { t, i18n } = useTranslation();
     const [news, setNews] = useState<News[]>([]);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [currentNewsItem, setCurrentNewsItem] = useState<News | null>(null);
 
-    const openModal = (newsItem: News) => {
-        setIsModalOpen(true);
-        setCurrentNewsItem(newsItem);
-    };
-
-    const closeModal = () => {
-        setIsModalOpen(false);
-        setCurrentNewsItem(null);
+    const navigate = useNavigate();
+    const newsRedirect = (newsItem: News) => {
+        navigate(`/news/${newsItem.id}`);
     };
 
     useEffect(() => {
@@ -215,7 +209,7 @@ export function NewsSection() {
             </Title>
             <SimpleGrid cols={1} spacing="xl" mt={50} breakpoints={[{ maxWidth: 'md', cols: 1 }]}>
                 {news.slice(startIndex, endIndex).map((newsItem) => (
-                    <UnstyledButton key={newsItem.id} className={classes.button} style={{width: 'auto', height: 'auto'}} onClick={() => openModal(newsItem)}>
+                    <UnstyledButton key={newsItem.id} className={classes.button} style={{width: 'auto', height: 'auto'}} onClick={() => newsRedirect(newsItem)}>
                     <Paper key={newsItem.id} className={classes.card} p="xl" radius="lg" shadow="lg">
                         <Flex className={classes.cardContent}>
                             <div className={classes.cardImage}>
@@ -258,39 +252,6 @@ export function NewsSection() {
                 radius={"lg"}
                 className={classes.pagination}
             />
-
-            {isModalOpen && (
-                <Modal
-                    opened={isModalOpen}
-                    onClose={closeModal}
-                    title={currentNewsItem?.name[i18n.language]}
-                    size={"60%"}
-                    overlayProps={{
-                        opacity: 0.4,
-                        blur: 4.5,
-                        style: {
-                            transition: 'all 0.5s ease'
-                        }
-                    }}
-                    p="xl"
-                    radius="lg"
-                    shadow="lg"
-                    centered
-                    className={classes.modal}
-                >
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        <div className={classes.NewsImage}>
-                            <Image src={currentNewsItem && currentNewsItem?.image_url} alt="newsimage" radius="lg" />
-                        </div>
-                        <Text className={classes.modalTitle} size="lg" fw="bold" mt={20}>
-                            {currentNewsItem && currentNewsItem?.name[i18n.language]}
-                        </Text>
-                        <Text mt={10}>
-                            {currentNewsItem && currentNewsItem?.description[i18n.language]}
-                        </Text>
-                    </div>
-                </Modal>
-            )}
 
         </Container>
     );
