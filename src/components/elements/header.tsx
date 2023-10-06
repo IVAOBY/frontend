@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     Burger,
     Container,
@@ -13,19 +13,19 @@ import {
     Transition,
     UnstyledButton,
 } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import {useDisclosure} from '@mantine/hooks';
 import bylogo from '../../assets/image/Logo_f_w.svg';
 import bylogoblue from '../../assets/image/logobyblue.svg';
-import { getTokenFromUrl, LogoutButton, removeTokenFromUrl, useAuth } from '../Handler';
-import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import {getTokenFromUrl, LogoutButton, removeTokenFromUrl, useAuth} from '../Handler';
+import {useNavigate} from 'react-router-dom';
+import {useTranslation} from 'react-i18next';
 import {
     IconLanguage,
     IconLogin,
 } from '@tabler/icons-react';
-import { IconLogin2 } from '@tabler/icons-react';
-import { HeaderDropdown } from './header/HeaderDropdown';
-import { HeaderDropdownMobile } from './header/HeaderDropdownMobile';
+import {IconLogin2} from '@tabler/icons-react';
+import {HeaderDropdown} from './header/HeaderDropdown';
+import {HeaderDropdownMobile} from './header/HeaderDropdownMobile';
 import by from '../../assets/image/by.svg';
 import ru from '../../assets/image/ru.svg';
 import en from '../../assets/image/en.svg';
@@ -43,11 +43,9 @@ const useStyles = createStyles((theme) => ({
         borderBottom: 0,
         transition: 'background-color 0.3s ease-in-out',
     },
-
     scrolled: {
         backgroundColor: '#fff',
     },
-
     dropdown: {
         position: 'absolute',
         top: HEADER_HEIGHT,
@@ -58,12 +56,10 @@ const useStyles = createStyles((theme) => ({
         borderTopLeftRadius: 0,
         borderTopWidth: 0,
         backgroundColor: theme.colors.lightBlue[9],
-
         [theme.fn.largerThan('sm')]: {
             display: 'none',
         },
     },
-
     header: {
         display: 'flex',
         justifyContent: 'space-between',
@@ -133,19 +129,19 @@ const useStyles = createStyles((theme) => ({
     },
     linkScrolled: {
         color: theme.colors.blue[9],
-        '&:hover': { color: theme.colors.lightBlue[8] },
+        '&:hover': {color: theme.colors.lightBlue[8]},
     },
 }));
 
 export function HeaderResponsive() {
-    const [opened, { toggle, close }] = useDisclosure(false);
-    const { classes } = useStyles();
+    const [opened, {toggle, close}] = useDisclosure(false);
+    const {classes} = useStyles();
     const [error, setError] = useState<string | null>(null);
     const [showAlert, setShowAlert] = useState(false);
     const isAuthenticated = useAuth();
     const [scrollPosition, setScrollPosition] = useState(0);
 
-    const serverUrl = `http://localhost:3000/auth/login?goto=http://localhost:3001`;
+    const serverUrl = `http://localhost:3001/auth/login`;
 
     // Handle scroll position
     useEffect(() => {
@@ -163,10 +159,10 @@ export function HeaderResponsive() {
     };
 
     const logoDefault = (
-        <Image height={60} width={180} src={bylogo} onClick={handleImageClick} style={{ cursor: 'pointer' }} />
+        <Image height={60} width={180} src={bylogo} onClick={handleImageClick} style={{cursor: 'pointer'}}/>
     );
     const logoScrolled = (
-        <Image height={60} width={180} src={bylogoblue} onClick={handleImageClick} style={{ cursor: 'pointer' }} />
+        <Image height={60} width={180} src={bylogoblue} onClick={handleImageClick} style={{cursor: 'pointer'}}/>
     );
 
     const handleLogin = () => {
@@ -201,7 +197,7 @@ export function HeaderResponsive() {
         navigate(link);
     };
 
-    const { t, i18n } = useTranslation();
+    const {t, i18n} = useTranslation();
 
     const changeLanguage = (newLanguage: any) => {
         i18n.changeLanguage(newLanguage);
@@ -218,56 +214,55 @@ export function HeaderResponsive() {
             <Container className={classes.header}>
                 {scrollPosition > 0 ? logoScrolled : logoDefault}
                 <Group spacing={5} className={classes.links}>
-                    <HeaderDropdown />
-                        {isAuthenticated ? (
-                            <>
-                                <LogoutButton />
-                            </>
-                        ) : (
-                            <UnstyledButton
-                                display="flex"
-                                className={`${classes.link} ${
+                    <HeaderDropdown/>
+                    {isAuthenticated ? (
+                        <>
+                            <LogoutButton/>
+                        </>
+                    ) : (
+                        <UnstyledButton
+                            display="flex"
+                            className={`${classes.link} ${
+                                scrollPosition > 0 ? classes.linkScrolled : ''
+                            }`}
+                        >
+                            <IconLogin2 size={20}></IconLogin2>
+                            <Text onClick={handleLogin} ml={6}>
+                                {t('navbar.user.login')}
+                            </Text>
+                        </UnstyledButton>
+                    )}
+                    <Menu trigger="hover" radius="lg">
+                        <Menu.Target>
+                            <IconLanguage
+                                className={`${classes.language} ${
                                     scrollPosition > 0 ? classes.linkScrolled : ''
                                 }`}
+                                size={25}
+                            />
+                        </Menu.Target>
+                        <Menu.Dropdown>
+                            <Menu.Item
+                                icon={<Image src={by} radius={3} width={20}/>}
+                                onClick={() => changeLanguage('be')}
                             >
-                                <IconLogin2 size={20}></IconLogin2>
-                                <Text onClick={handleLogin} ml={6}>
-                                    {t('navbar.user.login')}
-                                </Text>
-                            </UnstyledButton>
-                        )}
-                        <Menu trigger="hover" radius="lg">
-                            <Menu.Target>
-                                <IconLanguage
-                                    className={`${classes.language} ${
-                                        scrollPosition > 0 ? classes.linkScrolled : ''
-                                    }`}
-                                    size={25}
-                                />
-                            </Menu.Target>
-                            <Menu.Dropdown>
-                                <Menu.Item
-                                    icon={<Image src={by} radius={3} width={20} />}
-                                    onClick={() => changeLanguage('be')}
-                                >
-                                    {t('Беларуская')}
-                                </Menu.Item>
-                                <Menu.Item
-                                    icon={<Image src={ru} radius={3} width={20} />}
-                                    onClick={() => changeLanguage('ru')}
-                                >
-                                    {t('Русский')}
-                                </Menu.Item>
-                                <Menu.Item
-                                    icon={<Image src={en} radius={3} width={20} />}
-                                    onClick={() => changeLanguage('en')}
-                                >
-                                    {t('English')}
-                                </Menu.Item>
-                            </Menu.Dropdown>
-                        </Menu>
+                                {t('Беларуская')}
+                            </Menu.Item>
+                            <Menu.Item
+                                icon={<Image src={ru} radius={3} width={20}/>}
+                                onClick={() => changeLanguage('ru')}
+                            >
+                                {t('Русский')}
+                            </Menu.Item>
+                            <Menu.Item
+                                icon={<Image src={en} radius={3} width={20}/>}
+                                onClick={() => changeLanguage('en')}
+                            >
+                                {t('English')}
+                            </Menu.Item>
+                        </Menu.Dropdown>
+                    </Menu>
                 </Group>
-
                 <Burger
                     opened={opened}
                     onClick={toggle}
@@ -278,17 +273,42 @@ export function HeaderResponsive() {
                 <Transition transition="pop-top-right" duration={200} mounted={opened}>
                     {(styles) => (
                         <Paper className={classes.dropdown} style={styles}>
-                            <HeaderDropdownMobile />
+                            <HeaderDropdownMobile/>
                             {isAuthenticated ? (
-                                <LogoutButton />
+                                <LogoutButton/>
                             ) : (
                                 <Text className={classes.link} onClick={handleLogin}>
+                                    <IconLogin2 size={20}></IconLogin2>
                                     {t('navbar.user.login')}
                                 </Text>
                             )}
-                            <Text className={classes.link} onClick={() => changeLanguage(currentLanguage)}>
-                                <IconLanguage className={classes.language} size={25} />
-                            </Text>
+                            <Menu trigger="hover" radius="lg">
+                                <Menu.Target>
+                                    <Text className={classes.link} onClick={() => changeLanguage(currentLanguage)}>
+                                        <IconLanguage className={classes.language} size={25}/>
+                                    </Text>
+                                </Menu.Target>
+                                <Menu.Dropdown>
+                                    <Menu.Item
+                                        icon={<Image src={by} radius={3} width={20}/>}
+                                        onClick={() => changeLanguage('be')}
+                                    >
+                                        {t('Беларуская')}
+                                    </Menu.Item>
+                                    <Menu.Item
+                                        icon={<Image src={ru} radius={3} width={20}/>}
+                                        onClick={() => changeLanguage('ru')}
+                                    >
+                                        {t('Русский')}
+                                    </Menu.Item>
+                                    <Menu.Item
+                                        icon={<Image src={en} radius={3} width={20}/>}
+                                        onClick={() => changeLanguage('en')}
+                                    >
+                                        {t('English')}
+                                    </Menu.Item>
+                                </Menu.Dropdown>
+                            </Menu>
                         </Paper>
                     )}
                 </Transition>
