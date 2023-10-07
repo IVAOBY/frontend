@@ -17,7 +17,6 @@ function useAuth() {
         } else {
             const urlWithToken = `/auth/verify-token?token=${encodeURIComponent(authToken)}`;
 
-            // Make an API request to validate the token
             api(urlWithToken, 'v3', 'GET')
                 .then((data) => {
                     if (typeof data === 'string' && data.trim().toLowerCase() === '<body>false</body>') {
@@ -33,8 +32,6 @@ function useAuth() {
                 .catch((error) => {
                     console.error('Error while validating token:', error);
                     setIsAuthenticated(false);
-
-                    // над ошибку добавить. Сам сделаю, НАЦЕВСКИЙ НЕ ТРОГАТЬ
                 });
         }
     }, [authToken]);

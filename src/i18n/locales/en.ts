@@ -101,6 +101,12 @@ const enTranslations: { translations: Translations } = {
                 name: "Error!",
                 descritpion: "The server did not want to share data with us :(",
             },
+            auth: {
+                negative: {
+                    name: "Ошибка!",
+                    description: "Для совершения данного действия, пожалуйста войдите в аккаунт.",
+                },
+            }
         },
         FAQ: {
             page: {

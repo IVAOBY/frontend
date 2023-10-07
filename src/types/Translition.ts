@@ -97,6 +97,12 @@ export interface Translations {
         server: {
             name: string,
             descritpion: string,
+        },
+        auth: {
+            negative: {
+                name: string,
+                description: string,
+            },
         }
     },
     FAQ: {

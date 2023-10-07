@@ -1,8 +1,12 @@
-import { Title, Text, Group, Container, Flex, Button, Overlay, createStyles, rem } from '@mantine/core';
+import {Title, Text, Group, Container, Flex, Button, Overlay, createStyles, rem, Alert} from '@mantine/core';
 import {useTranslation} from "react-i18next";
-import {useCallback} from "react";
+import {useCallback, useState} from "react";
 import Typed from 'react-typed';
 import {useMediaQuery} from "@mantine/hooks";
+import {getDecodedToken, useAuth} from "../Handler";
+import {DecodedTokenInt} from "../../hooks/types";
+import {notifications} from "@mantine/notifications";
+import {IconCircleX} from "@tabler/icons-react";
 
 const useStyles = createStyles((theme) => ({
     wrapper: {
@@ -118,13 +122,45 @@ export function HeroText() {
     const { classes, cx } = useStyles();
     const { t } = useTranslation();
     const isSmallScreen = useMediaQuery('(max-width: 575px)');
+    const isAuthenticated = useAuth();
 
-    const byTransferMail = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-        window.open(
-            'mailto: by-hq@ivao.aero,xr-hq@ivao.aero?cc=members@ivao.aero&subject=Division%20transfer%20VID&body=Dear%20HQs%20and%20Membership%20Department!%0A%0AI%20request%20to%20transfer%20me%20from%20the%20{}%20division%20to%20the%20BY%20division.%0A%0ABest%20wishes,%0A{Name}%20{Surname}',
-            '_blank'
-        )
-    }, []);
+    const byTransferMail = useCallback(async (event: React.MouseEvent<HTMLButtonElement>) => {
+        if (!isAuthenticated) {
+            notifications.show({
+                id: 'auth-required',
+                color: 'red',
+                title: t('notif.auth.negative.name'),
+                message: t('notif.auth.negative.description'),
+                radius: 'lg',
+                icon: <IconCircleX />,
+                withCloseButton: true,
+                autoClose: 3000,
+            });
+            return;
+        }
+
+        const token = localStorage.getItem('authToken');
+        if (token !== null) {
+            try {
+                const decoded = await getDecodedToken(token);
+                const emailBody = `Dear HQs and Membership Department!
+
+I request to transfer me from the ${decoded?.userData.divisionId} division to the BY division.
+
+Best wishes,
+${decoded?.userData.name.first} ${decoded?.userData.name.last}`;
+
+                window.open(
+                    `mailto:by-hq@ivao.aero,${decoded?.userData.divisionId}-hq@ivao.aero?cc=members@ivao.aero&subject=Division%20transfer%20${decoded?.userData.id}&body=${encodeURIComponent(
+                        emailBody
+                    )}`,
+                    '_blank'
+                );
+            } catch (error) {
+                console.error('Error decoding token:', error);
+            }
+        }
+    }, [isAuthenticated]);
 
     const openLink = useCallback(function (link: any | undefined) {
         window.open(link, '_blank')

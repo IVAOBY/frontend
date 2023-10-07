@@ -101,6 +101,12 @@ const beTranslations: { translations: Translations } = {
                 name: "Памылка!",
                 descritpion: "Сервер не захацеў дзеліцца з намі дадзенымі :(",
             },
+            auth: {
+                negative: {
+                    name: "Ошибка!",
+                    description: "Для совершения данного действия, пожалуйста войдите в аккаунт.",
+                },
+            }
         },
         FAQ: {
             page: {

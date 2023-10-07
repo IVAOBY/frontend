@@ -100,6 +100,12 @@ const ruTranslations: { translations: Translations } = {
             server: {
                 name: "Ошибка!",
                 descritpion: "Сервер не захотел делится с нами данными :(",
+            },
+            auth: {
+                negative: {
+                    name: "Ошибка!",
+                    description: "Для совершения данного действия, пожалуйста войдите в аккаунт.",
+                },
             }
         },
         FAQ: {
