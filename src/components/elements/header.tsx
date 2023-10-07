@@ -24,11 +24,10 @@ import {
     IconLogin,
 } from '@tabler/icons-react';
 import { IconLogin2 } from '@tabler/icons-react';
-import { HeaderDropdown } from './header/HeaderDropdown';
-import { HeaderDropdownMobile } from './header/HeaderDropdownMobile';
 import by from '../../assets/image/by.svg';
 import ru from '../../assets/image/ru.svg';
 import en from '../../assets/image/en.svg';
+import {CommonDropdownContent} from "./header/CommonDropdownContent";
 
 const HEADER_HEIGHT = rem(100);
 
@@ -218,7 +217,7 @@ export function HeaderResponsive() {
             <Container className={classes.header}>
                 {scrollPosition > 0 ? logoScrolled : logoDefault}
                 <Group spacing={5} className={classes.links}>
-                    <HeaderDropdown />
+                    <CommonDropdownContent />
                         {isAuthenticated ? (
                             <>
                                 <LogoutButton />
@@ -278,7 +277,7 @@ export function HeaderResponsive() {
                 <Transition transition="pop-top-right" duration={200} mounted={opened}>
                     {(styles) => (
                         <Paper className={classes.dropdown} style={styles}>
-                            <HeaderDropdownMobile />
+                            <CommonDropdownContent />
                             {isAuthenticated ? (
                                 <LogoutButton />
                             ) : (
