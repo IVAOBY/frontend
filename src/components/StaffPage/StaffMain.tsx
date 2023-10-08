@@ -215,7 +215,7 @@ export function StaffMain() {
                                                 <Image
                                                     radius={100}
                                                     maw={150}
-                                                    src={position.userId ? `https://static.game-explore.space/staff/${position.userId}.jpg` : 'https://xr.ivao.aero/images/staff_photo/vacant.png'}
+                                                    src={position.userId ? `https://static.game-explore.space/staff/${position.userId}.jpg` : 'https://static.game-explore.space/staff/vacant.png'}
                                                 />
                                                 <Title order={3} color={theme.colors.blue[9]} mt={20}>
                                                     {position.userId ? position.userId : "Вакантно"}
