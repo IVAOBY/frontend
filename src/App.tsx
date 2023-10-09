@@ -26,6 +26,7 @@ import { Notifications } from '@mantine/notifications';
 import {NewsPage} from "./pages/News";
 import {DocumentsMain} from "./pages/documents/DocumentsPage";
 import {DocumentContentPage} from "./pages/documents/DocumentContentPage";
+import {MapPage} from "./pages/MapPage";
 export default function App() {
     const isAuthenticated = !!localStorage.getItem('authToken');
   return (
@@ -50,6 +51,7 @@ export default function App() {
                               <Route path="/contact-us" element={<GetInTouchSimple></GetInTouchSimple>}></Route>
                               <Route path="/pilots/first-step" element={<FirstStepP></FirstStepP>}></Route>
                               <Route path="/news/:id" element={<NewsPage></NewsPage>}></Route>
+                              <Route path="/map" element={<MapPage></MapPage>} />
                               {/*Документы*/}
                               <Route path="/documents" element={<DocumentsMain></DocumentsMain>}></Route>
                               <Route path="/documents/:id" element={<DocumentContentPage></DocumentContentPage>}></Route>
