@@ -98,7 +98,8 @@ export function DocumentsMain() {
                         id: documentdata.id,
                         category: documentdata.category,
                         name: documentdata.name,
-                        content: documentdata.content
+                        content: documentdata.content,
+                        published: documentdata.published
                     }));
                     setDocuments(documents);
 
@@ -165,10 +166,7 @@ export function DocumentsMain() {
                             wrap="wrap"
                         >
                             {documents
-                                .filter(
-                                    (document) =>
-                                        document.category === category.id
-                                )
+                                .filter((document) => document.category === category.id && document.published)
                                 .map((documents, positionIndex) => (
                                     <UnstyledButton key={documents.id} className={classes.button}
                                                     style={{width: 'auto', height: 'auto'}}

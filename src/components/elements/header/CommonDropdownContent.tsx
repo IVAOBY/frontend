@@ -157,6 +157,8 @@ export function CommonDropdownContent() {
                                onClick={() => menuLink('https://google.com')}>{t("navbar.pilots.charts")}</Menu.Item>
                     <Menu.Item icon={<IconPlane size={20}/>}
                                onClick={() => menuLink('https://google.com')}>{t("navbar.pilots.airlines")}</Menu.Item>
+                    <Menu.Item icon={<IconArticle size={20}/>}
+                               onClick={() => navigate('documents/pilots')}>{t("navbar.atc.docs")}</Menu.Item>
                     <Menu.Item icon={<IconMap2 size={20}/>}
                                onClick={() => menuLink('https://google.com')}>{t("navbar.pilots.tours")}</Menu.Item>
                 </Menu.Dropdown>

@@ -56,4 +56,5 @@ export interface DocumentsType {
     content: {
         [key: string]: string;
     }
+    published: boolean;
 }
