@@ -137,7 +137,7 @@ export function CommonDropdownContent() {
                     <Menu.Item icon={<IconArticle size={20}/>}
                                onClick={() => navigate('documents/atc')}>{t("navbar.atc.docs")}</Menu.Item>
                     <Menu.Item icon={<IconWorld size={20}/>}
-                               onClick={() => menuLink('https://google.com')}>{t("navbar.atc.gca")}</Menu.Item>
+                               onClick={() => navigate('atc/gca')}>{t("navbar.atc.gca")}</Menu.Item>
                 </Menu.Dropdown>
             </Menu>
             <Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} width={200} withArrow>

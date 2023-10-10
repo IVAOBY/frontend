@@ -27,6 +27,7 @@ import {NewsPage} from "./pages/News";
 import {DocumentsMain} from "./pages/documents/DocumentsPage";
 import {DocumentContentPage} from "./pages/documents/DocumentContentPage";
 import {MapPage} from "./pages/MapPage";
+import {GCAPage} from "./pages/atc/GCAPage";
 export default function App() {
     const isAuthenticated = !!localStorage.getItem('authToken');
   return (
@@ -55,6 +56,8 @@ export default function App() {
                               {/*Документы*/}
                               <Route path="/documents" element={<DocumentsMain></DocumentsMain>}></Route>
                               <Route path="/documents/:id" element={<DocumentContentPage></DocumentContentPage>}></Route>
+                              {/*ATC*/}
+                              <Route path="/atc/gca" element={<GCAPage></GCAPage>}></Route>
                               <Route path="/404" element={<NotFound />} />
                               <Route path="*" element={<Navigate to="/404" />} />
                           </Routes>
