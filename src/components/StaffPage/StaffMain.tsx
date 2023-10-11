@@ -22,7 +22,6 @@ import {
 } from '@tabler/icons-react';
 import React, {useEffect, useState} from "react";
 import {api} from "../../hooks/api";
-import AuthGuard from "../../hooks/AuthGuard";
 import {useTranslation} from "react-i18next";
 import {notifications} from "@mantine/notifications";
 
