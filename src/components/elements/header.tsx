@@ -144,7 +144,7 @@ export function HeaderResponsive() {
     const isAuthenticated = useAuth();
     const [scrollPosition, setScrollPosition] = useState(0);
 
-    const serverUrl = `http://localhost:3000/auth/login?goto=http://localhost:3001`;
+    const serverUrl = `https://v3.api.xr.ivao.aero/auth/login?goto=${window.location.protocol}//${window.location.hostname}${window.location.port ? ':'+window.location.port : ''}`;
 
     // Handle scroll position
     useEffect(() => {
