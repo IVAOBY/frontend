@@ -96,6 +96,7 @@ export const ivaoTheme: MantineThemeOverride = {
                     position: 'relative',
                     overflow: 'hidden',
                     transition: 'all 0.4s ease',
+                    color: '#ffffff',
                     '&:hover': {
                         transform: 'scale(1.05)',
                         boxShadow: '0px 10px 20px rgba(0, 0, 0, 0.2)',

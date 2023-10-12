@@ -24,6 +24,9 @@ import {Notifications, notifications} from '@mantine/notifications';
 import React from 'react';
 import {IconCircleX} from "@tabler/icons-react";
 import {MessageOverlay} from "./components/MessageOverlay";
+import {t} from "i18next";
+import {DocumentsPilotPage} from "./pages/documents/DocumentsPilotPage";
+import {DocumentsATCPage} from "./pages/documents/DocumentsATCPage";
 
 export default function App() {
     const isAuthenticated = !!localStorage.getItem('authToken');
@@ -33,18 +36,17 @@ export default function App() {
                                                                                 }) => {
         if (!isAuthenticated) {
             notifications.show({
-                id: 'denied',
-                loading: false,
-                title: 'Authentication Required',
-                message: 'Please log in to access this page.',
-                icon: <IconCircleX/>,
+                id: 'auth-required',
                 color: 'red',
+                title: t('notif.auth.negative.name'),
+                message: t('notif.auth.negative.description'),
                 radius: 'lg',
-                autoClose: false,
-                withCloseButton: false,
+                icon: <IconCircleX />,
+                withCloseButton: true,
+                autoClose: 3000,
             });
-            return <MessageOverlay message={"Forrbiden"} link={"/"} linkTitle={"Вернуться на главную"}
-                                   title={"Forrbiden"}></MessageOverlay>;
+            return <MessageOverlay message={t('notif.auth.negative.description')} link={"/"} linkTitle={"Вернуться на главную"}
+                                   title={t('notif.auth.negative.name')}></MessageOverlay>;
         }
         return <>{element}</>;
     };
@@ -72,11 +74,15 @@ export default function App() {
                             {/* Документы */}
                             <Route path="/documents" element={<DocumentsMain/>}/>
                             <Route path="/documents/:id" element={<DocumentContentPage/>}/>
+                            <Route path="/documents/pilots" element={<DocumentsPilotPage/>}/>
+                            <Route path="/documents/atc" element={<DocumentsATCPage/>}/>
 
                             {/* ATC */}
                             <Route path="/atc/gca" element={<GCAPage/>}/>
 
+                            {/* NotFound */}
                             <Route path="404" element={<NotFound/>}/>
+                            <Route path="*" element={<Navigate to="/404" />} />
 
                             {/* Private route*/}
                             <Route
