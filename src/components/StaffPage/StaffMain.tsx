@@ -65,7 +65,13 @@ interface Position {
     };
     prefix: string;
     order: number;
-    userId: number;
+    user: {
+        id: number;
+        name: {
+            first: string;
+            last: string;
+        },
+    },
     description: {
         en: string;
         ru: string | null;
@@ -116,7 +122,13 @@ export function StaffMain() {
                         name: positionData.name,
                         prefix: positionData.prefix,
                         order: positionData.order,
-                        userId: positionData.userId,
+                        user: {
+                            id: positionData.user.id,
+                            name: {
+                                first: positionData.user.name.first,
+                                last: positionData.user.name.last,
+                            }
+                        },
                         description: positionData.description,
                         is_vacant: positionData.is_vacant,
                     }));
@@ -193,12 +205,12 @@ export function StaffMain() {
                                     .filter(
                                         (position) =>
                                             position.departmentId === department.id &&
-                                            (position.userId !== null || position.is_vacant === 1)
+                                            (position.user.id !== null || position.is_vacant === 1)
                                     )
                                     .sort((a, b) => {
-                                        if (a.userId === null && b.userId !== null) {
+                                        if (a.user.id === null && b.user.id !== null) {
                                             return 1;
-                                        } else if (a.userId !== null && b.userId === null) {
+                                        } else if (a.user.id !== null && b.user.id === null) {
                                             return -1;
                                         } else {
                                             return a.order - b.order;
@@ -214,10 +226,14 @@ export function StaffMain() {
                                                 <Image
                                                     radius={100}
                                                     maw={150}
-                                                    src={position.userId ? `https://static.game-explore.space/staff/${position.userId}.jpg` : 'https://static.game-explore.space/staff/vacant.png'}
+                                                    src={position.user.id ? `https://static.game-explore.space/staff/${position.user.id}.jpg` : 'https://static.game-explore.space/staff/vacant.png'}
                                                 />
                                                 <Title order={3} color={theme.colors.blue[9]} mt={20}>
-                                                    {position.userId ? position.userId : "Вакантно"}
+                                                    {position.user.id ? (
+                                                        position.user.name.last
+                                                            ? `${position.user.name.first} ${position.user.name.last}`
+                                                            : `${position.user.name.first} ${position.user.id}`
+                                                    ) : "Вакантно"}
                                                 </Title>
                                                 <Tooltip label={position.name.en} position={"bottom"} radius={"lg"} withArrow>
                                                     <Text size={14} fw={600} c={theme.colors.gray[7]}>

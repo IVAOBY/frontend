@@ -124,7 +124,13 @@ const useStyles = createStyles((theme) => ({
 
 interface News {
     id: number;
-    userId: number;
+    user: {
+      id: number;
+      name: {
+        first: string;
+        last: string;
+      },
+    },
     image_url: string;
     name: {
         [key: string]: string;
@@ -219,7 +225,7 @@ export function NewsSection() {
                                     <Group>
                                         <IconUser size={18} color={theme.colors.blue[9]}></IconUser>
                                         <Text size="md" fw="bold" color={theme.colors.blue[9]}>
-                                            {newsItem.userId}
+                                            {newsItem.user.name.first} - {newsItem.user.id}
                                         </Text>
                                     </Group>
                                     <Group position="right">
