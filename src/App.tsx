@@ -27,6 +27,7 @@ import {MessageOverlay} from "./components/MessageOverlay";
 import {t} from "i18next";
 import {DocumentsPilotPage} from "./pages/documents/DocumentsPilotPage";
 import {DocumentsATCPage} from "./pages/documents/DocumentsATCPage";
+import {EventPage} from "./pages/events/EventPage";
 
 export default function App() {
     const isAuthenticated = !!localStorage.getItem('authToken');
@@ -79,6 +80,9 @@ export default function App() {
 
                             {/* ATC */}
                             <Route path="/atc/gca" element={<GCAPage/>}/>
+
+                            {/* ИВЕНТЫ */}
+                            <Route path="/event/:id" element={<EventPage />} />
 
                             {/* NotFound */}
                             <Route path="404" element={<NotFound/>}/>

@@ -1,0 +1,244 @@
+import React, { useEffect, useState } from 'react';
+import {
+    createStyles,
+    Title,
+    Container,
+    rem,
+    Image,
+    Text,
+    Flex, Paper, Group, Indicator, Card, Badge, Button, SimpleGrid, ActionIcon, Center, Box,
+} from '@mantine/core';
+import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
+import { notifications } from '@mantine/notifications';
+import { api } from '../../../hooks/api';
+import {
+    IconAirTrafficControl,
+    IconCalendarTime,
+    IconCircleCheck,
+    IconCircleX,
+    IconIdBadge2,
+    IconUser
+} from '@tabler/icons-react';
+import i18n from 'i18next';
+import {format} from "date-fns";
+import {EventEntity, PartsEntity} from "../../../types/Events";
+
+const useStyles = createStyles((theme) => ({
+    title: {
+        fontSize: rem(34),
+        fontWeight: 800,
+        color: theme.colors.blue[9],
+    },
+    subtitle: {
+        fontSize: rem(18),
+        fontWeight: 800,
+        color: theme.colors.blue[9],
+        '&::after': {
+            content: '""',
+            display: 'block',
+            backgroundColor: theme.fn.primaryColor(),
+            width: rem(45),
+            height: rem(2),
+            marginTop: theme.spacing.sm,
+            marginLeft: 'auto',
+            marginRight: 'auto',
+        },
+    },
+
+    image: {
+        maxWidth: '30%',
+    },
+
+    icon: {
+      backgroundColor: theme.colors.blue[9],
+      borderRadius: theme.radius.lg,
+        padding: theme.spacing.md
+    },
+
+    cardContent: {
+        wordBreak: 'break-word',
+    },
+
+    cardAuthorDate: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginTop: rem(20),
+        marginLeft: rem(20),
+        color: theme.colors.gray,
+    },
+
+    card: {
+        border: `${rem(2)} solid ${
+            theme.colors.lightBlue[6]
+        }`,
+    },
+
+    cardTitle: {
+        color: theme.colors.blue[9],
+        '&::after': {
+            content: '""',
+            display: 'block',
+            backgroundColor: theme.fn.primaryColor(),
+            width: rem(45),
+            height: rem(2),
+            marginTop: theme.spacing.sm,
+            marginLeft: 'auto',
+            marginRight: 'auto',
+        },
+    },
+}));
+
+
+export function ShiftComponent() {
+    const { classes, theme } = useStyles();
+    const { t } = useTranslation();
+    const { id } = useParams();
+    const isSmallScreen = window.innerWidth < 768;
+
+    const [partItem, setPartItem] = useState<PartsEntity[] | null>(null);
+    useEffect(() => {
+        notifications.show({
+            id: 'load-data',
+            loading: true,
+            title: t('notif.loading.name'),
+            message: t('notif.loading.descritpion'),
+            radius: 'lg',
+            autoClose: false,
+            withCloseButton: false,
+        });
+        api(`/events-parts/event/${id}`)
+            .then((response) => {
+                if (response && Array.isArray(response)) {
+                    setPartItem(response);
+                    notifications.hide('load-data');
+                } else {
+                    console.error('Invalid response from API:', response);
+                    notifications.update({
+                        id: 'load-data',
+                        color: 'red',
+                        title: t('notif.server.name'),
+                        message: t('notif.server.descritpion'),
+                        radius: 'lg',
+                        icon: <IconCircleX />,
+                        withCloseButton: false,
+                        autoClose: false,
+                    });
+                }
+            })
+            .catch((error) => {
+                console.error('Error fetching news:', error);
+                notifications.update({
+                    id: 'load-data',
+                    color: 'red',
+                    title: t('notif.server.name'),
+                    message: t('notif.server.descritpion'),
+                    radius: 'lg',
+                    icon: <IconCircleX />,
+                    withCloseButton: false,
+                    autoClose: false,
+                });
+            });
+    }, [id]);
+
+    const handleButtonClick = (partId: number, atcPositionId: number, bookingId: number | undefined) => {
+        const token = localStorage.getItem('authToken');
+        if (token && partItem) {
+            const part = partItem.find((part) => part.id === partId);
+            if (part) {
+                const isBooked = part.booking.find((bookingItem) => bookingItem.bookedUser?.id?.toString() === token);
+                if (isBooked) {
+                    // Send a DELETE request
+                    api(`/events-booking/unbook/${bookingId}`, 'v3', 'DELETE').then((response) => {
+                        // Handle success
+                    }).catch((error) => {
+                        // Handle error
+                    });
+                } else {
+                    // Send a POST request
+                    api(`/events-booking/book/${partId}/?atcPositionId=${atcPositionId}`, 'v3', 'POST', {
+                        "atcPositionId": atcPositionId,
+                    }).then((response) => {
+                        // Handle success
+                    }).catch((error) => {
+                        // Handle error
+                    });
+                }
+            }
+        }
+    };
+
+
+    return (
+        <Container size="lg" py="xl">
+            {partItem && partItem.map((part) => (
+                <div key={part.id}>
+                    {/* Display data for each part here */}
+                    <Title order={2} className={classes.title} ta="center" mt="sm">
+                        ATC Shift
+                    </Title>
+                    <Text className={classes.subtitle} ta="center">
+                        {`${format(new Date(part.startDate), 'dd.MM.yy')} ${new Date(part.startDate).toLocaleTimeString('eu', {
+                            timeZone: 'UTC',
+                            hour12: false,
+                            hour: '2-digit',
+                            minute: '2-digit',
+                        })}`}
+                        {` - ${format(new Date(part.startDate), 'dd.MM.yy')} ${new Date(part.endDate).toLocaleTimeString('eu', {
+                            timeZone: 'UTC',
+                            hour12: false,
+                            hour: '2-digit',
+                            minute: '2-digit',
+                        })}`}
+                    </Text>
+                        <Flex
+                            mt={rem(13)}
+                            gap="md"
+                            justify="center"
+                            align="center"
+                            direction="row"
+                            wrap="wrap"
+                        >
+                            {part.positions.map((position) => (
+                                <Card key={position.atcPositionId} shadow="md" radius="md" className={classes.card} padding="xl" miw={300}>
+                                    <Center>
+                                        <Box className={classes.icon}>
+                                            <IconAirTrafficControl size={rem(40)} stroke={2} color="#fff" />
+                                        </Box>
+                                    </Center>
+                                    <Text fz="lg" fw={700} className={classes.cardTitle} mt="md" ta={"center"}>
+                                        {position.position.callsign}
+                                    </Text>
+                                    <Center mt={10}>
+                                        <Image
+                                            className={classes.image}
+                                            aria-label="IVAO"
+                                            src={`https://www.ivao.aero/data/images/ratings/atc/${position.position.fra}.gif`}
+                                        />
+                                    </Center>
+                                    {part.booking
+                                        .filter((bookingItem) => bookingItem.atcPosition?.id === position.atcPositionId)
+                                        .map((filteredBookingItem) => (
+                                            <div key={filteredBookingItem.id}>
+                                                {/* Display information for each booking item */}
+                                                <Text>{filteredBookingItem.bookedUser?.id}</Text>
+                                                {/* Add more content for each booking item */}
+                                                <Center mt={rem(13)}>
+                                                    <Button onClick={() => handleButtonClick(part.id, position.atcPositionId, filteredBookingItem.id)}>
+                                                        Подать заявку
+                                                    </Button>
+                                                </Center>
+                                            </div>
+
+                                        ))}
+                                </Card>
+                            ))}
+                        </Flex>
+                </div>
+            ))}
+
+
+        </Container>
+    );
+}
