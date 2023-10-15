@@ -18,6 +18,7 @@ import {
 } from '@tabler/icons-react';
 import {format} from "date-fns";
 import {PartsEntity} from "../../../types/Events";
+import {getDecodedToken} from "../../../components/Handler";
 
 const useStyles = createStyles((theme) => ({
     title: {
@@ -137,32 +138,58 @@ export function ShiftComponent() {
             });
     }, [id]);
 
-    const handleButtonClick = (partId: number, atcPositionId: number, bookingId: number | undefined) => {
-        const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem('authToken');
+
+    const handleBook = async (
+        partId: number,
+        atcPositionId: number
+    ) => {
         if (token && partItem) {
             const part = partItem.find((part) => part.id === partId);
             if (part) {
-                const isBooked = part.booking.find((bookingItem) => bookingItem.bookedUser?.id?.toString() === token);
-                if (isBooked) {
-                    // Send a DELETE request
-                    api(`/events-booking/unbook/${bookingId}`, 'v3', 'DELETE').then((response) => {
-                        console.log(response)
-                    }).catch((error) => {
-                        console.log(error)
+                try {
+                    // Send a POST request to book
+                    await api(`/events-booking/book?atcPositionId=${atcPositionId}`, 'v3', 'POST', {
+                        atcPositionId: atcPositionId,
+                        eventPartId: part.id,
+                        eventId: part.eventId,
                     });
-                } else {
-                    // Send a POST request
-                    api(`/events-booking/book/${partId}/?atcPositionId=${atcPositionId}`, 'v3', 'POST', {
-                        "atcPositionId": atcPositionId,
-                    }).then((response) => {
-                        console.log(response)
-                    }).catch((error) => {
-                        console.log(error)
-                    });
+                    console.log('Successfully booked.');
+                } catch (error) {
+                    console.log('Error handling booking:', error);
+                    // Handle the error case
                 }
             }
         }
     };
+
+    const handleUnbook = async (bookingId: number) => {
+        if (token) {
+            try {
+                // Send a DELETE request to unbook
+                await api(`/events-booking/unbook/${bookingId}`, 'v3', 'DELETE');
+                console.log('Successfully unbooked.');
+            } catch (error) {
+                console.log('Error handling unbooking:', error);
+                // Handle the error case
+            }
+        }
+    };
+
+    function isBookedForPosition(bookings: any[], atcPositionId: number) {
+        const token = localStorage.getItem('authToken');
+        const decodedToken = getDecodedToken(`${token}`);
+        const isBooked = bookings.some((booking) => booking.atcPosition?.id === atcPositionId && booking.bookedUser?.id === decodedToken?.userData.id);
+        console.log(`isBookedForPosition(${atcPositionId}): ${isBooked}`);
+        return isBooked;
+    }
+
+    function getBookingIdForPosition(bookings: any[], atcPositionId: number) {
+        const token = localStorage.getItem('authToken');
+        const decodedToken = getDecodedToken(`${token}`);
+        const booking = bookings.find((booking) => booking.atcPosition?.id === atcPositionId && booking.bookedUser?.id === decodedToken?.userData.id);
+        return booking ? booking.id : undefined;
+    }
 
 
     return (
@@ -219,14 +246,25 @@ export function ShiftComponent() {
                                                 {/* Display information for each booking item */}
                                                 <Text>{filteredBookingItem.bookedUser?.id}</Text>
                                                 {/* Add more content for each booking item */}
-                                                <Center mt={rem(13)}>
-                                                    <Button onClick={() => handleButtonClick(part.id, position.atcPositionId, filteredBookingItem.id)}>
-                                                        Подать заявку
-                                                    </Button>
-                                                </Center>
                                             </div>
-
                                         ))}
+
+                                    {token && isBookedForPosition(part.booking, position.atcPositionId) ? (
+                                        // Check if the user is already booked for this specific position
+                                        <Button color={"red"} onClick={() => {
+                                            const bookingId = getBookingIdForPosition(part.booking, position.atcPositionId);
+                                            if (typeof bookingId !== 'undefined') {
+                                                handleUnbook(bookingId);
+                                            }
+                                        }}>
+                                            Удалить
+                                        </Button>
+                                    ) : (
+                                        // User is not booked or not logged in
+                                        <Button onClick={() => handleBook(part.id, position.atcPositionId)}>
+                                            Забронировать
+                                        </Button>
+                                    )}
                                 </Card>
                             ))}
                         </Flex>
