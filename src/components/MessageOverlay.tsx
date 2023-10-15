@@ -1,4 +1,3 @@
-import React from 'react';
 import {Button, Container, Group, Image, Paper, Text, useMantineTheme} from '@mantine/core';
 import {MessagesType} from "../hooks/types";
 import {useNavigate} from "react-router-dom";

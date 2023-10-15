@@ -1,17 +1,14 @@
-import React from 'react';
 import {
     createStyles,
     Title,
     Text,
     Container,
     rem,
-    Image, Paper, Accordion,
+    Accordion,
 } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
-import baner from '../assets/image/joinbaner.png';
 import {
     IconAwardOff,
-    IconDeviceImacQuestion,
     IconLanguage, IconMailForward,
     IconPlugConnectedX,
     IconUserQuestion,
@@ -75,7 +72,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export function FAQ() {
-    const { classes, theme } = useStyles();
+    const { classes} = useStyles();
     const { t } = useTranslation();
 
     return (

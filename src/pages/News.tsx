@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     createStyles,
     Title,
@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { notifications } from '@mantine/notifications';
 import { api } from '../hooks/api';
-import { IconCalendarTime, IconCircleCheck, IconCircleX, IconUser } from '@tabler/icons-react';
+import { IconCalendarTime, IconCircleX, IconUser } from '@tabler/icons-react';
 import i18n from 'i18next';
 import {format} from "date-fns";
 
@@ -83,7 +83,7 @@ export function NewsPage() {
     const { classes, theme } = useStyles();
     const { t } = useTranslation();
     const { id } = useParams();
-    const isSmallScreen = window.innerWidth < 768;
+    // const isSmallScreen = window.innerWidth < 768;
 
     const [newsItem, setNewsItem] = useState<News | null>(null);
     useEffect(() => {

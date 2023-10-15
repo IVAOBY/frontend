@@ -1,6 +1,6 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {
-    createStyles, Group, Image,
+    createStyles, Image,
     Menu,
     rem,
     Text, UnstyledButton,
@@ -84,9 +84,6 @@ export function CommonDropdownContent() {
     }, []);
 
     const navigate = useNavigate();
-    const handleNavigate = (link: string) => {
-        navigate(link);
-    };
 
     const {t} = useTranslation();
     const menuLink = useCallback(function (link: any | undefined) {

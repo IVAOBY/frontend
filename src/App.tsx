@@ -21,7 +21,6 @@ import {DocumentContentPage} from './pages/documents/DocumentContentPage';
 import {MapPage} from './pages/MapPage';
 import {GCAPage} from './pages/atc/GCAPage';
 import {Notifications, notifications} from '@mantine/notifications';
-import React from 'react';
 import {IconCircleX} from "@tabler/icons-react";
 import {MessageOverlay} from "./components/MessageOverlay";
 import {t} from "i18next";

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     createStyles,
     Title,
@@ -6,7 +6,7 @@ import {
     rem,
     Image,
     Text,
-    Flex, Paper, Group, Indicator, Card, Badge, Button, SimpleGrid, ActionIcon, Center, Box,
+    Flex, Card, Button, Center, Box,
 } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
@@ -14,15 +14,10 @@ import { notifications } from '@mantine/notifications';
 import { api } from '../../../hooks/api';
 import {
     IconAirTrafficControl,
-    IconCalendarTime,
-    IconCircleCheck,
     IconCircleX,
-    IconIdBadge2,
-    IconUser
 } from '@tabler/icons-react';
-import i18n from 'i18next';
 import {format} from "date-fns";
-import {EventEntity, PartsEntity} from "../../../types/Events";
+import {PartsEntity} from "../../../types/Events";
 
 const useStyles = createStyles((theme) => ({
     title: {
@@ -92,10 +87,10 @@ const useStyles = createStyles((theme) => ({
 
 
 export function ShiftComponent() {
-    const { classes, theme } = useStyles();
+    const { classes } = useStyles();
     const { t } = useTranslation();
     const { id } = useParams();
-    const isSmallScreen = window.innerWidth < 768;
+    // const isSmallScreen = window.innerWidth < 768;
 
     const [partItem, setPartItem] = useState<PartsEntity[] | null>(null);
     useEffect(() => {
@@ -151,18 +146,18 @@ export function ShiftComponent() {
                 if (isBooked) {
                     // Send a DELETE request
                     api(`/events-booking/unbook/${bookingId}`, 'v3', 'DELETE').then((response) => {
-                        // Handle success
+                        console.log(response)
                     }).catch((error) => {
-                        // Handle error
+                        console.log(error)
                     });
                 } else {
                     // Send a POST request
                     api(`/events-booking/book/${partId}/?atcPositionId=${atcPositionId}`, 'v3', 'POST', {
                         "atcPositionId": atcPositionId,
                     }).then((response) => {
-                        // Handle success
+                        console.log(response)
                     }).catch((error) => {
-                        // Handle error
+                        console.log(error)
                     });
                 }
             }

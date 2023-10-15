@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     createStyles,
     Title,
@@ -9,10 +9,10 @@ import {
     Paper,
     Image,
     Flex,
-    Group, Pagination, Button, Modal, ModalProps, UnstyledButton,
+    Group, Pagination, UnstyledButton,
 } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
-import {IconCalendarTime, IconCircleCheck, IconCircleX, IconUser} from '@tabler/icons-react';
+import {IconCalendarTime, IconCircleX, IconUser} from '@tabler/icons-react';
 import { api } from '../../../hooks/api';
 import { format } from 'date-fns';
 import {notifications} from "@mantine/notifications";
@@ -253,4 +253,4 @@ export function NewsSection() {
 
         </Container>
     );
-};
+}

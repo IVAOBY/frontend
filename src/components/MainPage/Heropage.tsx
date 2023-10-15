@@ -1,10 +1,9 @@
-import {Title, Text, Group, Container, Flex, Button, Overlay, createStyles, rem, Alert} from '@mantine/core';
+import {Title, Text, Group, Container, Flex, Button, Overlay, createStyles, rem} from '@mantine/core';
 import {useTranslation} from "react-i18next";
-import {useCallback, useState} from "react";
+import {useCallback} from "react";
 import Typed from 'react-typed';
 import {useMediaQuery} from "@mantine/hooks";
 import {getDecodedToken, useAuth} from "../Handler";
-import {DecodedTokenInt} from "../../hooks/types";
 import {notifications} from "@mantine/notifications";
 import {IconCircleX} from "@tabler/icons-react";
 
@@ -119,12 +118,12 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export function HeroText() {
-    const { classes, cx } = useStyles();
+    const { classes } = useStyles();
     const { t } = useTranslation();
     const isSmallScreen = useMediaQuery('(max-width: 575px)');
     const isAuthenticated = useAuth();
 
-    const byTransferMail = useCallback(async (event: React.MouseEvent<HTMLButtonElement>) => {
+    const byTransferMail = useCallback(async () => {
         if (!isAuthenticated) {
             notifications.show({
                 id: 'auth-required',

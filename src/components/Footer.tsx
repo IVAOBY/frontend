@@ -1,6 +1,5 @@
-import { createStyles, Container, rem, Image, Text, Group } from '@mantine/core';
+import { createStyles, Container, rem, Image, Group } from '@mantine/core';
 import bylogo from "../assets/image/logo30px.svg";
-import React from "react";
 
 const useStyles = createStyles((theme) => ({
     footer: {

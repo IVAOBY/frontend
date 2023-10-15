@@ -1,11 +1,10 @@
-import React from 'react';
 import {
     createStyles,
     Title,
     Container,
     rem, Paper, Input, Button, Flex, Text,
 } from '@mantine/core';
-import { useTranslation } from 'react-i18next';
+// import { useTranslation } from 'react-i18next';
 import {IconSearch} from "@tabler/icons-react";
 
 const useStyles = createStyles((theme) => ({
@@ -45,7 +44,7 @@ const useStyles = createStyles((theme) => ({
 
 export function ScenaryPage() {
     const { classes, theme } = useStyles();
-    const { t } = useTranslation();
+    // const { t } = useTranslation();
 
     return (
         <Container size="lg" py="xl">

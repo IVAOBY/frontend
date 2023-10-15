@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     createStyles,
     Title,
@@ -6,13 +6,13 @@ import {
     rem,
     Image,
     Text,
-    Flex, Paper, Group, Indicator,
+    Flex, Paper
 } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { notifications } from '@mantine/notifications';
 import { api } from '../../hooks/api';
-import { IconCalendarTime, IconCircleCheck, IconCircleX, IconUser } from '@tabler/icons-react';
+import { IconCircleX } from '@tabler/icons-react';
 import i18n from 'i18next';
 import {format} from "date-fns";
 import {EventEntity} from "../../types/Events";
@@ -68,7 +68,7 @@ export function EventPage() {
     const { classes, theme } = useStyles();
     const { t } = useTranslation();
     const { id } = useParams();
-    const isSmallScreen = window.innerWidth < 768;
+    // const isSmallScreen = window.innerWidth < 768;
 
     const [eventItem, setEventItem] = useState<EventEntity | null>(null);
     useEffect(() => {

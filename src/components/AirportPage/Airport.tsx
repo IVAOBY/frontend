@@ -5,37 +5,21 @@ import {
     Title,
     Card,
     rem,
-    Image,
-    Badge,
-    Button,
     Flex,
     Group,
-    SimpleGrid,
-    Divider,
-    Space, Grid
 } from '@mantine/core';
 import {IconAlertTriangle, IconRoad, IconInfoCircle, IconAirTrafficControl} from '@tabler/icons-react';
-import React, {useEffect, useState} from "react";
-import {api} from "../../hooks/api";
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles(() => ({
     card: {
         minWidth: rem(300),
         minHeight: rem(300)
     },
 }));
 
-interface Department {
-    id: string;
-    name: {
-        en: string;
-        ru: string;
-    };
-}
 
 export function Airport() {
-    const {classes, theme} = useStyles();
-    const [departments, setDepartments] = useState<Department[]>([]);
+    const { theme} = useStyles();
 
     return (
         <Container size="lg">

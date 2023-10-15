@@ -59,7 +59,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export function GCAPage() {
-    const {classes, theme} = useStyles();
+    const {classes} = useStyles();
     const {t} = useTranslation();
 
     const [documentItem, setDocumentItem] = useState<DocumentsType | null>(null);

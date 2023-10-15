@@ -1,4 +1,3 @@
-import React from 'react';
 import {
     createStyles,
     Title,
@@ -11,7 +10,7 @@ import {
     List,
     Grid,
 } from '@mantine/core';
-import { useTranslation } from 'react-i18next';
+// import { useTranslation } from 'react-i18next';
 
 const useStyles = createStyles((theme) => ({
     title: {
@@ -38,8 +37,8 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export function FirstStepP() {
-    const { classes, theme } = useStyles();
-    const { t } = useTranslation();
+    const { classes } = useStyles();
+    // const { t } = useTranslation();
 
     return (
         <Container size="lg" py="xl">

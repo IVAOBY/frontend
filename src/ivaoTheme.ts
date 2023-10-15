@@ -1,4 +1,4 @@
-import {ButtonStylesParams, MantineTheme, MantineThemeOverride, rem, useMantineTheme} from '@mantine/core';
+import {MantineThemeOverride, rem} from '@mantine/core';
 
 export const ivaoTheme: MantineThemeOverride = {
     colorScheme: 'light',
@@ -91,7 +91,7 @@ export const ivaoTheme: MantineThemeOverride = {
 
     components: {
         Button: {
-            styles: (theme, params: ButtonStylesParams, {variant}) => ({
+            styles: {
                 root: {
                     position: 'relative',
                     overflow: 'hidden',
@@ -106,7 +106,7 @@ export const ivaoTheme: MantineThemeOverride = {
                         boxShadow: 'none',
                     },
                 },
-            }),
+            },
         },
 
         Select: {

@@ -1,19 +1,14 @@
 import {
     createStyles,
     Container,
-    Text,
     Title,
     Paper,
     rem,
-    Image,
     Flex,
-    ActionIcon,
-    Tooltip, UnstyledButton
+    UnstyledButton
 } from '@mantine/core';
 import {
     IconCircleX,
-    IconIdBadge2,
-    IconMailOpened
 } from '@tabler/icons-react';
 import {useEffect, useState} from "react";
 import {api} from "../../hooks/api";

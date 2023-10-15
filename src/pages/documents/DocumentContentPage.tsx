@@ -1,12 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {
     createStyles,
     Title,
     Container,
     rem,
-    Image,
     Text,
-    Flex, Paper, Group,
+    Paper,
 } from '@mantine/core';
 import {useTranslation} from 'react-i18next';
 import {useParams} from 'react-router-dom';
@@ -61,7 +60,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export function DocumentContentPage() {
-    const {classes, theme} = useStyles();
+    const {classes} = useStyles();
     const {t} = useTranslation();
     const {id} = useParams();
 

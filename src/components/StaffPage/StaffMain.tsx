@@ -6,21 +6,16 @@ import {
     Paper,
     rem,
     Image,
-    Grid,
     Flex,
-    Group,
     ActionIcon,
-    SimpleGrid, Tooltip
+    Tooltip
 } from '@mantine/core';
 import {
-    IconAdjustments,
-    IconCircleCheck,
     IconCircleX,
     IconIdBadge2,
     IconMailOpened,
-    IconMoodSad
 } from '@tabler/icons-react';
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {api} from "../../hooks/api";
 import {useTranslation} from "react-i18next";
 import {notifications} from "@mantine/notifications";
@@ -84,7 +79,7 @@ export function StaffMain() {
     const {classes, theme} = useStyles();
     const [departments, setDepartments] = useState<Department[]>([]);
     const [positions, setPositions] = useState<Position[]>([]);
-    const { t, i18n } = useTranslation();
+    const { t} = useTranslation();
 
     const handleEmailClick = (email: string) => {
         window.location.href = `mailto:${email}`;

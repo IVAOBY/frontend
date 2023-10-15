@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     Burger,
     Container,
@@ -21,7 +21,6 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
     IconLanguage,
-    IconLogin,
 } from '@tabler/icons-react';
 import { IconLogin2 } from '@tabler/icons-react';
 import by from '../../assets/image/by.svg';
@@ -137,10 +136,8 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export function HeaderResponsive() {
-    const [opened, { toggle, close }] = useDisclosure(false);
+    const [opened, { toggle }] = useDisclosure(false);
     const { classes } = useStyles();
-    const [error, setError] = useState<string | null>(null);
-    const [showAlert, setShowAlert] = useState(false);
     const isAuthenticated = useAuth();
     const [scrollPosition, setScrollPosition] = useState(0);
 
@@ -173,10 +170,6 @@ export function HeaderResponsive() {
             window.location.href = serverUrl;
         } catch (error) {
             console.error('Ошибка при аутентификации:', error);
-            setError(
-                'Произошла ошибка при аутентификации. Пожалуйста, проверьте введенные данные и попробуйте снова.'
-            );
-            setShowAlert(true);
         }
     };
 
@@ -196,9 +189,6 @@ export function HeaderResponsive() {
 
     const navigate = useNavigate();
 
-    const handleNavigate = (link: string) => {
-        navigate(link);
-    };
 
     const { t, i18n } = useTranslation();
 

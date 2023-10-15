@@ -1,5 +1,5 @@
-import React, {useEffect, useMemo, useState} from 'react';
-import {createStyles, Menu, rem, Text, UnstyledButton} from "@mantine/core";
+import  {useEffect, useState} from 'react';
+import {createStyles, Menu, rem, UnstyledButton} from "@mantine/core";
 import { IconLogout, IconUser} from "@tabler/icons-react";
 import jwtDecode from 'jwt-decode';
 import {DecodedTokenInt} from "../hooks/types";

@@ -11,7 +11,6 @@ import {
     rem, Select
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import React from "react";
 
 const useStyles = createStyles((theme) => ({
     title: {
@@ -39,7 +38,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export function GetInTouchSimple() {
-    const { classes, theme } = useStyles();
+    const { classes } = useStyles();
     const form = useForm({
         initialValues: {
             name: '',
