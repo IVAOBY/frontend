@@ -150,7 +150,7 @@ Best wishes,
 ${decoded?.userData.name.first} ${decoded?.userData.name.last}`;
 
                 window.open(
-                    `mailto:by-hq@ivao.aero,${decoded?.userData.divisionId}-hq@ivao.aero?cc=members@ivao.aero&subject=Division%20transfer%20${decoded?.userData.id}&body=${encodeURIComponent(
+                    `mailto:BY-hq@ivao.aero,${decoded?.userData.divisionId}-hq@ivao.aero?cc=members@ivao.aero&subject=Division%20transfer%20${decoded?.userData.id}&body=${encodeURIComponent(
                         emailBody
                     )}`,
                     '_blank'
@@ -159,7 +159,7 @@ ${decoded?.userData.name.first} ${decoded?.userData.name.last}`;
                 console.error('Error decoding token:', error);
             }
         }
-    }, [isAuthenticated]);
+    }, [isAuthenticated, t]);
 
     const openLink = useCallback(function (link: any | undefined) {
         window.open(link, '_blank')
