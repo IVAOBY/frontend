@@ -1,4 +1,4 @@
-import {ButtonStylesParams, MantineTheme, MantineThemeOverride, useMantineTheme} from '@mantine/core';
+import {MantineThemeOverride, rem} from '@mantine/core';
 
 export const ivaoTheme: MantineThemeOverride = {
     colorScheme: 'light',
@@ -91,11 +91,12 @@ export const ivaoTheme: MantineThemeOverride = {
 
     components: {
         Button: {
-            styles: (theme, params: ButtonStylesParams, {variant}) => ({
+            styles: {
                 root: {
                     position: 'relative',
                     overflow: 'hidden',
                     transition: 'all 0.4s ease',
+                    color: '#ffffff',
                     '&:hover': {
                         transform: 'scale(1.05)',
                         boxShadow: '0px 10px 20px rgba(0, 0, 0, 0.2)',
@@ -105,7 +106,56 @@ export const ivaoTheme: MantineThemeOverride = {
                         boxShadow: 'none',
                     },
                 },
-            }),
+            },
+        },
+
+        Select: {
+            styles: {
+                dropdown: {
+                    backgroundColor: "white"
+                },
+            }
+        },
+
+        Tooltip: {
+            styles:{
+                tooltip:{
+                    color: "white"
+                }
+            }
+        },
+
+        Notification: {
+            styles: {
+                root: {
+                    backgroundColor: "white"
+                }
+            }
+        },
+
+        Modal: {
+            styles: {
+                content: {
+                    backgroundColor: "white",
+                },
+                title: {
+                    color: "#0D2C99",
+                    fontWeight: 700,
+                    fontSize: 20
+                },
+                close: {
+                    fontSize: rem(16),
+                    fontWeight: 400,
+                    cursor: 'pointer',
+                    color: "#fff",
+                    backgroundColor: '#3C55AC',
+                    '&:hover': {
+                        backgroundColor: '#3C55AC',
+                        transform: 'scale(1.05)',
+                        boxShadow: '0px 10px 20px rgba(0, 0, 0, 0.2)',
+                    },
+                }
+            }
         },
 
         Menu: {

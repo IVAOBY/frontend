@@ -70,6 +70,9 @@ export interface Translations {
         title: string,
         button: string
     },
+    staff: {
+      name: string,
+    },
     AboutUs: {
         title: string,
         text: string
@@ -82,5 +85,53 @@ export interface Translations {
         privacyPolicyName: string,
         termsOfUseName: string
     },
-    errors: {}
+    notif: {
+        loading: {
+            name: string,
+            descritpion: string
+        },
+        loaded: {
+            name: string,
+            descritpion: string
+        },
+        server: {
+            name: string,
+            descritpion: string,
+        },
+        auth: {
+            negative: {
+                name: string,
+                description: string,
+            },
+        }
+    },
+    FAQ: {
+        page: {
+            title: string,
+        },
+        questions: {
+            1: string,
+            2: string,
+            3: string,
+            4: string,
+            5: string,
+            6: string,
+            7: string,
+            8: string,
+            9: string,
+            10: string,
+        },
+       answers: {
+           1: string,
+           2: string,
+           3: string,
+           4: string,
+           5: string,
+           6: string,
+           7: string,
+           8: string,
+           9: string,
+           10: string,
+       },
+    }
 }

@@ -1,6 +1,6 @@
-import React, {useEffect, useRef} from 'react';
-import { useTranslation } from 'react-i18next';
-import {Container, Center, Card, Text, Group, useMantineTheme} from '@mantine/core';
+import {useEffect, useRef} from 'react';
+// import { useTranslation } from 'react-i18next';
+import {Container, Center, Card, Text, Group} from '@mantine/core';
 import { IconAlertTriangle } from "@tabler/icons-react";
 
 const StarrySky: React.FC = () => {
@@ -86,7 +86,7 @@ const StarrySky: React.FC = () => {
 };
 
 const NotFound: React.FC = () => {
-    const { t } = useTranslation();
+    // const { t } = useTranslation();
 
     return (
         <div style={{ position: 'relative' }}>

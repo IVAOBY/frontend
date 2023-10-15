@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     Burger,
     Container,
@@ -21,14 +21,12 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
     IconLanguage,
-    IconLogin,
 } from '@tabler/icons-react';
 import { IconLogin2 } from '@tabler/icons-react';
-import { HeaderDropdown } from './header/HeaderDropdown';
-import { HeaderDropdownMobile } from './header/HeaderDropdownMobile';
 import by from '../../assets/image/by.svg';
 import ru from '../../assets/image/ru.svg';
 import en from '../../assets/image/en.svg';
+import {CommonDropdownContent} from "./header/CommonDropdownContent";
 
 const HEADER_HEIGHT = rem(100);
 
@@ -57,7 +55,6 @@ const useStyles = createStyles((theme) => ({
         borderTopRightRadius: 0,
         borderTopLeftRadius: 0,
         borderTopWidth: 0,
-        overflow: 'hidden',
         backgroundColor: theme.colors.lightBlue[9],
 
         [theme.fn.largerThan('sm')]: {
@@ -139,14 +136,12 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export function HeaderResponsive() {
-    const [opened, { toggle, close }] = useDisclosure(false);
+    const [opened, { toggle }] = useDisclosure(false);
     const { classes } = useStyles();
-    const [error, setError] = useState<string | null>(null);
-    const [showAlert, setShowAlert] = useState(false);
     const isAuthenticated = useAuth();
     const [scrollPosition, setScrollPosition] = useState(0);
 
-    const serverUrl = `http://localhost:3000/auth/login?goto=http://localhost:3001`;
+    const serverUrl = `https://v3.api.xr.ivao.aero/auth/login?goto=${window.location.protocol}//${window.location.hostname}${window.location.port ? ':'+window.location.port : ''}`;
 
     // Handle scroll position
     useEffect(() => {
@@ -164,10 +159,10 @@ export function HeaderResponsive() {
     };
 
     const logoDefault = (
-        <Image width={150} src={bylogo} onClick={handleImageClick} style={{ cursor: 'pointer' }} />
+        <Image height={60} width={180} src={bylogo} onClick={handleImageClick} style={{ cursor: 'pointer' }} />
     );
     const logoScrolled = (
-        <Image width={150} src={bylogoblue} onClick={handleImageClick} style={{ cursor: 'pointer' }} />
+        <Image height={60} width={180} src={bylogoblue} onClick={handleImageClick} style={{ cursor: 'pointer' }} />
     );
 
     const handleLogin = () => {
@@ -175,10 +170,6 @@ export function HeaderResponsive() {
             window.location.href = serverUrl;
         } catch (error) {
             console.error('Ошибка при аутентификации:', error);
-            setError(
-                'Произошла ошибка при аутентификации. Пожалуйста, проверьте введенные данные и попробуйте снова.'
-            );
-            setShowAlert(true);
         }
     };
 
@@ -198,9 +189,6 @@ export function HeaderResponsive() {
 
     const navigate = useNavigate();
 
-    const handleNavigate = (link: string) => {
-        navigate(link);
-    };
 
     const { t, i18n } = useTranslation();
 
@@ -219,7 +207,7 @@ export function HeaderResponsive() {
             <Container className={classes.header}>
                 {scrollPosition > 0 ? logoScrolled : logoDefault}
                 <Group spacing={5} className={classes.links}>
-                    <HeaderDropdown />
+                    <CommonDropdownContent />
                         {isAuthenticated ? (
                             <>
                                 <LogoutButton />
@@ -279,7 +267,7 @@ export function HeaderResponsive() {
                 <Transition transition="pop-top-right" duration={200} mounted={opened}>
                     {(styles) => (
                         <Paper className={classes.dropdown} style={styles}>
-                            <HeaderDropdownMobile />
+                            <CommonDropdownContent />
                             {isAuthenticated ? (
                                 <LogoutButton />
                             ) : (

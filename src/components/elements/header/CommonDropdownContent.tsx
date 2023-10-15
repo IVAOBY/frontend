@@ -1,6 +1,6 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {
-    createStyles, Group, Image,
+    createStyles, Image,
     Menu,
     rem,
     Text, UnstyledButton,
@@ -50,6 +50,11 @@ const useStyles = createStyles((theme) => ({
             color: theme.colors.gray[3],
             transition: 'color 0.1s ease',
         },
+        [theme.fn.smallerThan('sm')]: {
+            paddingTop: rem(16),
+            paddingBottom: rem(7),
+            paddingLeft: rem(16),
+        },
     },
 
     linkScrolled: {
@@ -61,7 +66,7 @@ const useStyles = createStyles((theme) => ({
     },
 }));
 
-export function HeaderDropdown() {
+export function CommonDropdownContent() {
     const {classes} = useStyles();
     const theme = useMantineTheme();
 
@@ -79,9 +84,6 @@ export function HeaderDropdown() {
     }, []);
 
     const navigate = useNavigate();
-    const handleNavigate = (link: string) => {
-        navigate(link);
-    };
 
     const {t} = useTranslation();
     const menuLink = useCallback(function (link: any | undefined) {
@@ -124,15 +126,15 @@ export function HeaderDropdown() {
                 </Menu.Target>
                 <Menu.Dropdown>
                     <Menu.Item icon={<Image src={steps} width={20}/>}
-                               onClick={() => menuLink('https://google.com')}>{t("navbar.atc.start")}</Menu.Item>
+                               onClick={() => navigate('atc/first-step')}>{t("navbar.atc.start")}</Menu.Item>
                     <Menu.Item icon={<IconLock size={20}/>}
                                onClick={() => menuLink('https://ivao.aero/fras/list.asp?id=BY')}>{t("navbar.atc.fra")}</Menu.Item>
                     <Menu.Item icon={<IconFileInfo size={20}/>}
                                onClick={() => menuLink('https://google.com')}>{t("navbar.atc.charts")}</Menu.Item>
                     <Menu.Item icon={<IconArticle size={20}/>}
-                               onClick={() => menuLink('https://google.com')}>{t("navbar.atc.docs")}</Menu.Item>
+                               onClick={() => navigate('documents/atc')}>{t("navbar.atc.docs")}</Menu.Item>
                     <Menu.Item icon={<IconWorld size={20}/>}
-                               onClick={() => menuLink('https://google.com')}>{t("navbar.atc.gca")}</Menu.Item>
+                               onClick={() => navigate('atc/gca')}>{t("navbar.atc.gca")}</Menu.Item>
                 </Menu.Dropdown>
             </Menu>
             <Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} width={200} withArrow>
@@ -145,13 +147,15 @@ export function HeaderDropdown() {
                 </Menu.Target>
                 <Menu.Dropdown>
                     <Menu.Item icon={<Image src={steps} width={20}/>}
-                               onClick={() => menuLink('https://google.com')}>{t("navbar.pilots.start")}</Menu.Item>
+                               onClick={() => navigate('pilots/first-step')}>{t("navbar.pilots.start")}</Menu.Item>
                     <Menu.Item icon={<IconPlaneDeparture size={20}/>}
                                onClick={() => navigate('scenery')}>{t("navbar.pilots.scenarios")}</Menu.Item>
                     <Menu.Item icon={<IconFileInfo size={20}/>}
                                onClick={() => menuLink('https://google.com')}>{t("navbar.pilots.charts")}</Menu.Item>
                     <Menu.Item icon={<IconPlane size={20}/>}
                                onClick={() => menuLink('https://google.com')}>{t("navbar.pilots.airlines")}</Menu.Item>
+                    <Menu.Item icon={<IconArticle size={20}/>}
+                               onClick={() => navigate('documents/pilots')}>{t("navbar.atc.docs")}</Menu.Item>
                     <Menu.Item icon={<IconMap2 size={20}/>}
                                onClick={() => menuLink('https://google.com')}>{t("navbar.pilots.tours")}</Menu.Item>
                 </Menu.Dropdown>
@@ -167,6 +171,8 @@ export function HeaderDropdown() {
                 <Menu.Dropdown>
                     <Menu.Item icon={<IconCalendarEvent size={20}/>}
                                onClick={() => menuLink('https://google.com')}>{t("navbar.community.events")}</Menu.Item>
+                    <Menu.Item icon={<IconArticle size={20}/>}
+                               onClick={() => navigate('documents')}>{t("navbar.atc.docs")}</Menu.Item>
                     <Menu.Item icon={<IconMessageCircle2 size={20}/>}
                                onClick={() => menuLink('https://forum.ivao.aero')}>{t("navbar.community.forum")}</Menu.Item>
                     <Menu.Item icon={<IconEye size={20}/>}

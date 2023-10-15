@@ -1,6 +1,5 @@
-import { createStyles, Container, rem, Image, Text, Group } from '@mantine/core';
+import { createStyles, Container, rem, Image, Group } from '@mantine/core';
 import bylogo from "../assets/image/logo30px.svg";
-import React from "react";
 
 const useStyles = createStyles((theme) => ({
     footer: {
@@ -43,7 +42,7 @@ export function Footer() {
         <div className={classes.footer} style={{ marginTop: '3.125rem' }}>
             <Container className={classes.inner}>
                 <Group position="center" spacing="xs" noWrap>
-                    <Image width={150} src={bylogo} />
+                    <Image width={200} src={bylogo} />
                 </Group>
             </Container>
         </div>

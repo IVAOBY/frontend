@@ -39,20 +39,22 @@ export interface MessagesType {
     linkTitle: string;
 }
 
-export interface BookingData {
-    image: string;
-    title: string;
-    category: string;
-    url: string;
-    url_text: string;
+export interface DocumentsCategoryType {
+    id: string;
+    order: number;
+    name: {
+        [key: string]: string;
+    }
 }
 
-export interface SlotData {
-    id: number;
-    ident: string;
-    icaoDep: null | string;
-    icaoArr: null | string;
-    acftType: string;
-    scheduleTime: string;
-    bookedUser: null | { id: number; name: { first: string } };
+export interface DocumentsType {
+    id: string;
+    category: string;
+    name: {
+        [key: string]: string;
+    }
+    content: {
+        [key: string]: string;
+    }
+    published: boolean;
 }
