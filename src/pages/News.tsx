@@ -67,8 +67,12 @@ interface News {
         name: {
             first: string;
             last: string;
-        },
-    },
+        };
+        staffPositions: {
+            prefix: string;
+            id: string;
+        }[];
+    };
     image_url: string;
     name: {
         [key: string]: string;
@@ -156,7 +160,14 @@ export function NewsPage() {
                             <Group spacing={rem(5)}>
                                 <IconUser size={18} color={theme.colors.blue[9]}></IconUser>
                                 <Text size="md" fw="bold" color={theme.colors.blue[9]}>
-                                    {newsItem.user.name.first} {newsItem.user.name.last} - {newsItem.user.id}
+                                    {newsItem.user.staffPositions ? (
+                                        newsItem.user.staffPositions
+                                            .map((position) => `BY-${position.id}`)
+                                            .filter((value, index, self) => self.indexOf(value) === index)
+                                            .join('/')
+                                    ) : (
+                                        String(newsItem.user.id)
+                                    )}
                                 </Text>
                             </Group>
                             <Group position="left" spacing={rem(5)}>

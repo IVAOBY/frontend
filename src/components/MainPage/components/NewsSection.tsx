@@ -9,7 +9,7 @@ import {
     Paper,
     Image,
     Flex,
-    Group, Pagination, UnstyledButton,
+    Group, Pagination, UnstyledButton, Skeleton
 } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
 import {IconCalendarTime, IconCircleX, IconUser} from '@tabler/icons-react';
@@ -120,17 +120,28 @@ const useStyles = createStyles((theme) => ({
         color: theme.colors.blue[9],
         margin: 0,
     },
+    skeleton: {
+        display: 'flex',
+        flexDirection: 'column',
+        minWidth: '500px',
+        maxWidth: '100%',
+        gap: rem(10)
+    }
 }));
 
 interface News {
     id: number;
     user: {
-      id: number;
-      name: {
-        first: string;
-        last: string;
-      },
-    },
+        id: number;
+        name: {
+            first: string;
+            last: string;
+        };
+        staffPositions: {
+            prefix: string;
+            id: string;
+        }[];
+    };
     image_url: string;
     name: {
         [key: string]: string;
@@ -144,7 +155,7 @@ interface News {
 export function NewsSection() {
     const { classes, theme } = useStyles();
     const { t, i18n } = useTranslation();
-    const [news, setNews] = useState<News[]>([]);
+    const [news, setNews] = useState<News[] | null>(null);
 
     const navigate = useNavigate();
     const newsRedirect = (newsItem: News) => {
@@ -200,57 +211,76 @@ export function NewsSection() {
 
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
+
     return (
         <Container size="lg" py="xl">
             <Title order={2} className={classes.title} ta="center" mt="sm">
                 {t('news.title')}
             </Title>
             <SimpleGrid cols={1} spacing="xl" mt={rem(13)} breakpoints={[{ maxWidth: 'md', cols: 1 }]}>
-                {news.slice(startIndex, endIndex).map((newsItem) => (
-                    <UnstyledButton key={newsItem.id} className={classes.button} style={{width: 'auto', height: 'auto'}} onClick={() => newsRedirect(newsItem)}>
-                    <Paper key={newsItem.id} className={classes.card} p="xl" radius="lg" shadow="lg">
+                {news === null ? (
+                    Array.from({ length: itemsPerPage }).map((_, index) => (
+                    <Paper key={index} className={classes.card} p="xl" radius="lg" shadow="lg">
                         <Flex className={classes.cardContent}>
                             <div className={classes.cardImage}>
-                                <Image src={newsItem.image_url} alt="newsimage" radius="lg" />
+                                <Skeleton height={rem(231)} radius="lg" maw={400} />
                             </div>
-                            <div>
-                                <Title className={classes.cardTitle}>{newsItem.name[i18n.language]}</Title>
-                                <Text className={classes.cardDescription}>
-                                    {newsItem.description[i18n.language].length > 300
-                                        ? `${newsItem.description[i18n.language].slice(0, 300)}...`
-                                        : newsItem.description[i18n.language]}
-                                </Text>
-
-                                <div className={classes.cardAuthorDate}>
-                                    <Group>
-                                        <IconUser size={18} color={theme.colors.blue[9]}></IconUser>
-                                        <Text size="md" fw="bold" color={theme.colors.blue[9]}>
-                                            {newsItem.user.name.first} - {newsItem.user.id}
-                                        </Text>
-                                    </Group>
-                                    <Group position="right">
-                                        <IconCalendarTime size={18} color={theme.colors.blue[9]} />
-                                        <Text size="md" c={theme.colors.blue[9]}>
-                                            {format(new Date(newsItem.publishedAt), 'dd-MM-yyyy')}
-                                        </Text>
-                                    </Group>
-                                </div>
+                            <div className={classes.skeleton}>
+                                <Skeleton height={10} radius="lg" maw={600} />
+                                <Skeleton height={10} radius="lg" maw={600} />
+                                <Skeleton height={10} radius="lg" maw={600} />
+                                <Skeleton height={10} radius="lg" maw={600} />
+                                <Skeleton height={10} radius="lg" maw={600} />
+                                <Skeleton height={10} radius="lg" maw={600} />
                             </div>
                         </Flex>
                     </Paper>
-                    </UnstyledButton>
-                ))}
-            </SimpleGrid>
-            <Pagination
-                value={currentPage}
-                onChange={setCurrentPage}
-                total={Math.ceil(news.length / itemsPerPage)}
-                mt={10}
-                position={"center"}
-                radius={"lg"}
-                className={classes.pagination}
-            />
+                    ))
+                ) : (
+                    news.slice(startIndex, endIndex).map((newsItem) => (
+                        <UnstyledButton key={newsItem.id} className={classes.button} style={{ width: 'auto', height: 'auto' }} onClick={() => newsRedirect(newsItem)}>
+                            <Paper key={newsItem.id} className={classes.card} p="xl" radius="lg" shadow="lg">
+                                <Flex className={classes.cardContent}>
+                                    <div className={classes.cardImage}>
+                                        <Image src={newsItem.image_url} alt="newsimage" radius="lg" />
+                                    </div>
+                                    <div>
+                                        <Title className={classes.cardTitle}>{newsItem.name[i18n.language]}</Title>
+                                        <Text className={classes.cardDescription}>
+                                            {newsItem.description[i18n.language].length > 300
+                                                ? `${newsItem.description[i18n.language].slice(0, 300)}...`
+                                                : newsItem.description[i18n.language]}
+                                        </Text>
 
+                                        <div className={classes.cardAuthorDate}>
+                                            <Group>
+                                                <IconUser size={18} color={theme.colors.blue[9]}></IconUser>
+                                                <Text size="md" fw="bold" color={theme.colors.blue[9]}>
+                                                    {newsItem.user.staffPositions ? (
+                                                        newsItem.user.staffPositions
+                                                            .map((position) => `BY-${position.id}`)
+                                                            .filter((value, index, self) => self.indexOf(value) === index)
+                                                            .join('/')
+                                                    ) : (
+                                                        String(newsItem.user.id)
+                                                    )}
+                                                </Text>
+                                            </Group>
+                                            <Group position="right">
+                                                <IconCalendarTime size={18} color={theme.colors.blue[9]} />
+                                                <Text size="md" c={theme.colors.blue[9]}>
+                                                    {format(new Date(newsItem.publishedAt), 'dd-MM-yyyy')}
+                                                </Text>
+                                            </Group>
+                                        </div>
+                                    </div>
+                                </Flex>
+                            </Paper>
+                        </UnstyledButton>
+                    ))
+                )}
+            </SimpleGrid>
+            <Pagination value={currentPage} onChange={setCurrentPage} total={Math.ceil(news ? news.length / itemsPerPage : 1)} mt={10} position={'center'} radius={'lg'} className={classes.pagination} />
         </Container>
     );
 }
