@@ -95,7 +95,8 @@ export function FAQ() {
                         {t('FAQ.questions.1')}
                         </Text>
                     </Accordion.Control>
-                    <Accordion.Panel> {t('FAQ.answers.1')}</Accordion.Panel>
+                    <Accordion.Panel><Text dangerouslySetInnerHTML={{ __html: t('FAQ.answers.1') || '' }}>
+                    </Text></Accordion.Panel>
                 </Accordion.Item>
 
                 <Accordion.Item value="2">
@@ -143,7 +144,8 @@ export function FAQ() {
                             {t('FAQ.questions.6')}
                         </Text>
                     </Accordion.Control>
-                    <Accordion.Panel>  {t('FAQ.answers.6')}</Accordion.Panel>
+                    <Accordion.Panel><Text dangerouslySetInnerHTML={{ __html: t('FAQ.answers.6') || '' }}>
+                    </Text></Accordion.Panel>
                 </Accordion.Item>
                 <Accordion.Item value="7">
                     <Accordion.Control icon={<IconClockExclamation size={rem(30)} color={"#0D2C99"} />}>
@@ -151,7 +153,8 @@ export function FAQ() {
                             {t('FAQ.questions.7')}
                         </Text>
                     </Accordion.Control>
-                    <Accordion.Panel> {t('FAQ.answers.7')}</Accordion.Panel>
+                    <Accordion.Panel><Text dangerouslySetInnerHTML={{ __html: t('FAQ.answers.7') || '' }}>
+                    </Text></Accordion.Panel>
                 </Accordion.Item>
 
                 <Accordion.Item value="8">
@@ -160,7 +163,8 @@ export function FAQ() {
                             {t('FAQ.questions.8')}
                         </Text>
                     </Accordion.Control>
-                    <Accordion.Panel>  {t('FAQ.answers.8')}</Accordion.Panel>
+                    <Accordion.Panel><Text dangerouslySetInnerHTML={{ __html: t('FAQ.answers.8') || '' }}>
+                    </Text></Accordion.Panel>
                 </Accordion.Item>
 
                 <Accordion.Item value="9">
@@ -169,7 +173,8 @@ export function FAQ() {
                             {t('FAQ.questions.9')}
                         </Text>
                     </Accordion.Control>
-                    <Accordion.Panel>  {t('FAQ.answers.9')}</Accordion.Panel>
+                    <Accordion.Panel><Text dangerouslySetInnerHTML={{ __html: t('FAQ.answers.9') || '' }}>
+                    </Text></Accordion.Panel>
                 </Accordion.Item>
             </Accordion>
         </Container>
