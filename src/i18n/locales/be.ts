@@ -43,7 +43,7 @@ const beTranslations: { translations: Translations } = {
             }
         },
         errorpage: {
-            notfoundtext: 'Добро пожаловать в BY дивизион',
+            notfoundtext: 'Cардэчна запрашаем у BY дывізіён',
             notfoundsubtext: 'Добро пожаловать в BY дивизион'
         },
         heropage: {
@@ -55,7 +55,7 @@ const beTranslations: { translations: Translations } = {
         },
         featuresection: {
             title: 'Нашы перавагі',
-            subtitle: 'Потому что Назаренко есть в диве',
+            subtitle: 'Таму што Назаранка смокча ў дзіве',
             first: {
                 title: 'ddf',
                 subtitle: 'adf'
@@ -71,7 +71,7 @@ const beTranslations: { translations: Translations } = {
         },
         news: {
             title: 'Навіны',
-            button: 'Чытать больш'
+            button: 'Чытаць больш'
         },
         staff: {
             name: 'Кіраўніцтва дывізіёна',
@@ -103,8 +103,8 @@ const beTranslations: { translations: Translations } = {
             },
             auth: {
                 negative: {
-                    name: "Ошибка!",
-                    description: "Для совершения данного действия, пожалуйста войдите в аккаунт.",
+                    name: "Памылка!",
+                    description: "Дзеля ўчынення дадзенага дзеяння калі ласка ўвайдзіце ў акаўнт.",
                 },
             }
         },
