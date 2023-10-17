@@ -66,7 +66,7 @@ const beTranslations: { translations: Translations } = {
             },
             third: {
                 title: 'asdfasdf',
-                subtitle: 'asdfasdf'
+                subtitle: 'asddfasdf'
             }
         },
         news: {
