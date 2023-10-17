@@ -103,7 +103,7 @@ const beTranslations: { translations: Translations } = {
             },
             auth: {
                 negative: {
-                    name: "Памылка!",
+                    name: "Ошибка!",
                     description: "Для совершения данного действия, пожалуйста войдите в аккаунт.",
                 },
             }
