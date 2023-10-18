@@ -105,6 +105,14 @@ export interface Translations {
             },
         }
     },
+    Scenery: {
+        title: string,
+        search: string,
+        searchButton: string,
+        helpTitle: string,
+        helpText: string,
+        helpButton: string,
+    }
     FAQ: {
         page: {
             title: string,

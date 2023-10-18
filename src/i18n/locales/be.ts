@@ -108,6 +108,14 @@ const beTranslations: { translations: Translations } = {
                 },
             }
         },
+        Scenery: {
+            title: "Сценарии",
+            search: "Введите ICAO",
+            searchButton: "Найти",
+            helpTitle: "Хотите видеть здесь свои сценарии?",
+            helpText: "Вы можете помочь нам в разработке сценариев для аэропортов дивизиона? Присоединяйтесь!",
+            helpButton: "Я в деле!",
+        },
         FAQ: {
             page: {
                 title: "Пытанні і адказы",
