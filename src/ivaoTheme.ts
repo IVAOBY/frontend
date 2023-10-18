@@ -161,14 +161,13 @@ export const ivaoTheme: MantineThemeOverride = {
         Menu: {
             styles: {
                 dropdown: {
-                    backgroundColor: "white",
+                    backgroundColor: '#fff',
                     transition: 'all 0.1s ease',
                 },
                 item: {
                     '&[data-hovered]': {
                         backgroundColor: '#c2c2c6',
                         transition: 'all 0.1s ease',
-                        color: '#fff,'
                     },
                 },
             },

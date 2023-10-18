@@ -2,10 +2,15 @@ import {
     createStyles,
     Title,
     Container,
-    rem, Paper, Input, Button, Flex, Text,
+    rem,
+    Paper,
+    Input,
+    Button,
+    Flex,
+    Text,
+    BackgroundImage,
 } from '@mantine/core';
-// import { useTranslation } from 'react-i18next';
-import {IconSearch} from "@tabler/icons-react";
+import { IconSearch } from "@tabler/icons-react";
 
 const useStyles = createStyles((theme) => ({
     title: {
@@ -32,19 +37,19 @@ const useStyles = createStyles((theme) => ({
     },
 
     contactcard: {
-        backgroundImage: 'url(https://content.onliner.by/news/970x485/e1106fc9ff56225d5f2829d841c139ca.jpeg)',
+        background: "transparent",
+    },
+    contactimg: {
         backgroundSize: 'cover',
         backgroundPosition: 'center',
     },
-
     button: {
-      color: "white",
+        color: "white",
     },
 }));
 
 export function ScenaryPage() {
     const { classes, theme } = useStyles();
-    // const { t } = useTranslation();
 
     return (
         <Container size="lg" py="xl">
@@ -56,7 +61,7 @@ export function ScenaryPage() {
                     <Title order={2} c={theme.colors.blue[9]}>Enter ICAO</Title>
                     <Flex direction={"row"} gap={10}>
                         <Input
-                            icon={<IconSearch  />}
+                            icon={<IconSearch />}
                             placeholder="UMMS"
                             radius="md"
                         />
@@ -67,12 +72,18 @@ export function ScenaryPage() {
                 </Paper>
             </Container>
             <Container size={"md"} mt={rem(24)}>
-                {/*Добавить затемнение картинки*/}
-                <Paper className={classes.contactcard} shadow={"lg"} p={"lg"} radius={"lg"} ta={"center"}>
-                    <Title order={3} color={"#fff"}>Do you want to see your own sceneries here?</Title>
-                    <Text color={"#fff"}>We move forward with the help of people like you! </Text>
-                    <Button className={classes.button}>Apply Now!</Button>
-                </Paper>
+                <BackgroundImage
+                    radius={"md"}
+                    className={classes.contactimg}
+                    src="https://content.onliner.by/news/970x485/e1106fc9ff56225d5f2829d841c139ca.jpeg"
+                    style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://content.onliner.by/news/970x485/e1106fc9ff56225d5f2829d841c139ca.jpeg")`, }}
+                >
+                    <Paper shadow={"lg"} p={"lg"} radius={"lg"} ta={"center"}>
+                        <Title order={3} color={"#fff"}>Do you want to see your own sceneries here?</Title>
+                        <Text color={"#fff"}>We move forward with the help of people like you! </Text>
+                        <Button className={classes.button}>Apply Now!</Button>
+                    </Paper>
+                </BackgroundImage>
             </Container>
         </Container>
     );
