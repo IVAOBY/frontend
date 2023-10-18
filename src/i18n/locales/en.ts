@@ -43,8 +43,9 @@ const enTranslations: { translations: Translations } = {
             }
         },
         errorpage: {
-            notfoundtext: 'Добро пожаловать в BY дивизион',
-            notfoundsubtext: 'Добро пожаловать в BY дивизион'
+            notfoundtext: 'Something is not right!',
+            notfoundsubtext: 'It seems like you tried to open a page that doesn\'t exist. Good thing we have a cool button for you:',
+            homebutton: 'Home!'
         },
         heropage: {
             title: 'Welcome to the BY Division of',
@@ -103,8 +104,8 @@ const enTranslations: { translations: Translations } = {
             },
             auth: {
                 negative: {
-                    name: "Ошибка!",
-                    description: "Для совершения данного действия, пожалуйста войдите в аккаунт.",
+                    name: "Error!",
+                    description: "It seems you have to log into your account first.",
                 },
             }
         },

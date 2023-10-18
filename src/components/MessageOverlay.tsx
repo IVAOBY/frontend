@@ -19,10 +19,11 @@ export function MessageOverlay({ title, message, link, linkTitle }: MessagesType
                     maw={150}
                     mx="auto"
                 />
-                <Text size={25} fw={700} color={theme.colors.blue[9]} align="center">{title}</Text>
+                <Text mt={10} size={25} fw={700} color={theme.colors.blue[9]} align="center">{title}</Text>
                 <Text align="center">{message}</Text>
                 <Group position="center" mt={5}>
                     <Button
+                        mt={15}
                         bg={theme.colors.blue[9]}
                         onClick={() => {
                             HandleNavigate();

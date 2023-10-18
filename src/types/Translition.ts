@@ -41,7 +41,8 @@ export interface Translations {
     },
     errorpage: {
         notfoundtext: string,
-        notfoundsubtext: string
+        notfoundsubtext: string,
+        homebutton: string
     },
     heropage: {
         title: string,

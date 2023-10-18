@@ -8,7 +8,7 @@ import {MainPage} from './components/MainPage/MainPage';
 import {StaffMain} from './components/StaffPage/StaffMain';
 import {Airport} from './components/AirportPage/Airport';
 import {Handler} from './components/Handler';
-import NotFound from './pages/Error404';
+import {NotFound} from './pages/Error404';
 import {ivaoTheme} from './ivaoTheme';
 import {AboutUs} from './pages/AboutUs';
 import {FAQ} from './pages/FAQ';

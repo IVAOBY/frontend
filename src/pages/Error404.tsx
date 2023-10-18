@@ -1,116 +1,63 @@
-import {useEffect, useRef} from 'react';
-// import { useTranslation } from 'react-i18next';
-import {Container, Center, Card, Text, Group} from '@mantine/core';
-import { IconAlertTriangle } from "@tabler/icons-react";
+import {
+    createStyles,
+    Title,
+    Container,
+    Button,
+    Text, SimpleGrid, Image,
+} from '@mantine/core';
+import errorimage from '../assets/image/en.svg';
+import { useTranslation } from 'react-i18next';
+const useStyles = createStyles(() => ({
+    root: {
+        paddingTop: '80px',
+        paddingBottom: '80px',
+    },
+    title: {
+        fontWeight: 900,
+        fontSize: '34px',
+        marginBottom: '20px',
+        color: '#E93434',
 
-const StarrySky: React.FC = () => {
-    const containerRef = useRef<HTMLDivElement | null>(null);
-    useEffect(() => {
-        let stars: HTMLDivElement[] = [];
-        const header = document.querySelector('header');
-        if (header) {
-            header.style.background = 'transparent';
-        }
+        '@media (max-width: $mantine-breakpoint-sm)': {
+            fontSize: '32px',
+        },
+    },
+    control: {
+        '@media (max-width: $mantine-breakpoint-sm)': {
+            width: '100%',
+            backgroundColor: '#0D2C99',
+        },
+    },
+    mobileImage: {
+        '@media (min-width: 48em)': {
+            display: 'none',
+        },
+    },
+    desktopImage: {
+        '@media (max-width: 47.99em)': {
+            display: 'none',
+        },
+    },
+}));
 
-        const createStar = () => {
-            const star = document.createElement('div');
-            star.classList.add('star');
-            star.style.left = `${Math.random() * 100}%`;
-            star.style.top = `${Math.random() * 100}%`;
-            star.style.animationDuration = `${Math.random() * 3 + 2}s`;
-            star.style.animationDelay = `${Math.random() * 2}s`;
-            containerRef.current?.appendChild(star);
-            stars.push(star);
-        };
-
-        const createStars = () => {
-            for (let i = 0; i < 500; i++) {
-                createStar();
-            }
-        };
-
-        const init = () => {
-            createStars();
-        };
-
-        init();
-
-        return () => {
-            stars.forEach((star) => {
-                containerRef.current?.removeChild(star);
-            });
-        };
-    }, []);
-
+export function NotFound() {
+    const { classes } = useStyles();
+    const { t } = useTranslation();
     return (
-        <div
-            ref={containerRef}
-            style={{
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                zIndex: -1,
-                pointerEvents: 'none',
-                background: 'black',
-            }}
-        >
-            <style>
-                {`
-          .star {
-            position: absolute;
-            background: white;
-            width: 2px;
-            height: 2px;
-            border-radius: 50%;
-            pointer-events: none;
-            opacity: 1;
-            transform: translateX(-50%) translateY(-50%);
-            animation: twinkling 3s infinite;
-          }
-
-          @keyframes twinkling {
-            0%, 100% {
-              opacity: 1;
-            }
-            50% {
-              opacity: 0;
-              transform: translateX(-50%) translateY(-50%);
-            }
-          }
-        `}
-            </style>
-        </div>
+        <Container className={classes.root}>
+            <SimpleGrid spacing={40} cols={2}>
+                <Image src={errorimage} className={classes.mobileImage} />
+                <div>
+                    <Title className={classes.title}>{t('errorpage.notfoundtext')}</Title>
+                    <Text c={"#000"} size="lg">
+                        {t('errorpage.notfoundsubtext')}
+                    </Text>
+                    <Button variant="filled" size="md" mt="xl" className={classes.control}>
+                        {t('errorpage.homebutton')}
+                    </Button>
+                </div>
+                <Image src={errorimage} className={classes.desktopImage} />
+            </SimpleGrid>
+        </Container>
     );
-};
-
-const NotFound: React.FC = () => {
-    // const { t } = useTranslation();
-
-    return (
-        <div style={{ position: 'relative' }}>
-            <StarrySky />
-            <Container size="sm">
-                <Center h="50%" mt="50%">
-                    <Card bg="#fff" radius="md" style={{ padding: '20px', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)' }}>
-                        <Card.Section style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                            <Group position="center" grow>
-                                <IconAlertTriangle color="#ff0000" size={24} style={{ marginRight: '10px' }} />
-                                <Text size="lg" weight={700}>Произошла ошибка!</Text>
-                            </Group>
-                        </Card.Section>
-                        <Text size="sm" color="dimmed">
-                            Такой страницы нету
-                        </Text>
-                        <Text fw="400" size="sm" color="dimmed">
-                            Хорошо, что у нас их ещё много
-                        </Text>
-                    </Card>
-                </Center>
-            </Container>
-        </div>
-    );
-};
-
-export default NotFound;
+}

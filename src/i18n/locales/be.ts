@@ -43,8 +43,9 @@ const beTranslations: { translations: Translations } = {
             }
         },
         errorpage: {
-            notfoundtext: 'Cардэчна запрашаем у BY дывізіён',
-            notfoundsubtext: 'Добро пожаловать в BY дивизион'
+            notfoundtext: 'Что-то не так!',
+            notfoundsubtext: 'Кажется, вы попытались открыть страницу, которой нет. Хорошо, что мы приготовили для вас крутую кнопку:',
+            homebutton: 'Домой!'
         },
         heropage: {
             title: 'Сардэчна запрашаем у BY дывізіён',
@@ -104,7 +105,7 @@ const beTranslations: { translations: Translations } = {
             auth: {
                 negative: {
                     name: "Памылка!",
-                    description: "Дзеля ўчынення дадзенага дзеяння калі ласка ўвайдзіце ў акаўнт.",
+                    description: "Кажется, нужно сначала войти в аккаунт.",
                 },
             }
         },
@@ -130,7 +131,7 @@ const beTranslations: { translations: Translations } = {
                 7: "Інтэрнэт-гадзіны не абнаўляюцца на маім рахунку. Гэта нармальна?",
                 8: "Як я магу перайсці ў BY дывізіён?",
                 9: "З кім я магу звязацца, калі будуць іншыя пытанні.",
-                10:"струк",
+                10:"привет",
             },
             answers: {
                 1: 'Калі карыстальнік IVAO ня быў актыўны ў сеткі на працягу 3-х месяцаў, то такі акаунт становіцца неактыўным, і адзначаецца статусам "Inactive User" у профілі. Пасля гэтага вы не зможаце падлучыцца да сеткі. Калі вы памятаеце свой ID, то актываваць рахунак вельмі проста: зайдзіце на старонку профілю вашага акаўнта <a href=\'https://www.ivao.aero/members/person/details.asp?ID=XXXXXX\' target= \'_blank\' >https://www.ivao.aero/members/person/details.asp?ID=XXXXXX</a> (заменіце XXXXX на ваш VID). Націсніце справа на спасылку "Click here to reactivate it". Актывацыя адбываецца аўтаматычна на працягу 15 хвілін. Калі забыліся пароль, перайдзіце на старонку аднаўлення пароля <a href=\'http://www.ivao.aero/members/person/password.html\' target= \'_blank\' >http://www.ivao.aero/members/person/password.html</a> . Калі вы не памятаеце ваш VID, адпраўце ліст з вашымі імём, прозвішчам і адрасам e-mail, названым пры рэгістрацыі в BY Membership Department (<a href=\'mailto:by-membership@ivao.aero\' target= \'_blank\' >by-membership@ivao.aero</a>). ',
@@ -159,7 +160,7 @@ const beTranslations: { translations: Translations } = {
                     "\n" +
                     "Таксама вы можаце выкарыстоўваць кнопку на галоўнай старонцы нашага дывізіёна для аўталіста.",
                 9: "Калі вы жадаеце звязацца з кімсьці з каардынатараў BY дывізіёна, калі ласка паглядзіце яго e-mail адрас у <a href='/staff' target= '_blank' >спісе кіраўніцтва</a>",
-                10: "стук",
+                10: "привет",
             },
         },
     },
