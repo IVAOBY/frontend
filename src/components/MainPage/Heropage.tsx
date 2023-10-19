@@ -56,6 +56,7 @@ const useStyles = createStyles((theme) => ({
         color: theme.white,
         textAlign: 'center',
         fontSize: 30,
+        maxWidth: "100%",
 
         [theme.fn.smallerThan('xs')]: {
             fontSize: theme.fontSizes.md,
@@ -101,13 +102,13 @@ const useStyles = createStyles((theme) => ({
 
     joinButton: {
         color: '#fff',
-    '&:hover': {
-      backgroundColor: '#fff',
-      color: '#0D2C99',
-    },
+        '&:hover': {
+          backgroundColor: '#fff',
+          color: '#0D2C99',
+        },
     },
     transButton: {
-          color: '#fff',
+        color: '#fff',
         borderColor: '#fff',
         '&:hover': {
             backgroundColor: '#fff',
@@ -144,10 +145,10 @@ export function HeroText() {
                 const decoded = await getDecodedToken(token);
                 const emailBody = `Dear HQs and Membership Department!
 
-I request to transfer me from the ${decoded?.userData.divisionId} division to the BY division.
-
-Best wishes,
-${decoded?.userData.name.first} ${decoded?.userData.name.last}`;
+                I request to transfer me from the ${decoded?.userData.divisionId} division to the BY division.
+                
+                Best wishes,
+                ${decoded?.userData.name.first} ${decoded?.userData.name.last}`;
 
                 window.open(
                     `mailto:BY-hq@ivao.aero,${decoded?.userData.divisionId}-hq@ivao.aero?cc=members@ivao.aero&subject=Division%20transfer%20${decoded?.userData.id}&body=${encodeURIComponent(
