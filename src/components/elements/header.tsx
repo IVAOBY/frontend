@@ -21,8 +21,9 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
     IconLanguage,
+    IconLogout,
+    IconLogin2
 } from '@tabler/icons-react';
-import { IconLogin2 } from '@tabler/icons-react';
 import by from '../../assets/image/by.svg';
 import ru from '../../assets/image/ru.svg';
 import en from '../../assets/image/en.svg';
@@ -100,6 +101,7 @@ const useStyles = createStyles((theme) => ({
         lineHeight: 1,
         padding: `${rem(8)} ${rem(12)}`,
         borderRadius: theme.radius.sm,
+        transition: 'color 0.3s ease',
         textDecoration: 'none',
         color: '#ffffff',
         fontSize: theme.fontSizes.sm,
@@ -121,6 +123,7 @@ const useStyles = createStyles((theme) => ({
         color: '#fff',
         fontSize: theme.fontSizes.sm,
         fontWeight: 700,
+        transition: 'color 0.3s ease',
         fontFamily: 'Montserrat',
         cursor: 'pointer',
         paddingLeft: 0,
@@ -131,6 +134,7 @@ const useStyles = createStyles((theme) => ({
     },
     linkScrolled: {
         color: theme.colors.blue[9],
+        transition: 'color 0.1s ease',
         '&:hover': { color: theme.colors.lightBlue[8] },
     },
 }));
@@ -161,15 +165,39 @@ export function HeaderResponsive() {
     const logoDefault = (
         <Image height={60} width={180} src={bylogo} onClick={handleImageClick} style={{ cursor: 'pointer' }} />
     );
+
     const logoScrolled = (
         <Image height={60} width={180} src={bylogoblue} onClick={handleImageClick} style={{ cursor: 'pointer' }} />
     );
+
+
+    const logoToRender = scrollPosition > 0 ? logoScrolled : logoDefault;
 
     const handleLogin = () => {
         try {
             window.location.href = serverUrl;
         } catch (error) {
             console.error('Ошибка при аутентификации:', error);
+        }
+    };
+
+    const handleAuthAction = () => {
+        if (isAuthenticated) {
+            // Handle Logout
+            try {
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('authTokenExpiration');
+                navigate('/');
+            } catch (error) {
+                console.error('Error during logout:', error);
+            }
+        } else {
+            // Handle Login
+            try {
+                window.location.href = serverUrl;
+            } catch (error) {
+                console.error('Error during authentication:', error);
+            }
         }
     };
 
@@ -185,6 +213,7 @@ export function HeaderResponsive() {
             window.location.port ? ':' + window.location.port : ''
         }`;
     }
+
 
 
     const navigate = useNavigate();
@@ -205,56 +234,61 @@ export function HeaderResponsive() {
             className={`${classes.root} ${scrollPosition > 0 ? classes.scrolled : ''}`}
         >
             <Container className={classes.header}>
-                {scrollPosition > 0 ? logoScrolled : logoDefault}
+                {logoToRender}
                 <Group spacing={5} className={classes.links}>
-                    <CommonDropdownContent />
+                    <CommonDropdownContent scrollPosition={scrollPosition} />
+                    <UnstyledButton
+                        display="flex"
+                        className={`${classes.link} ${
+                            scrollPosition > 0 ? classes.linkScrolled : ''
+                        }`}
+                    >
                         {isAuthenticated ? (
                             <>
-                                <LogoutButton />
+                                <IconLogout size={20}></IconLogout>
+                                <Text onClick={handleAuthAction} ml={6}>
+                                    {t('navbar.user.logout')}
+                                </Text>
                             </>
                         ) : (
-                            <UnstyledButton
-                                display="flex"
-                                className={`${classes.link} ${
-                                    scrollPosition > 0 ? classes.linkScrolled : ''
-                                }`}
-                            >
+                            <>
                                 <IconLogin2 size={20}></IconLogin2>
-                                <Text onClick={handleLogin} ml={6}>
+                                <Text onClick={handleAuthAction} ml={6}>
                                     {t('navbar.user.login')}
                                 </Text>
-                            </UnstyledButton>
+                            </>
                         )}
-                        <Menu trigger="hover" radius="lg">
-                            <Menu.Target>
-                                <IconLanguage
-                                    className={`${classes.language} ${
-                                        scrollPosition > 0 ? classes.linkScrolled : ''
-                                    }`}
-                                    size={25}
-                                />
-                            </Menu.Target>
-                            <Menu.Dropdown>
-                                <Menu.Item
-                                    icon={<Image src={by} radius={3} width={20} />}
-                                    onClick={() => changeLanguage('be')}
-                                >
-                                    {t('Беларуская')}
-                                </Menu.Item>
-                                <Menu.Item
-                                    icon={<Image src={ru} radius={3} width={20} />}
-                                    onClick={() => changeLanguage('ru')}
-                                >
-                                    {t('Русский')}
-                                </Menu.Item>
-                                <Menu.Item
-                                    icon={<Image src={en} radius={3} width={20} />}
-                                    onClick={() => changeLanguage('en')}
-                                >
-                                    {t('English')}
-                                </Menu.Item>
-                            </Menu.Dropdown>
-                        </Menu>
+                    </UnstyledButton>
+                    <Menu trigger="hover" radius="lg">
+                        <Menu.Target>
+                            <IconLanguage
+                                className={`${classes.language} ${
+                                    scrollPosition > 0 ? classes.linkScrolled : ''
+                                }`}
+                                size={25}
+                            />
+                        </Menu.Target>
+                        <Menu.Dropdown>
+                            <Menu.Item
+                                icon={<Image src={by} radius={3} width={20} />}
+                                onClick={() => changeLanguage('be')}
+                            >
+                                {t('Беларуская')}
+                            </Menu.Item>
+                            <Menu.Item
+                                icon={<Image src={ru} radius={3} width={20} />}
+                                onClick={() => changeLanguage('ru')}
+                            >
+                                {t('Русский')}
+                            </Menu.Item>
+                            <Menu.Item
+                                icon={<Image src={en} radius={3} width={20} />}
+                                onClick={() => changeLanguage('en')}
+                            >
+                                {t('English')}
+                            </Menu.Item>
+                        </Menu.Dropdown>
+                    </Menu>
                 </Group>
 
                 <Burger
@@ -267,7 +301,7 @@ export function HeaderResponsive() {
                 <Transition transition="pop-top-right" duration={200} mounted={opened}>
                     {(styles) => (
                         <Paper className={classes.dropdown} style={styles}>
-                            <CommonDropdownContent />
+                            <CommonDropdownContent scrollPosition={scrollPosition} />
                             {isAuthenticated ? (
                                 <LogoutButton />
                             ) : (

@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback } from 'react';
 import {
     createStyles, Image,
     Menu,
@@ -6,7 +6,7 @@ import {
     Text, UnstyledButton,
     useMantineTheme,
 } from '@mantine/core';
-import {useNavigate} from 'react-router-dom';
+import {To, useNavigate} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import {
     IconBook,
@@ -59,6 +59,7 @@ const useStyles = createStyles((theme) => ({
 
     linkScrolled: {
         color: theme.colors.blue[9],
+        transition: 'color 0.1s ease',
         '&:hover': {
             color: theme.colors.lightBlue[8],
             transition: 'color 0.1s ease',
@@ -66,24 +67,16 @@ const useStyles = createStyles((theme) => ({
     },
 }));
 
-export function CommonDropdownContent() {
+export function CommonDropdownContent({scrollPosition: propScrollPosition}: { scrollPosition: number }) {
     const {classes} = useStyles();
     const theme = useMantineTheme();
 
-    const [scrollPosition, setScrollPosition] = useState(0);
+    const navigateFunction = useNavigate();
 
-    //Скролл хедера
-    useEffect(() => {
-        const handleScroll = () => {
-            setScrollPosition(window.scrollY);
-        };
-        window.addEventListener('scroll', handleScroll);
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
-
-    const navigate = useNavigate();
+    const navigate = (to: To) => {
+        navigateFunction(to);
+        window.scrollTo(0, 0);
+    };
 
     const {t} = useTranslation();
     const menuLink = useCallback(function (link: any | undefined) {
@@ -96,7 +89,8 @@ export function CommonDropdownContent() {
             <Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} withArrow>
                 <Menu.Target>
                     <UnstyledButton display="flex"
-                                    className={`${classes.link} ${scrollPosition > 0 ? classes.linkScrolled : ''}`}>
+                                    className={`${classes.link} ${propScrollPosition > 0 ? classes.linkScrolled : ''}`}
+                    >
                         <IconInfoSquareRounded size={20}></IconInfoSquareRounded>
                         <Text ml={6}>{t('navbar.division.index')}</Text>
                     </UnstyledButton>
@@ -119,7 +113,8 @@ export function CommonDropdownContent() {
             <Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} width={200} withArrow>
                 <Menu.Target>
                     <UnstyledButton display="flex"
-                                    className={`${classes.link} ${scrollPosition > 0 ? classes.linkScrolled : ''}`}>
+                                    className={`${classes.link} ${propScrollPosition > 0 ? classes.linkScrolled : ''}`}
+                    >
                         <IconAirTrafficControl size={20}></IconAirTrafficControl>
                         <Text ml={6}>{t('navbar.atc.index')}</Text>
                     </UnstyledButton>
@@ -140,7 +135,8 @@ export function CommonDropdownContent() {
             <Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} width={200} withArrow>
                 <Menu.Target>
                     <UnstyledButton display="flex"
-                                    className={`${classes.link} ${scrollPosition > 0 ? classes.linkScrolled : ''}`}>
+                                    className={`${classes.link} ${propScrollPosition > 0 ? classes.linkScrolled : ''}`}
+                    >
                         <IconPlaneTilt size={20}></IconPlaneTilt>
                         <Text ml={6}>{t('navbar.pilots.index')}</Text>
                     </UnstyledButton>
@@ -163,7 +159,8 @@ export function CommonDropdownContent() {
             <Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} width={200} withArrow>
                 <Menu.Target>
                     <UnstyledButton display="flex"
-                                    className={`${classes.link} ${scrollPosition > 0 ? classes.linkScrolled : ''}`}>
+                                    className={`${classes.link} ${propScrollPosition > 0 ? classes.linkScrolled : ''}`}
+                    >
                         <IconUsersGroup size={20}></IconUsersGroup>
                         <Text ml={6}>{t('navbar.community.index')}</Text>
                     </UnstyledButton>

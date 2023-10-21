@@ -7,6 +7,7 @@ import {
 } from '@mantine/core';
 import errorimage from '../assets/image/en.svg';
 import { useTranslation } from 'react-i18next';
+import {useNavigate} from "react-router-dom";
 const useStyles = createStyles(() => ({
     root: {
         paddingTop: '80px',
@@ -43,6 +44,8 @@ const useStyles = createStyles(() => ({
 export function NotFound() {
     const { classes } = useStyles();
     const { t } = useTranslation();
+
+    const navigate = useNavigate();
     return (
         <Container className={classes.root}>
             <SimpleGrid spacing={40} cols={2}>
@@ -52,7 +55,7 @@ export function NotFound() {
                     <Text c={"#000"} size="lg">
                         {t('errorpage.notfoundsubtext')}
                     </Text>
-                    <Button variant="filled" size="md" mt="xl" className={classes.control}>
+                    <Button variant="filled" size="md" mt="xl" className={classes.control} onClick={() => navigate('/')}>
                         {t('errorpage.homebutton')}
                     </Button>
                 </div>

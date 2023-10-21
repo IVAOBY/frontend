@@ -148,7 +148,6 @@ export function ShiftComponent() {
             const part = partItem.find((part) => part.id === partId);
             if (part) {
                 try {
-                    // Send a POST request to book
                     await api(`/events-booking/book?atcPositionId=${atcPositionId}`, 'v3', 'POST', {
                         atcPositionId: atcPositionId,
                         eventPartId: part.id,
@@ -157,7 +156,6 @@ export function ShiftComponent() {
                     console.log('Successfully booked.');
                 } catch (error) {
                     console.log('Error handling booking:', error);
-                    // Handle the error case
                 }
             }
         }
@@ -166,12 +164,10 @@ export function ShiftComponent() {
     const handleUnbook = async (bookingId: number) => {
         if (token) {
             try {
-                // Send a DELETE request to unbook
                 await api(`/events-booking/unbook/${bookingId}`, 'v3', 'DELETE');
                 console.log('Successfully unbooked.');
             } catch (error) {
                 console.log('Error handling unbooking:', error);
-                // Handle the error case
             }
         }
     };
@@ -243,28 +239,31 @@ export function ShiftComponent() {
                                         .filter((bookingItem) => bookingItem.atcPosition?.id === position.atcPositionId)
                                         .map((filteredBookingItem) => (
                                             <div key={filteredBookingItem.id}>
-                                                {/* Display information for each booking item */}
                                                 <Text>{filteredBookingItem.bookedUser?.id}</Text>
-                                                {/* Add more content for each booking item */}
                                             </div>
                                         ))}
 
                                     {token && isBookedForPosition(part.booking, position.atcPositionId) ? (
-                                        // Check if the user is already booked for this specific position
                                         <Button color={"red"} onClick={() => {
                                             const bookingId = getBookingIdForPosition(part.booking, position.atcPositionId);
                                             if (typeof bookingId !== 'undefined') {
-                                                handleUnbook(bookingId);
+                                                handleUnbook(bookingId)
+                                                    .then(() => {
+                                                        console.log('Successfully unbooked.');
+                                                    })
+                                                    .catch((error) => {
+                                                        console.log('Error handling unbooking:', error);
+                                                    });
                                             }
                                         }}>
                                             Удалить
                                         </Button>
                                     ) : (
-                                        // User is not booked or not logged in
                                         <Button onClick={() => handleBook(part.id, position.atcPositionId)}>
                                             Забронировать
                                         </Button>
                                     )}
+
                                 </Card>
                             ))}
                         </Flex>

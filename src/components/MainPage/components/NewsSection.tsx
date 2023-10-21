@@ -160,6 +160,7 @@ export function NewsSection() {
     const navigate = useNavigate();
     const newsRedirect = (newsItem: News) => {
         navigate(`/news/${newsItem.id}`);
+        window.scrollTo(0, 0);
     };
 
     useEffect(() => {
