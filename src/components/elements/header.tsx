@@ -16,7 +16,7 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import bylogo from '../../assets/image/Logo_f_w.svg';
 import bylogoblue from '../../assets/image/logobyblue.svg';
-import { getTokenFromUrl, LogoutButton, removeTokenFromUrl, useAuth } from '../Handler';
+import { getTokenFromUrl, removeTokenFromUrl, useAuth } from '../Handler';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
@@ -132,6 +132,21 @@ const useStyles = createStyles((theme) => ({
             color: theme.colors.gray[3],
         },
     },
+
+    languageScrolled: {
+        color: '#fff',
+        margin: `${rem(8)} ${rem(12)}`,
+        fontSize: theme.fontSizes.sm,
+        fontWeight: 700,
+        transition: 'color 0.3s ease',
+        fontFamily: 'Montserrat',
+        cursor: 'pointer',
+        paddingLeft: 0,
+
+        '&:hover': {
+            color: theme.colors.gray[3],
+        },
+    },
     linkScrolled: {
         color: theme.colors.blue[9],
         transition: 'color 0.1s ease',
@@ -160,6 +175,7 @@ export function HeaderResponsive() {
 
     const handleImageClick = () => {
         navigate('/');
+        window.scrollTo(0, 0);
     };
 
     const logoDefault = (
@@ -170,16 +186,7 @@ export function HeaderResponsive() {
         <Image height={60} width={180} src={bylogoblue} onClick={handleImageClick} style={{ cursor: 'pointer' }} />
     );
 
-
     const logoToRender = scrollPosition > 0 ? logoScrolled : logoDefault;
-
-    const handleLogin = () => {
-        try {
-            window.location.href = serverUrl;
-        } catch (error) {
-            console.error('Ошибка при аутентификации:', error);
-        }
-    };
 
     const handleAuthAction = () => {
         if (isAuthenticated) {
@@ -226,7 +233,7 @@ export function HeaderResponsive() {
         localStorage.setItem('language', newLanguage);
     };
 
-    const currentLanguage = i18n.language;
+    const isSmallScreen = window.innerWidth <= 768;
 
     return (
         <Header
@@ -302,16 +309,58 @@ export function HeaderResponsive() {
                     {(styles) => (
                         <Paper className={classes.dropdown} style={styles}>
                             <CommonDropdownContent scrollPosition={scrollPosition} />
-                            {isAuthenticated ? (
-                                <LogoutButton />
-                            ) : (
-                                <Text className={classes.link} onClick={handleLogin}>
-                                    {t('navbar.user.login')}
-                                </Text>
-                            )}
-                            <Text className={classes.link} onClick={() => changeLanguage(currentLanguage)}>
-                                <IconLanguage className={classes.language} size={25} />
-                            </Text>
+                            <UnstyledButton
+                                display="flex"
+                                className={classes.link}
+                            >
+                                {isAuthenticated ? (
+                                    <>
+                                        <IconLogout size={20}></IconLogout>
+                                        <Text onClick={handleAuthAction} ml={6}>
+                                            {t('navbar.user.logout')}
+                                        </Text>
+                                    </>
+                                ) : (
+                                    <>
+                                        <IconLogin2 size={20}></IconLogin2>
+                                        <Text onClick={handleAuthAction} ml={6}>
+                                            {t('navbar.user.login')}
+                                        </Text>
+                                    </>
+                                )}
+                            </UnstyledButton>
+                            <UnstyledButton>
+                                <Menu trigger="hover" radius="lg">
+                                    <Menu.Target>
+                                        <IconLanguage
+                                            className={`${classes.languageScrolled} ${
+                                                (scrollPosition > 0 && !isSmallScreen) ? classes.language : ''
+                                            }`}
+                                            size={25}
+                                        />
+                                    </Menu.Target>
+                                    <Menu.Dropdown>
+                                        <Menu.Item
+                                            icon={<Image src={by} radius={3} width={20} />}
+                                            onClick={() => changeLanguage('be')}
+                                        >
+                                            {t('Беларуская')}
+                                        </Menu.Item>
+                                        <Menu.Item
+                                            icon={<Image src={ru} radius={3} width={20} />}
+                                            onClick={() => changeLanguage('ru')}
+                                        >
+                                            {t('Русский')}
+                                        </Menu.Item>
+                                        <Menu.Item
+                                            icon={<Image src={en} radius={3} width={20} />}
+                                            onClick={() => changeLanguage('en')}
+                                        >
+                                            {t('English')}
+                                        </Menu.Item>
+                                    </Menu.Dropdown>
+                                </Menu>
+                            </UnstyledButton>
                         </Paper>
                     )}
                 </Transition>

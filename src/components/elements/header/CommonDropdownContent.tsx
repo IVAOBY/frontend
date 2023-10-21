@@ -84,12 +84,16 @@ export function CommonDropdownContent({scrollPosition: propScrollPosition}: { sc
         },
         []);
 
+    const isSmallScreen = window.innerWidth <= 768;
+
     return (
         <>
             <Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} withArrow>
                 <Menu.Target>
                     <UnstyledButton display="flex"
-                                    className={`${classes.link} ${propScrollPosition > 0 ? classes.linkScrolled : ''}`}
+                                    className={`${classes.link} ${
+                                        (propScrollPosition > 0 && !isSmallScreen) ? classes.linkScrolled : ''
+                                    }`}
                     >
                         <IconInfoSquareRounded size={20}></IconInfoSquareRounded>
                         <Text ml={6}>{t('navbar.division.index')}</Text>
@@ -113,7 +117,9 @@ export function CommonDropdownContent({scrollPosition: propScrollPosition}: { sc
             <Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} width={200} withArrow>
                 <Menu.Target>
                     <UnstyledButton display="flex"
-                                    className={`${classes.link} ${propScrollPosition > 0 ? classes.linkScrolled : ''}`}
+                                    className={`${classes.link} ${
+                                        (propScrollPosition > 0 && !isSmallScreen) ? classes.linkScrolled : ''
+                                    }`}
                     >
                         <IconAirTrafficControl size={20}></IconAirTrafficControl>
                         <Text ml={6}>{t('navbar.atc.index')}</Text>
@@ -135,7 +141,9 @@ export function CommonDropdownContent({scrollPosition: propScrollPosition}: { sc
             <Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} width={200} withArrow>
                 <Menu.Target>
                     <UnstyledButton display="flex"
-                                    className={`${classes.link} ${propScrollPosition > 0 ? classes.linkScrolled : ''}`}
+                                    className={`${classes.link} ${
+                                        (propScrollPosition > 0 && !isSmallScreen) ? classes.linkScrolled : ''
+                                    }`}
                     >
                         <IconPlaneTilt size={20}></IconPlaneTilt>
                         <Text ml={6}>{t('navbar.pilots.index')}</Text>
@@ -159,7 +167,9 @@ export function CommonDropdownContent({scrollPosition: propScrollPosition}: { sc
             <Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} width={200} withArrow>
                 <Menu.Target>
                     <UnstyledButton display="flex"
-                                    className={`${classes.link} ${propScrollPosition > 0 ? classes.linkScrolled : ''}`}
+                                    className={`${classes.link} ${
+                                        (propScrollPosition > 0 && !isSmallScreen) ? classes.linkScrolled : ''
+                                    }`}
                     >
                         <IconUsersGroup size={20}></IconUsersGroup>
                         <Text ml={6}>{t('navbar.community.index')}</Text>
