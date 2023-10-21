@@ -218,7 +218,8 @@ export function ShiftComponent() {
                             direction="row"
                             wrap="wrap"
                         >
-                            {part.positions.map((position) => (
+                            {part.positions && part.positions.length > 0 ? (
+                                part.positions.map((position) => (
                                 <Card key={position.atcPositionId} shadow="md" radius="md" className={classes.card} padding="xl" miw={300}>
                                     <Center>
                                         <Box className={classes.icon}>
@@ -245,33 +246,27 @@ export function ShiftComponent() {
 
                                     {token && isBookedForPosition(part.booking, position.atcPositionId) ? (
                                         <Button color={"red"} onClick={() => {
-                                            if(token) {
-                                                if(isBookedForPosition(part.booking, position.atcPositionId)) {
-                                                    const bookingId = getBookingIdForPosition(part.booking, position.atcPositionId);
-                                                    if (typeof bookingId !== 'undefined') {
-                                                        handleUnbook(bookingId);
-                                                    } else {
-                                                        console.log('Booking ID is undefined');
-                                                    }
-                                                } else {
-                                                    console.log('Position is not booked');
-                                                }
+                                            const bookingId = getBookingIdForPosition(part.booking, position.atcPositionId);
+                                            if (typeof bookingId !== 'undefined') {
+                                                handleUnbook(bookingId);
                                             } else {
-                                                console.log('Token is not defined');
+                                                console.log('Booking ID is undefined');
                                             }
                                         }}>
-
-
-                                            Удалить
+                                            {t("events.booking.unbook")}
                                         </Button>
-                                    ) : (
+                                    ) : token ? (
                                         <Button onClick={() => handleBook(part.id, position.atcPositionId)}>
-                                            Забронировать
+                                            {t("events.booking.book")}
                                         </Button>
-                                    )}
+                                    ) : null}
+
 
                                 </Card>
-                            ))}
+                                ))
+                            ) : (
+                                <Text>{t("events.booking.none")}</Text>
+                            )}
                         </Flex>
                 </div>
             ))}

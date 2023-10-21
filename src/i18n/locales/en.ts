@@ -109,6 +109,16 @@ const enTranslations: { translations: Translations } = {
                 },
             }
         },
+        events: {
+            content: {
+                title: "Ивенты"
+            },
+            booking: {
+                book: "Забронировать",
+                unbook: "Отменить",
+                none: "Нет доступных позиций для бронирования",
+            },
+        },
         Scenery: {
             title: "Sceneries",
             search: "Enter ICAO",

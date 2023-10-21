@@ -106,6 +106,16 @@ export interface Translations {
             },
         }
     },
+    events: {
+        content: {
+            title: string
+        },
+        booking: {
+          book: string,
+          unbook: string,
+            none: string,
+        },
+    },
     Scenery: {
         title: string,
         search: string,

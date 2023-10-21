@@ -6,7 +6,7 @@ import {
     rem,
     Image,
     Text,
-    Flex, Paper
+    Flex, Paper, Divider
 } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
@@ -145,6 +145,7 @@ export function EventPage() {
                             align="center"
                             direction="column"
                             wrap="wrap"
+                            py="xl"
                         >
                             <Image
                                 src={eventItem.imageUrl}
@@ -156,10 +157,9 @@ export function EventPage() {
                                 {eventItem.description[i18n.language]}
                             </Text>
                         </Flex>
+                        <Divider my="md" size={"md"} color={theme.colors.blue[9]} variant="dashed" />
+                        <ShiftComponent/>
                     </Paper>
-
-                    <ShiftComponent/>
-
                 </>
             )}
         </Container>
