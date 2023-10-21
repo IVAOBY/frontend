@@ -1,21 +1,10 @@
-import { useEffect, useState } from 'react';
-import {
-    createStyles,
-    Title,
-    Container,
-    rem,
-    Image,
-    Text,
-    Flex, Card, Button, Center, Box,
-} from '@mantine/core';
-import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
-import { notifications } from '@mantine/notifications';
-import { api } from '../../../hooks/api';
-import {
-    IconAirTrafficControl,
-    IconCircleX,
-} from '@tabler/icons-react';
+import {useEffect, useState} from 'react';
+import {Box, Button, Card, Center, Container, createStyles, Flex, Image, rem, Text, Title,} from '@mantine/core';
+import {useTranslation} from 'react-i18next';
+import {useParams} from 'react-router-dom';
+import {notifications} from '@mantine/notifications';
+import {api} from '../../../hooks/api';
+import {IconAirTrafficControl, IconCircleX,} from '@tabler/icons-react';
 import {format} from "date-fns";
 import {PartsEntity} from "../../../types/Events";
 import {getDecodedToken} from "../../../components/Handler";
@@ -140,10 +129,7 @@ export function ShiftComponent() {
 
     const token = localStorage.getItem('authToken');
 
-    const handleBook = async (
-        partId: number,
-        atcPositionId: number
-    ) => {
+    const handleBook = async (partId: number, atcPositionId: number) => {
         if (token && partItem) {
             const part = partItem.find((part) => part.id === partId);
             if (part) {
@@ -153,7 +139,13 @@ export function ShiftComponent() {
                         eventPartId: part.id,
                         eventId: part.eventId,
                     });
-                    console.log('Successfully booked.');
+
+                    api(`/events-parts/event/${id}`)
+                        .then((response) => {
+                            if (response && Array.isArray(response)) {
+                                setPartItem(response);
+                            }
+                        });
                 } catch (error) {
                     console.log('Error handling booking:', error);
                 }
@@ -161,31 +153,39 @@ export function ShiftComponent() {
         }
     };
 
-    const handleUnbook = async (bookingId: number) => {
-        if (token) {
-            try {
-                await api(`/events-booking/unbook/${bookingId}`, 'v3', 'DELETE');
-                console.log('Successfully unbooked.');
-            } catch (error) {
-                console.log('Error handling unbooking:', error);
-            }
-        }
-    };
-
     function isBookedForPosition(bookings: any[], atcPositionId: number) {
         const token = localStorage.getItem('authToken');
         const decodedToken = getDecodedToken(`${token}`);
-        const isBooked = bookings.some((booking) => booking.atcPosition?.id === atcPositionId && booking.bookedUser?.id === decodedToken?.userData.id);
-        console.log(`isBookedForPosition(${atcPositionId}): ${isBooked}`);
-        return isBooked;
+        return bookings.some((booking) => booking.atcPosition?.id === atcPositionId && booking.bookedUser?.id === decodedToken?.userData.id);
     }
 
     function getBookingIdForPosition(bookings: any[], atcPositionId: number) {
         const token = localStorage.getItem('authToken');
         const decodedToken = getDecodedToken(`${token}`);
-        const booking = bookings.find((booking) => booking.atcPosition?.id === atcPositionId && booking.bookedUser?.id === decodedToken?.userData.id);
+        const booking = bookings.find((booking) => {
+            return booking.atcPosition.id === atcPositionId && booking.bookedUser?.id === decodedToken?.userData.id;
+        });
         return booking ? booking.id : undefined;
     }
+
+    const handleUnbook = (bookingId: number) => {
+        if (token) {
+            api(`/events-booking/unbook/${bookingId}`, 'v3', 'DELETE')
+                .then(() => {
+                    api(`/events-parts/event/${id}`)
+                        .then((response) => {
+                            if (response && Array.isArray(response)) {
+                                setPartItem(response);
+                            }
+                        });
+                })
+                .catch((error) => {
+                    console.log('Error handling unbooking:', error);
+                });
+        } else {
+            console.log('Token is not defined or null');
+        }
+    };
 
 
     return (
@@ -245,17 +245,23 @@ export function ShiftComponent() {
 
                                     {token && isBookedForPosition(part.booking, position.atcPositionId) ? (
                                         <Button color={"red"} onClick={() => {
-                                            const bookingId = getBookingIdForPosition(part.booking, position.atcPositionId);
-                                            if (typeof bookingId !== 'undefined') {
-                                                handleUnbook(bookingId)
-                                                    .then(() => {
-                                                        console.log('Successfully unbooked.');
-                                                    })
-                                                    .catch((error) => {
-                                                        console.log('Error handling unbooking:', error);
-                                                    });
+                                            if(token) {
+                                                if(isBookedForPosition(part.booking, position.atcPositionId)) {
+                                                    const bookingId = getBookingIdForPosition(part.booking, position.atcPositionId);
+                                                    if (typeof bookingId !== 'undefined') {
+                                                        handleUnbook(bookingId);
+                                                    } else {
+                                                        console.log('Booking ID is undefined');
+                                                    }
+                                                } else {
+                                                    console.log('Position is not booked');
+                                                }
+                                            } else {
+                                                console.log('Token is not defined');
                                             }
                                         }}>
+
+
                                             Удалить
                                         </Button>
                                     ) : (
