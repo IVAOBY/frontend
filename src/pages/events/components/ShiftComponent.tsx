@@ -1,5 +1,19 @@
 import {useEffect, useState} from 'react';
-import {Box, Button, Card, Center, Container, createStyles, Flex, Image, rem, Text, Title,} from '@mantine/core';
+import {
+    Badge,
+    Box,
+    Button,
+    Card,
+    Center,
+    Container,
+    createStyles,
+    Flex,
+    Image,
+    rem,
+    Text,
+    Title,
+    Tooltip,
+} from '@mantine/core';
 import {useTranslation} from 'react-i18next';
 import {useParams} from 'react-router-dom';
 import {notifications} from '@mantine/notifications';
@@ -73,6 +87,14 @@ const useStyles = createStyles((theme) => ({
             marginRight: 'auto',
         },
     },
+
+    badge: {
+        margin: rem(5),
+        '&:hover': {
+            cursor: "pointer",
+            transform: 'scale(1.02)'
+        },
+    }
 }));
 
 
@@ -229,7 +251,7 @@ export function ShiftComponent() {
                                     <Text fz="lg" fw={700} className={classes.cardTitle} mt="md" ta={"center"}>
                                         {position.position.callsign}
                                     </Text>
-                                    <Center mt={10}>
+                                    <Center mt={10} mb={10}>
                                         <Image
                                             className={classes.image}
                                             aria-label="IVAO"
@@ -239,29 +261,55 @@ export function ShiftComponent() {
                                     {part.booking
                                         .filter((bookingItem) => bookingItem.atcPosition?.id === position.atcPositionId)
                                         .map((filteredBookingItem) => (
-                                            <div key={filteredBookingItem.id}>
-                                                <Text>{filteredBookingItem.bookedUser?.id}</Text>
-                                            </div>
-                                        ))}
+                                            <Center key={filteredBookingItem.id} style={{ margin: '0px' }}>
+                                                <Tooltip
+                                                    label="IVAO Profile"
+                                                    color="blue"
+                                                    position="bottom"
+                                                    withArrow
+                                                >
+                                                    <Badge
+                                                        className={classes.badge}
+                                                        component="a" href={`https://www.ivao.aero/Member.aspx?Id=${filteredBookingItem.bookedUser?.id}`}
+                                                        target="_blank" rel="noopener noreferrer"
+                                                        color={
+                                                            filteredBookingItem.status === 0
+                                                                ? "blue"
+                                                                : filteredBookingItem.status === 1
+                                                                    ? "green"
+                                                                    : "red"
+                                                        }
+                                                        style={{ margin: '5px' }}
+                                                    >
+                                                        {
+                                                            token
+                                                                ? `${filteredBookingItem.bookedUser?.name.first} ${filteredBookingItem.bookedUser?.name.last}`
+                                                                : `${filteredBookingItem.bookedUser?.name.first} ${filteredBookingItem.bookedUser?.id}`
+                                                        }
+                                                    </Badge>
+                                                </Tooltip>
+                                            </Center>
+                                        ))
+                                    }
 
                                     {token && isBookedForPosition(part.booking, position.atcPositionId) ? (
-                                        <Button color={"red"} onClick={() => {
-                                            const bookingId = getBookingIdForPosition(part.booking, position.atcPositionId);
-                                            if (typeof bookingId !== 'undefined') {
-                                                handleUnbook(bookingId);
-                                            } else {
-                                                console.log('Booking ID is undefined');
-                                            }
-                                        }}>
-                                            {t("events.booking.unbook")}
-                                        </Button>
+                                        <Center>
+                                            <Button color={"red"} onClick={() => {
+                                                const bookingId = getBookingIdForPosition(part.booking, position.atcPositionId);
+                                                if (typeof bookingId !== 'undefined') {
+                                                    handleUnbook(bookingId);
+                                                } else {
+                                                    console.log('Booking ID is undefined');
+                                                }
+                                            }}>
+                                                {t("events.booking.unbook")}
+                                            </Button>
+                                        </Center>
                                     ) : token ? (
                                         <Button onClick={() => handleBook(part.id, position.atcPositionId)}>
                                             {t("events.booking.book")}
                                         </Button>
                                     ) : null}
-
-
                                 </Card>
                                 ))
                             ) : (

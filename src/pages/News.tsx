@@ -6,7 +6,7 @@ import {
     rem,
     Image,
     Text,
-    Flex, Paper, Group,
+    Flex, Paper, Group, Skeleton, Center,
 } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
@@ -58,6 +58,13 @@ const useStyles = createStyles((theme) => ({
         marginLeft: rem(20),
         color: theme.colors.gray,
     },
+    skeleton: {
+        display: 'flex',
+        flexDirection: 'column',
+        minWidth: '500px',
+        maxWidth: '100%',
+        gap: rem(10)
+    }
 }));
 
 interface News {
@@ -136,22 +143,14 @@ export function NewsPage() {
 
     return (
         <Container size="lg" py="xl">
-            {newsItem && (
+            {newsItem ? (
                 <>
                     <Title order={2} className={classes.title} ta="center" mt="sm">
                         {newsItem.name[i18n.language]}
                     </Title>
                     <Paper p={"lg"} bg={"#fff"} shadow={"lg"} radius={"lg"} mt={rem(13)}>
-                        <Flex
-                            gap={"md"}
-                            className={classes.cardContent}
-                        >
-                            <Image
-                                src={newsItem.image_url}
-                                alt={newsItem.name.en}
-                                className={classes.image}
-                                radius="lg"
-                            />
+                        <Flex gap={"md"} className={classes.cardContent}>
+                            <Image src={newsItem.image_url} alt={newsItem.name.en} className={classes.image} radius="lg" />
                             <Text color={theme.colors.gray[8]} fz={rem(16)} mt={rem(10)}>
                                 {newsItem.description[i18n.language]}
                             </Text>
@@ -178,8 +177,27 @@ export function NewsPage() {
                             </Group>
                         </Flex>
                     </Paper>
-
                 </>
+            ) : (
+                <>
+                    <Title order={2} className={classes.title} ta="center" mt="sm">
+                        <Center><Skeleton height={30} radius="md" maw={300} /></Center>
+                    </Title>
+                    <Paper p="xl" radius="lg" shadow="lg">
+                    <Flex className={classes.cardContent}>
+                        <div className={classes.image}>
+                            <Skeleton height={rem(231)} radius="lg" maw={400}/>
+                        </div>
+                        <div className={classes.skeleton}>
+                            <Skeleton height={10} radius="lg" maw={600}/>
+                            <Skeleton height={10} radius="lg" maw={600}/>
+                            <Skeleton height={10} radius="lg" maw={600}/>
+                            <Skeleton height={10} radius="lg" maw={600}/>
+                            <Skeleton height={10} radius="lg" maw={600}/>
+                            <Skeleton height={10} radius="lg" maw={600}/>
+                        </div>
+                    </Flex>
+                </Paper></>
             )}
         </Container>
     );
