@@ -11,14 +11,13 @@ import {
     Image,
     rem,
     Text,
-    Title,
     Tooltip,
 } from '@mantine/core';
 import {useTranslation} from 'react-i18next';
 import {useParams} from 'react-router-dom';
 import {notifications} from '@mantine/notifications';
 import {api} from '../../../hooks/api';
-import {IconAirTrafficControl, IconCircleX,} from '@tabler/icons-react';
+import {IconAirTrafficControl, IconBrandFlightradar24, IconCircleX, IconRadar,} from '@tabler/icons-react';
 import {format} from "date-fns";
 import {PartsEntity} from "../../../types/Events";
 import {getDecodedToken} from "../../../components/Handler";
@@ -50,8 +49,8 @@ const useStyles = createStyles((theme) => ({
     },
 
     icon: {
-      backgroundColor: theme.colors.blue[9],
-      borderRadius: theme.radius.lg,
+        backgroundColor: theme.colors.blue[9],
+        borderRadius: theme.radius.lg,
         padding: theme.spacing.md
     },
 
@@ -99,9 +98,9 @@ const useStyles = createStyles((theme) => ({
 
 
 export function ShiftComponent() {
-    const { classes } = useStyles();
-    const { t } = useTranslation();
-    const { id } = useParams();
+    const {classes} = useStyles();
+    const {t} = useTranslation();
+    const {id} = useParams();
     // const isSmallScreen = window.innerWidth < 768;
 
     const [partItem, setPartItem] = useState<PartsEntity[] | null>(null);
@@ -128,7 +127,7 @@ export function ShiftComponent() {
                         title: t('notif.server.name'),
                         message: t('notif.server.descritpion'),
                         radius: 'lg',
-                        icon: <IconCircleX />,
+                        icon: <IconCircleX/>,
                         withCloseButton: false,
                         autoClose: false,
                     });
@@ -142,7 +141,7 @@ export function ShiftComponent() {
                     title: t('notif.server.name'),
                     message: t('notif.server.descritpion'),
                     radius: 'lg',
-                    icon: <IconCircleX />,
+                    icon: <IconCircleX/>,
                     withCloseButton: false,
                     autoClose: false,
                 });
@@ -214,10 +213,6 @@ export function ShiftComponent() {
         <Container size="lg" py="xl">
             {partItem && partItem.map((part) => (
                 <div key={part.id}>
-                    {/* Display data for each part here */}
-                    <Title order={2} className={classes.title} ta="center" mt="sm">
-                        ATC Shift
-                    </Title>
                     <Text className={classes.subtitle} ta="center">
                         {`${format(new Date(part.startDate), 'dd.MM.yy')} ${new Date(part.startDate).toLocaleTimeString('eu', {
                             timeZone: 'UTC',
@@ -232,20 +227,26 @@ export function ShiftComponent() {
                             minute: '2-digit',
                         })}`}
                     </Text>
-                        <Flex
-                            mt={rem(13)}
-                            gap="md"
-                            justify="center"
-                            align="center"
-                            direction="row"
-                            wrap="wrap"
-                        >
-                            {part.positions && part.positions.length > 0 ? (
-                                part.positions.map((position) => (
-                                <Card key={position.atcPositionId} shadow="md" radius="md" className={classes.card} padding="xl" miw={300}>
+                    <Flex
+                        mt={rem(13)}
+                        gap="md"
+                        justify="center"
+                        align="center"
+                        direction="row"
+                        wrap="wrap"
+                    >
+                        {part.positions && part.positions.length > 0 ? (
+                            part.positions.map((position) => (
+                                <Card key={position.atcPositionId} shadow="md" radius="md" className={classes.card}
+                                      padding="xl" miw={300}>
                                     <Center>
                                         <Box className={classes.icon}>
-                                            <IconAirTrafficControl size={rem(40)} stroke={2} color="#fff" />
+                                            {position.position.callsign.endsWith('APP') ?
+                                                <IconRadar size={rem(40)} stroke={2} color="#fff"/> :
+                                                position.position.callsign.endsWith('CTR') ?
+                                                    <IconBrandFlightradar24 size={rem(40)} stroke={2} color="#fff"/> :
+                                                    <IconAirTrafficControl size={rem(40)} stroke={2} color="#fff"/>
+                                            }
                                         </Box>
                                     </Center>
                                     <Text fz="lg" fw={700} className={classes.cardTitle} mt="md" ta={"center"}>
@@ -261,7 +262,7 @@ export function ShiftComponent() {
                                     {part.booking
                                         .filter((bookingItem) => bookingItem.atcPosition?.id === position.atcPositionId)
                                         .map((filteredBookingItem) => (
-                                            <Center key={filteredBookingItem.id} style={{ margin: '0px' }}>
+                                            <Center key={filteredBookingItem.id} style={{margin: '0px'}}>
                                                 <Tooltip
                                                     label="IVAO Profile"
                                                     color="blue"
@@ -270,7 +271,8 @@ export function ShiftComponent() {
                                                 >
                                                     <Badge
                                                         className={classes.badge}
-                                                        component="a" href={`https://www.ivao.aero/Member.aspx?Id=${filteredBookingItem.bookedUser?.id}`}
+                                                        component="a"
+                                                        href={`https://www.ivao.aero/Member.aspx?Id=${filteredBookingItem.bookedUser?.id}`}
                                                         target="_blank" rel="noopener noreferrer"
                                                         color={
                                                             filteredBookingItem.status === 0
@@ -279,7 +281,7 @@ export function ShiftComponent() {
                                                                     ? "green"
                                                                     : "red"
                                                         }
-                                                        style={{ margin: '5px' }}
+                                                        style={{margin: '5px'}}
                                                     >
                                                         {
                                                             token
@@ -294,7 +296,7 @@ export function ShiftComponent() {
 
                                     {token && isBookedForPosition(part.booking, position.atcPositionId) ? (
                                         <Center>
-                                            <Button color={"red"} onClick={() => {
+                                            <Button color={"red"} mt={10} onClick={() => {
                                                 const bookingId = getBookingIdForPosition(part.booking, position.atcPositionId);
                                                 if (typeof bookingId !== 'undefined') {
                                                     handleUnbook(bookingId);
@@ -306,16 +308,19 @@ export function ShiftComponent() {
                                             </Button>
                                         </Center>
                                     ) : token ? (
-                                        <Button onClick={() => handleBook(part.id, position.atcPositionId)}>
-                                            {t("events.booking.book")}
-                                        </Button>
+                                        <Center>
+                                            <Button color={"green"} mt={10}
+                                                    onClick={() => handleBook(part.id, position.atcPositionId)}>
+                                                {t("events.booking.book")}
+                                            </Button>
+                                        </Center>
                                     ) : null}
                                 </Card>
-                                ))
-                            ) : (
-                                <Text>{t("events.booking.none")}</Text>
-                            )}
-                        </Flex>
+                            ))
+                        ) : (
+                            <Text>{t("events.booking.none")}</Text>
+                        )}
+                    </Flex>
                 </div>
             ))}
 
