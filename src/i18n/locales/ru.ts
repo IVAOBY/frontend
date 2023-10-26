@@ -116,7 +116,7 @@ const ruTranslations: { translations: Translations } = {
             booking: {
                 book: "Забронировать",
                 unbook: "Отменить",
-                none: "Нет доступных позиций для бронирования",
+                none: "Доступных позиций нет!",
             },
         },
         Scenery: {
