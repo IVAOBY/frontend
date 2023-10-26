@@ -114,9 +114,9 @@ const enTranslations: { translations: Translations } = {
                 title: "Ивенты"
             },
             booking: {
-                book: "Забронировать",
-                unbook: "Отменить",
-                none: "Нет доступных позиций для бронирования",
+                book: "Book",
+                unbook: "Cancel",
+                none: "There are no available positions!",
             },
         },
         Scenery: {
