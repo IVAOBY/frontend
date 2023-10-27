@@ -111,7 +111,7 @@ const beTranslations: { translations: Translations } = {
         },
         events: {
             content: {
-                title: "Ивенты"
+                title: "Івэнты"
             },
             booking: {
                 book: "Забраніраваць",
