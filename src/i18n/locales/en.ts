@@ -111,7 +111,7 @@ const enTranslations: { translations: Translations } = {
         },
         events: {
             content: {
-                title: "Ивенты"
+                title: "Events"
             },
             booking: {
                 book: "Book",
