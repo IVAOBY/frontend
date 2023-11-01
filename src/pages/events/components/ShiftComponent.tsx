@@ -231,13 +231,12 @@ export function ShiftComponent() {
                         mt={rem(13)}
                         gap="md"
                         justify="center"
-                        align="center"
                         direction="row"
                         wrap="wrap"
                     >
                         {part.positions && part.positions.length > 0 ? (
                             part.positions.map((position) => (
-                                <Card key={position.atcPositionId} shadow="md" radius="md" className={classes.card}
+                                <Card mb={30} mt={15} key={position.atcPositionId} shadow="md" radius="md" className={classes.card}
                                       padding="xl" miw={300}>
                                     <Center>
                                         <Box className={classes.icon}>

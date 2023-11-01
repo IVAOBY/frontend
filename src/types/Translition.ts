@@ -51,28 +51,12 @@ export interface Translations {
         joinbutton: string,
         transfer: string
     },
-    featuresection: {
-        title: string,
-        subtitle: string,
-        first: {
-            title: string,
-            subtitle: string
-        },
-        second: {
-            title: string,
-            subtitle: string
-        },
-        third: {
-            title: string,
-            subtitle: string
-        }
-    },
     news: {
         title: string,
         button: string
     },
     staff: {
-      name: string,
+        name: string,
     },
     AboutUs: {
         title: string,
@@ -111,8 +95,8 @@ export interface Translations {
             title: string
         },
         booking: {
-          book: string,
-          unbook: string,
+            book: string,
+            unbook: string,
             none: string,
         },
     },
@@ -140,17 +124,17 @@ export interface Translations {
             9: string,
             10: string,
         },
-       answers: {
-           1: string,
-           2: string,
-           3: string,
-           4: string,
-           5: string,
-           6: string,
-           7: string,
-           8: string,
-           9: string,
-           10: string,
-       },
-    }
+        answers: {
+            1: string,
+            2: string,
+            3: string,
+            4: string,
+            5: string,
+            6: string,
+            7: string,
+            8: string,
+            9: string,
+            10: string,
+        },
+    },
 }

@@ -54,22 +54,6 @@ const ruTranslations: { translations: Translations } = {
             joinbutton: 'Присоединиться!',
             transfer: 'Перейти в BY дивизион!'
         },
-        featuresection: {
-            title: 'null',
-            subtitle: 'null',
-            first: {
-                title: 'null',
-                subtitle: 'null'
-            },
-            second: {
-                title: 'null',
-                subtitle: 'null'
-            },
-            third: {
-                title: 'null',
-                subtitle: 'null'
-            }
-        },
         news: {
             title: 'Новости',
             button: 'Читать больше'

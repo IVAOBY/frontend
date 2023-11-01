@@ -54,22 +54,6 @@ const enTranslations: { translations: Translations } = {
             joinbutton: 'Join!',
             transfer: 'Transfer to BY division!'
         },
-        featuresection: {
-            title: 'Our advantages',
-            subtitle: 'Потому что Назаренко есть в диве',
-            first: {
-                title: 'ddf',
-                subtitle: 'adf'
-            },
-            second: {
-                title: 'dfsdaf',
-                subtitle: 'asdfsaf'
-            },
-            third: {
-                title: 'asdfasdf',
-                subtitle: 'asdfasdf'
-            }
-        },
         news: {
             title: 'News',
             button: 'Read more'

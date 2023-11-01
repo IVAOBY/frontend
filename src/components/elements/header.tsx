@@ -28,6 +28,7 @@ import by from '../../assets/image/by.svg';
 import ru from '../../assets/image/ru.svg';
 import en from '../../assets/image/en.svg';
 import {CommonDropdownContent} from "./header/CommonDropdownContent";
+import { t } from 'i18next';
 
 const HEADER_HEIGHT = rem(100);
 

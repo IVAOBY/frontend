@@ -54,22 +54,6 @@ const beTranslations: { translations: Translations } = {
             joinbutton: 'Далучыцца!',
             transfer: 'Перайсці ў BY дывізіён!'
         },
-        featuresection: {
-            title: 'Нашы перавагі',
-            subtitle: 'Таму што Назаранка смокча ў дзіве',
-            first: {
-                title: 'ddf',
-                subtitle: 'adf'
-            },
-            second: {
-                title: 'dfsdaf',
-                subtitle: 'asdfsaf'
-            },
-            third: {
-                title: 'asdfasdf',
-                subtitle: 'asddfasdf'
-            }
-        },
         news: {
             title: 'Навіны',
             button: 'Чытаць больш'
@@ -105,7 +89,7 @@ const beTranslations: { translations: Translations } = {
             auth: {
                 negative: {
                     name: "Памылка!",
-                    description: "Кажется, нужно сначала войти в аккаунт.",
+                    description: "Здаецца, варта спачатку ўвайсці ў акаўнт.",
                 },
             }
         },
@@ -120,12 +104,12 @@ const beTranslations: { translations: Translations } = {
             },
         },
         Scenery: {
-            title: "Сценарии",
-            search: "Введите ICAO",
-            searchButton: "Найти",
-            helpTitle: "Хотите видеть здесь свои сценарии?",
-            helpText: "Вы можете помочь нам в разработке сценариев для аэропортов дивизиона? Присоединяйтесь!",
-            helpButton: "Я в деле!",
+            title: "Сцэнарыі",
+            search: "Увядзіце ICAO",
+            searchButton: "Шукаць",
+            helpTitle: "Жадаеце бачыць тут уласныя сцэнарыі?",
+            helpText: "Вы можаце нам дапагчы ў распрацоўцы сцэнаряў для аэрапортаў дывізіёна? Далучайцеся!",
+            helpButton: "Я з вамі!",
         },
         FAQ: {
             page: {
