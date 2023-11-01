@@ -227,7 +227,7 @@ export function HeaderResponsive() {
     const navigate = useNavigate();
 
 
-    const { t, i18n } = useTranslation();
+    const {  i18n } = useTranslation();
 
     const changeLanguage = (newLanguage: any) => {
         i18n.changeLanguage(newLanguage);
