@@ -10,12 +10,14 @@ const ruTranslations: { translations: Translations } = {
                 staff: 'Руководство дивизиона',
                 discord: 'Дискорд',
                 contact: 'Связь с нами',
-                rules: 'Правила IVAO'
+                rules: 'Правила IVAO',
+                legal: 'Правовая информация'
             },
             atc: {
                 index: 'Диспетчеру',
                 start: 'Первые шаги',
                 fra: 'Ограничения (FRAs)',
+                sector: 'Сектор IvAc',
                 gca: 'GCA Программа',
                 charts: 'Схемы аэропортов',
                 docs: 'Документы'
@@ -30,6 +32,7 @@ const ruTranslations: { translations: Translations } = {
             },
             community: {
                 index: 'Сообщество',
+                training: 'Тренировочный кампус',
                 events: 'Ивенты',
                 forum: 'Форум BY',
                 webeye: 'WebEye',
@@ -53,6 +56,20 @@ const ruTranslations: { translations: Translations } = {
             subtitle2: 'Присоединяйтесь прямо сейчас!',
             joinbutton: 'Присоединиться!',
             transfer: 'Перейти в BY дивизион!'
+        },
+        legal: {
+            title: 'Правовая информация',
+            text: 'Да, мы собираем и храним вашу информацию. Но делаем это в соответвии со следующими документами:',
+            privacypolicy: 'Политика конфиденциальности',
+            termsofuse: 'Условия использования',
+            ipp: 'Политика интеллектуальной собственности',
+        },
+        sector: {
+            title: 'Сектор-файл',
+            text: ' На этой странице вы можете загрузить сектор-файл для IvAc.',
+            wtitle: 'Пожалуйста, обратие внимание!',
+            warning: 'IvAc устарел и больше не рекомендуется к использованию! <br/> Вместно него рекомендуется использовать <a href={"https://ivao.aero/softdev/software/aurora.asp"} target={"_blank"} >Aurora</a>',
+            download: 'Скачать',
         },
         news: {
             title: 'Новости',

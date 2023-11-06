@@ -8,11 +8,13 @@ export interface Translations {
             discord: string,
             contact: string,
             rules: string
+            legal: string
         },
         atc: {
             index: string,
             start: string,
             fra: string,
+            sector: string,
             gca: string,
             charts: string,
             docs: string
@@ -27,6 +29,7 @@ export interface Translations {
         },
         community: {
             index: string,
+            training: string,
             events: string,
             forum: string,
             webeye: string,
@@ -50,6 +53,20 @@ export interface Translations {
         subtitle2: string,
         joinbutton: string,
         transfer: string
+    },
+    legal: {
+        title: string,
+        text: string,
+        privacypolicy: string,
+        termsofuse: string,
+        ipp: string,
+    },
+    sector: {
+        title: string,
+        text: string,
+        wtitle: string,
+        warning: string,
+        download: string,
     },
     news: {
         title: string,

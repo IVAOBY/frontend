@@ -27,6 +27,8 @@ import {t} from "i18next";
 import {DocumentsPilotPage} from "./pages/documents/DocumentsPilotPage";
 import {DocumentsATCPage} from "./pages/documents/DocumentsATCPage";
 import {EventPage} from "./pages/events/EventPage";
+import {Legal} from "./pages/Legal";
+import {SectorFile} from "./pages/SectorFile";
 
 export default function App() {
     const isAuthenticated = !!localStorage.getItem('authToken');
@@ -68,7 +70,7 @@ export default function App() {
                             <Route path="/pilots/first-step" element={<FirstStepP/>}/>
                             <Route path="/news/:id" element={<NewsPage/>}/>
                             <Route path="/map" element={<MapPage/>}/>
-
+                            <Route path="/legal" element={<Legal/>}/>
                             <Route path="/staff" element={<StaffMain/>}/>
 
                             {/* Документы */}
@@ -78,6 +80,7 @@ export default function App() {
                             <Route path="/documents/atc" element={<DocumentsATCPage/>}/>
 
                             {/* ATC */}
+                            <Route path="/sector" element={<SectorFile/>}/>
                             <Route path="/atc/gca" element={<GCAPage/>}/>
 
                             {/* ИВЕНТЫ */}

@@ -10,12 +10,14 @@ const enTranslations: { translations: Translations } = {
                 staff: 'Division Staff',
                 discord: 'Discord',
                 contact: 'Contact us',
-                rules: 'IVAO rules'
+                rules: 'IVAO rules',
+                legal: 'Legal information'
             },
             atc: {
                 index: 'ATC',
                 start: 'First steps',
                 fra: 'FRAs',
+                sector: 'IvAc Sector',
                 gca: 'GCA Programme',
                 charts: 'Charts',
                 docs: 'Documents'
@@ -30,6 +32,7 @@ const enTranslations: { translations: Translations } = {
             },
             community: {
                 index: 'Community',
+                training: 'Training campus',
                 events: 'Events',
                 forum: 'BY Forum',
                 webeye: 'WebEye',
@@ -53,6 +56,20 @@ const enTranslations: { translations: Translations } = {
             subtitle2: 'Join now!',
             joinbutton: 'Join!',
             transfer: 'Transfer to BY division!'
+        },
+        legal: {
+            title: 'Legal information',
+            text: 'Yes, we collect and store your information. But we do so in accordance with the following documents:',
+            privacypolicy: 'Privacy Policy',
+            termsofuse: 'Terms of Use',
+            ipp: 'Intellectual Property Policy',
+        },
+        sector: {
+            title: 'Sector file',
+            text: 'On this page you can download the sector file for IvAc.',
+            wtitle: 'Please pay attention!',
+            warning: 'IvAc is deprecated and no longer recommended to use! <br/> We strongly recommend using <a href={"https://ivao.aero/softdev/software/aurora.asp"} target={"_blank"} >Aurora</a>',
+            download: 'Download',
         },
         news: {
             title: 'News',

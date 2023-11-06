@@ -10,12 +10,14 @@ const beTranslations: { translations: Translations } = {
                 staff: 'Кіраўніцтва дывізіёна',
                 discord: 'Дыскорд',
                 contact: 'Сувязь з намі',
-                rules: 'Правілы IVAO'
+                rules: 'Правілы IVAO',
+                legal: 'Прававая інфармацыя'
             },
             atc: {
                 index: 'Дыспетчару',
                 start: 'Першыя крокі',
                 fra: 'Абмяжаванні (FRAs)',
+                sector: 'Сектар IvAc',
                 gca: 'GCA Праграма',
                 charts: 'Схемы аэрапортаў',
                 docs: 'Дакументы'
@@ -30,6 +32,7 @@ const beTranslations: { translations: Translations } = {
             },
             community: {
                 index: 'Супольнасць',
+                training: 'Трэніровачны кампус',
                 events: 'Івэнты',
                 forum: 'Форум BY',
                 webeye: 'WebEye',
@@ -53,6 +56,20 @@ const beTranslations: { translations: Translations } = {
             subtitle2: 'Далучайцеся зараз!',
             joinbutton: 'Далучыцца!',
             transfer: 'Перайсці ў BY дывізіён!'
+        },
+        legal: {
+            title: 'Правовая информация',
+            text: 'Да, мы собираем и храним вашу информацию. Но делаем это в соответвии со следующими документами:',
+            privacypolicy: 'Политика конфиденциальности',
+            termsofuse: 'Условия использования',
+            ipp: 'Политика интеллектуальной собственности',
+        },
+        sector: {
+            title: 'Сектор-файл',
+            text: ' На этой странице вы можете загрузить сектор-файл для IvAc.',
+            wtitle: 'Пожалуйста, обратие внимание!',
+            warning: 'IvAc устарел и больше не рекомендуется к использованию! <br/> Вместно него рекомендуется использовать <a href={"https://ivao.aero/softdev/software/aurora.asp"} target={"_blank"} >Aurora</a>',
+            download: 'Скачать',
         },
         news: {
             title: 'Навіны',
