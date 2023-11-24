@@ -17,7 +17,7 @@ import {useTranslation} from 'react-i18next';
 import {useParams} from 'react-router-dom';
 import {notifications} from '@mantine/notifications';
 import {api} from '../../../hooks/api';
-import {IconAirTrafficControl, IconBrandFlightradar24, IconCircleX, IconRadar,} from '@tabler/icons-react';
+import {IconAirTrafficControl, IconBrandFlightradar24, IconRadar,} from '@tabler/icons-react';
 import {format} from "date-fns";
 import {PartsEntity} from "../../../types/Events";
 import {getDecodedToken} from "../../../components/Handler";
@@ -121,30 +121,10 @@ export function ShiftComponent() {
                     notifications.hide('load-data');
                 } else {
                     console.error('Invalid response from API:', response);
-                    notifications.update({
-                        id: 'load-data',
-                        color: 'red',
-                        title: t('notif.server.name'),
-                        message: t('notif.server.descritpion'),
-                        radius: 'lg',
-                        icon: <IconCircleX/>,
-                        withCloseButton: false,
-                        autoClose: false,
-                    });
                 }
             })
             .catch((error) => {
-                console.error('Error fetching news:', error);
-                notifications.update({
-                    id: 'load-data',
-                    color: 'red',
-                    title: t('notif.server.name'),
-                    message: t('notif.server.descritpion'),
-                    radius: 'lg',
-                    icon: <IconCircleX/>,
-                    withCloseButton: false,
-                    autoClose: false,
-                });
+                console.error('Error:', error);
             });
     }, [id]);
 

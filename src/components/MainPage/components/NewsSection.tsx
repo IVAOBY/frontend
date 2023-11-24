@@ -86,6 +86,7 @@ const useStyles = createStyles((theme) => ({
         borderRadius: theme.radius.lg,
         overflow: 'hidden',
         transition: 'transform 0.4s ease, box-shadow 0.4s ease',
+        boxShadow: theme.shadows.md,
         '&.active': { // Новый класс для активной кнопки
             transform: 'scale(1.01)',
             boxShadow: '0px 50px 50px rgba(0, 0, 0, 0.2)',
