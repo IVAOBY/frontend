@@ -20,7 +20,8 @@ const ruTranslations: { translations: Translations } = {
                 sector: 'Сектор IvAc',
                 gca: 'GCA Программа',
                 charts: 'Схемы аэропортов',
-                docs: 'Документы'
+                docs: 'Документы',
+                vehicles: 'ТС'
             },
             pilots: {
                 index: 'Пилоту',

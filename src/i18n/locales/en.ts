@@ -20,7 +20,8 @@ const enTranslations: { translations: Translations } = {
                 sector: 'IvAc Sector',
                 gca: 'GCA Programme',
                 charts: 'Charts',
-                docs: 'Documents'
+                docs: 'Documents',
+                vehicles: 'Vehicles'
             },
             pilots: {
                 index: 'Pilots',

@@ -17,7 +17,8 @@ export interface Translations {
             sector: string,
             gca: string,
             charts: string,
-            docs: string
+            docs: string,
+            vehicles: string
         },
         pilots: {
             index: string,

@@ -28,7 +28,7 @@ import {
     IconAirTrafficControl,
     IconUsersGroup,
     IconPlaneTilt,
-    IconInfoSquareRounded, IconMapCog, IconGavel, IconSchool,
+    IconInfoSquareRounded, IconMapCog, IconCar, IconGavel,
 } from '@tabler/icons-react';
 import ivaoLogo from '../../../assets/image/logo_s_black.svg';
 import steps from '../../../assets/image/steps.svg';
@@ -107,14 +107,13 @@ export function CommonDropdownContent({scrollPosition: propScrollPosition}: { sc
                     <Menu.Item icon={<Image src={discord} width={19}/>}
                                onClick={() => menuLink('https://discord.gg/7t7UJjZcad')}>{t("navbar.division.discord")}</Menu.Item>
                     <Menu.Item icon={<IconBook size={20}/>}
-                               onClick={() => menuLink('https://wiki.ivao.aero/en/home/ivao/rules')}>{t("navbar.division.rules")}</Menu.Item>
-                    <Menu.Item icon={<IconGavel size={20}/>}
-                               onClick={() => navigate('/legal')}>{t("navbar.division.legal")}</Menu.Item>
+                               onClick={() => menuLink('https://wiki.ivao.aero/en/home/ivao/information')}>{t("navbar.division.rules")}</Menu.Item>
                     <Menu.Item icon={<IconMailForward size={20}/>}
                                onClick={() => navigate('contact-us')}>{t("navbar.division.contact")}</Menu.Item>
                     <Menu.Item icon={<IconMessages size={20}/>}
                                onClick={() => navigate('faq')}>{t("navbar.division.faq")}</Menu.Item>
-
+                    <Menu.Item icon={<IconGavel size={20}/>}
+                               onClick={() => navigate('/legal')}>{t("navbar.division.legal")}</Menu.Item>
                 </Menu.Dropdown>
             </Menu>
             <Menu trigger="hover" radius="lg" shadow={theme.shadows.lg} width={200} withArrow>
@@ -131,10 +130,14 @@ export function CommonDropdownContent({scrollPosition: propScrollPosition}: { sc
                 <Menu.Dropdown>
                     <Menu.Item icon={<Image src={steps} width={20}/>}
                                onClick={() => navigate('atc/first-step')}>{t("navbar.atc.start")}</Menu.Item>
-                    <Menu.Item icon={<IconLock size={20}/>}
-                               onClick={() => menuLink('https://ivao.aero/fras/list.asp?id=BY')}>{t("navbar.atc.fra")}</Menu.Item>
                     <Menu.Item icon={<IconMapCog size={20}/>}
                                onClick={() => navigate('/sector')}>{t("navbar.atc.sector")}</Menu.Item>
+                    <Menu.Item icon={<IconFileInfo size={20}/>}
+                               onClick={() => menuLink('https://www.ban.by/en/aeronautical-information-aip/amdt')}>{t("navbar.atc.charts")}</Menu.Item>
+                    <Menu.Item icon={<IconLock size={20}/>}
+                               onClick={() => menuLink('https://ivao.aero/fras/list.asp?id=BY')}>{t("navbar.atc.fra")}</Menu.Item>
+                    <Menu.Item icon={<IconCar size={20}/>}
+                               onClick={() => navigate('vehicles')}>{t("navbar.atc.vehicles")}</Menu.Item>
                     <Menu.Item icon={<IconArticle size={20}/>}
                                onClick={() => navigate('documents/atc')}>{t("navbar.atc.docs")}</Menu.Item>
                     <Menu.Item icon={<IconWorld size={20}/>}
@@ -158,7 +161,7 @@ export function CommonDropdownContent({scrollPosition: propScrollPosition}: { sc
                     <Menu.Item icon={<IconPlaneDeparture size={20}/>}
                                onClick={() => navigate('scenery')}>{t("navbar.pilots.scenarios")}</Menu.Item>
                     <Menu.Item icon={<IconFileInfo size={20}/>}
-                               onClick={() => menuLink('https://www.ban.by/AIP/Belarus231102/html/index.html')}>{t("navbar.pilots.charts")}</Menu.Item>
+                               onClick={() => menuLink('https://www.ban.by/en/aeronautical-information-aip/amdt')}>{t("navbar.pilots.charts")}</Menu.Item>
                     <Menu.Item icon={<IconPlane size={20}/>}
                                onClick={() => menuLink('https://google.com')}>{t("navbar.pilots.airlines")}</Menu.Item>
                     <Menu.Item icon={<IconArticle size={20}/>}
@@ -183,8 +186,6 @@ export function CommonDropdownContent({scrollPosition: propScrollPosition}: { sc
                                onClick={() => menuLink('https://google.com')}>{t("navbar.community.events")}</Menu.Item>
                     <Menu.Item icon={<IconArticle size={20}/>}
                                onClick={() => navigate('documents')}>{t("navbar.atc.docs")}</Menu.Item>
-                    <Menu.Item icon={<IconSchool size={20}/>}
-                               onClick={() => navigate('documents')}>{t("navbar.community.training")}</Menu.Item>
                     <Menu.Item icon={<IconMessageCircle2 size={20}/>}
                                onClick={() => menuLink('https://forum.ivao.aero')}>{t("navbar.community.forum")}</Menu.Item>
                     <Menu.Item icon={<IconEye size={20}/>}
