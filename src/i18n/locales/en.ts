@@ -1,181 +1,164 @@
-import {Translations} from '../../types/Translition'
-
-const enTranslations: { translations: Translations } = {
-    translations: {
-        navbar: {
-            division: {
-                index: 'Division',
-                about: 'About us',
-                faq: 'FAQ',
-                staff: 'Division Staff',
-                discord: 'Discord',
-                contact: 'Contact us',
-                rules: 'IVAO rules',
-                legal: 'Legal information'
-            },
-            atc: {
-                index: 'ATC',
-                start: 'First steps',
-                fra: 'FRAs',
-                sector: 'IvAc Sector',
-                gca: 'GCA Programme',
-                charts: 'Charts',
-                docs: 'Documents',
-                vehicles: 'Vehicles'
-            },
-            pilots: {
-                index: 'Pilots',
-                start: 'First steps',
-                scenarios: 'Scenarios',
-                charts: 'Charts',
-                airlines: 'Virtual airlines',
-                tours: 'Tours'
-            },
-            community: {
-                index: 'Community',
-                training: 'Training campus',
-                events: 'Events',
-                forum: 'BY Forum',
-                webeye: 'WebEye',
-                ivao: 'IVAO website',
-                tracker: 'Tracker'
-            },
-            user: {
-                login: 'Login',
-                logout: 'Logout',
-                profile: 'Profile'
-            }
-        },
-        errorpage: {
-            notfoundtext: 'Something is not right!',
-            notfoundsubtext: 'It seems like you tried to open a page that doesn\'t exist. Good thing we have a cool button for you:',
-            homebutton: 'Home!'
-        },
-        heropage: {
-            title: 'Welcome to the BY Division of',
-            subtitle: 'The most modern division in IVAO.',
-            subtitle2: 'Join now!',
-            joinbutton: 'Join!',
-            transfer: 'Transfer to BY division!'
-        },
-        legal: {
-            title: 'Legal information',
-            text: 'Yes, we collect and store your information. But we do so in accordance with the following documents:',
-            privacypolicy: 'Privacy Policy',
-            termsofuse: 'Terms of Use',
-            ipp: 'Intellectual Property Policy',
-        },
-        sector: {
-            title: 'Sector file',
-            text: 'On this page you can download the sector file for IvAc.',
-            wtitle: 'Please pay attention!',
-            warning: 'IvAc is deprecated and no longer recommended to use! <br/> We strongly recommend using <a href={"https://ivao.aero/softdev/software/aurora.asp"} target={"_blank"} >Aurora</a>',
-            download: 'Download',
-        },
-        news: {
-            title: 'News',
-            button: 'Read more'
-        },
-        staff: {
-            name: 'Division Staff',
-        },
-        AboutUs: {
-            title: 'About us',
-            text: 'The International Virtual Aviation Organisation, IVAO for short, was founded in 1998 to provide an online platform for flight simulation enthusiasts to enjoy their hobby in a simulated real-world environment, in company of other people, flying or providing Air Traffic Control services.'
-        },
-        generic: {
-            ivao: 'IVAO'
-        },
-        footer: {
-            copyrightMessage: '© 2023 International Virtual Aviation Organisation - IVAO Belarus. All Rights Reserved.',
-            privacyPolicyName: 'Privacy Policy',
-            termsOfUseName: 'Terms of Use',
-        },
-        notif: {
-            loading: {
-                name: "Loading data...",
-                descritpion: "Please wait while we contact the server.",
-            },
-            loaded: {
-                name: "Data loaded!",
-                descritpion: "Hooray! We received and processed the data."
-            },
-            server: {
-                name: "Error!",
-                descritpion: "The server did not want to share data with us :(",
-            },
-            auth: {
-                negative: {
-                    name: "Error!",
-                    description: "It seems you have to log into your account first.",
-                },
-            }
-        },
-        events: {
-            content: {
-                title: "Events"
-            },
-            booking: {
-                book: "Book",
-                unbook: "Cancel",
-                none: "There are no available positions!",
-            },
-        },
-        Scenery: {
-            title: "Sceneries",
-            search: "Enter ICAO",
-            searchButton: "Find",
-            helpTitle: "Would you like to see your own sceneries here?",
-            helpText: "Can you help us develop scenarios for division airports? Join us!",
-            helpButton: "I'm in!",
-        },
-        FAQ: {
-            page: {
-                title: "Frequently Asked Questions",
-            },
-            questions: {
-                1: "I was a member of IVAO, but after being inactive, I can't get online.",
-                2: "I registered for the second time because I can't remember the password to my old account or I don't have access to my e-mail in my old account.",
-                3: "When registering, I entered my first and last name in Russian and they became unreadable. What should I do?",
-                4: "I was supposed to get an award on my profile, but I didn't. Why?",
-                5: "I lost my password, how can I get it again?",
-                6: "How can I change my email in my profile?",
-                7: "Online hours are not updating in my account. Is it ok?",
-                8: "How can I move to the BY division?",
-                9: "Who can I contact if I have any other questions?",
-                10: "hello"
-            },
-            answers: {
-                1: 'If an IVAO user has not been active on the network for 3 months, the account becomes inactive and is marked as "Inactive User" in the profile. After that you will not be able to connect to the network. If you remember your VID, it is very easy to activate your account: go to the profile page of your account. <a href=\'https://www.ivao.aero/members/person/details.asp?ID=XXXXXX\' target=\'_blank\'>https://www.ivao.aero/members/person/details.asp?ID=XXXXXX</a> (replace XXXXX with your VID). Click the "Click here to reactivate it" link on the right. Activation will take place automatically within 15 minutes. If you have forgotten your password, go to the password recovery page <a href=\'http://www.ivao.aero/members/person/password.htm\' target=\'_blank\'>http://www.ivao.aero/members/person/password.htm</a>. If you do not remember your VID, send an email with your first name, last name, and email address provided when you registered with the BY Membership Department (<a href=\'mailto:by-membership@ivao.aero\' target=\'_blank\'>by-membership@ivao.aero</a>). ',
-                2: "In case you have access to the mail in your old account, go to the page to recover your password <a href='https://ivao.aero/Login.aspx' target='_blank'>https://ivao.aero/Login.aspx</a>, enter the VID of your old account and click \"I forgot my password\". The password will be sent automatically to the mail in your old profile. In case you do not have access to the mail, email BY Membership Department (<a href='mailto:by-membership@ivao.aero?subject=E-mail%20change%20VID%20XXXXXX&body=%D0%A3%D0%B2%D0%B0%D0%B6%D0%B0%D0%B5%D0%BC%D1%8B%D0%B9%20Membership%20%D0%94%D0%B5%D0%BF%D0%B0%D1%80%D1%82%D0%B0%D0%BC%D0%B5%D0%BD%D1%82!%0D%0A%0D%0A%D0%9F%D1%80%D0%BE%D1%88%D1%83%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BC%D0%BE%D1%8E%20%D0%BF%D0%BE%D1%87%D1%82%D1%83%20%D0%B2%20%D0%B0%D0%BA%D0%BA%D0%B0%D1%83%D0%BD%D1%82%D0%B5%20IVAO.%0D%0A%D0%A1%D1%82%D0%B0%D1%80%D0%B0%D1%8F%20%D0%BF%D0%BE%D1%87%D1%82%D0%B0%3A%0D%0A%D0%9D%D0%BE%D0%B2%D0%B0%D1%8F%20%D0%BF%D0%BE%D1%87%D1%82%D0%B0%3A%0D%0A%D0%9F%D1%80%D0%B8%D1%87%D0%B8%D0%BD%D0%B0%3A%0D%0A%0D%0A%D0%A1%20%D1%83%D0%B2%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5%D0%BC%2C%0D%0A' target='_blank'>by-membership@ivao.aero</a>) with a request to change the e-mail address in your old account. In the subject line write: E-mail change VID XXXXXX (where XXXXXX is your VID). In the text of the e-mail, please specify the reason for the change of address, and be sure to include the old and new address.",
-                3: "Email the BY Membership Department (<a href='mailto:by-membership@ivao.aero' target='_blank'>by-membership@ivao.aero</a>), enter your VID and your first and last name in Latin letters. Your profile will be changed with these data.",
-                4: "If you have not received an award for the IVAO World Tour, please contact <a href='mailto:members@ivao.aero' target='_blank'>members@ivao.aero</a> (in English) to clarify the issue. If you have not received an award for a divisional tourney or event, please contact <a href='mailto:xx-mc@ivao.aero' target='_blank'>xx-mc@ivao.aero</a> или <a href='mailto:xx-mac@ivao.aero' target='_blank'>xx-mac@ivao.aero</a>, where xx is the two-letter code for the division in which you were in the tourney or event.",
-                5: "You can request password recovery on the account login page. \n" +
-                    "The password will be sent to the e-mail address specified in your profile during registration.",
-                6: "You cannot change it yourself. If you need to change the address on your account, submit a request to BY Membership Department (<a href='mailto:members@ivao.aero' target='_blank'>members@ivao.aero</a>). In the subject line specify: E-mail change and your VID. In the body of the e-mail, indicate the reason for the change of address, as well as your old and new addresses.",
-                7: "Changing the number of your online hours is an automatic process performed on the IVAO servers. If you find that the number of online hours does not change, make sure that you have actually connected to the network as a pilot or dispatcher. To check this, go to the IVAO Tracker page and check your online activity. If the activity is confirmed, please wait 12 to 24 hours and then check your profile again.\n" +
-                    "\n" +
-                    "\n" +
-                    "It is also possible that the pilot (this is for pilots only) was connected to the network, but remained stationary for a long time (for example, standing in a parking lot or pressing pause in the simulator). In this case the system considers such actions as \"sandbagging\" and will not increase your online hours.",
-                8: "Based on IVAO Regulation 4.1.6, a user may request a division change at any time, however all transfers are subject to approval by division management and the IVAO User Relations Department.\n" +
-                    "\n" +
-                    "\n" +
-                    "Send a request for <a href='mailto:xx-hq@ivao.aero' target='_blank'>xx-hq@ivao.aero</a> and <a href='mailto:yy-hq@ivao.aero' target='_blank'>yy-hq@ivao.aero</a>, with a CC for <a href='mailto:members@ivao.aero' target='_blank'>members@ivao.aero</a> (it must be one e-mail from the e-mail address specified in your account)\n" +
-                    "\n" +
-                    "\n" +
-                    "Replace xx with the two-letter code for your current division (for information)\n" +
-                    "Replace uu with the two-letter code of the division you intend to transfer to (approval required)\n" +
-                    "\n" +
-                    "In the subject line write: Division Transfer VID 123456 (replace 123456 with your VID)\n" +
-                    "In the body of the letter, write: I request to transfer me from XX division to YY division\n" +
-                    "Please note that a transfer is possible provided you are not pending a practical exam in your current division. Please complete the exam or request a cancellation from the Training Department.\n" +
-                    "\n" +
-                    "You can also use the button on our division home page to automail.",
-                9: "If you would like to contact any of the BY division coordinators, please see their e-mail address in the <a href='/staff' target= '_blank' >staff list</a>",
-                10: "hello",
-            },
-        },
+import { Translations } from '../../types/Translition';
+const ruTranslations: {
+  translations: Translations;
+} = {
+  translations: {
+    navbar: {
+      division: {
+        index: 'Дивизион',
+        about: 'О нас',
+        faq: 'FAQ',
+        staff: 'Руководство дивизиона',
+        discord: 'Дискорд',
+        contact: 'Связь с нами',
+        rules: 'Правила IVAO',
+        legal: 'Правовая информация'
+      },
+      atc: {
+        index: 'Диспетчеру',
+        start: 'Первые шаги',
+        fra: 'Ограничения (FRAs)',
+        sector: 'Сектор IvAc',
+        gca: 'GCA Программа',
+        charts: 'Схемы аэропортов',
+        docs: 'Документы',
+        vehicles: 'ТС'
+      },
+      pilots: {
+        index: 'Пилоту',
+        start: 'Первые шаги',
+        scenarios: 'Сценарии',
+        charts: 'Схемы аэропортов',
+        airlines: 'Виртуальные авиакомпании',
+        tours: 'Туры'
+      },
+      community: {
+        index: 'Сообщество',
+        training: 'Тренировочный кампус',
+        events: 'Ивенты',
+        forum: 'Форум BY',
+        webeye: 'WebEye',
+        ivao: 'Сайт IVAO',
+        tracker: 'Трекер'
+      },
+      user: {
+        login: 'Войти',
+        logout: 'Выйти',
+        profile: 'Профиль'
+      }
     },
+    errorpage: {
+      notfoundtext: 'Что-то не так!',
+      notfoundsubtext: 'Кажется, вы попытались открыть страницу, которой нет. Хорошо, что мы приготовили для вас крутую кнопку:',
+      homebutton: 'Домой!'
+    },
+    heropage: {
+      title: 'Добро пожаловать в BY дивизион',
+      subtitle: 'Самый современный дивизион в IVAO.',
+      subtitle2: 'Присоединяйтесь прямо сейчас!',
+      joinbutton: 'Присоединиться!',
+      transfer: 'Перейти в BY дивизион!'
+    },
+    legal: {
+      title: 'Правовая информация',
+      text: 'Да, мы собираем и храним вашу информацию. Но делаем это в соответвии со следующими документами:',
+      privacypolicy: 'Политика конфиденциальности',
+      termsofuse: 'Условия использования',
+      ipp: 'Политика интеллектуальной собственности'
+    },
+    sector: {
+      title: 'Сектор-файл',
+      text: ' На этой странице вы можете загрузить сектор-файл для IvAc.',
+      wtitle: 'Пожалуйста, обратие внимание!',
+      warning: 'IvAc устарел и больше не рекомендуется к использованию! <br/> Вместно него рекомендуется использовать <a href={"https://ivao.aero/softdev/software/aurora.asp"} target={"_blank"} >Aurora</a>',
+      download: 'Скачать'
+    },
+    news: {
+      title: 'Новости',
+      button: 'Читать больше'
+    },
+    staff: {
+      name: 'Руководство дивизиона'
+    },
+    AboutUs: {
+      title: 'О нас',
+      text: 'Международная организация виртуальной авиации, сокращенно IVAO, была основана в 1998 году, чтобы предоставить онлайн-платформу любителям авиасимуляторов, которые могут наслаждаться своим хобби в имитируемой реальной среде, в компании других людей, летающих или предоставляющих услуги управления воздушным движением.'
+    },
+    generic: {
+      ivao: 'IVAO'
+    },
+    footer: {
+      copyrightMessage: '© 2023 International Virtual Aviation Organisation - IVAO Belarus. All Rights Reserved.',
+      privacyPolicyName: 'Privacy Policy',
+      termsOfUseName: 'Terms of Use'
+    },
+    notif: {
+      loading: {
+        name: "Загружаем данные...",
+        descritpion: "Пожалуйста, подождите пока мы обращаемся к серверу."
+      },
+      loaded: {
+        name: "Данные загружены!",
+        descritpion: "Ура! Мы получили и обработали данные."
+      },
+      server: {
+        name: "Ошибка!",
+        descritpion: "Сервер не захотел делится с нами данными :("
+      },
+      auth: {
+        negative: {
+          name: "Ошибка!",
+          description: "Кажется, нужно сначала войти в аккаунт."
+        }
+      }
+    },
+    events: {
+      content: {
+        title: "Ивенты"
+      },
+      booking: {
+        book: "Забронировать",
+        unbook: "Отменить",
+        none: "Доступных позиций нет!"
+      }
+    },
+    Scenery: {
+      title: "Сценарии",
+      search: "Введите ICAO",
+      searchButton: "Найти",
+      helpTitle: "Хотите видеть здесь свои сценарии?",
+      helpText: "Вы можете помочь нам в разработке сценариев для аэропортов дивизиона? Присоединяйтесь!",
+      helpButton: "Я в деле!"
+    },
+    FAQ: {
+      page: {
+        title: "Вопросы и ответы"
+      },
+      questions: {
+        1: "Я был участником IVAO, но после неактивности не могу зайти в сеть.",
+        2: "Я зарегистрировался второй раз, потому что не помню пароля к старому аккаунту или нет доступа к e-mail в старом аккаунте.",
+        3: "При регистрации я указал имя и фамилию по-русски и они стали нечитаемы. Что мне делать?",
+        4: "Я должен был получить награду в профиль, но не получил. Почему?",
+        5: "Я потерял свой пароль, как я могу получить его снова?",
+        6: "Как я могу изменить свою почту в профиле?",
+        7: "Oнлайн-часы не обновляются в моём аккаунте. Это нормально?",
+        8: "Как я могу перейти в BY дивизион?",
+        9: "С кем я могу связаться, если будут другие вопросы.",
+        10: "привет"
+      },
+      answers: {
+        1: 'Если пользователь IVAO не был активен в сети в течение 3-х месяцев, то такой аккаунт становится неактивным, и отмечается статусом “Inactive User” в профиле. После этого вы не сможете подключится к сети. Если вы помните свой VID, то активировать аккаунт очень просто: зайдите на страницу профиля вашего аккаунта <a href=\'https://www.ivao.aero/members/person/details.asp?ID=XXXXXX\' target=\'_blank\'>https://www.ivao.aero/members/person/details.asp?ID=XXXXXX</a> (замените XXXXX на ваш VID). Нажмите справа на ссылку “Click here to reactivate it”. Активация происходит автоматически в течение 15 минут. Если забыли пароль, перейдите на страницу восстановления пароля <a href=\'http://www.ivao.aero/members/person/password.htm\' target=\'_blank\'>http://www.ivao.aero/members/person/password.htm</a>. Если вы не помните ваш VID, отправьте письмо с вашими именем, фамилией и адресом e-mail, указанным при регистрации в BY Membership Department (<a href=\'mailto:by-membership@ivao.aero\' target=\'_blank\'>by-membership@ivao.aero</a>). ',
+        2: "В случае, если у вас есть доступ к почте в старом аккаунте, то для восстановления пароля перейдите на страницу <a href='https://ivao.aero/Login.aspx' target='_blank'>https://ivao.aero/Login.aspx</a>, введите VID вашего старого аккаунта и нажмите “I forgot my password”. Пароль будет выслан автоматически на почту в вашем старом профиле. В случае, если у вас нет доступа к почте, отправьте письмо для BY Membership Department (<a href='mailto:by-membership@ivao.aero?subject=E-mail%20change%20VID%20XXXXXX&body=%D0%A3%D0%B2%D0%B0%D0%B6%D0%B0%D0%B5%D0%BC%D1%8B%D0%B9%20Membership%20%D0%94%D0%B5%D0%BF%D0%B0%D1%80%D1%82%D0%B0%D0%BC%D0%B5%D0%BD%D1%82!%0D%0A%0D%0A%D0%9F%D1%80%D0%BE%D1%88%D1%83%20%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B8%D1%82%D1%8C%20%D0%BC%D0%BE%D1%8E%20%D0%BF%D0%BE%D1%87%D1%82%D1%83%20%D0%B2%20%D0%B0%D0%BA%D0%BA%D0%B0%D1%83%D0%BD%D1%82%D0%B5%20IVAO.%0D%0A%D0%A1%D1%82%D0%B0%D1%80%D0%B0%D1%8F%20%D0%BF%D0%BE%D1%87%D1%82%D0%B0%3A%0D%0A%D0%9D%D0%BE%D0%B2%D0%B0%D1%8F%20%D0%BF%D0%BE%D1%87%D1%82%D0%B0%3A%0D%0A%D0%9F%D1%80%D0%B8%D1%87%D0%B8%D0%BD%D0%B0%3A%0D%0A%0D%0A%D0%A1%20%D1%83%D0%B2%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5%D0%BC%2C%0D%0A' target='_blank'>by-membership@ivao.aero</a>) с просьбой изменить адрес e-mail в вашем старом аккаунте. В теме письма напишите: E-mail change VID XXXXXX (где XXXXXX – ваш VID). В тексте письма укажите причину изменения адреса, и обязательно старый и новый адрес.",
+        3: "Отправьте письмо для BY Membership Department (<a href='mailto:by-membership@ivao.aero' target='_blank'>by-membership@ivao.aero</a>), укажите ваш VID, а также имя и фамилию латинскими буквами. Ваш профиль будет изменён с этими данными.",
+        4: "Если вы не получили награду за мировой тур IVAO, пожалуйста свяжитесь с <a href='mailto:members@ivao.aero' target='_blank'>members@ivao.aero</a> (на английском языке) для выяснения вопроса. Если вы не получили награду за дивизионный тур или ивент, пожалуйста свяжитесь с <a href='mailto:xx-mc@ivao.aero' target='_blank'>xx-mc@ivao.aero</a> или <a href='mailto:xx-mac@ivao.aero' target='_blank'>xx-mac@ivao.aero</a>, где xx - двух-буквенный код дивизиона, в котором вы проходили тур или участвовали в ивенте.",
+        5: "Вы можете запросить восстановление пароля на странице входа в аккаунт. \n" + "Пароль будет выслан на адрес e-mail, указанный в вашем профиле при регистрации.",
+        6: "Самостоятельно изменить вы не можете. Если необходимо сменить адрес в вашем аккаунте, отправьте запрос для BY Membership Department (<a href='mailto:members@ivao.aero' target='_blank'>members@ivao.aero</a>). В теме укажите: E-mail change и ваш VID. В тексте письма укажите причину изменения адреса, а также ваш старый и новый адреса.",
+        7: "Изменение количества ваших онлайн-часов это автоматический процесс, выполняющийся на серверах IVAO. Если вы обнаружили, что количество онлайн-часов не изменяется, убедитесь, что вы действительно подключались к сети в качестве пилота или диспетчера. Чтобы это проверить, зайдите на страницу IVAO Tracker и проверьте вашу онлайн-активность. Если активность подтверждена, пожалуйста подождите от 12-ти до 24-х часов и после этого снова проверьте свой профиль.\n" + "\n" + "\n" + "Также возможно, что пилот (это только для пилотов) был подключен к сети, но оставался неподвижным долгое время (например, стоял на стоянке или нажал паузу в симуляторе). В этом случае система расценивает такие действия как “sandbagging” (накручивание онлайн-часов), и не увеличивает время ваших онлайн-часов.",
+        8: "На основании пункта 4.1.6 Правил IVAO пользователь может запросить смену дивизиона в любое время, однако все трансферы являются предметом для одобрения руководством дивизионов и Департамента по работе с пользователями IVAO.\n" + "\n" + "\n" + "Отправьте запрос для <a href='mailto:xx-hq@ivao.aero' target='_blank'>xx-hq@ivao.aero</a> и <a href='mailto:yy-hq@ivao.aero' target='_blank'>yy-hq@ivao.aero</a>, с копией для <a href='mailto:members@ivao.aero' target='_blank'>members@ivao.aero</a> (это должно быть одно письмо c адреса e-mail указанного в вашем аккаунте)\n" + "\n" + "\n" + "Замените xx на двух-буквенный код вашего текущего дивизиона (для информации)\n" + "Замените уу на двух-буквенный код дивизиона, в который собираетесь перейти (необходимо одобрение)\n" + "\n" + "В теме письма напишите: Division Transfer VID 123456 (замените 123456 на ваш номер)\n" + "В тексте письма напишите: I request to transfer me from XX division to YY division\n" + "Имейте в ввиду, что перевод возможен при условии, что в текущем дивизионе вы не находитесь в ожидании сдачи практического экзамена. Пожалуйста завершите экзамен или запросите его отмену в Training Department.\n" + "\n" + "Также вы можете использовать кнопку на главной странице нашего дивизиона для автописьма.",
+        9: "Если вы хотите связаться с кем-то из координаторов BY дивизиона, пожалуйста посмотрите его e-mail адрес в <a href='/staff' target= '_blank' >списке руководства</a>",
+        10: "привет"
+      }
+    }
+  }
 };
-
-export default enTranslations;
+export default ruTranslations;
