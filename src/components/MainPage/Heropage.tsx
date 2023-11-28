@@ -55,7 +55,7 @@ const useStyles = createStyles((theme) => ({
     description: {
         color: theme.white,
         textAlign: 'center',
-        fontSize: 30,
+        fontSize: 29,
         maxWidth: "100%",
 
         [theme.fn.smallerThan('xs')]: {
