@@ -29,7 +29,7 @@ import ru from '../../assets/image/ru.svg';
 import en from '../../assets/image/en.svg';
 import {CommonDropdownContent} from "./CommonDropdownContent";
 import { t } from 'i18next';
-import {AuthContext, useUser} from "../../context/UserContext";
+import {AuthContext} from "../../context/UserContext";
 
 const HEADER_HEIGHT = rem(100);
 
