@@ -164,7 +164,7 @@ export function HeaderResponsive() {
     const [urlParams] = useSearchParams();
     const ivaoToken = urlParams.get("token");
 
-    const { signed, token } = useContext(AuthContext);
+    const { signed } = useContext(AuthContext);
 
     const serverUrl = `https://v3.api.xr.ivao.aero/auth/login?goto=${window.location.protocol}//${window.location.hostname}${window.location.port ? ':'+window.location.port : ''}`;
 

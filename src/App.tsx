@@ -29,15 +29,16 @@ import {DocumentsATCPage} from "./pages/documents/DocumentsATCPage";
 import {EventPage} from "./pages/events/EventPage";
 import {Legal} from "./pages/Legal";
 import {SectorFile} from "./pages/SectorFile";
-import {AuthProvider} from "./context/UserContext";
+import {AuthContext, AuthProvider} from "./context/UserContext";
+import {useContext} from "react";
 
 export default function App() {
-    const isAuthenticated = !!localStorage.getItem('authToken');
 
     const PrivateRoute: React.FC<{ path: string; element: React.ReactNode }> = ({
                                                                                     element,
                                                                                 }) => {
-        if (!isAuthenticated) {
+        const { signed } = useContext(AuthContext);
+        if (!signed) {
             notifications.show({
                 id: 'auth-required',
                 color: 'red',
