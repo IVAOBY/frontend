@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {
     Burger,
     Container,
@@ -16,8 +16,8 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import bylogo from '../../assets/image/Logo_f_w.svg';
 import bylogoblue from '../../assets/image/logobyblue.svg';
-import { getTokenFromUrl, removeTokenFromUrl, useAuth } from '../Handler';
-import { useNavigate } from 'react-router-dom';
+import { getTokenFromUrl, removeTokenFromUrl } from '../Handler';
+import {useNavigate, useSearchParams} from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
     IconLanguage,
@@ -27,8 +27,9 @@ import {
 import by from '../../assets/image/by.svg';
 import ru from '../../assets/image/ru.svg';
 import en from '../../assets/image/en.svg';
-import {CommonDropdownContent} from "./header/CommonDropdownContent";
+import {CommonDropdownContent} from "./CommonDropdownContent";
 import { t } from 'i18next';
+import {AuthContext, useUser} from "../../context/UserContext";
 
 const HEADER_HEIGHT = rem(100);
 
@@ -158,21 +159,32 @@ const useStyles = createStyles((theme) => ({
 export function HeaderResponsive() {
     const [opened, { toggle }] = useDisclosure(false);
     const { classes } = useStyles();
-    const isAuthenticated = useAuth();
     const [scrollPosition, setScrollPosition] = useState(0);
+    const authContext = useContext(AuthContext);
+    const [urlParams] = useSearchParams();
+    const ivaoToken = urlParams.get("token");
+
+    const { signed, token } = useContext(AuthContext);
 
     const serverUrl = `https://v3.api.xr.ivao.aero/auth/login?goto=${window.location.protocol}//${window.location.hostname}${window.location.port ? ':'+window.location.port : ''}`;
 
-    // Handle scroll position
     useEffect(() => {
+        console.log('Signed:', signed);
         const handleScroll = () => {
             setScrollPosition(window.scrollY);
         };
+
         window.addEventListener('scroll', handleScroll);
+
+        if (ivaoToken) {
+            authContext.signIn(ivaoToken);
+        }
+
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
-    }, []);
+    }, [ivaoToken, authContext]);
+
 
     const handleImageClick = () => {
         navigate('/');
@@ -189,40 +201,13 @@ export function HeaderResponsive() {
 
     const logoToRender = scrollPosition > 0 ? logoScrolled : logoDefault;
 
-    const handleAuthAction = () => {
-        if (isAuthenticated) {
-            // Handle Logout
-            try {
-                localStorage.removeItem('authToken');
-                localStorage.removeItem('authTokenExpiration');
-                navigate('/');
-            } catch (error) {
-                console.error('Error during logout:', error);
-            }
+    const handleAuthAction = async () => {
+        if (!signed) {
+            window.location.href = serverUrl;
         } else {
-            // Handle Login
-            try {
-                window.location.href = serverUrl;
-            } catch (error) {
-                console.error('Error during authentication:', error);
-            }
+            authContext.signOut();
         }
     };
-
-    const token = getTokenFromUrl();
-
-    if (token) {
-        const expirationTime = Date.now() + 3600 * 1000;
-
-        localStorage.setItem('authToken', token);
-        localStorage.setItem('authTokenExpiration', expirationTime.toString());
-        removeTokenFromUrl();
-        window.location.href = `${window.location.protocol}//${window.location.hostname}${
-            window.location.port ? ':' + window.location.port : ''
-        }`;
-    }
-
-
 
     const navigate = useNavigate();
 
@@ -251,7 +236,7 @@ export function HeaderResponsive() {
                             scrollPosition > 0 ? classes.linkScrolled : ''
                         }`}
                     >
-                        {isAuthenticated ? (
+                        {authContext.signed ? (
                             <>
                                 <IconLogout size={20}></IconLogout>
                                 <Text onClick={handleAuthAction} ml={6}>
@@ -314,7 +299,7 @@ export function HeaderResponsive() {
                                 display="flex"
                                 className={classes.link}
                             >
-                                {isAuthenticated ? (
+                                {authContext.signed ? (
                                     <>
                                         <IconLogout size={20}></IconLogout>
                                         <Text onClick={handleAuthAction} ml={6}>

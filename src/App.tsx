@@ -2,7 +2,7 @@ import {AppShell, MantineProvider} from '@mantine/core';
 import {Route, BrowserRouter, Routes, Navigate} from 'react-router-dom';
 import {I18nextProvider} from 'react-i18next';
 import i18n from './i18n/i18n';
-import {HeaderResponsive} from './components/elements/header';
+import {HeaderResponsive} from './components/header/header';
 import {Footer} from './components/Footer';
 import {MainPage} from './components/MainPage/MainPage';
 import {StaffMain} from './components/StaffPage/StaffMain';
@@ -29,6 +29,7 @@ import {DocumentsATCPage} from "./pages/documents/DocumentsATCPage";
 import {EventPage} from "./pages/events/EventPage";
 import {Legal} from "./pages/Legal";
 import {SectorFile} from "./pages/SectorFile";
+import {AuthProvider} from "./context/UserContext";
 
 export default function App() {
     const isAuthenticated = !!localStorage.getItem('authToken');
@@ -57,6 +58,7 @@ export default function App() {
         <MantineProvider withCSSVariables withGlobalStyles withNormalizeCSS theme={ivaoTheme}>
             <I18nextProvider i18n={i18n}>
                 <BrowserRouter>
+                    <AuthProvider>
                     <AppShell padding={0} navbar={<HeaderResponsive/>} footer={<Footer/>}>
                         <Notifications/>
                         <Handler/>
@@ -99,6 +101,7 @@ export default function App() {
                             />
                         </Routes>
                     </AppShell>
+                    </ AuthProvider>
                 </BrowserRouter>
             </I18nextProvider>
         </MantineProvider>
