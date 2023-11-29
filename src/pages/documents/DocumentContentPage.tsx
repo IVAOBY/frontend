@@ -77,7 +77,7 @@ export function DocumentContentPage() {
             withCloseButton: false,
         });
         api(`/documents/${id}`)
-            .then((response) => {
+            .then((response: any) => {
                 if (response && typeof response === 'object' && !Array.isArray(response)) {
                     setDocumentItem(response);
                     notifications.hide('load-data');
@@ -95,7 +95,7 @@ export function DocumentContentPage() {
                     });
                 }
             })
-            .catch((error) => {
+            .catch((error: any) => {
                 console.error('Error fetching news:', error);
                 notifications.update({
                     id: 'load-data',

@@ -116,7 +116,7 @@ export function ShiftComponent() {
             withCloseButton: false,
         });
         api(`/events-parts/event/${id}`)
-            .then((response) => {
+            .then((response: any) => {
                 if (response && Array.isArray(response)) {
                     setPartItem(response);
                     notifications.hide('load-data');
@@ -134,7 +134,7 @@ export function ShiftComponent() {
                     });
                 }
             })
-            .catch((error) => {
+            .catch((error: any) => {
                 console.error('Error fetching news:', error);
                 notifications.update({
                     id: 'load-data',
@@ -163,7 +163,7 @@ export function ShiftComponent() {
                     });
 
                     api(`/events-parts/event/${id}`)
-                        .then((response) => {
+                        .then((response: any) => {
                             if (response && Array.isArray(response)) {
                                 setPartItem(response);
                             }
@@ -195,13 +195,13 @@ export function ShiftComponent() {
             api(`/events-booking/unbook/${bookingId}`, 'v3', 'DELETE')
                 .then(() => {
                     api(`/events-parts/event/${id}`)
-                        .then((response) => {
+                        .then((response: any) => {
                             if (response && Array.isArray(response)) {
                                 setPartItem(response);
                             }
                         });
                 })
-                .catch((error) => {
+                .catch((error: any) => {
                     console.log('Error handling unbooking:', error);
                 });
         } else {
