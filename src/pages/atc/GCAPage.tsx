@@ -9,10 +9,10 @@ import {
 } from '@mantine/core';
 import {useTranslation} from 'react-i18next';
 import {notifications} from '@mantine/notifications';
-import {api} from '../../hooks/api';
 import {IconCircleX} from '@tabler/icons-react';
 import i18n from 'i18next';
 import {DocumentsType} from "../../hooks/types";
+import {useApi} from "../../context/ApiContext";
 
 const useStyles = createStyles((theme) => ({
     title: {
@@ -61,6 +61,7 @@ const useStyles = createStyles((theme) => ({
 export function GCAPage() {
     const {classes} = useStyles();
     const {t} = useTranslation();
+    const api = useApi();
 
     const [documentItem, setDocumentItem] = useState<DocumentsType | null>(null);
     useEffect(() => {

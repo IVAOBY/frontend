@@ -16,9 +16,9 @@ import {
     IconMailOpened,
 } from '@tabler/icons-react';
 import {useEffect, useState} from "react";
-import {api} from "../../hooks/api";
 import {useTranslation} from "react-i18next";
 import {notifications} from "@mantine/notifications";
+import {useApi} from "../../context/ApiContext";
 
 const useStyles = createStyles((theme) => ({
     title: {
@@ -80,6 +80,7 @@ export function StaffMain() {
     const [departments, setDepartments] = useState<Department[]>([]);
     const [positions, setPositions] = useState<Position[]>([]);
     const { t} = useTranslation();
+    const api = useApi();
 
     const handleEmailClick = (email: string) => {
         window.location.href = `mailto:${email}`;

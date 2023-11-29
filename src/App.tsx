@@ -7,7 +7,6 @@ import {Footer} from './components/Footer';
 import {MainPage} from './components/MainPage/MainPage';
 import {StaffMain} from './components/StaffPage/StaffMain';
 import {Airport} from './components/AirportPage/Airport';
-import {Handler} from './components/Handler';
 import {NotFound} from './pages/Error404';
 import {ivaoTheme} from './ivaoTheme';
 import {AboutUs} from './pages/AboutUs';
@@ -31,6 +30,7 @@ import {Legal} from "./pages/Legal";
 import {SectorFile} from "./pages/SectorFile";
 import {AuthContext, AuthProvider} from "./context/UserContext";
 import {useContext} from "react";
+import {ApiProvider} from "./context/ApiContext";
 
 export default function App() {
 
@@ -59,10 +59,10 @@ export default function App() {
         <MantineProvider withCSSVariables withGlobalStyles withNormalizeCSS theme={ivaoTheme}>
             <I18nextProvider i18n={i18n}>
                 <BrowserRouter>
+                    <ApiProvider>
                     <AuthProvider>
                     <AppShell padding={0} navbar={<HeaderResponsive/>} footer={<Footer/>}>
                         <Notifications/>
-                        <Handler/>
                         <Routes>
                             <Route path="/" element={<MainPage/>}/>
                             <Route path="/airport" element={<Airport/>}/>
@@ -103,6 +103,7 @@ export default function App() {
                         </Routes>
                     </AppShell>
                     </ AuthProvider>
+                    </ApiProvider>
                 </BrowserRouter>
             </I18nextProvider>
         </MantineProvider>

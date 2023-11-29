@@ -11,12 +11,12 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { notifications } from '@mantine/notifications';
-import { api } from '../../hooks/api';
 import { IconCircleX } from '@tabler/icons-react';
 import i18n from 'i18next';
 import {format} from "date-fns";
 import {EventEntity} from "../../types/Events";
 import {ShiftComponent} from "./components/ShiftComponent";
+import {useApi} from "../../context/ApiContext";
 
 const useStyles = createStyles((theme) => ({
     title: {
@@ -68,7 +68,7 @@ export function EventPage() {
     const { classes, theme } = useStyles();
     const { t } = useTranslation();
     const { id } = useParams();
-    // const isSmallScreen = window.innerWidth < 768;
+    const api = useApi();
 
     const [eventItem, setEventItem] = useState<EventEntity | null>(null);
     useEffect(() => {
