@@ -108,7 +108,7 @@ export function NewsPage() {
             withCloseButton: false,
         });
         api(`/news/${id}`)
-            .then((response) => {
+            .then((response: any) => {
                 if (response && typeof response === 'object' && !Array.isArray(response)) {
                     setNewsItem(response);
                     notifications.hide('load-data');
@@ -126,7 +126,7 @@ export function NewsPage() {
                     });
                 }
             })
-            .catch((error) => {
+            .catch((error: any) => {
                 console.error('Error fetching news:', error);
                 notifications.update({
                     id: 'load-data',

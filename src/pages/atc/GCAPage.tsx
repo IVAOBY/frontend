@@ -75,7 +75,7 @@ export function GCAPage() {
             withCloseButton: false,
         });
         api("/documents/5")
-            .then(response => {
+            .then(function (response: any) {
                 if (response) {
                     setDocumentItem(response);
                     notifications.hide('load-gca');
@@ -93,7 +93,7 @@ export function GCAPage() {
                     });
                 }
             })
-            .catch((error) => {
+            .catch((error: any) => {
                 console.error('Error fetching gca programm:', error);
                 notifications.update({
                     id: 'load-gca',

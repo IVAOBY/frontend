@@ -176,7 +176,7 @@ export function NewsSection() {
             withCloseButton: false,
         });
         api('/news')
-            .then((response) => {
+            .then((response: any) => {
                 if (response && Array.isArray(response)) {
                     response.sort((a, b) => b.id - a.id);
                     setNews(response);
@@ -194,7 +194,7 @@ export function NewsSection() {
                     });
                 }
             })
-            .catch((error) => {
+            .catch((error: any) => {
                 console.error('Error fetching news:', error);
                 notifications.update({
                     id: 'load-data',

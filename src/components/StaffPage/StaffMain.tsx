@@ -88,14 +88,14 @@ export function StaffMain() {
 
     useEffect(() => {
         api("/staff-departments")
-            .then(response => {
+            .then(function (response: any) {
                 if (response && Array.isArray(response)) {
                     setDepartments(response);
                 } else {
                     console.error("Error: Unexpected API response structure");
                 }
             })
-            .catch(error => {
+            .catch(function (error: any) {
                 console.error("Error fetching data:", error);
             });
 
@@ -110,7 +110,7 @@ export function StaffMain() {
         });
 
         api('/staff-positions')
-            .then((response) => {
+            .then((response: any) => {
                 if (response && Array.isArray(response)) {
                     const positions: Position[] = response.map((positionData) => ({
                         departmentId: positionData.departmentId,
@@ -145,7 +145,7 @@ export function StaffMain() {
                     });
                 }
             })
-            .catch((error) => {
+            .catch((error: any) => {
                 console.error('Error fetching staff positions:', error);
                 notifications.update({
                     id: 'load-data',

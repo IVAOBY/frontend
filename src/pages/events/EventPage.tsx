@@ -82,7 +82,7 @@ export function EventPage() {
             withCloseButton: false,
         });
         api(`/events/${id}`)
-            .then((response) => {
+            .then((response: any) => {
                 if (response && typeof response === 'object' && !Array.isArray(response)) {
                     setEventItem(response);
                     notifications.hide('load-data');
@@ -100,7 +100,7 @@ export function EventPage() {
                     });
                 }
             })
-            .catch((error) => {
+            .catch((error: any) => {
                 console.error('Error fetching news:', error);
                 notifications.update({
                     id: 'load-data',

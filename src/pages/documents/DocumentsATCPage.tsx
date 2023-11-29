@@ -66,14 +66,14 @@ export function DocumentsATCPage() {
 
     useEffect(() => {
         api("/documents-category")
-            .then(response => {
+            .then(function (response: any) {
                 if (response && Array.isArray(response)) {
                     setDocumentsCategory(response);
                 } else {
                     console.error("Error: Unexpected API response structure");
                 }
             })
-            .catch(error => {
+            .catch(function (error: any) {
                 console.error("Error fetching data:", error);
             });
 
@@ -88,7 +88,7 @@ export function DocumentsATCPage() {
         });
 
         api('/documents')
-            .then((response) => {
+            .then((response: any) => {
                 if (response && Array.isArray(response)) {
                     const documents: DocumentsType[] = response.map((documentdata) => ({
                         id: documentdata.id,
@@ -114,7 +114,7 @@ export function DocumentsATCPage() {
                     });
                 }
             })
-            .catch((error) => {
+            .catch((error: any) => {
                 console.error('Error fetching staff positions:', error);
                 notifications.update({
                     id: 'load-data',

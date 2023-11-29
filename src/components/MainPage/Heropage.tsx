@@ -3,7 +3,6 @@ import {useTranslation} from "react-i18next";
 import {useCallback, useContext} from "react";
 import Typed from 'react-typed';
 import {useMediaQuery} from "@mantine/hooks";
-import {getDecodedToken} from "../Handler";
 import {notifications} from "@mantine/notifications";
 import {IconCircleX} from "@tabler/icons-react";
 import {AuthContext} from "../../context/UserContext";
@@ -140,10 +139,8 @@ export function HeroText() {
             return;
         }
 
-        const token = localStorage.getItem('authToken');
         if (signed) {
             try {
-                const decoded = await getDecodedToken(token);
                 const emailBody = `Dear HQs and Membership Department!
 
                 I request to transfer me from the ${decodedToken?.userData.divisionId} division to the BY division.
