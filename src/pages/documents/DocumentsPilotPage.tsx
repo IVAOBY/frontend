@@ -11,11 +11,11 @@ import {
     IconCircleX,
 } from '@tabler/icons-react';
 import {useEffect, useState} from "react";
-import {api} from "../../hooks/api";
 import {useTranslation} from "react-i18next";
 import {notifications} from "@mantine/notifications";
 import {DocumentsCategoryType, DocumentsType} from "../../hooks/types";
 import {useNavigate} from "react-router-dom";
+import {useApi} from "../../context/ApiContext";
 
 const useStyles = createStyles((theme) => ({
     title: {
@@ -62,6 +62,7 @@ export function DocumentsPilotPage() {
     const [documentsCategory, setDocumentsCategory] = useState<DocumentsCategoryType[]>([]);
     const [documents, setDocuments] = useState<DocumentsType[]>([]);
     const {t, i18n} = useTranslation();
+    const api = useApi();
 
     useEffect(() => {
         api("/documents-category")

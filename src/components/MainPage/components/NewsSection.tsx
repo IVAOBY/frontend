@@ -13,10 +13,10 @@ import {
 } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
 import {IconCalendarTime, IconCircleX, IconUser} from '@tabler/icons-react';
-import { api } from '../../../hooks/api';
 import { format } from 'date-fns';
 import {notifications} from "@mantine/notifications";
 import {useNavigate} from "react-router-dom";
+import {useApi} from "../../../context/ApiContext";
 
 const useStyles = createStyles((theme) => ({
     title: {
@@ -157,6 +157,7 @@ export function NewsSection() {
     const { classes, theme } = useStyles();
     const { t, i18n } = useTranslation();
     const [news, setNews] = useState<News[] | null>(null);
+    const api = useApi();
 
     const navigate = useNavigate();
     const newsRedirect = (newsItem: News) => {

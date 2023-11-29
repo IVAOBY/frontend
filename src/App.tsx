@@ -2,12 +2,11 @@ import {AppShell, MantineProvider} from '@mantine/core';
 import {Route, BrowserRouter, Routes, Navigate} from 'react-router-dom';
 import {I18nextProvider} from 'react-i18next';
 import i18n from './i18n/i18n';
-import {HeaderResponsive} from './components/elements/header';
+import {HeaderResponsive} from './components/header/header';
 import {Footer} from './components/Footer';
 import {MainPage} from './components/MainPage/MainPage';
 import {StaffMain} from './components/StaffPage/StaffMain';
 import {Airport} from './components/AirportPage/Airport';
-import {Handler} from './components/Handler';
 import {NotFound} from './pages/Error404';
 import {ivaoTheme} from './ivaoTheme';
 import {AboutUs} from './pages/AboutUs';
@@ -29,14 +28,17 @@ import {DocumentsATCPage} from "./pages/documents/DocumentsATCPage";
 import {EventPage} from "./pages/events/EventPage";
 import {Legal} from "./pages/Legal";
 import {SectorFile} from "./pages/SectorFile";
+import {AuthContext, AuthProvider} from "./context/UserContext";
+import {useContext} from "react";
+import {ApiProvider} from "./context/ApiContext";
 
 export default function App() {
-    const isAuthenticated = !!localStorage.getItem('authToken');
 
     const PrivateRoute: React.FC<{ path: string; element: React.ReactNode }> = ({
                                                                                     element,
                                                                                 }) => {
-        if (!isAuthenticated) {
+        const { signed } = useContext(AuthContext);
+        if (!signed) {
             notifications.show({
                 id: 'auth-required',
                 color: 'red',
@@ -57,9 +59,10 @@ export default function App() {
         <MantineProvider withCSSVariables withGlobalStyles withNormalizeCSS theme={ivaoTheme}>
             <I18nextProvider i18n={i18n}>
                 <BrowserRouter>
+                    <ApiProvider>
+                    <AuthProvider>
                     <AppShell padding={0} navbar={<HeaderResponsive/>} footer={<Footer/>}>
                         <Notifications/>
-                        <Handler/>
                         <Routes>
                             <Route path="/" element={<MainPage/>}/>
                             <Route path="/airport" element={<Airport/>}/>
@@ -99,6 +102,8 @@ export default function App() {
                             />
                         </Routes>
                     </AppShell>
+                    </ AuthProvider>
+                    </ApiProvider>
                 </BrowserRouter>
             </I18nextProvider>
         </MantineProvider>
