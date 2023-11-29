@@ -1,5 +1,5 @@
 const apiURL: { [key: string]: string } = {
-    'v3': 'https://api.game-explore.space'
+    'v3': 'http://localhost:3000'
 };
 
 const api = async (
