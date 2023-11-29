@@ -13,7 +13,7 @@ type ApiProviderProps = {
 };
 
 export const ApiProvider = ({ children }: ApiProviderProps) => {
-    const apiURL = 'http://127.0.0.1:3000';
+    const apiURL = 'https://api.game-explore.space/';
     const { token } = useContext(AuthContext);
 
     const api = async (path: string, method: string = 'GET', body: any = null) => {
