@@ -7,6 +7,9 @@ import React, {
 import {useLocation, useNavigate} from 'react-router-dom';
 import jwtDecode from "jwt-decode";
 import {removeTokenFromUrl} from "../components/Handler";
+import {notifications} from "@mantine/notifications";
+import {IconCircleX} from "@tabler/icons-react";
+import {DecodedTokenInt} from "../hooks/types";
 
 interface AuthProviderProps {
     children: React.ReactNode;
@@ -15,19 +18,16 @@ interface AuthProviderProps {
 interface AuthContextProps {
     signed: boolean;
     token: string;
+    decodedToken: DecodedTokenInt | null;
     signIn: (ivaoToken: string) => Promise<void>;
     signOut: () => void;
     refreshToken: () => void;
 }
 
-interface TokenData {
-    iat: number;
-    exp: number;
-}
-
 export const AuthContext = createContext<AuthContextProps>({
     signed: false,
     token: "",
+    decodedToken: null,
     signIn: (_: string) => Promise.reject(),
     signOut: () => { },
     refreshToken: () => { }
@@ -37,11 +37,28 @@ export function AuthProvider({ children }: AuthProviderProps ) {
     const location = useLocation();
     const navigate = useNavigate();
     const [token, setToken] = useState<string>(localStorage.getItem("token") || "");
+    const [decodedToken, setDecodedToken] = useState<DecodedTokenInt | null>(null);
 
     const signIn = useCallback(async () => {
         try {
             const urlSearchParams = new URLSearchParams(window.location.search);
             const tokenFromUrl = urlSearchParams.get('token');
+
+            //Добавить перевод
+            if (token) {
+                removeTokenFromUrl();
+                notifications.show({
+                    id: 'auth-already',
+                    color: 'red',
+                    title: 'Ошибка!',
+                    message: 'Вы уже авторизированы на сайте!',
+                    radius: 'lg',
+                    icon: <IconCircleX />,
+                    withCloseButton: true,
+                    autoClose: 3000,
+                });
+                return;
+            }
 
             if (tokenFromUrl) {
                 localStorage.setItem("token", tokenFromUrl);
@@ -70,16 +87,24 @@ export function AuthProvider({ children }: AuthProviderProps ) {
 
     useEffect(() => {
         if (!token) {
+            setDecodedToken(null);
             return;
         }
 
         const currentTimestampSec = Math.floor(Date.now() / 1000);
-        const { exp } = jwtDecode<TokenData>(token);
+        const decoded = jwtDecode<DecodedTokenInt>(token);
 
-        if (currentTimestampSec > exp) {
+        if (currentTimestampSec > decoded.exp) {
             refreshToken();
-        }
+        } else {
+            const mappedToken: DecodedTokenInt = {
+                iat: decoded.iat,
+                exp: decoded.exp,
+                userData: decoded.userData,
+            };
 
+            setDecodedToken(mappedToken);
+        }
     }, [refreshToken, token]);
 
     return (
@@ -90,6 +115,7 @@ export function AuthProvider({ children }: AuthProviderProps ) {
                 refreshToken,
                 signed: !!token,
                 token,
+                decodedToken,
             }}
         >
             {children}

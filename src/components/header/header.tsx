@@ -16,7 +16,6 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import bylogo from '../../assets/image/Logo_f_w.svg';
 import bylogoblue from '../../assets/image/logobyblue.svg';
-import { getTokenFromUrl, removeTokenFromUrl } from '../Handler';
 import {useNavigate, useSearchParams} from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
@@ -29,7 +28,7 @@ import ru from '../../assets/image/ru.svg';
 import en from '../../assets/image/en.svg';
 import {CommonDropdownContent} from "./CommonDropdownContent";
 import { t } from 'i18next';
-import {AuthContext, useUser} from "../../context/UserContext";
+import {AuthContext} from "../../context/UserContext";
 
 const HEADER_HEIGHT = rem(100);
 
@@ -164,7 +163,7 @@ export function HeaderResponsive() {
     const [urlParams] = useSearchParams();
     const ivaoToken = urlParams.get("token");
 
-    const { signed } = useContext(AuthContext);
+    const { signed, decodedToken } = useContext(AuthContext);
 
     const serverUrl = `https://v3.api.xr.ivao.aero/auth/login?goto=${window.location.protocol}//${window.location.hostname}${window.location.port ? ':'+window.location.port : ''}`;
 
@@ -240,7 +239,7 @@ export function HeaderResponsive() {
                             <>
                                 <IconLogout size={20}></IconLogout>
                                 <Text onClick={handleAuthAction} ml={6}>
-                                    {t('navbar.user.logout')}
+                                    {decodedToken?.userData.name.first} {decodedToken?.userData.id}
                                 </Text>
                             </>
                         ) : (
