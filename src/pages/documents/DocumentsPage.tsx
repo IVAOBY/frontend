@@ -11,11 +11,11 @@ import {
     IconCircleX,
 } from '@tabler/icons-react';
 import {useEffect, useState} from "react";
-import {api} from "../../hooks/api";
 import {useTranslation} from "react-i18next";
 import {notifications} from "@mantine/notifications";
 import {DocumentsCategoryType, DocumentsType} from "../../hooks/types";
 import {useNavigate} from "react-router-dom";
+import {useApi} from "../../context/ApiContext";
 
 const useStyles = createStyles((theme) => ({
     title: {
@@ -62,17 +62,18 @@ export function DocumentsMain() {
     const [documentsCategory, setDocumentsCategory] = useState<DocumentsCategoryType[]>([]);
     const [documents, setDocuments] = useState<DocumentsType[]>([]);
     const {t, i18n} = useTranslation();
+    const api = useApi();
 
     useEffect(() => {
         api("/documents-category")
-            .then(response => {
+            .then(function (response: any) {
                 if (response && Array.isArray(response)) {
                     setDocumentsCategory(response);
                 } else {
                     console.error("Error: Unexpected API response structure");
                 }
             })
-            .catch(error => {
+            .catch(function (error: any) {
                 console.error("Error fetching data:", error);
             });
 
@@ -87,7 +88,7 @@ export function DocumentsMain() {
         });
 
         api('/documents')
-            .then((response) => {
+            .then((response: any) => {
                 if (response && Array.isArray(response)) {
                     const documents: DocumentsType[] = response.map((documentdata) => ({
                         id: documentdata.id,
@@ -113,7 +114,7 @@ export function DocumentsMain() {
                     });
                 }
             })
-            .catch((error) => {
+            .catch((error: any) => {
                 console.error('Error fetching staff positions:', error);
                 notifications.update({
                     id: 'load-data',

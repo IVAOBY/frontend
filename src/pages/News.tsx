@@ -11,10 +11,10 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { notifications } from '@mantine/notifications';
-import { api } from '../hooks/api';
 import { IconCalendarTime, IconCircleX, IconUser } from '@tabler/icons-react';
 import i18n from 'i18next';
 import {format} from "date-fns";
+import {useApi} from "../context/ApiContext";
 
 const useStyles = createStyles((theme) => ({
     title: {
@@ -94,7 +94,7 @@ export function NewsPage() {
     const { classes, theme } = useStyles();
     const { t } = useTranslation();
     const { id } = useParams();
-    // const isSmallScreen = window.innerWidth < 768;
+    const api = useApi();
 
     const [newsItem, setNewsItem] = useState<News | null>(null);
     useEffect(() => {
@@ -108,7 +108,7 @@ export function NewsPage() {
             withCloseButton: false,
         });
         api(`/news/${id}`)
-            .then((response) => {
+            .then((response: any) => {
                 if (response && typeof response === 'object' && !Array.isArray(response)) {
                     setNewsItem(response);
                     notifications.hide('load-data');
@@ -126,7 +126,7 @@ export function NewsPage() {
                     });
                 }
             })
-            .catch((error) => {
+            .catch((error: any) => {
                 console.error('Error fetching news:', error);
                 notifications.update({
                     id: 'load-data',
