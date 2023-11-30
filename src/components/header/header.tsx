@@ -59,7 +59,7 @@ const useStyles = createStyles((theme) => ({
         borderTopWidth: 0,
         backgroundColor: theme.colors.lightBlue[9],
 
-        [theme.fn.largerThan('sm')]: {
+        [theme.fn.largerThan('md')]: {
             display: 'none',
         },
     },
@@ -73,26 +73,26 @@ const useStyles = createStyles((theme) => ({
     },
 
     links: {
-        [theme.fn.smallerThan('sm')]: {
+        [theme.fn.smallerThan('md')]: {
             display: 'none',
         },
     },
 
     burger: {
         backgroundColor: theme.colors.lightBlue[9],
-        [theme.fn.largerThan('sm')]: {
+        [theme.fn.largerThan('md')]: {
             display: 'none',
         },
     },
 
     titleSmall: {
-        [theme.fn.largerThan('sm')]: {
+        [theme.fn.largerThan('md')]: {
             display: 'none',
         },
     },
 
     titleBig: {
-        [theme.fn.smallerThan('sm')]: {
+        [theme.fn.smallerThan('md')]: {
             display: 'none',
         },
     },
@@ -114,7 +114,7 @@ const useStyles = createStyles((theme) => ({
             color: theme.colors.gray[3],
         },
 
-        [theme.fn.smallerThan('sm')]: {
+        [theme.fn.smallerThan('md')]: {
             borderRadius: 0,
             padding: theme.spacing.md,
         },
