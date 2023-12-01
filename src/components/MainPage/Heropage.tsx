@@ -13,7 +13,7 @@ const useStyles = createStyles((theme) => ({
         paddingTop: rem(180),
         paddingBottom: rem(130),
         backgroundImage:
-            'url(https://cdn.discordapp.com/attachments/1091120742059491439/1153365379196915762/orsha.jpg)',
+            'url(https://static.game-explore.space/images/minskwinter.jpeg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         height: 620,
