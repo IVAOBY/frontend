@@ -1,11 +1,11 @@
 import {Title, Text, Group, Container, Flex, Button, Overlay, createStyles, rem} from '@mantine/core';
 import {useTranslation} from "react-i18next";
-import {useCallback} from "react";
+import {useCallback, useContext} from "react";
 import Typed from 'react-typed';
 import {useMediaQuery} from "@mantine/hooks";
-import {getDecodedToken, useAuth} from "../Handler";
 import {notifications} from "@mantine/notifications";
 import {IconCircleX} from "@tabler/icons-react";
+import {AuthContext} from "../../context/UserContext";
 
 const useStyles = createStyles((theme) => ({
     wrapper: {
@@ -122,10 +122,10 @@ export function HeroText() {
     const { classes } = useStyles();
     const { t } = useTranslation();
     const isSmallScreen = useMediaQuery('(max-width: 575px)');
-    const isAuthenticated = useAuth();
+    const { signed, decodedToken } = useContext(AuthContext);
 
     const byTransferMail = useCallback(async () => {
-        if (!isAuthenticated) {
+        if (!signed) {
             notifications.show({
                 id: 'auth-required',
                 color: 'red',
@@ -139,19 +139,17 @@ export function HeroText() {
             return;
         }
 
-        const token = localStorage.getItem('authToken');
-        if (token !== null) {
+        if (signed) {
             try {
-                const decoded = await getDecodedToken(token);
                 const emailBody = `Dear HQs and Membership Department!
 
-                I request to transfer me from the ${decoded?.userData.divisionId} division to the BY division.
+                I request to transfer me from the ${decodedToken?.userData.divisionId} division to the BY division.
                 
                 Best wishes,
-                ${decoded?.userData.name.first} ${decoded?.userData.name.last}`;
+                ${decodedToken?.userData.name.first} ${decodedToken?.userData.name.last}`;
 
                 window.open(
-                    `mailto:BY-hq@ivao.aero,${decoded?.userData.divisionId}-hq@ivao.aero?cc=members@ivao.aero&subject=Division%20transfer%20${decoded?.userData.id}&body=${encodeURIComponent(
+                    `mailto:BY-hq@ivao.aero,${decodedToken?.userData.divisionId}-hq@ivao.aero?cc=members@ivao.aero&subject=Division%20transfer%20${decodedToken?.userData.id}&body=${encodeURIComponent(
                         emailBody
                     )}`,
                     '_blank'
@@ -160,7 +158,7 @@ export function HeroText() {
                 console.error('Error decoding token:', error);
             }
         }
-    }, [isAuthenticated, t]);
+    }, [t]);
 
     const openLink = useCallback(function (link: any | undefined) {
         window.open(link, '_blank')

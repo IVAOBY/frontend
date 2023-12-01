@@ -13,122 +13,131 @@ import {
 } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
 import {IconCalendarTime, IconCircleX, IconUser} from '@tabler/icons-react';
-import { api } from '../../../hooks/api';
 import { format } from 'date-fns';
 import {notifications} from "@mantine/notifications";
 import {useNavigate} from "react-router-dom";
+import {useApi} from "../../../context/ApiContext";
 
-const useStyles = createStyles((theme) => ({
-    title: {
-        fontSize: rem(34),
-        fontWeight: 800,
-        color: theme.colors.blue[9],
-        [theme.fn.smallerThan('sm')]: {
-            fontSize: rem(24),
+const useStyles = createStyles((theme) => {
+    return ({
+        title: {
+            fontSize: rem(34),
+            fontWeight: 800,
+            color: theme.colors.blue[9],
+            [theme.fn.smallerThan('sm')]: {
+                fontSize: rem(24),
+            },
+            '&::after': {
+                content: '""',
+                display: 'block',
+                backgroundColor: theme.fn.primaryColor(),
+                width: rem(45),
+                height: rem(2),
+                marginTop: theme.spacing.sm,
+                marginLeft: 'auto',
+                marginRight: 'auto',
+            },
         },
-        '&::after': {
-            content: '""',
-            display: 'block',
-            backgroundColor: theme.fn.primaryColor(),
-            width: rem(45),
-            height: rem(2),
-            marginTop: theme.spacing.sm,
-            marginLeft: 'auto',
-            marginRight: 'auto',
+        card: {
+            backgroundColor: 'white',
         },
-    },
-    card: {
-        backgroundColor: 'white',
-    },
-    cardTitle: {
-        color: theme.colors.blue[9],
-        marginLeft: rem(20),
-    },
-    cardDescription: {
-        marginTop: rem(20),
-        marginBottom: rem(20),
-        color: theme.colors.gray[6],
-        marginLeft: rem(20),
-    },
-    cardAuthorDate: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginTop: rem(20),
-        marginLeft: rem(20),
-        color: theme.colors.gray,
-    },
-    cardContent: {
-        [theme.fn.smallerThan('sm')]: {
-            flexDirection: 'column',
+        cardTitle: {
+            color: theme.colors.blue[9],
+            marginLeft: rem(20),
+            [theme.fn.smallerThan('md')]: {
+                fontSize: rem(28),
+            },
+        },
+        cardDescription: {
+            marginTop: rem(20),
+            marginBottom: rem(20),
+            color: theme.colors.gray[6],
+            marginLeft: rem(20),
+        },
+        cardAuthorDate: {
+            display: 'flex',
+            justifyContent: 'space-between',
             alignItems: 'center',
+            marginTop: rem(20),
+            marginLeft: rem(20),
+            color: theme.colors.gray,
         },
-        wordBreak: 'break-word',
-    },
-    cardImage: {
-        [theme.fn.smallerThan('md')]: {
-            marginBottom: rem(20),
+        cardContent: {
+            [theme.fn.smallerThan('md')]: {
+                flexDirection: 'column',
+                alignItems: 'center',
+            },
+            wordBreak: 'break-word',
         },
-        maxWidth: '100%',
-        minWidth: '50%',
-        height: 'auto',
-        [theme.fn.largerThan('md')]: {
-            maxWidth: '50%',
+        cardImage: {
+            [theme.fn.smallerThan('md')]: {
+                marginBottom: rem(20),
+                maxWidth: '70%',
+            },
+            [theme.fn.smallerThan('xs')]: {
+                maxWidth: '100%',
+            },
+            maxWidth: '100%',
+            minWidth: '50%',
+            height: 'auto',
+            [theme.fn.largerThan('md')]: {
+                maxWidth: '50%',
+            },
         },
-    },
-    pagination: {
-        '[data-active]': {
-            color: "#fff!important"
+        pagination: {
+            '[data-active]': {
+                color: "#fff!important"
+            },
         },
-    },
-    button: {
-        position: 'relative',
-        borderRadius: theme.radius.lg,
-        overflow: 'hidden',
-        transition: 'transform 0.4s ease, box-shadow 0.4s ease',
-        boxShadow: theme.shadows.md,
-        '&.active': { // Новый класс для активной кнопки
-            transform: 'scale(1.01)',
-            boxShadow: '0px 50px 50px rgba(0, 0, 0, 0.2)',
+        button: {
+            position: 'relative',
+            borderRadius: theme.radius.lg,
+            overflow: 'hidden',
+            transition: 'transform 0.4s ease, box-shadow 0.4s ease',
+            boxShadow: theme.shadows.md,
+            '&.active': { // Новый класс для активной кнопки
+                transform: 'scale(1.01)',
+                boxShadow: '0px 50px 50px rgba(0, 0, 0, 0.2)',
+            },
+            '&:hover': {
+                transform: 'scale(1.01)',
+                boxShadow: '0px 50px 50px rgba(0, 0, 0, 0.2)',
+            },
         },
-        '&:hover': {
-            transform: 'scale(1.01)',
-            boxShadow: '0px 50px 50px rgba(0, 0, 0, 0.2)',
+        NewsImage: {
+            [theme.fn.smallerThan('md')]: {
+                marginBottom: rem(20),
+            },
+            maxWidth: '80%',
+            minWidth: '20%',
+            height: 'auto',
         },
-    },
-    NewsImage: {
-        [theme.fn.smallerThan('md')]: {
-            marginBottom: rem(20),
+        modal: {
+            backgroundColor: '#fff',
+            border: '1px solid #ccc',
+            borderRadius: theme.radius.lg,
+            boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
+            padding: '20px',
+            minWidth: '600px',
+            maxWidth: '100%',
+            position: 'relative',
+            zIndex: 1000,
         },
-        maxWidth: '80%',
-        minWidth: '20%',
-        height: 'auto',
-    },
-    modal: {
-        backgroundColor: '#fff',
-        border: '1px solid #ccc',
-        borderRadius: theme.radius.lg,
-        boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
-        padding: '20px',
-        minWidth: '600px',
-        maxWidth: '100%',
-        position: 'relative',
-        zIndex: 1000,
-    },
-    modalTitle: {
-        fontSize: rem(24),
-        fontWeight: 800,
-        color: theme.colors.blue[9],
-        margin: 0,
-    },
-    skeleton: {
-        display: 'flex',
-        flexDirection: 'column',
-        minWidth: '500px',
-        maxWidth: '100%',
-        gap: rem(10)
-    }
-}));
+        modalTitle: {
+            fontSize: rem(24),
+            fontWeight: 800,
+            color: theme.colors.blue[9],
+            margin: 0,
+        },
+        skeleton: {
+            display: 'flex',
+            flexDirection: 'column',
+            minWidth: '500px',
+            maxWidth: '100%',
+            gap: rem(10)
+        }
+    });
+});
 
 interface News {
     id: number;
@@ -157,6 +166,7 @@ export function NewsSection() {
     const { classes, theme } = useStyles();
     const { t, i18n } = useTranslation();
     const [news, setNews] = useState<News[] | null>(null);
+    const api = useApi();
 
     const navigate = useNavigate();
     const newsRedirect = (newsItem: News) => {
@@ -175,7 +185,7 @@ export function NewsSection() {
             withCloseButton: false,
         });
         api('/news')
-            .then((response) => {
+            .then((response: any) => {
                 if (response && Array.isArray(response)) {
                     response.sort((a, b) => b.id - a.id);
                     setNews(response);
@@ -193,7 +203,7 @@ export function NewsSection() {
                     });
                 }
             })
-            .catch((error) => {
+            .catch((error: any) => {
                 console.error('Error fetching news:', error);
                 notifications.update({
                     id: 'load-data',

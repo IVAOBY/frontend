@@ -16,11 +16,11 @@ import {
 import {useTranslation} from 'react-i18next';
 import {useParams} from 'react-router-dom';
 import {notifications} from '@mantine/notifications';
-import {api} from '../../../hooks/api';
 import {IconAirTrafficControl, IconBrandFlightradar24, IconCircleX, IconRadar,} from '@tabler/icons-react';
 import {format} from "date-fns";
 import {PartsEntity} from "../../../types/Events";
 import {getDecodedToken} from "../../../components/Handler";
+import {useApi} from "../../../context/ApiContext";
 
 const useStyles = createStyles((theme) => ({
     title: {
@@ -101,6 +101,7 @@ export function ShiftComponent() {
     const {classes} = useStyles();
     const {t} = useTranslation();
     const {id} = useParams();
+    const api = useApi();
     // const isSmallScreen = window.innerWidth < 768;
 
     const [partItem, setPartItem] = useState<PartsEntity[] | null>(null);
@@ -115,7 +116,7 @@ export function ShiftComponent() {
             withCloseButton: false,
         });
         api(`/events-parts/event/${id}`)
-            .then((response) => {
+            .then((response: any) => {
                 if (response && Array.isArray(response)) {
                     setPartItem(response);
                     notifications.hide('load-data');
@@ -133,7 +134,7 @@ export function ShiftComponent() {
                     });
                 }
             })
-            .catch((error) => {
+            .catch((error: any) => {
                 console.error('Error fetching news:', error);
                 notifications.update({
                     id: 'load-data',
@@ -162,7 +163,7 @@ export function ShiftComponent() {
                     });
 
                     api(`/events-parts/event/${id}`)
-                        .then((response) => {
+                        .then((response: any) => {
                             if (response && Array.isArray(response)) {
                                 setPartItem(response);
                             }
@@ -194,13 +195,13 @@ export function ShiftComponent() {
             api(`/events-booking/unbook/${bookingId}`, 'v3', 'DELETE')
                 .then(() => {
                     api(`/events-parts/event/${id}`)
-                        .then((response) => {
+                        .then((response: any) => {
                             if (response && Array.isArray(response)) {
                                 setPartItem(response);
                             }
                         });
                 })
-                .catch((error) => {
+                .catch((error: any) => {
                     console.log('Error handling unbooking:', error);
                 });
         } else {

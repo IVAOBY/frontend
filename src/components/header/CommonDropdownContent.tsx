@@ -30,9 +30,9 @@ import {
     IconPlaneTilt,
     IconInfoSquareRounded, IconMapCog, IconCar, IconGavel,
 } from '@tabler/icons-react';
-import ivaoLogo from '../../../assets/image/logo_s_black.svg';
-import steps from '../../../assets/image/steps.svg';
-import discord from '../../../assets/image/discord.svg';
+import ivaoLogo from '../../assets/image/logo_s_black.svg';
+import steps from '../../assets/image/steps.svg';
+import discord from '../../assets/image/discord.svg';
 
 const useStyles = createStyles((theme) => ({
     link: {
@@ -50,7 +50,7 @@ const useStyles = createStyles((theme) => ({
             color: theme.colors.gray[3],
             transition: 'color 0.1s ease',
         },
-        [theme.fn.smallerThan('sm')]: {
+        [theme.fn.smallerThan('md')]: {
             paddingTop: rem(16),
             paddingBottom: rem(7),
             paddingLeft: rem(16),
@@ -84,7 +84,7 @@ export function CommonDropdownContent({scrollPosition: propScrollPosition}: { sc
         },
         []);
 
-    const isSmallScreen = window.innerWidth <= 768;
+    const isSmallScreen = window.innerWidth <= 991;
 
     return (
         <>

@@ -1,10 +1,10 @@
 import Map from 'react-map-gl';
-import {Container} from "@mantine/core";
+import {Container, Stack} from "@mantine/core";
 import 'mapbox-gl/dist/mapbox-gl.css';
-
 export function MapPage() {
     return (
-        <Container mt={100}>
+        <Container>
+            <Stack align="center">
             <Map
                 mapboxAccessToken='pk.eyJ1IjoiaGFudDIiLCJhIjoiY2xsNzY5Y2l4MHZrNjNlb3pudmgycnFhayJ9.bqU_JTNxY8d7CYVZPreMjQ'
                 initialViewState={{
@@ -12,9 +12,14 @@ export function MapPage() {
                     latitude: 53.800,
                     zoom: 5
                 }}
-                style={{maxWidth: 1000, height: 600, borderRadius: "30px"}}
+                style={{
+                    width: '100vw',
+                    height: '90vh',
+                }}
                 mapStyle="mapbox://styles/hant2/cll76chvx00nb01ph0y3q4zri"
+                //mapStyle="mapbox://styles/mapbox/dark-v11" нужно потрахать две эти темы между собой и будет ок
             />
+            </Stack>
         </Container>
     );
 }
