@@ -55,6 +55,15 @@ export interface Translations {
         joinbutton: string,
         transfer: string
     },
+    onlinecomponent: {
+      title: string,
+        first: {
+            title: string,
+        },
+        second: {
+            title: string,
+        }
+    },
     legal: {
         title: string,
         text: string,

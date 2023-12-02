@@ -58,6 +58,15 @@ const enTranslations: { translations: Translations } = {
             joinbutton: 'Join!',
             transfer: 'Transfer to BY division!'
         },
+        onlinecomponent: {
+            title: 'Activity of division in the Network',
+            first: {
+                title: "Pilots",
+            },
+            second: {
+                title: "ATC",
+            }
+        },
         legal: {
             title: 'Legal information',
             text: 'Yes, we collect and store your information. But we do so in accordance with the following documents:',

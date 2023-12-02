@@ -5,7 +5,7 @@ import Typed from 'react-typed';
 import {useMediaQuery} from "@mantine/hooks";
 import {notifications} from "@mantine/notifications";
 import {IconCircleX} from "@tabler/icons-react";
-import {AuthContext} from "../../context/UserContext";
+import {AuthContext} from "../../../context/UserContext";
 
 const useStyles = createStyles((theme) => ({
     wrapper: {

@@ -58,6 +58,15 @@ const beTranslations: { translations: Translations } = {
             joinbutton: 'Далучыцца!',
             transfer: 'Перайсці ў BY дывізіён!'
         },
+        onlinecomponent: {
+            title: 'Activity of division in the Network',
+            first: {
+                title: "Pilots",
+            },
+            second: {
+                title: "ATC",
+            }
+        },
         legal: {
             title: 'Прававая інфармацыя',
             text: 'Так, мы збіраем и захоўваем вашу інфармацыю. Але робім гэта у адпаведнасці з наступнымі дакументамі:',

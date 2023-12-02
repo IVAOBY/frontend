@@ -58,6 +58,15 @@ const ruTranslations: { translations: Translations } = {
             joinbutton: 'Присоединиться!',
             transfer: 'Перейти в BY дивизион!'
         },
+        onlinecomponent: {
+            title: 'Activity of division in the Network',
+            first: {
+                title: "Pilots",
+            },
+            second: {
+                title: "ATC",
+            }
+        },
         legal: {
             title: 'Правовая информация',
             text: 'Да, мы собираем и храним вашу информацию. Но делаем это в соответвии со следующими документами:',
