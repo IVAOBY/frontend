@@ -34,7 +34,6 @@ const useStyles = createStyles((theme) => ({
             marginRight: 'auto',
         },
     },
-
     description: {
         maxWidth: 600,
         margin: 'auto',
@@ -50,25 +49,33 @@ const useStyles = createStyles((theme) => ({
             marginRight: 'auto',
         },
     },
-
     card: {
         minWidth: rem(250),
+        backgroundColor: "#fff",
         border: `${rem(2)} solid ${
-            theme.colors.lightBlue[6]
+            theme.colors.blue[6]
         }`,
+        transition: 'transform 0.4s ease, box-shadow 0.4s ease',
+        '&.active': {
+            transform: 'scale(1.03)',
+        },
+        '&:hover': {
+            transform: 'scale(1.03)',
+        },
     },
-
     cardTitle: {
         color: theme.colors.blue[9],
         fontSize: rem(25),
     },
-    dvider: {
-        maxWidth: rem(75)
-    }
+    icon: {
+        backgroundColor: theme.colors.blue[9],
+        borderRadius: theme.radius.lg,
+        padding: theme.spacing.md
+    },
 }));
 
 export function OnlineInfoComponent() {
-    const { classes, theme } = useStyles();
+    const { classes } = useStyles();
     const { t } = useTranslation();
     const data: FeatureData[] = [
         {
@@ -85,7 +92,7 @@ export function OnlineInfoComponent() {
     const features = data.map((feature) => (
         <Card key={feature.title} shadow="md" radius="md" className={classes.card} padding="xl">
             <Flex justify={"center"} align={"center"} direction={"column"} mt="md">
-                <feature.icon size={rem(50)} stroke={2} color={theme.fn.primaryColor()} />
+                <feature.icon className={classes.icon} size={rem(65)} stroke={2} color="#fff" />
                 <Text fw={700} className={classes.cardTitle}>
                     {feature.title}
                 </Text>

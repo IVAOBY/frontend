@@ -97,11 +97,11 @@ const useStyles = createStyles((theme) => {
             boxShadow: theme.shadows.md,
             '&.active': { // Новый класс для активной кнопки
                 transform: 'scale(1.01)',
-                boxShadow: '0px 50px 50px rgba(0, 0, 0, 0.2)',
+                boxShadow: '0px 10px 23px -4px rgba(34, 60, 80, 0.2)',
             },
             '&:hover': {
                 transform: 'scale(1.01)',
-                boxShadow: '0px 50px 50px rgba(0, 0, 0, 0.2)',
+                boxShadow: '0px 10px 23px -4px rgba(34, 60, 80, 0.2)',
             },
         },
         NewsImage: {

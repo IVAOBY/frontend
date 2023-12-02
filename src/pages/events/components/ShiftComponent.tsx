@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {
     Badge,
     Box,
@@ -19,8 +19,8 @@ import {notifications} from '@mantine/notifications';
 import {IconAirTrafficControl, IconBrandFlightradar24, IconCircleX, IconRadar,} from '@tabler/icons-react';
 import {format} from "date-fns";
 import {PartsEntity} from "../../../types/Events";
-import {getDecodedToken} from "../../../components/Handler";
 import {useApi} from "../../../context/ApiContext";
+import {AuthContext} from "../../../context/UserContext";
 
 const useStyles = createStyles((theme) => ({
     title: {
@@ -102,6 +102,7 @@ export function ShiftComponent() {
     const {t} = useTranslation();
     const {id} = useParams();
     const api = useApi();
+    const { decodedToken, signed } = useContext(AuthContext);
     // const isSmallScreen = window.innerWidth < 768;
 
     const [partItem, setPartItem] = useState<PartsEntity[] | null>(null);
@@ -149,10 +150,8 @@ export function ShiftComponent() {
             });
     }, [id]);
 
-    const token = localStorage.getItem('authToken');
-
     const handleBook = async (partId: number, atcPositionId: number) => {
-        if (token && partItem) {
+        if (signed && partItem) {
             const part = partItem.find((part) => part.id === partId);
             if (part) {
                 try {
@@ -176,14 +175,10 @@ export function ShiftComponent() {
     };
 
     function isBookedForPosition(bookings: any[], atcPositionId: number) {
-        const token = localStorage.getItem('authToken');
-        const decodedToken = getDecodedToken(`${token}`);
         return bookings.some((booking) => booking.atcPosition?.id === atcPositionId && booking.bookedUser?.id === decodedToken?.userData.id);
     }
 
     function getBookingIdForPosition(bookings: any[], atcPositionId: number) {
-        const token = localStorage.getItem('authToken');
-        const decodedToken = getDecodedToken(`${token}`);
         const booking = bookings.find((booking) => {
             return booking.atcPosition.id === atcPositionId && booking.bookedUser?.id === decodedToken?.userData.id;
         });
@@ -191,7 +186,7 @@ export function ShiftComponent() {
     }
 
     const handleUnbook = (bookingId: number) => {
-        if (token) {
+        if (signed) {
             api(`/events-booking/unbook/${bookingId}`, 'v3', 'DELETE')
                 .then(() => {
                     api(`/events-parts/event/${id}`)
@@ -284,7 +279,7 @@ export function ShiftComponent() {
                                                         style={{margin: '5px'}}
                                                     >
                                                         {
-                                                            token
+                                                            signed
                                                                 ? `${filteredBookingItem.bookedUser?.name.first} ${filteredBookingItem.bookedUser?.name.last}`
                                                                 : `${filteredBookingItem.bookedUser?.name.first} ${filteredBookingItem.bookedUser?.id}`
                                                         }
@@ -294,7 +289,7 @@ export function ShiftComponent() {
                                         ))
                                     }
 
-                                    {token && isBookedForPosition(part.booking, position.atcPositionId) ? (
+                                    {signed && isBookedForPosition(part.booking, position.atcPositionId) ? (
                                         <Center>
                                             <Button color={"red"} mt={10} onClick={() => {
                                                 const bookingId = getBookingIdForPosition(part.booking, position.atcPositionId);
@@ -307,7 +302,7 @@ export function ShiftComponent() {
                                                 {t("events.booking.unbook")}
                                             </Button>
                                         </Center>
-                                    ) : token ? (
+                                    ) : signed ? (
                                         <Center>
                                             <Button color={"green"} mt={10}
                                                     onClick={() => handleBook(part.id, position.atcPositionId)}>

@@ -17,6 +17,7 @@ const useStyles = createStyles((theme) => ({
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         height: 620,
+        overflow: 'hidden',
 
         [theme.fn.smallerThan('xs')]: {
             paddingTop: rem(80),
@@ -45,12 +46,6 @@ const useStyles = createStyles((theme) => ({
             fontSize: rem(28),
         },
     },
-
-    highlight: {
-        fontWeight: 800,
-        },
-
-
 
     description: {
         color: theme.white,
@@ -114,8 +109,7 @@ const useStyles = createStyles((theme) => ({
             backgroundColor: '#fff',
             color: '#0D2C99',
         },
-    },
-
+    }
 }));
 
 export function HeroText() {
@@ -166,14 +160,14 @@ export function HeroText() {
 
     return (
         <div className={classes.wrapper}>
-            <Overlay color="#00000" opacity={0.45} zIndex={1} />
+            <Overlay
+                gradient="linear-gradient(to top, rgba(13, 44, 153, 0.7), rgba(60, 85, 172, 0.7))"
+                zIndex={1}
+            />
             <Flex mih={50} gap="md" justify="center" align="center" direction="row" wrap="wrap" >
                 <div className={classes.inner}>
                     <Title className={classes.title}>
-                        {t("heropage.title")}{' '}
-                        <Text component="span" inherit className={classes.highlight}>
-                            {t("generic.ivao")}
-                        </Text>
+                        {t("heropage.title")} {t("generic.ivao")}
                     </Title>
                     <Container size={640}>
                         <Text size="lg" className={`${classes.description}`}>

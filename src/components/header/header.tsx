@@ -46,6 +46,7 @@ const useStyles = createStyles((theme) => ({
 
     scrolled: {
         backgroundColor: '#fff',
+        boxShadow: '0px 4px 23px -4px rgba(34, 60, 80, 0.2)',
     },
 
     dropdown: {
