@@ -160,10 +160,7 @@ export function HeroText() {
 
     return (
         <div className={classes.wrapper}>
-            <Overlay
-                gradient="linear-gradient(to top, rgba(13, 44, 153, 0.7), rgba(60, 85, 172, 0.7))"
-                zIndex={1}
-            />
+            <Overlay color="#00000" opacity={0.45} zIndex={1}/>
             <Flex mih={50} gap="md" justify="center" align="center" direction="row" wrap="wrap" >
                 <div className={classes.inner}>
                     <Title className={classes.title}>

@@ -1,7 +1,5 @@
 import {
     createStyles,
-    Title,
-    Text,
     Card,
     SimpleGrid,
     Container,
@@ -16,24 +14,6 @@ import {useTranslation} from "react-i18next";
 import {FeatureData} from "../../../types/Feture";
 
 const useStyles = createStyles((theme) => ({
-    title: {
-        fontSize: rem(34),
-        fontWeight: 800,
-        color: theme.colors.blue[9],
-        [theme.fn.smallerThan('sm')]: {
-            fontSize: rem(24),
-        },
-        '&::after': {
-            content: '""',
-            display: 'block',
-            backgroundColor: theme.fn.primaryColor(),
-            width: rem(45),
-            height: rem(2),
-            marginTop: theme.spacing.sm,
-            marginLeft: 'auto',
-            marginRight: 'auto',
-        },
-    },
     description: {
         maxWidth: 600,
         margin: 'auto',
@@ -50,18 +30,15 @@ const useStyles = createStyles((theme) => ({
         },
     },
     card: {
-        minWidth: rem(250),
+        minWidth: rem(550),
+        maxHeight: rem(140),
+        [theme.fn.smallerThan('xs')]: {
+            minWidth: rem(370),
+            maxWidth: '100%',
+        },
+        borderRadius: theme.radius.lg,
         backgroundColor: "#fff",
-        border: `${rem(2)} solid ${
-            theme.colors.blue[6]
-        }`,
-        transition: 'transform 0.4s ease, box-shadow 0.4s ease',
-        '&.active': {
-            transform: 'scale(1.03)',
-        },
-        '&:hover': {
-            transform: 'scale(1.03)',
-        },
+        marginTop: 20,
     },
     cardTitle: {
         color: theme.colors.blue[9],
@@ -70,7 +47,7 @@ const useStyles = createStyles((theme) => ({
     icon: {
         backgroundColor: theme.colors.blue[9],
         borderRadius: theme.radius.lg,
-        padding: theme.spacing.md
+        padding: theme.spacing.md,
     },
 }));
 
@@ -81,35 +58,24 @@ export function OnlineInfoComponent() {
         {
             title: t('onlinecomponent.first.title'),
             description: t('featuresection.first.subtitle'),
-            icon: IconPlaneTilt,
+            icon: IconAirTrafficControl,
         },
         {
             title: t('onlinecomponent.second.title'),
             description: t('featuresection.second.subtitle'),
-            icon: IconAirTrafficControl,
+            icon: IconPlaneTilt,
         }
     ];
     const features = data.map((feature) => (
         <Card key={feature.title} shadow="md" radius="md" className={classes.card} padding="xl">
-            <Flex justify={"center"} align={"center"} direction={"column"} mt="md">
-                <feature.icon className={classes.icon} size={rem(65)} stroke={2} color="#fff" />
-                <Text fw={700} className={classes.cardTitle}>
-                    {feature.title}
-                </Text>
+            <Flex justify={"center"} align={"left"} direction={"column"}>
+                <feature.icon className={classes.icon} size={rem(70)} stroke={2} color="#fff"/>
             </Flex>
-            <Text fz="xl" c="dimmed" mt="sm" ta={"center"}>
-                4
-            </Text>
         </Card>
     ));
 
     return (
         <Container size="lg" py="xl">
-
-            <Title order={2} className={classes.title} ta="center" mt="sm">
-                {t('onlinecomponent.title')}
-            </Title>
-
             <Center>
                 <SimpleGrid cols={2} spacing="md" mt={"sm"} breakpoints={[{ maxWidth: 'md', cols: 1 }]}>
                     {features}
