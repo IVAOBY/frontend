@@ -134,6 +134,10 @@ const useStyles = createStyles((theme) => {
             flexDirection: 'column',
             minWidth: '500px',
             maxWidth: '100%',
+            [theme.fn.smallerThan('xs')]: {
+                minWidth: rem(340),
+                maxWidth: '100%',
+            },
             gap: rem(10)
         }
     });
