@@ -1,15 +1,5 @@
-import {
-    createStyles,
-    Container,
-    Title,
-    Paper,
-    rem,
-    Flex,
-    UnstyledButton
-} from '@mantine/core';
-import {
-    IconCircleX,
-} from '@tabler/icons-react';
+import {Container, createStyles, Flex, Paper, rem, Title, UnstyledButton} from '@mantine/core';
+import {IconCircleX,} from '@tabler/icons-react';
 import {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import {notifications} from "@mantine/notifications";
@@ -43,12 +33,9 @@ const useStyles = createStyles((theme) => ({
     button: {
         position: 'relative',
         borderRadius: theme.radius.lg,
+        boxShadow: '0px 10px 23px -4px rgba(34, 60, 80, 0.2)',
         overflow: 'hidden',
         transition: 'transform 0.4s ease, box-shadow 0.4s ease',
-        '&.active': { // Новый класс для активной кнопки
-            transform: 'scale(1.01)',
-            boxShadow: '0px 50px 50px rgba(0, 0, 0, 0.2)',
-        },
         '&:hover': {
             transform: 'scale(1.01)',
             boxShadow: '0px 50px 50px rgba(0, 0, 0, 0.2)',
