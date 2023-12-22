@@ -1,11 +1,11 @@
 import {Title, Text, Group, Container, Flex, Button, Overlay, createStyles, rem} from '@mantine/core';
 import {useTranslation} from "react-i18next";
-import {useCallback} from "react";
+import {useCallback, useContext} from "react";
 import Typed from 'react-typed';
 import {useMediaQuery} from "@mantine/hooks";
-import {getDecodedToken, useAuth} from "../Handler";
 import {notifications} from "@mantine/notifications";
 import {IconCircleX} from "@tabler/icons-react";
+import {AuthContext} from "../../../context/UserContext";
 
 const useStyles = createStyles((theme) => ({
     wrapper: {
@@ -13,10 +13,11 @@ const useStyles = createStyles((theme) => ({
         paddingTop: rem(180),
         paddingBottom: rem(130),
         backgroundImage:
-            'url(https://cdn.discordapp.com/attachments/1091120742059491439/1153365379196915762/orsha.jpg)',
+            'url(https://static.game-explore.space/images/minskwinter.jpeg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         height: 620,
+        overflow: 'hidden',
 
         [theme.fn.smallerThan('xs')]: {
             paddingTop: rem(80),
@@ -46,16 +47,10 @@ const useStyles = createStyles((theme) => ({
         },
     },
 
-    highlight: {
-        fontWeight: 800,
-        },
-
-
-
     description: {
         color: theme.white,
         textAlign: 'center',
-        fontSize: 30,
+        fontSize: 29,
         maxWidth: "100%",
 
         [theme.fn.smallerThan('xs')]: {
@@ -114,18 +109,17 @@ const useStyles = createStyles((theme) => ({
             backgroundColor: '#fff',
             color: '#0D2C99',
         },
-    },
-
+    }
 }));
 
 export function HeroText() {
     const { classes } = useStyles();
     const { t } = useTranslation();
     const isSmallScreen = useMediaQuery('(max-width: 575px)');
-    const isAuthenticated = useAuth();
+    const { signed, decodedToken } = useContext(AuthContext);
 
     const byTransferMail = useCallback(async () => {
-        if (!isAuthenticated) {
+        if (!signed) {
             notifications.show({
                 id: 'auth-required',
                 color: 'red',
@@ -139,19 +133,17 @@ export function HeroText() {
             return;
         }
 
-        const token = localStorage.getItem('authToken');
-        if (token !== null) {
+        if (signed) {
             try {
-                const decoded = await getDecodedToken(token);
                 const emailBody = `Dear HQs and Membership Department!
 
-                I request to transfer me from the ${decoded?.userData.divisionId} division to the BY division.
+                I request to transfer me from the ${decodedToken?.userData.divisionId} division to the BY division.
                 
                 Best wishes,
-                ${decoded?.userData.name.first} ${decoded?.userData.name.last}`;
+                ${decodedToken?.userData.name.first} ${decodedToken?.userData.name.last}`;
 
                 window.open(
-                    `mailto:BY-hq@ivao.aero,${decoded?.userData.divisionId}-hq@ivao.aero?cc=members@ivao.aero&subject=Division%20transfer%20${decoded?.userData.id}&body=${encodeURIComponent(
+                    `mailto:BY-hq@ivao.aero,${decodedToken?.userData.divisionId}-hq@ivao.aero?cc=members@ivao.aero&subject=Division%20transfer%20${decodedToken?.userData.id}&body=${encodeURIComponent(
                         emailBody
                     )}`,
                     '_blank'
@@ -160,7 +152,7 @@ export function HeroText() {
                 console.error('Error decoding token:', error);
             }
         }
-    }, [isAuthenticated, t]);
+    }, [t]);
 
     const openLink = useCallback(function (link: any | undefined) {
         window.open(link, '_blank')
@@ -168,14 +160,11 @@ export function HeroText() {
 
     return (
         <div className={classes.wrapper}>
-            <Overlay color="#00000" opacity={0.45} zIndex={1} />
+            <Overlay color="#00000" opacity={0.45} zIndex={1}/>
             <Flex mih={50} gap="md" justify="center" align="center" direction="row" wrap="wrap" >
                 <div className={classes.inner}>
                     <Title className={classes.title}>
-                        {t("heropage.title")}{' '}
-                        <Text component="span" inherit className={classes.highlight}>
-                            {t("generic.ivao")}
-                        </Text>
+                        {t("heropage.title")} {t("generic.ivao")}
                     </Title>
                     <Container size={640}>
                         <Text size="lg" className={`${classes.description}`}>

@@ -20,7 +20,8 @@ const ruTranslations: { translations: Translations } = {
                 sector: 'Сектор IvAc',
                 gca: 'GCA Программа',
                 charts: 'Схемы аэропортов',
-                docs: 'Документы'
+                docs: 'Документы',
+                vehicles: 'ТС'
             },
             pilots: {
                 index: 'Пилоту',
@@ -56,6 +57,15 @@ const ruTranslations: { translations: Translations } = {
             subtitle2: 'Присоединяйтесь прямо сейчас!',
             joinbutton: 'Присоединиться!',
             transfer: 'Перейти в BY дивизион!'
+        },
+        onlinecomponent: {
+            title: 'Activity of division in the Network',
+            first: {
+                title: "Pilots",
+            },
+            second: {
+                title: "ATC",
+            }
         },
         legal: {
             title: 'Правовая информация',

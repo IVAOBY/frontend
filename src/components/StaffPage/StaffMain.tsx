@@ -16,9 +16,9 @@ import {
     IconMailOpened,
 } from '@tabler/icons-react';
 import {useEffect, useState} from "react";
-import {api} from "../../hooks/api";
 import {useTranslation} from "react-i18next";
 import {notifications} from "@mantine/notifications";
+import {useApi} from "../../context/ApiContext";
 
 const useStyles = createStyles((theme) => ({
     title: {
@@ -80,6 +80,7 @@ export function StaffMain() {
     const [departments, setDepartments] = useState<Department[]>([]);
     const [positions, setPositions] = useState<Position[]>([]);
     const { t} = useTranslation();
+    const api = useApi();
 
     const handleEmailClick = (email: string) => {
         window.location.href = `mailto:${email}`;
@@ -87,14 +88,14 @@ export function StaffMain() {
 
     useEffect(() => {
         api("/staff-departments")
-            .then(response => {
+            .then(function (response: any) {
                 if (response && Array.isArray(response)) {
                     setDepartments(response);
                 } else {
                     console.error("Error: Unexpected API response structure");
                 }
             })
-            .catch(error => {
+            .catch(function (error: any) {
                 console.error("Error fetching data:", error);
             });
 
@@ -109,7 +110,7 @@ export function StaffMain() {
         });
 
         api('/staff-positions')
-            .then((response) => {
+            .then((response: any) => {
                 if (response && Array.isArray(response)) {
                     const positions: Position[] = response.map((positionData) => ({
                         departmentId: positionData.departmentId,
@@ -144,7 +145,7 @@ export function StaffMain() {
                     });
                 }
             })
-            .catch((error) => {
+            .catch((error: any) => {
                 console.error('Error fetching staff positions:', error);
                 notifications.update({
                     id: 'load-data',

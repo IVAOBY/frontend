@@ -17,7 +17,8 @@ export interface Translations {
             sector: string,
             gca: string,
             charts: string,
-            docs: string
+            docs: string,
+            vehicles: string
         },
         pilots: {
             index: string,
@@ -53,6 +54,15 @@ export interface Translations {
         subtitle2: string,
         joinbutton: string,
         transfer: string
+    },
+    onlinecomponent: {
+      title: string,
+        first: {
+            title: string,
+        },
+        second: {
+            title: string,
+        }
     },
     legal: {
         title: string,

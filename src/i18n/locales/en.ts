@@ -20,7 +20,8 @@ const enTranslations: { translations: Translations } = {
                 sector: 'IvAc Sector',
                 gca: 'GCA Programme',
                 charts: 'Charts',
-                docs: 'Documents'
+                docs: 'Documents',
+                vehicles: 'Vehicles'
             },
             pilots: {
                 index: 'Pilots',
@@ -56,6 +57,15 @@ const enTranslations: { translations: Translations } = {
             subtitle2: 'Join now!',
             joinbutton: 'Join!',
             transfer: 'Transfer to BY division!'
+        },
+        onlinecomponent: {
+            title: 'Activity of division in the Network',
+            first: {
+                title: "Pilots",
+            },
+            second: {
+                title: "ATC",
+            }
         },
         legal: {
             title: 'Legal information',

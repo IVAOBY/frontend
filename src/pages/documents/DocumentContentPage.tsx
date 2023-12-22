@@ -10,10 +10,10 @@ import {
 import {useTranslation} from 'react-i18next';
 import {useParams} from 'react-router-dom';
 import {notifications} from '@mantine/notifications';
-import {api} from '../../hooks/api';
 import {IconCircleX} from '@tabler/icons-react';
 import i18n from 'i18next';
 import {DocumentsType} from "../../hooks/types";
+import {useApi} from "../../context/ApiContext";
 
 const useStyles = createStyles((theme) => ({
     title: {
@@ -63,6 +63,7 @@ export function DocumentContentPage() {
     const {classes} = useStyles();
     const {t} = useTranslation();
     const {id} = useParams();
+    const api = useApi();
 
     const [documentItem, setDocumentItem] = useState<DocumentsType | null>(null);
     useEffect(() => {
@@ -76,7 +77,7 @@ export function DocumentContentPage() {
             withCloseButton: false,
         });
         api(`/documents/${id}`)
-            .then((response) => {
+            .then((response: any) => {
                 if (response && typeof response === 'object' && !Array.isArray(response)) {
                     setDocumentItem(response);
                     notifications.hide('load-data');
@@ -94,7 +95,7 @@ export function DocumentContentPage() {
                     });
                 }
             })
-            .catch((error) => {
+            .catch((error: any) => {
                 console.error('Error fetching news:', error);
                 notifications.update({
                     id: 'load-data',

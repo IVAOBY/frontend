@@ -20,7 +20,8 @@ const beTranslations: { translations: Translations } = {
                 sector: 'Сектар IvAc',
                 gca: 'GCA Праграма',
                 charts: 'Схемы аэрапортаў',
-                docs: 'Дакументы'
+                docs: 'Дакументы',
+                vehicles: 'ТС'
             },
             pilots: {
                 index: 'Пілоту',
@@ -46,9 +47,9 @@ const beTranslations: { translations: Translations } = {
             }
         },
         errorpage: {
-            notfoundtext: 'Что-то не так!',
-            notfoundsubtext: 'Кажется, вы попытались открыть страницу, которой нет. Хорошо, что мы приготовили для вас крутую кнопку:',
-            homebutton: 'Домой!'
+            notfoundtext: 'Нешта не так!',
+            notfoundsubtext: 'Здаецца, вы паспрабавалі адкрыць старонку, якой няма. Добра, што мы падрыхтавалі для вас крутую кнопку:',
+            homebutton: 'Дадому!'
         },
         heropage: {
             title: 'Сардэчна запрашаем у BY дывізіён',
@@ -57,19 +58,28 @@ const beTranslations: { translations: Translations } = {
             joinbutton: 'Далучыцца!',
             transfer: 'Перайсці ў BY дывізіён!'
         },
+        onlinecomponent: {
+            title: 'Activity of division in the Network',
+            first: {
+                title: "Pilots",
+            },
+            second: {
+                title: "ATC",
+            }
+        },
         legal: {
-            title: 'Правовая информация',
-            text: 'Да, мы собираем и храним вашу информацию. Но делаем это в соответвии со следующими документами:',
-            privacypolicy: 'Политика конфиденциальности',
-            termsofuse: 'Условия использования',
-            ipp: 'Политика интеллектуальной собственности',
+            title: 'Прававая інфармацыя',
+            text: 'Так, мы збіраем и захоўваем вашу інфармацыю. Але робім гэта у адпаведнасці з наступнымі дакументамі:',
+            privacypolicy: 'Палітыка канфідэнцыяльнасці',
+            termsofuse: 'Умовы карыстання',
+            ipp: 'Палітыка інтэлектуальнай уласнасці',
         },
         sector: {
-            title: 'Сектор-файл',
-            text: ' На этой странице вы можете загрузить сектор-файл для IvAc.',
-            wtitle: 'Пожалуйста, обратие внимание!',
-            warning: 'IvAc устарел и больше не рекомендуется к использованию! <br/> Вместно него рекомендуется использовать <a href={"https://ivao.aero/softdev/software/aurora.asp"} target={"_blank"} >Aurora</a>',
-            download: 'Скачать',
+            title: 'Сектар-файл',
+            text: ' На гэтай старонке вы можаце спампаваць сектар-файл для IvAc.',
+            wtitle: 'Калі ласка, звярніце увагу!',
+            warning: 'IvAc састарэлы и больш не раіцца да карыстання! <br/> Замест яго раіцца карыстацца <a href={"https://ivao.aero/softdev/software/aurora.asp"} target={"_blank"} >Aurora</a>',
+            download: 'Спампаваць',
         },
         news: {
             title: 'Навіны',
@@ -101,7 +111,7 @@ const beTranslations: { translations: Translations } = {
             },
             server: {
                 name: "Памылка!",
-                descritpion: "Сервер не захацеў дзеліцца з намі дадзенымі :(",
+                descritpion: "Сервер не захацеў дзяліцца з намі дадзенымі :(",
             },
             auth: {
                 negative: {
@@ -139,10 +149,10 @@ const beTranslations: { translations: Translations } = {
                 4: "Я павінен быў атрымаць узнагароду ў профіль, але не атрымаў. Чаму?",
                 5: "Я страціў свой пароль, як я магу атрымаць яго зноў?",
                 6: "Як я магу змяніць сваю пошту ў профілі?",
-                7: "Інтэрнэт-гадзіны не абнаўляюцца на маім рахунку. Гэта нармальна?",
+                7: "Інтэрнэт-гадзіны не абнаўляюцца ў маім профілі. Гэта нармальна?",
                 8: "Як я магу перайсці ў BY дывізіён?",
                 9: "З кім я магу звязацца, калі будуць іншыя пытанні.",
-                10:"привет",
+                10: "Прывітанне",
             },
             answers: {
                 1: 'Калі карыстальнік IVAO ня быў актыўны ў сеткі на працягу 3-х месяцаў, то такі акаунт становіцца неактыўным, і адзначаецца статусам "Inactive User" у профілі. Пасля гэтага вы не зможаце падлучыцца да сеткі. Калі вы памятаеце свой ID, то актываваць рахунак вельмі проста: зайдзіце на старонку профілю вашага акаўнта <a href=\'https://www.ivao.aero/members/person/details.asp?ID=XXXXXX\' target= \'_blank\' >https://www.ivao.aero/members/person/details.asp?ID=XXXXXX</a> (заменіце XXXXX на ваш VID). Націсніце справа на спасылку "Click here to reactivate it". Актывацыя адбываецца аўтаматычна на працягу 15 хвілін. Калі забыліся пароль, перайдзіце на старонку аднаўлення пароля <a href=\'http://www.ivao.aero/members/person/password.html\' target= \'_blank\' >http://www.ivao.aero/members/person/password.html</a> . Калі вы не памятаеце ваш VID, адпраўце ліст з вашымі імём, прозвішчам і адрасам e-mail, названым пры рэгістрацыі в BY Membership Department (<a href=\'mailto:by-membership@ivao.aero\' target= \'_blank\' >by-membership@ivao.aero</a>). ',
@@ -171,7 +181,7 @@ const beTranslations: { translations: Translations } = {
                     "\n" +
                     "Таксама вы можаце выкарыстоўваць кнопку на галоўнай старонцы нашага дывізіёна для аўталіста.",
                 9: "Калі вы жадаеце звязацца з кімсьці з каардынатараў BY дывізіёна, калі ласка паглядзіце яго e-mail адрас у <a href='/staff' target= '_blank' >спісе кіраўніцтва</a>",
-                10: "привет",
+                10: "Прывітанне",
             },
         },
     },

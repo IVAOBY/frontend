@@ -9,10 +9,10 @@ import {
 } from '@mantine/core';
 import {useTranslation} from 'react-i18next';
 import {notifications} from '@mantine/notifications';
-import {api} from '../../hooks/api';
 import {IconCircleX} from '@tabler/icons-react';
 import i18n from 'i18next';
 import {DocumentsType} from "../../hooks/types";
+import {useApi} from "../../context/ApiContext";
 
 const useStyles = createStyles((theme) => ({
     title: {
@@ -61,6 +61,7 @@ const useStyles = createStyles((theme) => ({
 export function GCAPage() {
     const {classes} = useStyles();
     const {t} = useTranslation();
+    const api = useApi();
 
     const [documentItem, setDocumentItem] = useState<DocumentsType | null>(null);
     useEffect(() => {
@@ -74,7 +75,7 @@ export function GCAPage() {
             withCloseButton: false,
         });
         api("/documents/5")
-            .then(response => {
+            .then(function (response: any) {
                 if (response) {
                     setDocumentItem(response);
                     notifications.hide('load-gca');
@@ -92,7 +93,7 @@ export function GCAPage() {
                     });
                 }
             })
-            .catch((error) => {
+            .catch((error: any) => {
                 console.error('Error fetching gca programm:', error);
                 notifications.update({
                     id: 'load-gca',
