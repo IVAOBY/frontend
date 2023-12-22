@@ -74,8 +74,7 @@ export interface Translations {
         vids: string,
         training: string,
         caption: string,
-    }
-
+    },
     legal: {
         title: string,
         text: string,
