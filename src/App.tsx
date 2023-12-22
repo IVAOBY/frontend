@@ -1,5 +1,5 @@
 import {AppShell, MantineProvider} from '@mantine/core';
-import {Route, BrowserRouter, Routes, Navigate} from 'react-router-dom';
+import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom';
 import {I18nextProvider} from 'react-i18next';
 import i18n from './i18n/i18n';
 import {HeaderResponsive} from './components/header/header';
@@ -31,6 +31,7 @@ import {SectorFile} from "./pages/SectorFile";
 import {AuthContext, AuthProvider} from "./context/UserContext";
 import {useContext} from "react";
 import {ApiProvider} from "./context/ApiContext";
+import {Vehicles} from "./pages/vehicles/Vehicles";
 
 export default function App() {
 
@@ -75,6 +76,7 @@ export default function App() {
                             <Route path="/map" element={<MapPage/>}/>
                             <Route path="/legal" element={<Legal/>}/>
                             <Route path="/staff" element={<StaffMain/>}/>
+                            <Route path="/vehicles" element={<Vehicles/>}/>
 
                             {/* Документы */}
                             <Route path="/documents" element={<DocumentsMain/>}/>

@@ -64,6 +64,18 @@ export interface Translations {
             title: string,
         }
     },
+    vehicles: {
+        title: string,
+        airports: string,
+        description: string,
+        airport: string,
+        atcreq: string,
+        driverreq: string,
+        vids: string,
+        training: string,
+        caption: string,
+    }
+
     legal: {
         title: string,
         text: string,
