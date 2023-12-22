@@ -67,6 +67,17 @@ const enTranslations: { translations: Translations } = {
                 title: "ATC",
             }
         },
+        vehicles: {
+            title: "Vehicles",
+            airports: "Airports",
+            description: "The table below describes the airports where the use of vehicles is permitted",
+            airport: "Airport",
+            atcreq: "ATC requirements",
+            driverreq: "Driver requirements",
+            vids: "Allowed VIDs",
+            training: "Training is required",
+            caption: "Active ATC position (GND+) is required for vehicle operation",
+        },
         legal: {
             title: 'Legal information',
             text: 'Yes, we collect and store your information. But we do so in accordance with the following documents:',
