@@ -124,7 +124,7 @@ export function Vehicles() {
                                 {vehicle.unrestricted_vids.map((vid) => (
                                     <a key={vid} target={"_blank"} href={"https://www.ivao.aero/Member.aspx?Id=" + vid}
                                        style={{marginLeft: 2}}>
-                                        <Badge color="green" mb={2} key={vid}>{vid}</Badge>
+                                        <Badge mb={2} key={vid}>{vid}</Badge>
                                     </a>
                                 ))}
                             </td>
