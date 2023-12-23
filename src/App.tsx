@@ -32,6 +32,7 @@ import {AuthContext, AuthProvider} from "./context/UserContext";
 import {useContext} from "react";
 import {ApiProvider} from "./context/ApiContext";
 import {Vehicles} from "./pages/vehicles/Vehicles";
+import './App.css';
 
 
 export default function App() {
@@ -58,7 +59,7 @@ export default function App() {
     };
 
     return (
-        <MantineProvider withCSSVariables withGlobalStyles withNormalizeCSS theme={ivaoTheme}>
+        <MantineProvider theme={ivaoTheme}>
             <I18nextProvider i18n={i18n}>
                 <BrowserRouter>
                     <ApiProvider>
