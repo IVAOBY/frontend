@@ -1,71 +1,12 @@
 import { useEffect, useState } from 'react';
-import {
-    createStyles,
-    Title,
-    Container,
-    rem,
-    Image,
-    Text,
-    Flex, Paper, Group, Skeleton, Center,
-} from '@mantine/core';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { notifications } from '@mantine/notifications';
 import { IconCalendarTime, IconCircleX, IconUser } from '@tabler/icons-react';
 import i18n from 'i18next';
-import {format} from "date-fns";
-import {useApi} from "../context/ApiContext";
-
-const useStyles = createStyles((theme) => ({
-    title: {
-        fontSize: rem(34),
-        fontWeight: 800,
-        color: theme.colors.blue[9],
-        '&::after': {
-            content: '""',
-            display: 'block',
-            backgroundColor: theme.fn.primaryColor(),
-            width: rem(45),
-            height: rem(2),
-            marginTop: theme.spacing.sm,
-            marginLeft: 'auto',
-            marginRight: 'auto',
-        },
-    },
-
-    image: {
-        maxWidth: '100%',
-        minWidth: '50%',
-        height: 'auto',
-        [theme.fn.largerThan('md')]: {
-            maxWidth: '50%',
-        },
-    },
-
-    cardContent: {
-        [theme.fn.smallerThan('sm')]: {
-            flexDirection: 'column',
-            alignItems: 'center',
-        },
-        wordBreak: 'break-word',
-    },
-
-    cardAuthorDate: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginTop: rem(20),
-        marginLeft: rem(20),
-        color: theme.colors.gray,
-    },
-    skeleton: {
-        display: 'flex',
-        flexDirection: 'column',
-        minWidth: '500px',
-        maxWidth: '100%',
-        gap: rem(10)
-    }
-}));
+import { format } from "date-fns";
+import { useApi } from "../context/ApiContext";
+import {GeneralLayout} from "../components/Layout";
 
 interface News {
     id: number;
@@ -91,7 +32,6 @@ interface News {
 }
 
 export function NewsPage() {
-    const { classes, theme } = useStyles();
     const { t } = useTranslation();
     const { id } = useParams();
     const api = useApi();
@@ -142,23 +82,27 @@ export function NewsPage() {
     }, [id]);
 
     return (
-        <Container size="lg" py="xl">
+        <GeneralLayout>
             {newsItem ? (
                 <>
-                    <Title order={2} className={classes.title} ta="center" mt="sm">
+                    <h2 className="text-4xl font-bold text-ivao-blue text-center mt-4">
                         {newsItem.name[i18n.language]}
-                    </Title>
-                    <Paper p={"lg"} bg={"#fff"} shadow={"lg"} radius={"lg"} mt={rem(13)}>
-                        <Flex gap={"md"} className={classes.cardContent}>
-                            <Image src={newsItem.image_url} alt={newsItem.name.en} className={classes.image} radius="lg" />
-                            <Text color={theme.colors.gray[8]} fz={rem(16)} mt={rem(10)}>
+                    </h2>
+                    <div className="bg-white p-6 shadow-lg rounded-2xl mt-8">
+                        <div className="flex flex-col gap-5 md:flex-row">
+                            <img
+                                src={newsItem.image_url}
+                                alt={newsItem.name.en}
+                                className="max-w-full md:max-w-md h-full rounded-lg"
+                            />
+                            <p className="text-gray-700 text-md">
                                 {newsItem.description[i18n.language]}
-                            </Text>
-                        </Flex>
-                        <Flex direction={"row"} gap={rem(20)} mt={rem(13)}>
-                            <Group spacing={rem(5)}>
-                                <IconUser size={18} color={theme.colors.blue[9]}></IconUser>
-                                <Text size="md" fw="bold" color={theme.colors.blue[9]}>
+                            </p>
+                        </div>
+                        <div className="flex justify-between items-center mt-4">
+                            <div className="flex items-center">
+                                <IconUser className="text-ivao-blue" size={18} />
+                                <p className="text-md font-bold text-ivao-blue">
                                     {newsItem.user.staffPositions ? (
                                         newsItem.user.staffPositions
                                             .map((position) => `BY-${position.id}`)
@@ -167,38 +111,35 @@ export function NewsPage() {
                                     ) : (
                                         String(newsItem.user.id)
                                     )}
-                                </Text>
-                            </Group>
-                            <Group position="left" spacing={rem(5)}>
-                                <IconCalendarTime size={18} color={theme.colors.blue[9]} />
-                                <Text size="md" c={theme.colors.blue[9]}>
+                                </p>
+                            </div>
+                            <div className="flex items-center">
+                                <IconCalendarTime className="text-ivao-blue" size={18} />
+                                <p className="text-md text-ivao-blue">
                                     {format(new Date(newsItem.publishedAt), 'dd-MM-yyyy')}
-                                </Text>
-                            </Group>
-                        </Flex>
-                    </Paper>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </>
             ) : (
                 <>
-                    <Title order={2} className={classes.title} ta="center" mt="sm">
-                        <Center><Skeleton height={30} radius="md" maw={300} /></Center>
-                    </Title>
-                    <Paper p="xl" radius="lg" shadow="lg">
-                    <Flex className={classes.cardContent}>
-                        <div className={classes.image}>
-                            <Skeleton height={rem(231)} radius="lg" maw={400}/>
+                    <h2 className="text-3xl font-bold text-blue-900 text-center mt-4">
+                        <div className="animate-pulse bg-blue-300 h-6 w-1/2 mx-auto mb-4"></div>
+                    </h2>
+                    <div className="bg-white p-6 shadow-lg rounded-lg mt-8 flex gap-8">
+                        <div className="w-1/2 animate-pulse bg-blue-300 h-40 rounded-lg"></div>
+                        <div className="w-1/2">
+                            {[1, 2, 3, 4, 5, 6].map((index) => (
+                                <div
+                                    key={index}
+                                    className="animate-pulse bg-blue-300 h-6 w-4/5 my-2 rounded-lg"
+                                ></div>
+                            ))}
                         </div>
-                        <div className={classes.skeleton}>
-                            <Skeleton height={10} radius="lg" maw={600}/>
-                            <Skeleton height={10} radius="lg" maw={600}/>
-                            <Skeleton height={10} radius="lg" maw={600}/>
-                            <Skeleton height={10} radius="lg" maw={600}/>
-                            <Skeleton height={10} radius="lg" maw={600}/>
-                            <Skeleton height={10} radius="lg" maw={600}/>
-                        </div>
-                    </Flex>
-                </Paper></>
+                    </div>
+                </>
             )}
-        </Container>
+        </GeneralLayout>
     );
 }
