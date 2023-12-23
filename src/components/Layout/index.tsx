@@ -1,5 +1,5 @@
-import {PropsWithChildren} from "react";
+import React, { PropsWithChildren, ReactNode } from "react";
 
-export const GeneralLayout: PropsWithChildren<any> = ({children}) => {
-    return <div className="container py-16">{children}</div>;
+export const GeneralLayout: React.FC<PropsWithChildren<ReactNode>> = ({ children }) => {
+    return <div className="container max-w-screen-lg py-16">{children}</div>;
 };

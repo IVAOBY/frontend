@@ -4,12 +4,11 @@ import {
     Title,
     Text,
     SimpleGrid,
-    Container,
     rem,
     Paper,
     Image,
     Flex,
-    Group, Pagination, UnstyledButton, Skeleton
+    Group, UnstyledButton, Skeleton
 } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
 import {IconCalendarTime, IconCircleX, IconUser} from '@tabler/icons-react';
@@ -17,6 +16,8 @@ import { format } from 'date-fns';
 import {notifications} from "@mantine/notifications";
 import {useNavigate} from "react-router-dom";
 import {useApi} from "../../../context/ApiContext";
+import {GeneralLayout} from "../../Layout";
+import Pagination from "../../Pagination";
 
 const useStyles = createStyles((theme) => {
     return ({
@@ -229,7 +230,7 @@ export function NewsSection() {
     const endIndex = startIndex + itemsPerPage;
 
     return (
-        <Container size="lg" py="xl">
+        <GeneralLayout>
             <Title order={2} className={classes.title} ta="center" mt="sm">
                 {t('news.title')}
             </Title>
@@ -296,7 +297,12 @@ export function NewsSection() {
                     ))
                 )}
             </SimpleGrid>
-            <Pagination value={currentPage} onChange={setCurrentPage} total={Math.ceil(news ? news.length / itemsPerPage : 1)} mt={10} position={'center'} radius={'lg'} className={classes.pagination} />
-        </Container>
+            <Pagination
+                currentPage={currentPage}
+                totalPages={Math.ceil(news ? news.length / itemsPerPage : 1)}
+                onPageChange={setCurrentPage}
+                className="mt-4"
+            />
+        </GeneralLayout>
     );
 }

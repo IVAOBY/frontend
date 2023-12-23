@@ -125,15 +125,15 @@ export function NewsPage() {
             ) : (
                 <>
                     <h2 className="text-3xl font-bold text-blue-900 text-center mt-4">
-                        <div className="animate-pulse bg-blue-300 h-6 w-1/2 mx-auto mb-4"></div>
+                        <div className="animate-pulse bg-ivao-blue h-6 w-1/2 mx-auto mb-4 rounded-lg"></div>
                     </h2>
-                    <div className="bg-white p-6 shadow-lg rounded-lg mt-8 flex gap-8">
-                        <div className="w-1/2 animate-pulse bg-blue-300 h-40 rounded-lg"></div>
-                        <div className="w-1/2">
+                    <div className="bg-white p-6 shadow-lg rounded-lg mt-8 flex flex-col gap-5 md:flex-row">
+                        <div className="md:w-1/2 animate-pulse bg-ivao-grey h-40 rounded-lg"></div>
+                        <div className="md:w-1/2">
                             {[1, 2, 3, 4, 5, 6].map((index) => (
                                 <div
                                     key={index}
-                                    className="animate-pulse bg-blue-300 h-6 w-4/5 my-2 rounded-lg"
+                                    className="animate-pulse bg-ivao-grey h-6 w-4/5 my-2 rounded-lg"
                                 ></div>
                             ))}
                         </div>
