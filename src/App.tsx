@@ -62,8 +62,8 @@ export default function App() {
         <MantineProvider theme={ivaoTheme}>
             <I18nextProvider i18n={i18n}>
                 <BrowserRouter>
-                    <ApiProvider>
                     <AuthProvider>
+                    <ApiProvider>
                     <AppShell padding={0} navbar={<HeaderResponsive/>} footer={<Footer/>}>
                         <Notifications/>
                         <Routes>
@@ -106,8 +106,8 @@ export default function App() {
                             />
                         </Routes>
                     </AppShell>
-                    </ AuthProvider>
                     </ApiProvider>
+                    </ AuthProvider>
                 </BrowserRouter>
             </I18nextProvider>
         </MantineProvider>
