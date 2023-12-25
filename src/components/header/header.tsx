@@ -169,7 +169,6 @@ export function HeaderResponsive() {
     const serverUrl = `https://v3.api.xr.ivao.aero/auth/login?goto=${window.location.protocol}//${window.location.hostname}${window.location.port ? ':'+window.location.port : ''}`;
 
     useEffect(() => {
-        console.log('Signed:', signed);
         const handleScroll = () => {
             setScrollPosition(window.scrollY);
         };
