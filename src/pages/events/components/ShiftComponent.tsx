@@ -2,7 +2,6 @@ import {useContext, useEffect, useState} from 'react';
 import {
     Badge,
     Box,
-    Button,
     Card,
     Center,
     Container,
@@ -21,6 +20,7 @@ import {format} from "date-fns";
 import {PartsEntity} from "../../../types/Events";
 import {useApi} from "../../../context/ApiContext";
 import {AuthContext} from "../../../context/UserContext";
+import {CustomButton} from "../../../components/Button";
 
 const useStyles = createStyles((theme) => ({
     title: {
@@ -103,6 +103,7 @@ export function ShiftComponent() {
     const {id} = useParams();
     const api = useApi();
     const { decodedToken, signed } = useContext(AuthContext);
+    console.log(decodedToken);
     // const isSmallScreen = window.innerWidth < 768;
 
     const [partItem, setPartItem] = useState<PartsEntity[] | null>(null);
@@ -291,23 +292,20 @@ export function ShiftComponent() {
 
                                     {signed && isBookedForPosition(part.booking, position.atcPositionId) ? (
                                         <Center>
-                                            <Button color={"red"} mt={10} onClick={() => {
-                                                const bookingId = getBookingIdForPosition(part.booking, position.atcPositionId);
-                                                if (typeof bookingId !== 'undefined') {
-                                                    handleUnbook(bookingId);
-                                                } else {
-                                                    console.log('Booking ID is undefined');
+                                            <CustomButton title={t("events.booking.unbook")} variant={"danger"} size={"lg"} onClick={
+                                                () => {
+                                                    const bookingId = getBookingIdForPosition(part.booking, position.atcPositionId);
+                                                    if (typeof bookingId !== 'undefined') {
+                                                        handleUnbook(bookingId);
+                                                    } else {
+                                                        console.log('Booking ID is undefined');
+                                                    }
                                                 }
-                                            }}>
-                                                {t("events.booking.unbook")}
-                                            </Button>
+                                            }/>
                                         </Center>
                                     ) : signed ? (
                                         <Center>
-                                            <Button color={"green"} mt={10}
-                                                    onClick={() => handleBook(part.id, position.atcPositionId)}>
-                                                {t("events.booking.book")}
-                                            </Button>
+                                            <CustomButton title={t("events.booking.book")} variant={"primary"} size={"lg"} onClick={() => handleBook(part.id, position.atcPositionId)} />
                                         </Center>
                                     ) : null}
                                 </Card>

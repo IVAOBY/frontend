@@ -85,24 +85,24 @@ export function NewsPage() {
         <GeneralLayout>
             {newsItem ? (
                 <>
-                    <h2 className="text-4xl font-bold text-ivao-blue text-center mt-4">
+                    <h2 className="mt-4 text-center text-4xl font-bold text-ivao-blue">
                         {newsItem.name[i18n.language]}
                     </h2>
-                    <div className="bg-white p-6 shadow-lg rounded-2xl mt-8">
+                    <div className="mt-8 rounded-2xl bg-white p-6 shadow-lg">
                         <div className="flex flex-col gap-5 md:flex-row">
                             <img
                                 src={newsItem.image_url}
                                 alt={newsItem.name.en}
-                                className="max-w-full md:max-w-md h-full rounded-lg"
+                                className="h-full max-w-full rounded-lg md:max-w-md"
                             />
                             <p className="text-gray-700 text-md">
                                 {newsItem.description[i18n.language]}
                             </p>
                         </div>
-                        <div className="flex justify-between items-center mt-4">
+                        <div className="mt-4 flex items-center justify-between">
                             <div className="flex items-center">
                                 <IconUser className="text-ivao-blue" size={18} />
-                                <p className="text-md font-bold text-ivao-blue">
+                                <p className="font-bold text-md text-ivao-blue">
                                     {newsItem.user.staffPositions ? (
                                         newsItem.user.staffPositions
                                             .map((position) => `BY-${position.id}`)
@@ -124,16 +124,16 @@ export function NewsPage() {
                 </>
             ) : (
                 <>
-                    <h2 className="text-3xl font-bold text-blue-900 text-center mt-4">
-                        <div className="animate-pulse bg-ivao-blue h-6 w-1/2 mx-auto mb-4 rounded-lg"></div>
+                    <h2 className="mt-4 text-center text-3xl font-bold text-blue-900">
+                        <div className="mx-auto mb-4 h-6 w-1/2 animate-pulse rounded-lg bg-ivao-blue"></div>
                     </h2>
-                    <div className="bg-white p-6 shadow-lg rounded-lg mt-8 flex flex-col gap-5 md:flex-row">
-                        <div className="md:w-1/2 animate-pulse bg-ivao-grey h-40 rounded-lg"></div>
+                    <div className="mt-8 flex flex-col gap-5 rounded-lg bg-white p-6 shadow-lg md:flex-row">
+                        <div className="h-40 animate-pulse rounded-lg bg-ivao-grey md:w-1/2"></div>
                         <div className="md:w-1/2">
                             {[1, 2, 3, 4, 5, 6].map((index) => (
                                 <div
                                     key={index}
-                                    className="animate-pulse bg-ivao-grey h-6 w-4/5 my-2 rounded-lg"
+                                    className="my-2 h-6 w-4/5 animate-pulse rounded-lg bg-ivao-grey"
                                 ></div>
                             ))}
                         </div>
