@@ -32,7 +32,7 @@ jobs:
         username: ${{ secrets.PRODUCTION_FTP_USER }}
         password: ${{ secrets.PRODUCTION_FTP_PASSWORD }}
         local_folder: dist
-        remote_folder: ./
+        remote_folder: ./by.ivao.systems/htdocs
         cleanup: false
         exclude: '[]'
         passive: true
