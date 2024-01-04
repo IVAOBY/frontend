@@ -20,7 +20,7 @@ jobs:
       
     - name: 🔨 Build Project
       run: |
-        npm install --force --legacy-peer-deps
+        yarn install
         CI=false npm run build
 
     - name: 📂 Sync files
