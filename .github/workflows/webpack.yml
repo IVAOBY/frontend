@@ -23,16 +23,16 @@ jobs:
         npm install --force --legacy-peer-deps
         CI=false npm run build
 
- #    - name: 📂 Sync files
- #      uses: sand4rt/ftp-deployer@v1.7
- #      with:
- #        sftp: false
- #        host: ${{ secrets.PRODUCTION_FTP_HOST }}
- #        port: 21
- #        username: ${{ secrets.PRODUCTION_FTP_USER }}
- #        password: ${{ secrets.PRODUCTION_FTP_PASSWORD }}
- #        local_folder: dist
- #        remote_folder: ./
- #        cleanup: false
- #        exclude: '[]'
- #        passive: true
+    - name: 📂 Sync files
+      uses: sand4rt/ftp-deployer@v1.7
+      with:
+        sftp: false
+        host: ${{ secrets.PRODUCTION_FTP_HOST }}
+        port: 21
+        username: ${{ secrets.PRODUCTION_FTP_USER }}
+        password: ${{ secrets.PRODUCTION_FTP_PASSWORD }}
+        local_folder: dist
+        remote_folder: ./
+        cleanup: false
+        exclude: '[]'
+        passive: true
