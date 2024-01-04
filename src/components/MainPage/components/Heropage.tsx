@@ -1,4 +1,4 @@
-import {Title, Text, Group, Container, Flex, Button, Overlay, createStyles, rem} from '@mantine/core';
+import {Button, Container, createStyles, Flex, Group, Overlay, rem, Text, Title} from '@mantine/core';
 import {useTranslation} from "react-i18next";
 import {useCallback, useContext} from "react";
 import Typed from 'react-typed';
@@ -13,7 +13,7 @@ const useStyles = createStyles((theme) => ({
         paddingTop: rem(180),
         paddingBottom: rem(130),
         backgroundImage:
-            'url(https://static.game-explore.space/images/minskwinter.jpeg)',
+            'url(https://static.ivao.systems/first24.png)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         height: 620,

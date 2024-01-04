@@ -1,5 +1,5 @@
 import {AppShell, MantineProvider} from '@mantine/core';
-import {Route, BrowserRouter, Routes, Navigate} from 'react-router-dom';
+import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom';
 import {I18nextProvider} from 'react-i18next';
 import i18n from './i18n/i18n';
 import {HeaderResponsive} from './components/header/header';
@@ -13,7 +13,7 @@ import {AboutUs} from './pages/AboutUs';
 import {FAQ} from './pages/FAQ';
 import {ScenaryPage} from './pages/Scenary';
 import {GetInTouchSimple} from './pages/contact-us/ContactUs';
-import {FirstStepP} from './pages/FirstStepPilot'; // Correct the import statement
+import {FirstStepP} from './pages/FirstStepPilot';
 import {NewsPage} from './pages/News';
 import {DocumentsMain} from './pages/documents/DocumentsPage';
 import {DocumentContentPage} from './pages/documents/DocumentContentPage';
@@ -31,6 +31,7 @@ import {SectorFile} from "./pages/SectorFile";
 import {AuthContext, AuthProvider} from "./context/UserContext";
 import {useContext} from "react";
 import {ApiProvider} from "./context/ApiContext";
+import Snowfall from 'react-snowfall'
 
 export default function App() {
 
@@ -63,6 +64,16 @@ export default function App() {
                     <AuthProvider>
                     <AppShell padding={0} navbar={<HeaderResponsive/>} footer={<Footer/>}>
                         <Notifications/>
+                        <Snowfall
+                            color="#fff"
+                            style={{
+                                position: 'absolute',
+                                width: '100vw',
+                                height: '45rem',
+                                zIndex: 9
+                            }}
+                            snowflakeCount={200}
+                        />
                         <Routes>
                             <Route path="/" element={<MainPage/>}/>
                             <Route path="/airport" element={<Airport/>}/>
