@@ -13,7 +13,7 @@ const useStyles = createStyles((theme) => ({
         paddingTop: rem(180),
         paddingBottom: rem(130),
         backgroundImage:
-            'url(https://static.ivao.systems/first24.png)',
+            'url(https://static.ivao.systems/minskwinter.jpeg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         height: 620,
