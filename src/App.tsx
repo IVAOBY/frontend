@@ -31,7 +31,6 @@ import {SectorFile} from "./pages/SectorFile";
 import {AuthContext, AuthProvider} from "./context/UserContext";
 import {useContext} from "react";
 import {ApiProvider} from "./context/ApiContext";
-import Snowfall from 'react-snowfall'
 
 export default function App() {
 
@@ -64,16 +63,6 @@ export default function App() {
                     <AuthProvider>
                     <AppShell padding={0} navbar={<HeaderResponsive/>} footer={<Footer/>}>
                         <Notifications/>
-                        <Snowfall
-                            color="#fff"
-                            style={{
-                                position: 'absolute',
-                                width: '100vw',
-                                height: '45rem',
-                                zIndex: 9
-                            }}
-                            snowflakeCount={200}
-                        />
                         <Routes>
                             <Route path="/" element={<MainPage/>}/>
                             <Route path="/airport" element={<Airport/>}/>
