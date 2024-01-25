@@ -1,9 +1,7 @@
-import type { Config } from 'tailwindcss'
+import type { Config } from 'tailwindcss';
 
 export default {
-  content: [
-    'src/**/*.{ts,tsx}'
-  ],
+  content: ['src/**/*.{ts,tsx}'],
   theme: {
     fontFamily: {
       sans: ['Montserrat', 'sans-serif'],
@@ -14,13 +12,13 @@ export default {
     extend: {
       colors: {
         ivao: {
-          blue: "#0D2C99",
-          grey: "#D7D7DC",
-          lightBlue: "#3C55AC",
-          green: "#2EC662",
-          yellow: "#F9CC2C",
-          red: "#E93434",
-          infoBlue: "#7EA2D6"
+          blue: '#0D2C99',
+          grey: '#D7D7DC',
+          lightBlue: '#3C55AC',
+          green: '#2EC662',
+          yellow: '#F9CC2C',
+          red: '#E93434',
+          infoBlue: '#7EA2D6',
         },
         atmos: {
           50: '#B6C5F9',
@@ -35,7 +33,7 @@ export default {
           900: '#040E32',
         },
         background: {
-          body: '#f5f5f5'
+          body: '#f5f5f5',
         },
         ocean: {
           50: '#D7DDF1',
@@ -117,5 +115,4 @@ export default {
   },
   plugins: [],
   darkMode: ['class', '[data-theme="dark"]'],
-} satisfies Config
-
+} satisfies Config;
