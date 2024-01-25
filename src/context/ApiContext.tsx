@@ -13,7 +13,6 @@ type ApiProviderProps = {
 };
 
 export const ApiProvider = ({ children }: ApiProviderProps) => {
-    const apiURL = 'http://localhost:3000';
     const { token } = useContext(AuthContext);
 
     const api = async (path: string, method: string = 'GET', body: any = null) => {
@@ -21,14 +20,12 @@ export const ApiProvider = ({ children }: ApiProviderProps) => {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + token
         };
-
-        var data;
         try {
             const config = {
-                url: apiURL + path,
+                url: import.meta.env.VITE_API_URL_BASE + path,
                 method,
                 headers,
-                data
+                data: body
             };
 
             if (body !== null) {

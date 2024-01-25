@@ -185,7 +185,7 @@ export function StaffMain() {
                                 onClick={() => handleEmailClick(department.email)}
                                 mt={10}
                             >
-                                <IconMailOpened style={{ width: "60%", height: "60%" }} color="white" stroke={1.5} />
+                                <IconMailOpened style={{ width: "60%", height: "60%" }} color={theme.colors.blue[9]} stroke={1.5} />
                             </ActionIcon>
 
                             <Flex
