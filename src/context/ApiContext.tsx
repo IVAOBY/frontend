@@ -1,5 +1,5 @@
-import { createContext, ReactNode, useContext } from 'react';
-import { notifications } from '@mantine/notifications';
+import {createContext, ReactNode, useContext} from 'react';
+import {notifications} from '@mantine/notifications';
 import axios from 'axios';
 import {IconCircleX} from "@tabler/icons-react";
 import {AuthContext} from "./UserContext";
@@ -13,7 +13,7 @@ type ApiProviderProps = {
 };
 
 export const ApiProvider = ({ children }: ApiProviderProps) => {
-    const apiURL = 'https://api.game-explore.space';
+    const apiURL = 'http://164.92.184.135:3000';
     const { token } = useContext(AuthContext);
 
     const api = async (path: string, method: string = 'GET', body: any = null) => {
