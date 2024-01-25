@@ -13,7 +13,7 @@ import {AboutUs} from './pages/AboutUs';
 import {FAQ} from './pages/FAQ';
 import {ScenaryPage} from './pages/Scenary';
 import {GetInTouchSimple} from './pages/contact-us/ContactUs';
-import {FirstStepP} from './pages/FirstStepPilot'; // Correct the import statement
+import {FirstStepP} from './pages/FirstStepPilot';
 import {NewsPage} from './pages/News';
 import {DocumentsMain} from './pages/documents/DocumentsPage';
 import {DocumentContentPage} from './pages/documents/DocumentContentPage';

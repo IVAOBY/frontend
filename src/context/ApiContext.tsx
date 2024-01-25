@@ -1,5 +1,5 @@
-import { createContext, ReactNode, useContext } from 'react';
-import { notifications } from '@mantine/notifications';
+import {createContext, ReactNode, useContext} from 'react';
+import {notifications} from '@mantine/notifications';
 import axios from 'axios';
 import {IconCircleX} from "@tabler/icons-react";
 import {AuthContext} from "./UserContext";

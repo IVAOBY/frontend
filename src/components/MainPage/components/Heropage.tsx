@@ -1,4 +1,4 @@
-import {Title, Text, Group, Container, Flex, Button, Overlay, createStyles, rem} from '@mantine/core';
+import {Button, Container, createStyles, Flex, Group, Overlay, rem, Text, Title} from '@mantine/core';
 import {useTranslation} from "react-i18next";
 import {useCallback, useContext} from "react";
 import Typed from 'react-typed';
@@ -6,6 +6,7 @@ import {useMediaQuery} from "@mantine/hooks";
 import {notifications} from "@mantine/notifications";
 import {IconCircleX} from "@tabler/icons-react";
 import {AuthContext} from "../../../context/UserContext";
+import Snowfall from 'react-snowfall'
 
 const useStyles = createStyles((theme) => ({
     wrapper: {
@@ -160,6 +161,16 @@ export function HeroText() {
 
     return (
         <div className={classes.wrapper}>
+            <Snowfall
+                color="#fff"
+                style={{
+                    position: 'absolute',
+                    width: '100vw',
+                    height: '45rem',
+                    zIndex: 9
+                }}
+                snowflakeCount={200}
+            />
             <Overlay color="#00000" opacity={0.45} zIndex={1}/>
             <Flex mih={50} gap="md" justify="center" align="center" direction="row" wrap="wrap" >
                 <div className={classes.inner}>
