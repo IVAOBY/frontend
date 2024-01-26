@@ -24,6 +24,7 @@ export const AuthContext = createContext<AuthContextProps>({
   signed: false,
   token: '',
   decodedToken: null,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   signIn: (_: string) => Promise.reject(),
   signOut: () => {},
   refreshToken: () => {},

@@ -196,6 +196,7 @@ export function ShiftComponent() {
         booking.bookedUser?.id === decodedToken?.userData.id
       );
     });
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return booking ? booking.id : undefined;
   }
 
@@ -345,7 +346,7 @@ export function ShiftComponent() {
                           variant={'danger'}
                           size={'lg'}
                           onClick={() => {
-                            const bookingId = getBookingIdForPosition(
+                            const bookingId: number = getBookingIdForPosition(
                               part.booking,
                               position.atcPositionId,
                             );
@@ -363,6 +364,7 @@ export function ShiftComponent() {
                           title={t('events.booking.book')}
                           variant={'primary'}
                           size={'lg'}
+                          /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
                           onClick={() =>
                             handleBook(part.id, position.atcPositionId)
                           }

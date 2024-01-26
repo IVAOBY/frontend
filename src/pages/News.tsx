@@ -101,14 +101,14 @@ export function NewsPage() {
                 alt={newsItem.name.en}
                 className="h-full max-w-full rounded-lg md:max-w-md"
               />
-              <p className="text-md text-gray-700">
+              <p className="text-base text-gray-700">
                 {newsItem.description[i18n.language]}
               </p>
             </div>
             <div className="mt-4 flex items-center justify-between">
               <div className="flex items-center">
                 <IconUser className="text-ivao-blue" size={18} />
-                <p className="text-md font-bold text-ivao-blue">
+                <p className="text-base font-bold text-ivao-blue">
                   {newsItem.user.staffPositions
                     ? newsItem.user.staffPositions
                         .map((position) => `BY-${position.id}`)
@@ -121,7 +121,7 @@ export function NewsPage() {
               </div>
               <div className="flex items-center">
                 <IconCalendarTime className="text-ivao-blue" size={18} />
-                <p className="text-md text-ivao-blue">
+                <p className="text-base text-ivao-blue">
                   {format(new Date(newsItem.publishedAt), 'dd-MM-yyyy')}
                 </p>
               </div>

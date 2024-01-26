@@ -12,6 +12,7 @@ interface ApiContextType {
 
 const ApiContext = createContext<ApiContextType | undefined>(undefined);
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useApi = () => useContext(ApiContext);
 
 type ApiProviderProps = {
@@ -46,6 +47,7 @@ export const ApiProvider = ({ children }: ApiProviderProps) => {
 
       const result = response.data;
       if (result && !result.status) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         return result;
       } else {
         return false;

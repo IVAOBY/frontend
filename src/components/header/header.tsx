@@ -187,7 +187,7 @@ export function HeaderResponsive() {
     window.scrollTo(0, 0);
   };
 
-  const handleAuthAction = async () => {
+  const handleAuthAction = () => {
     if (!signed) {
       window.location.href = serverUrl;
     } else {

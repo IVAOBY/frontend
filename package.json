@@ -1,6 +1,7 @@
 {
   "name": "by-frontend",
   "version": "0.1.0",
+  "license": "MIT",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -36,7 +37,7 @@
     "react-typed": "^1.2.0",
     "tailwind-merge": "^2.2.0",
     "typescript": "^5.3.2",
-    "vite": "^5.0.5",
+    "vite": "5.1.0-beta.0",
     "vite-tsconfig-paths": "^4.2.1",
     "web-vitals": "^3.5.0"
   },
@@ -45,7 +46,11 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "format": "prettier src -w --log-level warn",
-    "lint": "eslint src --cache --report-unused-disable-directives --max-warnings 0"
+    "lint": "eslint src --cache --report-unused-disable-directives --max-warnings 0",
+    "postinstall": "husky",
+    "prepack": "pinst --disable",
+    "postpack": "pinst --enable",
+    "prepare": "husky"
   },
   "eslintConfig": {
     "extends": [
@@ -81,6 +86,7 @@
     "eslint-plugin-react-refresh": "^0.4.5",
     "eslint-plugin-storybook": "^0.6.15",
     "eslint-plugin-tailwindcss": "^3.14.0",
+    "husky": "^9.0.6",
     "postcss": "^8.4.32",
     "prettier": "^3.2.4",
     "tailwindcss": "^3.4.0"

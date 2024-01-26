@@ -53,7 +53,7 @@ export function NotFound() {
   return (
     <Container className={classes.root}>
       <SimpleGrid spacing={40} cols={2}>
-        <Image src={errorimage} className={classes.mobileImage} />
+        <Image alt={''} src={errorimage} className={classes.mobileImage} />
         <div>
           <Title className={classes.title}>{t('errorpage.notfoundtext')}</Title>
           <Text c={'#000'} size="lg">
@@ -69,7 +69,7 @@ export function NotFound() {
             {t('errorpage.homebutton')}
           </Button>
         </div>
-        <Image src={errorimage} className={classes.desktopImage} />
+        <Image alt={''} src={errorimage} className={classes.desktopImage} />
       </SimpleGrid>
     </Container>
   );
