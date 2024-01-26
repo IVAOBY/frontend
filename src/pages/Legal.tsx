@@ -42,6 +42,7 @@ export function Legal() {
                         <a
                             target={'_blank'}
                             href={'https://wiki.ivao.aero/en/home/ivao/privacypolicy'}
+                            rel="noreferrer"
                         >
                             {' '}
                             {t('legal.privacypolicy')}
@@ -51,6 +52,7 @@ export function Legal() {
                         <a
                             target={'_blank'}
                             href={'https://wiki.ivao.aero/en/home/ivao/terms-of-use'}
+                            rel="noreferrer"
                         >
                             {' '}
                             {t('legal.termsofuse')}
@@ -62,6 +64,7 @@ export function Legal() {
                             href={
                                 'https://wiki.ivao.aero/en/home/ivao/intellectual-property-policy'
                             }
+                            rel="noreferrer"
                         >
                             {' '}
                             {t('legal.ipp')}

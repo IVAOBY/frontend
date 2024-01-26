@@ -139,6 +139,7 @@ export function Vehicles() {
                                         target={'_blank'}
                                         href={'https://www.ivao.aero/Member.aspx?Id=' + vid}
                                         style={{marginLeft: 2}}
+                                        rel="noreferrer"
                                     >
                                         <Badge mb={2} key={vid}>
                                             {vid}
