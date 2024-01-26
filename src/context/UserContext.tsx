@@ -1,12 +1,12 @@
-import React, {createContext, useCallback, useEffect, useState} from 'react';
+import React, { createContext, useCallback, useEffect, useState } from 'react';
 
-import {notifications} from '@mantine/notifications';
-import {IconCircleX} from '@tabler/icons-react';
+import { notifications } from '@mantine/notifications';
+import { IconCircleX } from '@tabler/icons-react';
 import jwtDecode from 'jwt-decode';
-import {useLocation, useNavigate} from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import {removeTokenFromUrl} from '../components/Handler';
-import {DecodedTokenInt} from '../hooks/types';
+import { removeTokenFromUrl } from '../components/Handler';
+import { DecodedTokenInt } from '../hooks/types';
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -26,20 +26,18 @@ export const AuthContext = createContext<AuthContextProps>({
   token: '',
   decodedToken: null,
   signIn: (_: string) => Promise.reject(),
-  signOut: () => {
-  },
-  refreshToken: () => {
-  },
+  signOut: () => {},
+  refreshToken: () => {},
 });
 
-export function AuthProvider({children}: AuthProviderProps) {
+export function AuthProvider({ children }: AuthProviderProps) {
   const location = useLocation();
   const navigate = useNavigate();
   const [token, setToken] = useState<string>(
-      localStorage.getItem('token') || '',
+    localStorage.getItem('token') || '',
   );
   const [decodedToken, setDecodedToken] = useState<DecodedTokenInt | null>(
-      null,
+    null,
   );
 
   const signIn = useCallback(async () => {
@@ -56,7 +54,7 @@ export function AuthProvider({children}: AuthProviderProps) {
           title: 'Ошибка!',
           message: 'Вы уже авторизированы на сайте!',
           radius: 'lg',
-          icon: <IconCircleX/>,
+          icon: <IconCircleX />,
           withCloseButton: true,
           autoClose: 3000,
         });
@@ -84,7 +82,7 @@ export function AuthProvider({children}: AuthProviderProps) {
 
   const refreshToken = useCallback(() => {
     signOut();
-    navigate('/', {state: {from: location}});
+    navigate('/', { state: { from: location } });
   }, [navigate, signOut, location]);
 
   useEffect(() => {
@@ -110,17 +108,17 @@ export function AuthProvider({children}: AuthProviderProps) {
   }, [refreshToken, token]);
 
   return (
-      <AuthContext.Provider
-          value={{
-            signIn,
-            signOut,
-            refreshToken,
-            signed: !!token,
-            token,
-            decodedToken,
-          }}
-      >
-        {children}
-      </AuthContext.Provider>
+    <AuthContext.Provider
+      value={{
+        signIn,
+        signOut,
+        refreshToken,
+        signed: !!token,
+        token,
+        decodedToken,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
   );
 }

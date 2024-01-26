@@ -1,82 +1,82 @@
 export interface User {
-    id: number;
-    ratings: {
-        atc: {
-            id: number;
-            name: string;
-            shortName: string;
-        };
-        pilot: {
-            id: number;
-            name: string;
-            shortName: string;
-        };
+  id: number;
+  ratings: {
+    atc: {
+      id: number;
+      name: string;
+      shortName: string;
     };
-    hours: {
-        atc: number;
-        pilot: number;
-        staff: number;
+    pilot: {
+      id: number;
+      name: string;
+      shortName: string;
     };
-    staffPositions: string[];
-    staffDepartments: (string | null)[];
-    name: {
-        first: string;
-        last: string;
-    };
-    centerId: string;
-    countryId: string;
-    divisionId: string;
+  };
+  hours: {
+    atc: number;
+    pilot: number;
+    staff: number;
+  };
+  staffPositions: string[];
+  staffDepartments: (string | null)[];
+  name: {
+    first: string;
+    last: string;
+  };
+  centerId: string;
+  countryId: string;
+  divisionId: string;
 }
 
 export interface PartsEntity {
-    id: number;
-    eventId: number;
-    event: EventEntity;
-    startDate: Date;
-    endDate: Date;
-    positions: EventAtcPositions[];
-    booking: BookingEntity[];
+  id: number;
+  eventId: number;
+  event: EventEntity;
+  startDate: Date;
+  endDate: Date;
+  positions: EventAtcPositions[];
+  booking: BookingEntity[];
 }
 
 export interface EventEntity {
-    id: number;
-    startDate: Date;
-    endDate: Date;
-    name: {
-        [key: string]: string;
-    };
-    description: {
-        [key: string]: string;
-    };
-    imageUrl: string;
-    infoUrl: string;
-    airport: string;
+  id: number;
+  startDate: Date;
+  endDate: Date;
+  name: {
+    [key: string]: string;
+  };
+  description: {
+    [key: string]: string;
+  };
+  imageUrl: string;
+  infoUrl: string;
+  airport: string;
 }
 
 export interface BookingEntity {
-    id: number;
-    eventId: number;
-    event: EventEntity;
-    eventPartId: PartsEntity;
-    bookedUserId: number | null;
-    bookedUser: User | null;
-    atcPositionId: number;
-    atcPosition: EventAtcPositions;
-    status: number;
-    statusUserId: number | null;
-    statusUser: User | null;
+  id: number;
+  eventId: number;
+  event: EventEntity;
+  eventPartId: PartsEntity;
+  bookedUserId: number | null;
+  bookedUser: User | null;
+  atcPositionId: number;
+  atcPosition: EventAtcPositions;
+  status: number;
+  statusUserId: number | null;
+  statusUser: User | null;
 }
 
 export interface EventAtcPositions {
-    id: number;
-    eventId: number;
-    eventPartId: PartsEntity;
-    atcPositionId: number;
-    position: AtcEntity;
+  id: number;
+  eventId: number;
+  eventPartId: PartsEntity;
+  atcPositionId: number;
+  position: AtcEntity;
 }
 
 export interface AtcEntity {
-    id: string;
-    callsign: string;
-    fra: number;
+  id: string;
+  callsign: string;
+  fra: number;
 }

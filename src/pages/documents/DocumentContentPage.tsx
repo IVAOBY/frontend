@@ -1,14 +1,21 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 
-import {Container, createStyles, Paper, rem, Text, Title,} from '@mantine/core';
-import {notifications} from '@mantine/notifications';
-import {IconCircleX} from '@tabler/icons-react';
+import {
+  Container,
+  createStyles,
+  Paper,
+  rem,
+  Text,
+  Title,
+} from '@mantine/core';
+import { notifications } from '@mantine/notifications';
+import { IconCircleX } from '@tabler/icons-react';
 import i18n from 'i18next';
-import {useTranslation} from 'react-i18next';
-import {useParams} from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 
-import {useApi} from '../../context/ApiContext';
-import {DocumentsType} from '../../hooks/types';
+import { useApi } from '../../context/ApiContext';
+import { DocumentsType } from '../../hooks/types';
 
 const useStyles = createStyles((theme) => ({
   title: {
@@ -55,9 +62,9 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export function DocumentContentPage() {
-  const {classes} = useStyles();
-  const {t} = useTranslation();
-  const {id} = useParams();
+  const { classes } = useStyles();
+  const { t } = useTranslation();
+  const { id } = useParams();
   const api = useApi();
 
   const [documentItem, setDocumentItem] = useState<DocumentsType | null>(null);
@@ -72,60 +79,60 @@ export function DocumentContentPage() {
       withCloseButton: false,
     });
     api(`/documents/${id}`)
-        .then((response: any) => {
-          if (
-              response &&
-              typeof response === 'object' &&
-              !Array.isArray(response)
-          ) {
-            setDocumentItem(response);
-            notifications.hide('load-data');
-          } else {
-            console.error('Invalid response from API:', response);
-            notifications.update({
-              id: 'load-data',
-              color: 'red',
-              title: t('notif.server.name'),
-              message: t('notif.server.descritpion'),
-              radius: 'lg',
-              icon: <IconCircleX/>,
-              withCloseButton: false,
-              autoClose: false,
-            });
-          }
-        })
-        .catch((error: any) => {
-          console.error('Error fetching news:', error);
+      .then((response: any) => {
+        if (
+          response &&
+          typeof response === 'object' &&
+          !Array.isArray(response)
+        ) {
+          setDocumentItem(response);
+          notifications.hide('load-data');
+        } else {
+          console.error('Invalid response from API:', response);
           notifications.update({
             id: 'load-data',
             color: 'red',
             title: t('notif.server.name'),
             message: t('notif.server.descritpion'),
             radius: 'lg',
-            icon: <IconCircleX/>,
+            icon: <IconCircleX />,
             withCloseButton: false,
             autoClose: false,
           });
+        }
+      })
+      .catch((error: any) => {
+        console.error('Error fetching news:', error);
+        notifications.update({
+          id: 'load-data',
+          color: 'red',
+          title: t('notif.server.name'),
+          message: t('notif.server.descritpion'),
+          radius: 'lg',
+          icon: <IconCircleX />,
+          withCloseButton: false,
+          autoClose: false,
         });
+      });
   }, [id]);
 
   return (
-      <Container size="lg" py="xl">
-        {documentItem && (
-            <>
-              <Title order={2} className={classes.title} ta="center" mt="sm">
-                {documentItem.name[i18n.language]}
-              </Title>
-              <Paper p={'lg'} bg={'#fff'} shadow={'lg'} radius={'lg'} mt={rem(13)}>
-                <Text
-                    dangerouslySetInnerHTML={{
-                      __html: documentItem.content[i18n.language] || '',
-                    }}
-                    mt={rem(10)}
-                ></Text>
-              </Paper>
-            </>
-        )}
-      </Container>
+    <Container size="lg" py="xl">
+      {documentItem && (
+        <>
+          <Title order={2} className={classes.title} ta="center" mt="sm">
+            {documentItem.name[i18n.language]}
+          </Title>
+          <Paper p={'lg'} bg={'#fff'} shadow={'lg'} radius={'lg'} mt={rem(13)}>
+            <Text
+              dangerouslySetInnerHTML={{
+                __html: documentItem.content[i18n.language] || '',
+              }}
+              mt={rem(10)}
+            ></Text>
+          </Paper>
+        </>
+      )}
+    </Container>
   );
 }

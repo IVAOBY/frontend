@@ -1,16 +1,16 @@
 import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import {initReactI18next} from 'react-i18next';
+import { initReactI18next } from 'react-i18next';
 
 import translations from './locales';
 
 const storedLanguage = localStorage.getItem('language');
 
 const i18nConfig = {
-    resources: translations,
-    lng: storedLanguage || 'en',
-    fallbackLng: 'en',
-    defaultNS: 'translations',
+  resources: translations,
+  lng: storedLanguage || 'en',
+  fallbackLng: 'en',
+  defaultNS: 'translations',
 };
 
 i18n.use(LanguageDetector).use(initReactI18next).init(i18nConfig);
