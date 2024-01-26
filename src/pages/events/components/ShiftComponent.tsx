@@ -151,7 +151,7 @@ export function ShiftComponent() {
           autoClose: false,
         });
       });
-  }, [id]);
+  }, [api, id, t]);
 
   const handleBook = async (partId: number, atcPositionId: number) => {
     if (signed && partItem) {

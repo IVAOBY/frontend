@@ -169,7 +169,7 @@ interface News {
   description: {
     [key: string]: string;
   };
-  publishedAt: any;
+  publishedAt: Date;
 }
 
 export function NewsSection() {
@@ -226,7 +226,7 @@ export function NewsSection() {
           autoClose: false,
         });
       });
-  }, []);
+  }, [api, t]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 2;

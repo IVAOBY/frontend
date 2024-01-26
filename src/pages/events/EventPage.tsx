@@ -84,7 +84,7 @@ export function EventPage() {
       withCloseButton: false,
     });
     api(`/events/${id}`)
-      .then((response: any) => {
+      .then((response: EventEntity) => {
         if (
           response &&
           typeof response === 'object' &&
@@ -119,7 +119,7 @@ export function EventPage() {
           autoClose: false,
         });
       });
-  }, [id]);
+  }, [api, id, t]);
 
   return (
     <Container size="lg" py="xl">

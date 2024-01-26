@@ -30,7 +30,7 @@ interface News {
   description: {
     [key: string]: string;
   };
-  publishedAt: any;
+  publishedAt: Date;
 }
 
 export function NewsPage() {
@@ -50,7 +50,7 @@ export function NewsPage() {
       withCloseButton: false,
     });
     api(`/news/${id}`)
-      .then((response: any) => {
+      .then((response: News) => {
         if (
           response &&
           typeof response === 'object' &&
@@ -85,7 +85,7 @@ export function NewsPage() {
           autoClose: false,
         });
       });
-  }, [id]);
+  }, [api, id, t]);
 
   return (
     <GeneralLayout>

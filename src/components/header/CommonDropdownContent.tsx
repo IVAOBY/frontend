@@ -90,7 +90,7 @@ export function CommonDropdownContent({
   };
 
   const { t } = useTranslation();
-  const menuLink = useCallback(function (link: any | undefined) {
+  const menuLink = useCallback(function (link: string | undefined) {
     window.open(link, '_blank');
   }, []);
 
@@ -126,7 +126,7 @@ export function CommonDropdownContent({
             {t('navbar.division.staff')}
           </Menu.Item>
           <Menu.Item
-            icon={<Image src={discord} width={19} />}
+            icon={<Image src={discord} width={19} alt={'Discord Icon'} />}
             onClick={() => menuLink('https://discord.gg/7t7UJjZcad')}
           >
             {t('navbar.division.discord')}
@@ -181,7 +181,7 @@ export function CommonDropdownContent({
         </Menu.Target>
         <Menu.Dropdown>
           <Menu.Item
-            icon={<Image src={steps} width={20} />}
+            icon={<Image src={steps} width={20} alt={'ATC First Step'} />}
             onClick={() => navigate('atc/first-step')}
           >
             {t('navbar.atc.start')}
@@ -250,7 +250,7 @@ export function CommonDropdownContent({
         </Menu.Target>
         <Menu.Dropdown>
           <Menu.Item
-            icon={<Image src={steps} width={20} />}
+            icon={<Image src={steps} width={20} alt={'PilotFS Icon'} />}
             onClick={() => navigate('pilots/first-step')}
           >
             {t('navbar.pilots.start')}
@@ -337,7 +337,7 @@ export function CommonDropdownContent({
             {t('navbar.community.webeye')}
           </Menu.Item>
           <Menu.Item
-            icon={<Image src={ivaoLogo} width={20} />}
+            icon={<Image src={ivaoLogo} width={20} alt={'IVAO Icon'} />}
             onClick={() => menuLink('https://ivao.aero')}
           >
             {t('navbar.community.ivao')}

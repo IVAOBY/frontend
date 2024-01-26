@@ -79,7 +79,7 @@ export function DocumentContentPage() {
       withCloseButton: false,
     });
     api(`/documents/${id}`)
-      .then((response: any) => {
+      .then((response: DocumentsType) => {
         if (
           response &&
           typeof response === 'object' &&
@@ -114,7 +114,7 @@ export function DocumentContentPage() {
           autoClose: false,
         });
       });
-  }, [id]);
+  }, [api, id, t]);
 
   return (
     <Container size="lg" py="xl">

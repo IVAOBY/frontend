@@ -104,7 +104,7 @@ export function Vehicles() {
           autoClose: false,
         });
       });
-  }, [id]);
+  }, [api, id, t]);
 
   return (
     <Container size="lg" py="xl">

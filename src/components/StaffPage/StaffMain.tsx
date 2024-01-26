@@ -155,7 +155,7 @@ export function StaffMain() {
           autoClose: false,
         });
       });
-  }, []);
+  }, [api, t]);
 
   return (
     <Container size={'xl'} py={'xl'}>
@@ -235,6 +235,7 @@ export function StaffMain() {
                             ? `https://static.game-explore.space/staff/${position.user.id}.jpg`
                             : 'https://static.game-explore.space/staff/vacant.png'
                         }
+                        alt={'Staff Photo'}
                       />
                       <Title order={3} color={theme.colors.blue[9]} mt={20}>
                         {position.user.id

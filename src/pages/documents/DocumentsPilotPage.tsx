@@ -125,7 +125,7 @@ export function DocumentsPilotPage() {
           autoClose: false,
         });
       });
-  }, []);
+  }, [api, t]);
 
   const navigate = useNavigate();
   const documentsRedirect = (documentsItem: DocumentsType) => {

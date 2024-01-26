@@ -5,7 +5,6 @@ import { IconCircleX } from '@tabler/icons-react';
 import jwtDecode from 'jwt-decode';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { removeTokenFromUrl } from '../components/Handler';
 import { DecodedTokenInt } from '../hooks/types';
 
 interface AuthProviderProps {
@@ -30,6 +29,17 @@ export const AuthContext = createContext<AuthContextProps>({
   refreshToken: () => {},
 });
 
+function removeTokenFromUrl() {
+  if (window.history.replaceState) {
+    const urlWithoutToken =
+      window.location.protocol +
+      '//' +
+      window.location.host +
+      window.location.pathname;
+    window.history.replaceState({}, document.title, urlWithoutToken);
+  }
+}
+
 export function AuthProvider({ children }: AuthProviderProps) {
   const location = useLocation();
   const navigate = useNavigate();
@@ -40,6 +50,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     null,
   );
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   const signIn = useCallback(async () => {
     try {
       const urlSearchParams = new URLSearchParams(window.location.search);
@@ -73,7 +84,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     } catch (error) {
       console.error('Ошибка при аутентификации:', error);
     }
-  }, []);
+  }, [token]);
 
   const signOut = useCallback(() => {
     localStorage.removeItem('token');

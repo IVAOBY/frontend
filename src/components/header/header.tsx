@@ -174,7 +174,7 @@ export function HeaderResponsive() {
     window.addEventListener('scroll', handleScroll);
 
     if (ivaoToken) {
-      authContext.signIn(ivaoToken);
+      void authContext.signIn(ivaoToken);
     }
 
     return () => {
@@ -186,28 +186,6 @@ export function HeaderResponsive() {
     navigate('/');
     window.scrollTo(0, 0);
   };
-
-  const logoDefault = (
-    <Image
-      height={60}
-      width={180}
-      src={bylogo}
-      onClick={handleImageClick}
-      style={{ cursor: 'pointer' }}
-    />
-  );
-
-  const logoScrolled = (
-    <Image
-      height={60}
-      width={180}
-      src={bylogoblue}
-      onClick={handleImageClick}
-      style={{ cursor: 'pointer' }}
-    />
-  );
-
-  const logoToRender = scrollPosition > 0 ? logoScrolled : logoDefault;
 
   const handleAuthAction = async () => {
     if (!signed) {
@@ -221,8 +199,8 @@ export function HeaderResponsive() {
 
   const { i18n } = useTranslation();
 
-  const changeLanguage = (newLanguage: any) => {
-    i18n.changeLanguage(newLanguage);
+  const changeLanguage = (newLanguage: string) => {
+    void i18n.changeLanguage(newLanguage);
     localStorage.setItem('language', newLanguage);
   };
 
@@ -234,7 +212,14 @@ export function HeaderResponsive() {
       className={`${classes.root} ${scrollPosition > 0 ? classes.scrolled : ''}`}
     >
       <Container className={classes.header}>
-        {logoToRender}
+        <Image
+          height={60}
+          width={180}
+          src={scrollPosition > 0 ? bylogoblue : bylogo}
+          onClick={handleImageClick}
+          style={{ cursor: 'pointer' }}
+          alt={'Logo'}
+        />
         <Group spacing={5} className={classes.links}>
           <CommonDropdownContent scrollPosition={scrollPosition} />
           <UnstyledButton
@@ -271,19 +256,19 @@ export function HeaderResponsive() {
             </Menu.Target>
             <Menu.Dropdown>
               <Menu.Item
-                icon={<Image src={by} radius={3} width={20} />}
+                icon={<Image src={by} radius={3} width={20} alt={'BY Flag'} />}
                 onClick={() => changeLanguage('be')}
               >
                 {t('Беларуская')}
               </Menu.Item>
               <Menu.Item
-                icon={<Image src={ru} radius={3} width={20} />}
+                icon={<Image src={ru} radius={3} width={20} alt={'RU Flag'} />}
                 onClick={() => changeLanguage('ru')}
               >
                 {t('Русский')}
               </Menu.Item>
               <Menu.Item
-                icon={<Image src={en} radius={3} width={20} />}
+                icon={<Image src={en} radius={3} width={20} alt={'EN Flag'} />}
                 onClick={() => changeLanguage('en')}
               >
                 {t('English')}
@@ -334,19 +319,25 @@ export function HeaderResponsive() {
                   </Menu.Target>
                   <Menu.Dropdown>
                     <Menu.Item
-                      icon={<Image src={by} radius={3} width={20} />}
+                      icon={
+                        <Image src={by} radius={3} width={20} alt={'BY Flag'} />
+                      }
                       onClick={() => changeLanguage('be')}
                     >
                       {t('Беларуская')}
                     </Menu.Item>
                     <Menu.Item
-                      icon={<Image src={ru} radius={3} width={20} />}
+                      icon={
+                        <Image src={ru} radius={3} width={20} alt={'RU Flag'} />
+                      }
                       onClick={() => changeLanguage('ru')}
                     >
                       {t('Русский')}
                     </Menu.Item>
                     <Menu.Item
-                      icon={<Image src={en} radius={3} width={20} />}
+                      icon={
+                        <Image src={en} radius={3} width={20} alt={'EN Flag'} />
+                      }
                       onClick={() => changeLanguage('en')}
                     >
                       {t('English')}

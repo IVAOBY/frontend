@@ -77,7 +77,7 @@ export function GCAPage() {
       withCloseButton: false,
     });
     api('/documents/5')
-      .then(function (response: any) {
+      .then(function (response: DocumentsType) {
         if (response) {
           setDocumentItem(response);
           notifications.hide('load-gca');
@@ -108,7 +108,7 @@ export function GCAPage() {
           autoClose: false,
         });
       });
-  }, []);
+  }, [api, t]);
 
   return (
     <Container size="lg" py="xl">

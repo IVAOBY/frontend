@@ -6,7 +6,11 @@ import axios from 'axios';
 
 import { AuthContext } from './UserContext';
 
-const ApiContext = createContext({} as any);
+interface ApiContextType {
+  api: (path: string, method?: string, body?: any) => Promise<any>;
+}
+
+const ApiContext = createContext<ApiContextType | undefined>(undefined);
 
 export const useApi = () => useContext(ApiContext);
 
@@ -31,7 +35,7 @@ export const ApiProvider = ({ children }: ApiProviderProps) => {
         url: import.meta.env.VITE_API_URL_BASE + path,
         method,
         headers,
-        data: body,
+        data: '',
       };
 
       if (body !== null) {

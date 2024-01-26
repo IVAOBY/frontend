@@ -131,7 +131,7 @@ export function HeroText() {
   const isSmallScreen = useMediaQuery('(max-width: 575px)');
   const { signed, decodedToken } = useContext(AuthContext);
 
-  const byTransferMail = useCallback(async () => {
+  const byTransferMail = useCallback(() => {
     if (!signed) {
       notifications.show({
         id: 'auth-required',
@@ -165,9 +165,9 @@ export function HeroText() {
         console.error('Error decoding token:', error);
       }
     }
-  }, [t]);
+  }, [decodedToken, signed, t]);
 
-  const openLink = useCallback(function (link: any | undefined) {
+  const openLink = useCallback(function (link: string | undefined) {
     window.open(link, '_blank');
   }, []);
 

@@ -51,6 +51,7 @@ export function AboutUs() {
           src={baner}
           mt={20}
           radius={'lg'}
+          alt={'About Us Image'}
         ></Image>
       </Paper>
     </Container>

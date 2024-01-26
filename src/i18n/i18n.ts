@@ -13,6 +13,6 @@ const i18nConfig = {
   defaultNS: 'translations',
 };
 
-i18n.use(LanguageDetector).use(initReactI18next).init(i18nConfig);
+void i18n.use(LanguageDetector).use(initReactI18next).init(i18nConfig);
 
 export default i18n;
