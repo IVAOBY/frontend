@@ -107,8 +107,6 @@ export function ShiftComponent() {
   const { id } = useParams();
   const api = useApi();
   const { decodedToken, signed } = useContext(AuthContext);
-  console.log(decodedToken);
-  // const isSmallScreen = window.innerWidth < 768;
 
   const [partItem, setPartItem] = useState<PartsEntity[] | null>(null);
   useEffect(() => {
