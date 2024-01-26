@@ -47,10 +47,8 @@
     "preview": "vite preview",
     "format": "prettier src -w --log-level warn",
     "lint": "eslint src --cache --report-unused-disable-directives --max-warnings 0",
-    "postinstall": "husky",
-    "prepack": "pinst --disable",
-    "postpack": "pinst --enable",
-    "prepare": "husky"
+    "prepare": "husky",
+    "postinstall": "husky install"
   },
   "eslintConfig": {
     "extends": [
