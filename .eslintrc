@@ -1,0 +1,43 @@
+{
+  "extends": [
+    "@ivaoaero/eslint-config",
+    "@ivaoaero/eslint-config/tailwind",
+    "@ivaoaero/eslint-config/react",
+    "@ivaoaero/eslint-config/storybook"
+  ],
+  "parserOptions": {
+    "tsconfigRootDir": "./",
+    "project": [
+      "./tsconfig.json"
+    ],
+    "extraFileExtensions": [
+      ".json",
+      ".lock"
+    ]
+  },
+  "rules": {
+    "yarn.lock": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-unsafe-call": "off",
+    "@typescript-eslint/no-unsafe-member-access": "off",
+    "@typescript-eslint/no-unsafe-assignment": "off"
+  },
+  "ignorePatterns": [
+    "yarn.lock",
+    "*.json"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "yarn.lock",
+        "./.eslintcache",
+        "./.lintstagedrc",
+        "./package.json",
+        "**/*.{js,cjs}"
+      ],
+      "extends": [
+        "plugin:@typescript-eslint/disable-type-checked"
+      ]
+    }
+  ]
+}
