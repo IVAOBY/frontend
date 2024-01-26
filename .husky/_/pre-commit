@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+yarn test && yarn format && yarn lint
+. "${0%/*}/h"
