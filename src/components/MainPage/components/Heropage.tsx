@@ -15,7 +15,6 @@ import { useMediaQuery } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import { IconCircleX } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
-import Snowfall from 'react-snowfall';
 import Typed from 'react-typed';
 
 import { AuthContext } from '../../../context/UserContext';
@@ -173,16 +172,6 @@ export function HeroText() {
 
   return (
     <div className={classes.wrapper}>
-      <Snowfall
-        color="#fff"
-        style={{
-          position: 'absolute',
-          width: '100vw',
-          height: '45rem',
-          zIndex: 9,
-        }}
-        snowflakeCount={200}
-      />
       <Overlay color="#00000" opacity={0.45} zIndex={1} />
       <Flex
         mih={50}
