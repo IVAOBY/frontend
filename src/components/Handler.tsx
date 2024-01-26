@@ -1,10 +1,12 @@
-import  {useEffect, useState} from 'react';
-import {createStyles, Menu, rem, UnstyledButton} from "@mantine/core";
-import { IconLogout, IconUser} from "@tabler/icons-react";
+import {useEffect, useState} from 'react';
+
+import {createStyles, Menu, rem, UnstyledButton} from '@mantine/core';
+import {IconLogout, IconUser} from '@tabler/icons-react';
 import jwtDecode from 'jwt-decode';
-import {DecodedTokenInt} from "../hooks/types";
-import {useNavigate} from "react-router-dom";
-import {useTranslation} from "react-i18next";
+import {useTranslation} from 'react-i18next';
+import {useNavigate} from 'react-router-dom';
+
+import {DecodedTokenInt} from '../hooks/types';
 
 function getTokenFromUrl() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -13,7 +15,11 @@ function getTokenFromUrl() {
 
 function removeTokenFromUrl() {
     if (window.history.replaceState) {
-        const urlWithoutToken = window.location.protocol + '//' + window.location.host + window.location.pathname;
+        const urlWithoutToken =
+            window.location.protocol +
+            '//' +
+            window.location.host +
+            window.location.pathname;
         window.history.replaceState({}, document.title, urlWithoutToken);
     }
 }
@@ -48,10 +54,11 @@ export const logOutButtonStyle = createStyles((theme) => ({
     },
 }));
 
-
 function LogoutButton() {
-    const { classes } = logOutButtonStyle();
-    const [decodedToken, setDecodedToken] = useState<DecodedTokenInt | null>(null);
+    const {classes} = logOutButtonStyle();
+    const [decodedToken, setDecodedToken] = useState<DecodedTokenInt | null>(
+        null,
+    );
     const navigate = useNavigate();
     const [scrollPosition, setScrollPosition] = useState(0);
 
@@ -88,21 +95,31 @@ function LogoutButton() {
         };
     }, []);
 
-    const { t } = useTranslation();
+    const {t} = useTranslation();
 
-    return (
-        decodedToken ? (
-            <Menu radius="lg" shadow="md" width={200}>
-                <Menu.Target>
-                    <UnstyledButton className={`${classes.link} ${scrollPosition > 0 ? classes.linkScrolled : ''}`}>{decodedToken.userData.name.first} {decodedToken.userData.id}</UnstyledButton>
-                </Menu.Target>
-                <Menu.Dropdown>
-                    <Menu.Item icon={<IconUser size={14} />} onClick={HandleProfile}>{t("navbar.user.profile")}</Menu.Item>
-                    <Menu.Item color="red" icon={<IconLogout size={14} />} onClick={HandleLogout}>{t("navbar.user.logout")}</Menu.Item>
-                </Menu.Dropdown>
-            </Menu>
-        ) : null
-    );
+    return decodedToken ? (
+        <Menu radius="lg" shadow="md" width={200}>
+            <Menu.Target>
+                <UnstyledButton
+                    className={`${classes.link} ${scrollPosition > 0 ? classes.linkScrolled : ''}`}
+                >
+                    {decodedToken.userData.name.first} {decodedToken.userData.id}
+                </UnstyledButton>
+            </Menu.Target>
+            <Menu.Dropdown>
+                <Menu.Item icon={<IconUser size={14}/>} onClick={HandleProfile}>
+                    {t('navbar.user.profile')}
+                </Menu.Item>
+                <Menu.Item
+                    color="red"
+                    icon={<IconLogout size={14}/>}
+                    onClick={HandleLogout}
+                >
+                    {t('navbar.user.logout')}
+                </Menu.Item>
+            </Menu.Dropdown>
+        </Menu>
+    ) : null;
 }
 
 export { LogoutButton, getDecodedToken, getTokenFromUrl, removeTokenFromUrl };

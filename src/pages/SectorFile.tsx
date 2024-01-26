@@ -1,14 +1,6 @@
-import {
-    createStyles,
-    Title,
-    Text,
-    Container,
-    rem,
-    Paper,
-    Alert, Button,
-} from '@mantine/core';
-import { useTranslation } from 'react-i18next';
-import {IconAlertCircle} from "@tabler/icons-react";
+import {Alert, Button, Container, createStyles, Paper, rem, Text, Title,} from '@mantine/core';
+import {IconAlertCircle} from '@tabler/icons-react';
+import {useTranslation} from 'react-i18next';
 
 const useStyles = createStyles((theme) => ({
     title: {
@@ -35,24 +27,31 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export function SectorFile() {
-    const { classes } = useStyles();
-    const { t } = useTranslation();
+    const {classes} = useStyles();
+    const {t} = useTranslation();
 
     return (
         <Container size="lg" py="xl">
             <Title order={2} className={classes.title} ta="center" mt="sm">
                 {t('sector.title')}
             </Title>
-            <Paper shadow={"lg"} radius={"lg"} bg="#fff" p={"lg"} mt={rem(16)}>
-                <Text size={15}>
-                    {t('sector.text')}
-                </Text> <br/>
-                <Alert maw={"100%"} w={"35rem"} icon={<IconAlertCircle size="1rem" />} title={t('sector.wtitle')} color="red">
-                    <Text dangerouslySetInnerHTML={{ __html: t('sector.warning') || '' }}>
-                    </Text>
+            <Paper shadow={'lg'} radius={'lg'} bg="#fff" p={'lg'} mt={rem(16)}>
+                <Text size={15}>{t('sector.text')}</Text> <br/>
+                <Alert
+                    maw={'100%'}
+                    w={'35rem'}
+                    icon={<IconAlertCircle size="1rem"/>}
+                    title={t('sector.wtitle')}
+                    color="red"
+                >
+                    <Text
+                        dangerouslySetInnerHTML={{__html: t('sector.warning') || ''}}
+                    ></Text>
                 </Alert>
                 <br/>
-                <a href={"https://files.ivaoru.org/sector_files/UMMV.zip"}><Button> {t('sector.download')}</Button></a>
+                <a href={'https://files.ivaoru.org/sector_files/UMMV.zip'}>
+                    <Button> {t('sector.download')}</Button>
+                </a>
             </Paper>
         </Container>
     );

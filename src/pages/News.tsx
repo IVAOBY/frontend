@@ -1,12 +1,14 @@
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
-import { notifications } from '@mantine/notifications';
-import { IconCalendarTime, IconCircleX, IconUser } from '@tabler/icons-react';
+import {useEffect, useState} from 'react';
+
+import {notifications} from '@mantine/notifications';
+import {IconCalendarTime, IconCircleX, IconUser} from '@tabler/icons-react';
+import {format} from 'date-fns';
 import i18n from 'i18next';
-import { format } from "date-fns";
-import { useApi } from "../context/ApiContext";
-import {GeneralLayout} from "../components/Layout";
+import {useTranslation} from 'react-i18next';
+import {useParams} from 'react-router-dom';
+
+import {GeneralLayout} from '../components/Layout';
+import {useApi} from '../context/ApiContext';
 
 interface News {
     id: number;
@@ -32,8 +34,8 @@ interface News {
 }
 
 export function NewsPage() {
-    const { t } = useTranslation();
-    const { id } = useParams();
+    const {t} = useTranslation();
+    const {id} = useParams();
     const api = useApi();
 
     const [newsItem, setNewsItem] = useState<News | null>(null);
@@ -49,7 +51,11 @@ export function NewsPage() {
         });
         api(`/news/${id}`)
             .then((response: any) => {
-                if (response && typeof response === 'object' && !Array.isArray(response)) {
+                if (
+                    response &&
+                    typeof response === 'object' &&
+                    !Array.isArray(response)
+                ) {
                     setNewsItem(response);
                     notifications.hide('load-data');
                 } else {
@@ -60,7 +66,7 @@ export function NewsPage() {
                         title: t('notif.server.name'),
                         message: t('notif.server.descritpion'),
                         radius: 'lg',
-                        icon: <IconCircleX />,
+                        icon: <IconCircleX/>,
                         withCloseButton: false,
                         autoClose: false,
                     });
@@ -74,7 +80,7 @@ export function NewsPage() {
                     title: t('notif.server.name'),
                     message: t('notif.server.descritpion'),
                     radius: 'lg',
-                    icon: <IconCircleX />,
+                    icon: <IconCircleX/>,
                     withCloseButton: false,
                     autoClose: false,
                 });
@@ -101,20 +107,20 @@ export function NewsPage() {
                         </div>
                         <div className="mt-4 flex items-center justify-between">
                             <div className="flex items-center">
-                                <IconUser className="text-ivao-blue" size={18} />
+                                <IconUser className="text-ivao-blue" size={18}/>
                                 <p className="font-bold text-md text-ivao-blue">
-                                    {newsItem.user.staffPositions ? (
-                                        newsItem.user.staffPositions
+                                    {newsItem.user.staffPositions
+                                        ? newsItem.user.staffPositions
                                             .map((position) => `BY-${position.id}`)
-                                            .filter((value, index, self) => self.indexOf(value) === index)
+                                            .filter(
+                                                (value, index, self) => self.indexOf(value) === index,
+                                            )
                                             .join('/')
-                                    ) : (
-                                        String(newsItem.user.id)
-                                    )}
+                                        : String(newsItem.user.id)}
                                 </p>
                             </div>
                             <div className="flex items-center">
-                                <IconCalendarTime className="text-ivao-blue" size={18} />
+                                <IconCalendarTime className="text-ivao-blue" size={18}/>
                                 <p className="text-md text-ivao-blue">
                                     {format(new Date(newsItem.publishedAt), 'dd-MM-yyyy')}
                                 </p>

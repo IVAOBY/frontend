@@ -1,24 +1,11 @@
-import {
-    createStyles,
-    Container,
-    Text,
-    Title,
-    Paper,
-    rem,
-    Image,
-    Flex,
-    ActionIcon,
-    Tooltip
-} from '@mantine/core';
-import {
-    IconCircleX,
-    IconIdBadge2,
-    IconMailOpened,
-} from '@tabler/icons-react';
-import {useEffect, useState} from "react";
-import {useTranslation} from "react-i18next";
-import {notifications} from "@mantine/notifications";
-import {useApi} from "../../context/ApiContext";
+import {useEffect, useState} from 'react';
+
+import {ActionIcon, Container, createStyles, Flex, Image, Paper, rem, Text, Title, Tooltip,} from '@mantine/core';
+import {notifications} from '@mantine/notifications';
+import {IconCircleX, IconIdBadge2, IconMailOpened} from '@tabler/icons-react';
+import {useTranslation} from 'react-i18next';
+
+import {useApi} from '../../context/ApiContext';
 
 const useStyles = createStyles((theme) => ({
     title: {
@@ -41,7 +28,7 @@ const useStyles = createStyles((theme) => ({
     },
     card: {
         minWidth: rem(300),
-        minHeight: rem(300)
+        minHeight: rem(300),
     },
 }));
 
@@ -65,8 +52,8 @@ interface Position {
         name: {
             first: string;
             last: string;
-        },
-    },
+        };
+    };
     description: {
         en: string;
         ru: string | null;
@@ -74,12 +61,11 @@ interface Position {
     is_vacant: number; // new property
 }
 
-
 export function StaffMain() {
     const {classes, theme} = useStyles();
     const [departments, setDepartments] = useState<Department[]>([]);
     const [positions, setPositions] = useState<Position[]>([]);
-    const { t} = useTranslation();
+    const {t} = useTranslation();
     const api = useApi();
 
     const handleEmailClick = (email: string) => {
@@ -87,24 +73,24 @@ export function StaffMain() {
     };
 
     useEffect(() => {
-        api("/staff-departments")
+        api('/staff-departments')
             .then(function (response: any) {
                 if (response && Array.isArray(response)) {
                     setDepartments(response);
                 } else {
-                    console.error("Error: Unexpected API response structure");
+                    console.error('Error: Unexpected API response structure');
                 }
             })
             .catch(function (error: any) {
-                console.error("Error fetching data:", error);
+                console.error('Error fetching data:', error);
             });
 
         notifications.show({
             id: 'load-data',
             loading: true,
-            title: t("notif.loading.name"),
-            message: t("notif.loading.descritpion"),
-            radius: "lg",
+            title: t('notif.loading.name'),
+            message: t('notif.loading.descritpion'),
+            radius: 'lg',
             autoClose: false,
             withCloseButton: false,
         });
@@ -123,23 +109,23 @@ export function StaffMain() {
                             name: {
                                 first: positionData.user.name.first,
                                 last: positionData.user.name.last,
-                            }
+                            },
                         },
                         description: positionData.description,
                         is_vacant: positionData.is_vacant,
                     }));
                     setPositions(positions);
 
-                    notifications.hide('load-data')
+                    notifications.hide('load-data');
                 } else {
                     console.error('Error: Unexpected API response structure');
                     notifications.update({
                         id: 'load-data',
                         color: 'red',
-                        title: t("notif.server.name"),
-                        message: t("notif.server.descritpion"),
-                        radius: "lg",
-                        icon: <IconCircleX />,
+                        title: t('notif.server.name'),
+                        message: t('notif.server.descritpion'),
+                        radius: 'lg',
+                        icon: <IconCircleX/>,
                         withCloseButton: false,
                         autoClose: false,
                     });
@@ -150,10 +136,10 @@ export function StaffMain() {
                 notifications.update({
                     id: 'load-data',
                     color: 'red',
-                    title: t("notif.server.name"),
-                    message: t("notif.server.descritpion"),
-                    radius: "lg",
-                    icon: <IconCircleX />,
+                    title: t('notif.server.name'),
+                    message: t('notif.server.descritpion'),
+                    radius: 'lg',
+                    icon: <IconCircleX/>,
                     withCloseButton: false,
                     autoClose: false,
                 });
@@ -161,117 +147,142 @@ export function StaffMain() {
     }, []);
 
     return (
-        <Container size={"xl"} py={"xl"}>
+        <Container size={'xl'} py={'xl'}>
             <Title order={2} className={classes.title} ta="center" mt="sm">
                 {t('staff.name')}
             </Title>
-                {departments.map((department, index) => (
-                    <div key={index}>
-                        <Flex direction="column" align="center">
-                            <Title
-                                key={index}
-                                ta="center"
-                                order={2}
-                                c={theme.colors.blue[9]}
-                                pt={index === 0 ? 13 : 40}
-                            >
-                                {department.name}
-                            </Title>
-                            <ActionIcon
-                                variant="filled"
+            {departments.map((department, index) => (
+                <div key={index}>
+                    <Flex direction="column" align="center">
+                        <Title
+                            key={index}
+                            ta="center"
+                            order={2}
+                            c={theme.colors.blue[9]}
+                            pt={index === 0 ? 13 : 40}
+                        >
+                            {department.name}
+                        </Title>
+                        <ActionIcon
+                            variant="filled"
+                            color={theme.colors.blue[9]}
+                            size="lg"
+                            aria-label="Send Email"
+                            onClick={() => handleEmailClick(department.email)}
+                            mt={10}
+                        >
+                            <IconMailOpened
+                                style={{width: '60%', height: '60%'}}
                                 color={theme.colors.blue[9]}
-                                size="lg"
-                                aria-label="Send Email"
-                                onClick={() => handleEmailClick(department.email)}
-                                mt={10}
-                            >
-                                <IconMailOpened style={{ width: "60%", height: "60%" }} color={theme.colors.blue[9]} stroke={1.5} />
-                            </ActionIcon>
+                                stroke={1.5}
+                            />
+                        </ActionIcon>
 
-                            <Flex
-                                id="staff-grid"
-                                mt={40}
-                                gap="md"
-                                justify="center"
-                                align="center"
-                                direction="row"
-                                wrap="wrap"
-                            >
-                                {positions
-                                    .filter(
-                                        (position) =>
-                                            position.departmentId === department.id &&
-                                            (position.user.id !== null || position.is_vacant === 1)
-                                    )
-                                    .sort((a, b) => {
-                                        if (a.user.id === null && b.user.id !== null) {
-                                            return 1;
-                                        } else if (a.user.id !== null && b.user.id === null) {
-                                            return -1;
-                                        } else {
-                                            return a.order - b.order;
-                                        }
-                                    })
-                                    .map((position, positionIndex) => (
-                                        <Paper className={classes.card} shadow={"lg"} p={"xl"} radius="lg" key={positionIndex} bg="#fff">
-                                            <Flex
-                                                direction={"column"}
-                                                justify={"center"}
-                                                align={"center"}
+                        <Flex
+                            id="staff-grid"
+                            mt={40}
+                            gap="md"
+                            justify="center"
+                            align="center"
+                            direction="row"
+                            wrap="wrap"
+                        >
+                            {positions
+                                .filter(
+                                    (position) =>
+                                        position.departmentId === department.id &&
+                                        (position.user.id !== null || position.is_vacant === 1),
+                                )
+                                .sort((a, b) => {
+                                    if (a.user.id === null && b.user.id !== null) {
+                                        return 1;
+                                    } else if (a.user.id !== null && b.user.id === null) {
+                                        return -1;
+                                    } else {
+                                        return a.order - b.order;
+                                    }
+                                })
+                                .map((position, positionIndex) => (
+                                    <Paper
+                                        className={classes.card}
+                                        shadow={'lg'}
+                                        p={'xl'}
+                                        radius="lg"
+                                        key={positionIndex}
+                                        bg="#fff"
+                                    >
+                                        <Flex
+                                            direction={'column'}
+                                            justify={'center'}
+                                            align={'center'}
+                                        >
+                                            <Image
+                                                radius={100}
+                                                maw={150}
+                                                src={
+                                                    position.user.id
+                                                        ? `https://static.game-explore.space/staff/${position.user.id}.jpg`
+                                                        : 'https://static.game-explore.space/staff/vacant.png'
+                                                }
+                                            />
+                                            <Title order={3} color={theme.colors.blue[9]} mt={20}>
+                                                {position.user.id
+                                                    ? position.user.name.last
+                                                        ? `${position.user.name.first} ${position.user.name.last}`
+                                                        : `${position.user.name.first} ${position.user.id}`
+                                                    : 'Вакантно'}
+                                            </Title>
+                                            <Tooltip
+                                                label={position.name.en}
+                                                position={'bottom'}
+                                                radius={'lg'}
+                                                withArrow
                                             >
-                                                <Image
-                                                    radius={100}
-                                                    maw={150}
-                                                    src={position.user.id ? `https://static.game-explore.space/staff/${position.user.id}.jpg` : 'https://static.game-explore.space/staff/vacant.png'}
-                                                />
-                                                <Title order={3} color={theme.colors.blue[9]} mt={20}>
-                                                    {position.user.id ? (
-                                                        position.user.name.last
-                                                            ? `${position.user.name.first} ${position.user.name.last}`
-                                                            : `${position.user.name.first} ${position.user.id}`
-                                                    ) : "Вакантно"}
-                                                </Title>
-                                                <Tooltip label={position.name.en} position={"bottom"} radius={"lg"} withArrow>
-                                                    <Text size={14} fw={600} c={theme.colors.gray[7]}>
-                                                        {position.prefix}-{position.id}
-                                                    </Text>
-                                                </Tooltip>
-                                                <Flex
-                                                    gap={10}
-                                                    mt={40}
+                                                <Text size={14} fw={600} c={theme.colors.gray[7]}>
+                                                    {position.prefix}-{position.id}
+                                                </Text>
+                                            </Tooltip>
+                                            <Flex gap={10} mt={40}>
+                                                <ActionIcon
+                                                    component="a"
+                                                    variant="filled"
+                                                    color={theme.colors.blue[9]}
+                                                    size="lg"
+                                                    radius="xl"
+                                                    aria-label="MAIL IVAO"
+                                                    href={`mailto:${position.prefix}-${position.id}@ivao.aero`}
+                                                    target="_blank"
                                                 >
-                                                    <ActionIcon
-                                                        component="a"
-                                                        variant="filled"
-                                                        color={theme.colors.blue[9]}
-                                                        size="lg"
-                                                        radius="xl"
-                                                        aria-label="MAIL IVAO"
-                                                        href={`mailto:${position.prefix}-${position.id}@ivao.aero`}
-                                                        target="_blank"
-                                                    >
-                                                        <IconMailOpened style={{ width: "60%", height: "60%" }} color="white" stroke={1.5} />
-                                                    </ActionIcon>
-                                                    <ActionIcon
-                                                        component="a"
-                                                        variant="filled"
-                                                        color={theme.colors.blue[9]}
-                                                        size="lg"
-                                                        radius="xl"
-                                                        aria-label="IVAO"
-                                                        href={`https://www.ivao.aero/staff/details.asp?Id=${position.prefix}-${position.id}`}
-                                                        target="_blank"
-                                                    >
-                                                        <IconIdBadge2 style={{ width: "60%", height: "60%" }} color="white" stroke={1.5} />
-                                                    </ActionIcon>
-                                                </Flex>
+                                                    <IconMailOpened
+                                                        style={{width: '60%', height: '60%'}}
+                                                        color="white"
+                                                        stroke={1.5}
+                                                    />
+                                                </ActionIcon>
+                                                <ActionIcon
+                                                    component="a"
+                                                    variant="filled"
+                                                    color={theme.colors.blue[9]}
+                                                    size="lg"
+                                                    radius="xl"
+                                                    aria-label="IVAO"
+                                                    href={`https://www.ivao.aero/staff/details.asp?Id=${position.prefix}-${position.id}`}
+                                                    target="_blank"
+                                                >
+                                                    <IconIdBadge2
+                                                        style={{width: '60%', height: '60%'}}
+                                                        color="white"
+                                                        stroke={1.5}
+                                                    />
+                                                </ActionIcon>
                                             </Flex>
-                                        </Paper>
-                                    ))}
-                            </Flex>
+                                        </Flex>
+                                    </Paper>
+                                ))}
                         </Flex>
-                    </div>
-                ))}
-            </Container>
+                    </Flex>
+                </div>
+            ))}
+        </Container>
     );
 }

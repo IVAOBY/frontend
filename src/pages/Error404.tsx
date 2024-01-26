@@ -1,13 +1,9 @@
-import {
-    createStyles,
-    Title,
-    Container,
-    Button,
-    Text, SimpleGrid, Image,
-} from '@mantine/core';
+import {Button, Container, createStyles, Image, SimpleGrid, Text, Title,} from '@mantine/core';
+import {useTranslation} from 'react-i18next';
+import {useNavigate} from 'react-router-dom';
+
 import errorimage from '../assets/image/en.svg';
-import { useTranslation } from 'react-i18next';
-import {useNavigate} from "react-router-dom";
+
 const useStyles = createStyles(() => ({
     root: {
         paddingTop: '80px',
@@ -42,24 +38,30 @@ const useStyles = createStyles(() => ({
 }));
 
 export function NotFound() {
-    const { classes } = useStyles();
-    const { t } = useTranslation();
+    const {classes} = useStyles();
+    const {t} = useTranslation();
 
     const navigate = useNavigate();
     return (
         <Container className={classes.root}>
             <SimpleGrid spacing={40} cols={2}>
-                <Image src={errorimage} className={classes.mobileImage} />
+                <Image src={errorimage} className={classes.mobileImage}/>
                 <div>
                     <Title className={classes.title}>{t('errorpage.notfoundtext')}</Title>
-                    <Text c={"#000"} size="lg">
+                    <Text c={'#000'} size="lg">
                         {t('errorpage.notfoundsubtext')}
                     </Text>
-                    <Button variant="filled" size="md" mt="xl" className={classes.control} onClick={() => navigate('/')}>
+                    <Button
+                        variant="filled"
+                        size="md"
+                        mt="xl"
+                        className={classes.control}
+                        onClick={() => navigate('/')}
+                    >
                         {t('errorpage.homebutton')}
                     </Button>
                 </div>
-                <Image src={errorimage} className={classes.desktopImage} />
+                <Image src={errorimage} className={classes.desktopImage}/>
             </SimpleGrid>
         </Container>
     );

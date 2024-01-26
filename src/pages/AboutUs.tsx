@@ -1,12 +1,6 @@
-import {
-    createStyles,
-    Title,
-    Text,
-    Container,
-    rem,
-    Image, Paper,
-} from '@mantine/core';
-import { useTranslation } from 'react-i18next';
+import {Container, createStyles, Image, Paper, rem, Text, Title,} from '@mantine/core';
+import {useTranslation} from 'react-i18next';
+
 import baner from '../assets/image/joinbaner.png';
 
 const useStyles = createStyles((theme) => ({
@@ -28,22 +22,28 @@ const useStyles = createStyles((theme) => ({
             marginRight: 'auto',
         },
     },
-    image: {
-    },
+    image: {},
 }));
 
 export function AboutUs() {
-    const { classes, theme } = useStyles();
-    const { t } = useTranslation();
+    const {classes, theme} = useStyles();
+    const {t} = useTranslation();
 
     return (
         <Container size="lg" py="xl">
             <Title order={2} className={classes.title} ta="center" mt="sm">
                 {t('AboutUs.title')}
             </Title>
-            <Text color={theme.colors.blue[9]} fw={600} mt={rem(12)}>{t('AboutUs.text')}</Text>
-            <Paper shadow={"lg"} radius={"lg"}>
-                <Image className={classes.image} src={baner} mt={20} radius={"lg"}></Image>
+            <Text color={theme.colors.blue[9]} fw={600} mt={rem(12)}>
+                {t('AboutUs.text')}
+            </Text>
+            <Paper shadow={'lg'} radius={'lg'}>
+                <Image
+                    className={classes.image}
+                    src={baner}
+                    mt={20}
+                    radius={'lg'}
+                ></Image>
             </Paper>
         </Container>
     );

@@ -1,16 +1,17 @@
 import {
-    TextInput,
-    Textarea,
-    SimpleGrid,
-    Group,
-    Title,
     Button,
-    Paper,
     Container,
     createStyles,
-    rem, Select
+    Group,
+    Paper,
+    rem,
+    Select,
+    SimpleGrid,
+    Textarea,
+    TextInput,
+    Title,
 } from '@mantine/core';
-import { useForm } from '@mantine/form';
+import {useForm} from '@mantine/form';
 
 const useStyles = createStyles((theme) => ({
     title: {
@@ -33,12 +34,12 @@ const useStyles = createStyles((theme) => ({
     },
 
     Card: {
-      backgroundColor: "white",
+        backgroundColor: 'white',
     },
 }));
 
 export function GetInTouchSimple() {
-    const { classes } = useStyles();
+    const {classes} = useStyles();
     const form = useForm({
         initialValues: {
             name: '',
@@ -54,14 +55,25 @@ export function GetInTouchSimple() {
     });
 
     return (
-        <form onSubmit={form.onSubmit(() => {})}>
+        <form onSubmit={form.onSubmit(() => {
+        })}>
             <Title order={2} className={classes.title} ta="center" mt="sm">
                 Contact Us
             </Title>
 
-            <Container size={"lg"}>
-                <Paper shadow={"lg"} p={"lg"} radius={"lg"} mt="sm" className={classes.Card}>
-                    <SimpleGrid cols={2} mt="xl" breakpoints={[{ maxWidth: 'sm', cols: 1 }]}>
+            <Container size={'lg'}>
+                <Paper
+                    shadow={'lg'}
+                    p={'lg'}
+                    radius={'lg'}
+                    mt="sm"
+                    className={classes.Card}
+                >
+                    <SimpleGrid
+                        cols={2}
+                        mt="xl"
+                        breakpoints={[{maxWidth: 'sm', cols: 1}]}
+                    >
                         <TextInput
                             label="Name"
                             placeholder="Your name"
@@ -81,12 +93,12 @@ export function GetInTouchSimple() {
                         label="Select department"
                         placeholder="Department"
                         mt="md"
-                        variant={"filled"}
+                        variant={'filled'}
                         data={[
-                            { value: 'by-hq@ivao.aero', label: 'HQ' },
-                            { value: 'ng', label: 'ATC Operations' },
-                            { value: 'svelte', label: 'Flight Operations' },
-                            { value: 'vue', label: 'Training' },
+                            {value: 'by-hq@ivao.aero', label: 'HQ'},
+                            {value: 'ng', label: 'ATC Operations'},
+                            {value: 'svelte', label: 'Flight Operations'},
+                            {value: 'vue', label: 'Training'},
                         ]}
                     />
 
@@ -111,7 +123,7 @@ export function GetInTouchSimple() {
                     />
 
                     <Group position="center" mt="xl">
-                        <Button type="submit" c={"#fff"}>
+                        <Button type="submit" c={'#fff'}>
                             Send message
                         </Button>
                     </Group>

@@ -83,10 +83,9 @@ export const ivaoTheme: MantineThemeOverride = {
 
         body: {
             backgroundColor: '#f8f8f8',
-            color: "white",
+            color: 'white',
             lineHeight: theme.lineHeight,
         },
-
     }),
 
     components: {
@@ -112,50 +111,50 @@ export const ivaoTheme: MantineThemeOverride = {
         Select: {
             styles: {
                 dropdown: {
-                    backgroundColor: "white"
+                    backgroundColor: 'white',
                 },
-            }
+            },
         },
 
         Tooltip: {
-            styles:{
-                tooltip:{
-                    color: "white"
-                }
-            }
+            styles: {
+                tooltip: {
+                    color: 'white',
+                },
+            },
         },
 
         Notification: {
             styles: {
                 root: {
-                    backgroundColor: "white"
-                }
-            }
+                    backgroundColor: 'white',
+                },
+            },
         },
 
         Modal: {
             styles: {
                 content: {
-                    backgroundColor: "white",
+                    backgroundColor: 'white',
                 },
                 title: {
-                    color: "#0D2C99",
+                    color: '#0D2C99',
                     fontWeight: 700,
-                    fontSize: 20
+                    fontSize: 20,
                 },
                 close: {
                     fontSize: rem(16),
                     fontWeight: 400,
                     cursor: 'pointer',
-                    color: "#fff",
+                    color: '#fff',
                     backgroundColor: '#3C55AC',
                     '&:hover': {
                         backgroundColor: '#3C55AC',
                         transform: 'scale(1.05)',
                         boxShadow: '0px 10px 20px rgba(0, 0, 0, 0.2)',
                     },
-                }
-            }
+                },
+            },
         },
 
         Menu: {

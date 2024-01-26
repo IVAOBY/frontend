@@ -1,18 +1,13 @@
 import {useEffect, useState} from 'react';
-import {
-    createStyles,
-    Title,
-    Container,
-    rem,
-    Text,
-    Paper,
-} from '@mantine/core';
-import {useTranslation} from 'react-i18next';
+
+import {Container, createStyles, Paper, rem, Text, Title,} from '@mantine/core';
 import {notifications} from '@mantine/notifications';
 import {IconCircleX} from '@tabler/icons-react';
 import i18n from 'i18next';
-import {DocumentsType} from "../../hooks/types";
-import {useApi} from "../../context/ApiContext";
+import {useTranslation} from 'react-i18next';
+
+import {useApi} from '../../context/ApiContext';
+import {DocumentsType} from '../../hooks/types';
 
 const useStyles = createStyles((theme) => ({
     title: {
@@ -74,7 +69,7 @@ export function GCAPage() {
             autoClose: false,
             withCloseButton: false,
         });
-        api("/documents/5")
+        api('/documents/5')
             .then(function (response: any) {
                 if (response) {
                     setDocumentItem(response);
@@ -115,12 +110,14 @@ export function GCAPage() {
                     <Title order={2} className={classes.title} ta="center" mt="sm">
                         {documentItem.name[i18n.language]}
                     </Title>
-                    <Paper p={"lg"} bg={"#fff"} shadow={"lg"} radius={"lg"} mt={rem(13)}>
-                        <Text dangerouslySetInnerHTML={{__html: documentItem.content[i18n.language] || ''}}
-                              mt={rem(10)}>
-                        </Text>
+                    <Paper p={'lg'} bg={'#fff'} shadow={'lg'} radius={'lg'} mt={rem(13)}>
+                        <Text
+                            dangerouslySetInnerHTML={{
+                                __html: documentItem.content[i18n.language] || '',
+                            }}
+                            mt={rem(10)}
+                        ></Text>
                     </Paper>
-
                 </>
             )}
         </Container>

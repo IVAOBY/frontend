@@ -43,7 +43,8 @@
   "scripts": {
     "start": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "format": "prettier src -w --log-level warn"
   },
   "eslintConfig": {
     "extends": [
@@ -64,9 +65,11 @@
     ]
   },
   "devDependencies": {
+    "@ivaoaero/prettier-config": "^2.1.0",
     "@types/jsonwebtoken": "^9.0.5",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.32",
+    "prettier": "^3.2.4",
     "tailwindcss": "^3.4.0"
   }
 }

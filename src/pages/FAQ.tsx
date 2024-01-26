@@ -1,22 +1,16 @@
-import {
-    createStyles,
-    Title,
-    Text,
-    Container,
-    rem,
-    Accordion,
-} from '@mantine/core';
-import { useTranslation } from 'react-i18next';
+import {Accordion, Container, createStyles, rem, Text, Title,} from '@mantine/core';
 import {
     IconAwardOff,
-    IconLanguage, IconMailForward,
+    IconClockExclamation,
+    IconLanguage,
+    IconMailForward,
     IconPlugConnectedX,
+    IconSos,
+    IconTransfer,
     IconUserQuestion,
     IconUsers,
-    IconClockExclamation,
-    IconTransfer,
-    IconSos
-} from "@tabler/icons-react";
+} from '@tabler/icons-react';
+import {useTranslation} from 'react-i18next';
 
 const useStyles = createStyles((theme) => ({
     title: {
@@ -38,14 +32,14 @@ const useStyles = createStyles((theme) => ({
         },
     },
     root: {
-        backgroundColor: "#fff",
+        backgroundColor: '#fff',
         borderRadius: theme.radius.xl,
     },
 
     item: {
         borderRadius: theme.radius.xl,
-        wordBreak: "break-word",
-        backgroundColor: "#fff",
+        wordBreak: 'break-word',
+        backgroundColor: '#fff',
         border: `${rem(1)} solid transparent`,
         position: 'relative',
         zIndex: 0,
@@ -54,7 +48,7 @@ const useStyles = createStyles((theme) => ({
         '&[data-active]': {
             color: '#000',
             transform: 'scale(1.03)',
-            backgroundColor: "white",
+            backgroundColor: 'white',
             boxShadow: theme.shadows.xl,
             borderRadius: theme.radius.lg,
             zIndex: 1,
@@ -68,12 +62,12 @@ const useStyles = createStyles((theme) => ({
     },
     text: {
         fontWeight: 600,
-    }
+    },
 }));
 
 export function FAQ() {
-    const { classes} = useStyles();
-    const { t } = useTranslation();
+    const {classes} = useStyles();
+    const {t} = useTranslation();
 
     return (
         <Container size="lg" py="xl">
@@ -90,91 +84,124 @@ export function FAQ() {
                 className={classes.root}
             >
                 <Accordion.Item value="1">
-                    <Accordion.Control icon={<IconPlugConnectedX size={rem(30)} fontWeight={700} color={"#0D2C99"} />}>
-                        <Text className={classes.text}>
-                        {t('FAQ.questions.1')}
-                        </Text>
+                    <Accordion.Control
+                        icon={
+                            <IconPlugConnectedX
+                                size={rem(30)}
+                                fontWeight={700}
+                                color={'#0D2C99'}
+                            />
+                        }
+                    >
+                        <Text className={classes.text}>{t('FAQ.questions.1')}</Text>
                     </Accordion.Control>
-                    <Accordion.Panel><Text dangerouslySetInnerHTML={{ __html: t('FAQ.answers.1') || '' }}>
-                    </Text></Accordion.Panel>
+                    <Accordion.Panel>
+                        <Text
+                            dangerouslySetInnerHTML={{__html: t('FAQ.answers.1') || ''}}
+                        ></Text>
+                    </Accordion.Panel>
                 </Accordion.Item>
 
                 <Accordion.Item value="2">
-                    <Accordion.Control icon={<IconUsers size={rem(30)} color={"#0D2C99"} />}>
-                        <Text className={classes.text}>
-                            {t('FAQ.questions.2')}
-                        </Text>
+                    <Accordion.Control
+                        icon={<IconUsers size={rem(30)} color={'#0D2C99'}/>}
+                    >
+                        <Text className={classes.text}>{t('FAQ.questions.2')}</Text>
                     </Accordion.Control>
-                    <Accordion.Panel><Text dangerouslySetInnerHTML={{ __html: t('FAQ.answers.2') || '' }}>
-                    </Text></Accordion.Panel>
+                    <Accordion.Panel>
+                        <Text
+                            dangerouslySetInnerHTML={{__html: t('FAQ.answers.2') || ''}}
+                        ></Text>
+                    </Accordion.Panel>
                 </Accordion.Item>
 
                 <Accordion.Item value="3">
-                    <Accordion.Control icon={<IconLanguage size={rem(30)} color={"#0D2C99"} />}>
-                        <Text className={classes.text}>
-                            {t('FAQ.questions.3')}
-                        </Text>
+                    <Accordion.Control
+                        icon={<IconLanguage size={rem(30)} color={'#0D2C99'}/>}
+                    >
+                        <Text className={classes.text}>{t('FAQ.questions.3')}</Text>
                     </Accordion.Control>
-                    <Accordion.Panel><Text dangerouslySetInnerHTML={{ __html: t('FAQ.answers.3') || '' }}>
-                    </Text></Accordion.Panel>
+                    <Accordion.Panel>
+                        <Text
+                            dangerouslySetInnerHTML={{__html: t('FAQ.answers.3') || ''}}
+                        ></Text>
+                    </Accordion.Panel>
                 </Accordion.Item>
                 <Accordion.Item value="4">
-                    <Accordion.Control icon={<IconAwardOff size={rem(30)} color={"#0D2C99"} />}>
-                        <Text className={classes.text}>
-                            {t('FAQ.questions.4')}
-                        </Text>
+                    <Accordion.Control
+                        icon={<IconAwardOff size={rem(30)} color={'#0D2C99'}/>}
+                    >
+                        <Text className={classes.text}>{t('FAQ.questions.4')}</Text>
                     </Accordion.Control>
-                    <Accordion.Panel><Text dangerouslySetInnerHTML={{ __html: t('FAQ.answers.4') || '' }}>
-                    </Text></Accordion.Panel>
+                    <Accordion.Panel>
+                        <Text
+                            dangerouslySetInnerHTML={{__html: t('FAQ.answers.4') || ''}}
+                        ></Text>
+                    </Accordion.Panel>
                 </Accordion.Item>
 
                 <Accordion.Item value="5">
-                    <Accordion.Control icon={<IconUserQuestion size={rem(30)} color={"#0D2C99"} />}>
-                        <Text className={classes.text}>
-                            {t('FAQ.questions.5')}
-                        </Text>
+                    <Accordion.Control
+                        icon={<IconUserQuestion size={rem(30)} color={'#0D2C99'}/>}
+                    >
+                        <Text className={classes.text}>{t('FAQ.questions.5')}</Text>
                     </Accordion.Control>
-                    <Accordion.Panel><Text dangerouslySetInnerHTML={{ __html: t('FAQ.answers.5') || '' }}>
-                    </Text></Accordion.Panel>
+                    <Accordion.Panel>
+                        <Text
+                            dangerouslySetInnerHTML={{__html: t('FAQ.answers.5') || ''}}
+                        ></Text>
+                    </Accordion.Panel>
                 </Accordion.Item>
 
                 <Accordion.Item value="6">
-                    <Accordion.Control icon={<IconMailForward size={rem(30)} color={"#0D2C99"} />}>
-                        <Text className={classes.text}>
-                            {t('FAQ.questions.6')}
-                        </Text>
+                    <Accordion.Control
+                        icon={<IconMailForward size={rem(30)} color={'#0D2C99'}/>}
+                    >
+                        <Text className={classes.text}>{t('FAQ.questions.6')}</Text>
                     </Accordion.Control>
-                    <Accordion.Panel><Text dangerouslySetInnerHTML={{ __html: t('FAQ.answers.6') || '' }}>
-                    </Text></Accordion.Panel>
+                    <Accordion.Panel>
+                        <Text
+                            dangerouslySetInnerHTML={{__html: t('FAQ.answers.6') || ''}}
+                        ></Text>
+                    </Accordion.Panel>
                 </Accordion.Item>
                 <Accordion.Item value="7">
-                    <Accordion.Control icon={<IconClockExclamation size={rem(30)} color={"#0D2C99"} />}>
-                        <Text className={classes.text}>
-                            {t('FAQ.questions.7')}
-                        </Text>
+                    <Accordion.Control
+                        icon={<IconClockExclamation size={rem(30)} color={'#0D2C99'}/>}
+                    >
+                        <Text className={classes.text}>{t('FAQ.questions.7')}</Text>
                     </Accordion.Control>
-                    <Accordion.Panel><Text dangerouslySetInnerHTML={{ __html: t('FAQ.answers.7') || '' }}>
-                    </Text></Accordion.Panel>
+                    <Accordion.Panel>
+                        <Text
+                            dangerouslySetInnerHTML={{__html: t('FAQ.answers.7') || ''}}
+                        ></Text>
+                    </Accordion.Panel>
                 </Accordion.Item>
 
                 <Accordion.Item value="8">
-                    <Accordion.Control icon={<IconTransfer size={rem(30)} color={"#0D2C99"} />}>
-                        <Text className={classes.text}>
-                            {t('FAQ.questions.8')}
-                        </Text>
+                    <Accordion.Control
+                        icon={<IconTransfer size={rem(30)} color={'#0D2C99'}/>}
+                    >
+                        <Text className={classes.text}>{t('FAQ.questions.8')}</Text>
                     </Accordion.Control>
-                    <Accordion.Panel><Text dangerouslySetInnerHTML={{ __html: t('FAQ.answers.8') || '' }}>
-                    </Text></Accordion.Panel>
+                    <Accordion.Panel>
+                        <Text
+                            dangerouslySetInnerHTML={{__html: t('FAQ.answers.8') || ''}}
+                        ></Text>
+                    </Accordion.Panel>
                 </Accordion.Item>
 
                 <Accordion.Item value="9">
-                    <Accordion.Control icon={<IconSos size={rem(30)} color={"#0D2C99"} />}>
-                        <Text className={classes.text}>
-                            {t('FAQ.questions.9')}
-                        </Text>
+                    <Accordion.Control
+                        icon={<IconSos size={rem(30)} color={'#0D2C99'}/>}
+                    >
+                        <Text className={classes.text}>{t('FAQ.questions.9')}</Text>
                     </Accordion.Control>
-                    <Accordion.Panel><Text dangerouslySetInnerHTML={{ __html: t('FAQ.answers.9') || '' }}>
-                    </Text></Accordion.Panel>
+                    <Accordion.Panel>
+                        <Text
+                            dangerouslySetInnerHTML={{__html: t('FAQ.answers.9') || ''}}
+                        ></Text>
+                    </Accordion.Panel>
                 </Accordion.Item>
             </Accordion>
         </Container>

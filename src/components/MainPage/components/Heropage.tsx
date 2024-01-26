@@ -1,12 +1,14 @@
-import {Button, Container, createStyles, Flex, Group, Overlay, rem, Text, Title} from '@mantine/core';
-import {useTranslation} from "react-i18next";
-import {useCallback, useContext} from "react";
+import {useCallback, useContext} from 'react';
+
+import {Button, Container, createStyles, Flex, Group, Overlay, rem, Text, Title,} from '@mantine/core';
+import {useMediaQuery} from '@mantine/hooks';
+import {notifications} from '@mantine/notifications';
+import {IconCircleX} from '@tabler/icons-react';
+import {useTranslation} from 'react-i18next';
+import Snowfall from 'react-snowfall';
 import Typed from 'react-typed';
-import {useMediaQuery} from "@mantine/hooks";
-import {notifications} from "@mantine/notifications";
-import {IconCircleX} from "@tabler/icons-react";
-import {AuthContext} from "../../../context/UserContext";
-import Snowfall from 'react-snowfall'
+
+import {AuthContext} from '../../../context/UserContext';
 
 const useStyles = createStyles((theme) => ({
     wrapper: {
@@ -52,7 +54,7 @@ const useStyles = createStyles((theme) => ({
         color: theme.white,
         textAlign: 'center',
         fontSize: 29,
-        maxWidth: "100%",
+        maxWidth: '100%',
 
         [theme.fn.smallerThan('xs')]: {
             fontSize: theme.fontSizes.md,
@@ -99,8 +101,8 @@ const useStyles = createStyles((theme) => ({
     joinButton: {
         color: '#fff',
         '&:hover': {
-          backgroundColor: '#fff',
-          color: '#0D2C99',
+            backgroundColor: '#fff',
+            color: '#0D2C99',
         },
     },
     transButton: {
@@ -110,14 +112,14 @@ const useStyles = createStyles((theme) => ({
             backgroundColor: '#fff',
             color: '#0D2C99',
         },
-    }
+    },
 }));
 
 export function HeroText() {
-    const { classes } = useStyles();
-    const { t } = useTranslation();
+    const {classes} = useStyles();
+    const {t} = useTranslation();
     const isSmallScreen = useMediaQuery('(max-width: 575px)');
-    const { signed, decodedToken } = useContext(AuthContext);
+    const {signed, decodedToken} = useContext(AuthContext);
 
     const byTransferMail = useCallback(async () => {
         if (!signed) {
@@ -127,7 +129,7 @@ export function HeroText() {
                 title: t('notif.auth.negative.name'),
                 message: t('notif.auth.negative.description'),
                 radius: 'lg',
-                icon: <IconCircleX />,
+                icon: <IconCircleX/>,
                 withCloseButton: true,
                 autoClose: 3000,
             });
@@ -145,9 +147,9 @@ export function HeroText() {
 
                 window.open(
                     `mailto:BY-hq@ivao.aero,${decodedToken?.userData.divisionId}-hq@ivao.aero?cc=members@ivao.aero&subject=Division%20transfer%20${decodedToken?.userData.id}&body=${encodeURIComponent(
-                        emailBody
+                        emailBody,
                     )}`,
-                    '_blank'
+                    '_blank',
                 );
             } catch (error) {
                 console.error('Error decoding token:', error);
@@ -156,7 +158,7 @@ export function HeroText() {
     }, [t]);
 
     const openLink = useCallback(function (link: any | undefined) {
-        window.open(link, '_blank')
+        window.open(link, '_blank');
     }, []);
 
     return (
@@ -167,19 +169,31 @@ export function HeroText() {
                     position: 'absolute',
                     width: '100vw',
                     height: '45rem',
-                    zIndex: 9
+                    zIndex: 9,
                 }}
                 snowflakeCount={200}
             />
             <Overlay color="#00000" opacity={0.45} zIndex={1}/>
-            <Flex mih={50} gap="md" justify="center" align="center" direction="row" wrap="wrap" >
+            <Flex
+                mih={50}
+                gap="md"
+                justify="center"
+                align="center"
+                direction="row"
+                wrap="wrap"
+            >
                 <div className={classes.inner}>
                     <Title className={classes.title}>
-                        {t("heropage.title")} {t("generic.ivao")}
+                        {t('heropage.title')} {t('generic.ivao')}
                     </Title>
                     <Container size={640}>
                         <Text size="lg" className={`${classes.description}`}>
-                            <Typed strings={[t("heropage.subtitle"), t("heropage.subtitle2")]} typeSpeed={90} backSpeed={15} loop />
+                            <Typed
+                                strings={[t('heropage.subtitle'), t('heropage.subtitle2')]}
+                                typeSpeed={90}
+                                backSpeed={15}
+                                loop
+                            />
                         </Text>
                     </Container>
                     <div className={classes.controls}>
@@ -187,18 +201,20 @@ export function HeroText() {
                             <Button
                                 className={classes.joinButton}
                                 variant="filled"
-                                size={isSmallScreen ? "sm" : "md"}
-                                onClick={() => openLink('https://ivao.aero/members/person/register.htm')}
+                                size={isSmallScreen ? 'sm' : 'md'}
+                                onClick={() =>
+                                    openLink('https://ivao.aero/members/person/register.htm')
+                                }
                             >
-                                {t("heropage.joinbutton")}
+                                {t('heropage.joinbutton')}
                             </Button>
                             <Button
                                 className={classes.transButton}
                                 variant="outline"
-                                size={isSmallScreen ? "sm" : "md"}
+                                size={isSmallScreen ? 'sm' : 'md'}
                                 onClick={byTransferMail}
                             >
-                                {t("heropage.transfer")}
+                                {t('heropage.transfer')}
                             </Button>
                         </Group>
                     </div>

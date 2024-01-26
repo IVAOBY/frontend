@@ -1,13 +1,5 @@
-import {
-    createStyles,
-    Title,
-    Text,
-    Container,
-    rem,
-    Paper,
-    List,
-} from '@mantine/core';
-import { useTranslation } from 'react-i18next';
+import {Container, createStyles, List, Paper, rem, Text, Title,} from '@mantine/core';
+import {useTranslation} from 'react-i18next';
 
 const useStyles = createStyles((theme) => ({
     title: {
@@ -34,23 +26,47 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export function Legal() {
-    const { classes } = useStyles();
-    const { t } = useTranslation();
+    const {classes} = useStyles();
+    const {t} = useTranslation();
 
     return (
         <Container size="lg" py="xl">
             <Title order={2} className={classes.title} ta="center" mt="sm">
                 {t('legal.title')}
             </Title>
-            <Paper shadow={"lg"} radius={"lg"} bg="#fff" p={"lg"} mt={rem(16)}>
-                <Text size={15}>
-                    {t('legal.text')}
-                </Text>
+            <Paper shadow={'lg'} radius={'lg'} bg="#fff" p={'lg'} mt={rem(16)}>
+                <Text size={15}>{t('legal.text')}</Text>
                 <br/>
-                <List size={"sm"} withPadding>
-                    <List.Item><a target={"_blank"} href={"https://wiki.ivao.aero/en/home/ivao/privacypolicy"}> {t('legal.privacypolicy')}</a></List.Item>
-                    <List.Item><a target={"_blank"} href={"https://wiki.ivao.aero/en/home/ivao/terms-of-use"}> {t('legal.termsofuse')}</a></List.Item>
-                    <List.Item><a target={"_blank"} href={"https://wiki.ivao.aero/en/home/ivao/intellectual-property-policy"}> {t('legal.ipp')}</a></List.Item>
+                <List size={'sm'} withPadding>
+                    <List.Item>
+                        <a
+                            target={'_blank'}
+                            href={'https://wiki.ivao.aero/en/home/ivao/privacypolicy'}
+                        >
+                            {' '}
+                            {t('legal.privacypolicy')}
+                        </a>
+                    </List.Item>
+                    <List.Item>
+                        <a
+                            target={'_blank'}
+                            href={'https://wiki.ivao.aero/en/home/ivao/terms-of-use'}
+                        >
+                            {' '}
+                            {t('legal.termsofuse')}
+                        </a>
+                    </List.Item>
+                    <List.Item>
+                        <a
+                            target={'_blank'}
+                            href={
+                                'https://wiki.ivao.aero/en/home/ivao/intellectual-property-policy'
+                            }
+                        >
+                            {' '}
+                            {t('legal.ipp')}
+                        </a>
+                    </List.Item>
                 </List>
             </Paper>
         </Container>

@@ -1,10 +1,12 @@
-import {Badge, Container, createStyles, Paper, rem, Table, Text, Title,} from '@mantine/core';
-import {useApi} from '../../context/ApiContext';
 import {useEffect, useState} from 'react';
+
+import {Badge, Container, createStyles, Paper, rem, Table, Text, Title,} from '@mantine/core';
 import {notifications} from '@mantine/notifications';
 import {IconCircleX} from '@tabler/icons-react';
 import {useTranslation} from 'react-i18next';
 import {useParams} from 'react-router-dom';
+
+import {useApi} from '../../context/ApiContext';
 
 const useStyles = createStyles((theme) => ({
     title: {
@@ -43,7 +45,9 @@ export function Vehicles() {
     const {id} = useParams();
     const api = useApi();
 
-    const [vehiclesData, setVehiclesData] = useState<Unrestrictions[] | null>(null);
+    const [vehiclesData, setVehiclesData] = useState<Unrestrictions[] | null>(
+        null,
+    );
 
     useEffect(() => {
         notifications.show({
@@ -58,7 +62,10 @@ export function Vehicles() {
 
         api(`/vehicles`)
             .then((response: Unrestrictions[]) => {
-                if (Array.isArray(response) && response.every((item) => typeof item === 'object')) {
+                if (
+                    Array.isArray(response) &&
+                    response.every((item) => typeof item === 'object')
+                ) {
                     setVehiclesData(response);
                     notifications.hide('load-data');
                 } else {
@@ -99,10 +106,15 @@ export function Vehicles() {
                 <Title order={2} className={classes.subtitle}>
                     {t('vehicles.airports')}
                 </Title>
-                <Text size={15}>
-                    {t('vehicles.description')}
-                </Text>
-                <Table mt={15} mb={15} striped withBorder withColumnBorders captionSide="bottom">
+                <Text size={15}>{t('vehicles.description')}</Text>
+                <Table
+                    mt={15}
+                    mb={15}
+                    striped
+                    withBorder
+                    withColumnBorders
+                    captionSide="bottom"
+                >
                     <caption>{t('vehicles.caption')}</caption>
                     <thead>
                     <tr>
@@ -122,9 +134,15 @@ export function Vehicles() {
                             <td>{t('vehicles.training')}</td>
                             <td>
                                 {vehicle.unrestricted_vids.map((vid) => (
-                                    <a key={vid} target={"_blank"} href={"https://www.ivao.aero/Member.aspx?Id=" + vid}
-                                       style={{marginLeft: 2}}>
-                                        <Badge mb={2} key={vid}>{vid}</Badge>
+                                    <a
+                                        key={vid}
+                                        target={'_blank'}
+                                        href={'https://www.ivao.aero/Member.aspx?Id=' + vid}
+                                        style={{marginLeft: 2}}
+                                    >
+                                        <Badge mb={2} key={vid}>
+                                            {vid}
+                                        </Badge>
                                     </a>
                                 ))}
                             </td>

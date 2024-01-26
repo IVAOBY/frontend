@@ -1,26 +1,30 @@
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
+
 import {
     createStyles,
-    Title,
-    Text,
-    SimpleGrid,
-    rem,
-    Paper,
-    Image,
     Flex,
-    Group, UnstyledButton, Skeleton
+    Group,
+    Image,
+    Paper,
+    rem,
+    SimpleGrid,
+    Skeleton,
+    Text,
+    Title,
+    UnstyledButton,
 } from '@mantine/core';
-import { useTranslation } from 'react-i18next';
+import {notifications} from '@mantine/notifications';
 import {IconCalendarTime, IconCircleX, IconUser} from '@tabler/icons-react';
-import { format } from 'date-fns';
-import {notifications} from "@mantine/notifications";
-import {useNavigate} from "react-router-dom";
-import {useApi} from "../../../context/ApiContext";
-import {GeneralLayout} from "../../Layout";
-import Pagination from "../../Pagination";
+import {format} from 'date-fns';
+import {useTranslation} from 'react-i18next';
+import {useNavigate} from 'react-router-dom';
+
+import {useApi} from '../../../context/ApiContext';
+import {GeneralLayout} from '../../Layout';
+import Pagination from '../../Pagination';
 
 const useStyles = createStyles((theme) => {
-    return ({
+    return {
         title: {
             fontSize: rem(34),
             fontWeight: 800,
@@ -87,7 +91,7 @@ const useStyles = createStyles((theme) => {
         },
         pagination: {
             '[data-active]': {
-                color: "#fff!important"
+                color: '#fff!important',
             },
         },
         button: {
@@ -96,7 +100,8 @@ const useStyles = createStyles((theme) => {
             overflow: 'hidden',
             transition: 'transform 0.4s ease, box-shadow 0.4s ease',
             boxShadow: theme.shadows.md,
-            '&.active': { // Новый класс для активной кнопки
+            '&.active': {
+                // Новый класс для активной кнопки
                 transform: 'scale(1.01)',
                 boxShadow: '0px 10px 23px -4px rgba(34, 60, 80, 0.2)',
             },
@@ -139,9 +144,9 @@ const useStyles = createStyles((theme) => {
                 minWidth: rem(340),
                 maxWidth: '100%',
             },
-            gap: rem(10)
-        }
-    });
+            gap: rem(10),
+        },
+    };
 });
 
 interface News {
@@ -168,8 +173,8 @@ interface News {
 }
 
 export function NewsSection() {
-    const { classes, theme } = useStyles();
-    const { t, i18n } = useTranslation();
+    const {classes, theme} = useStyles();
+    const {t, i18n} = useTranslation();
     const [news, setNews] = useState<News[] | null>(null);
     const api = useApi();
 
@@ -183,9 +188,9 @@ export function NewsSection() {
         notifications.show({
             id: 'load-data',
             loading: true,
-            title: t("notif.loading.name"),
-            message: t("notif.loading.descritpion"),
-            radius: "lg",
+            title: t('notif.loading.name'),
+            message: t('notif.loading.descritpion'),
+            radius: 'lg',
             autoClose: false,
             withCloseButton: false,
         });
@@ -194,15 +199,15 @@ export function NewsSection() {
                 if (response && Array.isArray(response)) {
                     response.sort((a, b) => b.id - a.id);
                     setNews(response);
-                    notifications.hide('load-data')
+                    notifications.hide('load-data');
                 } else {
                     notifications.update({
                         id: 'load-data',
                         color: 'red',
-                        title: t("notif.server.name"),
-                        message: t("notif.server.descritpion"),
-                        radius: "lg",
-                        icon: <IconCircleX />,
+                        title: t('notif.server.name'),
+                        message: t('notif.server.descritpion'),
+                        radius: 'lg',
+                        icon: <IconCircleX/>,
                         withCloseButton: false,
                         autoClose: false,
                     });
@@ -213,10 +218,10 @@ export function NewsSection() {
                 notifications.update({
                     id: 'load-data',
                     color: 'red',
-                    title: t("notif.server.name"),
-                    message: t("notif.server.descritpion"),
-                    radius: "lg",
-                    icon: <IconCircleX />,
+                    title: t('notif.server.name'),
+                    message: t('notif.server.descritpion'),
+                    radius: 'lg',
+                    icon: <IconCircleX/>,
                     withCloseButton: false,
                     autoClose: false,
                 });
@@ -234,35 +239,62 @@ export function NewsSection() {
             <Title order={2} className={classes.title} ta="center" mt="sm">
                 {t('news.title')}
             </Title>
-            <SimpleGrid cols={1} spacing="xl" mt={rem(13)} breakpoints={[{ maxWidth: 'md', cols: 1 }]}>
-                {news === null ? (
-                    Array.from({ length: itemsPerPage }).map((_, index) => (
-                    <Paper key={index} className={classes.card} p="xl" radius="lg" shadow="lg">
-                        <Flex className={classes.cardContent}>
-                            <div className={classes.cardImage}>
-                                <Skeleton height={rem(231)} radius="lg" maw={400} />
-                            </div>
-                            <div className={classes.skeleton}>
-                                <Skeleton height={10} radius="lg" maw={600} />
-                                <Skeleton height={10} radius="lg" maw={600} />
-                                <Skeleton height={10} radius="lg" maw={600} />
-                                <Skeleton height={10} radius="lg" maw={600} />
-                                <Skeleton height={10} radius="lg" maw={600} />
-                                <Skeleton height={10} radius="lg" maw={600} />
-                            </div>
-                        </Flex>
-                    </Paper>
+            <SimpleGrid
+                cols={1}
+                spacing="xl"
+                mt={rem(13)}
+                breakpoints={[{maxWidth: 'md', cols: 1}]}
+            >
+                {news === null
+                    ? Array.from({length: itemsPerPage}).map((_, index) => (
+                        <Paper
+                            key={index}
+                            className={classes.card}
+                            p="xl"
+                            radius="lg"
+                            shadow="lg"
+                        >
+                            <Flex className={classes.cardContent}>
+                                <div className={classes.cardImage}>
+                                    <Skeleton height={rem(231)} radius="lg" maw={400}/>
+                                </div>
+                                <div className={classes.skeleton}>
+                                    <Skeleton height={10} radius="lg" maw={600}/>
+                                    <Skeleton height={10} radius="lg" maw={600}/>
+                                    <Skeleton height={10} radius="lg" maw={600}/>
+                                    <Skeleton height={10} radius="lg" maw={600}/>
+                                    <Skeleton height={10} radius="lg" maw={600}/>
+                                    <Skeleton height={10} radius="lg" maw={600}/>
+                                </div>
+                            </Flex>
+                        </Paper>
                     ))
-                ) : (
-                    news.slice(startIndex, endIndex).map((newsItem) => (
-                        <UnstyledButton key={newsItem.id} className={classes.button} style={{ width: 'auto', height: 'auto' }} onClick={() => newsRedirect(newsItem)}>
-                            <Paper key={newsItem.id} className={classes.card} p="xl" radius="lg" shadow="lg">
+                    : news.slice(startIndex, endIndex).map((newsItem) => (
+                        <UnstyledButton
+                            key={newsItem.id}
+                            className={classes.button}
+                            style={{width: 'auto', height: 'auto'}}
+                            onClick={() => newsRedirect(newsItem)}
+                        >
+                            <Paper
+                                key={newsItem.id}
+                                className={classes.card}
+                                p="xl"
+                                radius="lg"
+                                shadow="lg"
+                            >
                                 <Flex className={classes.cardContent}>
                                     <div className={classes.cardImage}>
-                                        <Image src={newsItem.image_url} alt="newsimage" radius="lg" />
+                                        <Image
+                                            src={newsItem.image_url}
+                                            alt="newsimage"
+                                            radius="lg"
+                                        />
                                     </div>
                                     <div>
-                                        <Title className={classes.cardTitle}>{newsItem.name[i18n.language]}</Title>
+                                        <Title className={classes.cardTitle}>
+                                            {newsItem.name[i18n.language]}
+                                        </Title>
                                         <Text className={classes.cardDescription}>
                                             {newsItem.description[i18n.language].length > 300
                                                 ? `${newsItem.description[i18n.language].slice(0, 300)}...`
@@ -271,22 +303,36 @@ export function NewsSection() {
 
                                         <div className={classes.cardAuthorDate}>
                                             <Group>
-                                                <IconUser size={18} color={theme.colors.blue[9]}></IconUser>
-                                                <Text size="md" fw="bold" color={theme.colors.blue[9]}>
-                                                    {newsItem.user.staffPositions ? (
-                                                        newsItem.user.staffPositions
+                                                <IconUser
+                                                    size={18}
+                                                    color={theme.colors.blue[9]}
+                                                ></IconUser>
+                                                <Text
+                                                    size="md"
+                                                    fw="bold"
+                                                    color={theme.colors.blue[9]}
+                                                >
+                                                    {newsItem.user.staffPositions
+                                                        ? newsItem.user.staffPositions
                                                             .map((position) => `BY-${position.id}`)
-                                                            .filter((value, index, self) => self.indexOf(value) === index)
+                                                            .filter(
+                                                                (value, index, self) =>
+                                                                    self.indexOf(value) === index,
+                                                            )
                                                             .join('/')
-                                                    ) : (
-                                                        String(newsItem.user.id)
-                                                    )}
+                                                        : String(newsItem.user.id)}
                                                 </Text>
                                             </Group>
                                             <Group position="right">
-                                                <IconCalendarTime size={18} color={theme.colors.blue[9]} />
+                                                <IconCalendarTime
+                                                    size={18}
+                                                    color={theme.colors.blue[9]}
+                                                />
                                                 <Text size="md" c={theme.colors.blue[9]}>
-                                                    {format(new Date(newsItem.publishedAt), 'dd-MM-yyyy')}
+                                                    {format(
+                                                        new Date(newsItem.publishedAt),
+                                                        'dd-MM-yyyy',
+                                                    )}
                                                 </Text>
                                             </Group>
                                         </div>
@@ -294,8 +340,7 @@ export function NewsSection() {
                                 </Flex>
                             </Paper>
                         </UnstyledButton>
-                    ))
-                )}
+                    ))}
             </SimpleGrid>
             <Pagination
                 currentPage={currentPage}

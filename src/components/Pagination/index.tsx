@@ -1,5 +1,6 @@
 import React from 'react';
-import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
+
+import {IconChevronLeft, IconChevronRight} from '@tabler/icons-react';
 
 interface PaginationProps {
     currentPage: number;
@@ -8,7 +9,12 @@ interface PaginationProps {
     className?: string;
 }
 
-const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange, className }) => {
+const Pagination: React.FC<PaginationProps> = ({
+                                                   currentPage,
+                                                   totalPages,
+                                                   onPageChange,
+                                                   className,
+                                               }) => {
     const generatePageNumbers = () => {
         const pages = [];
         for (let i = 1; i <= totalPages; i++) {
@@ -19,15 +25,15 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
 
     return (
         <div className={`flex gap-1 items-center justify-center ${className}`}>
-                <button
-                    onClick={() => onPageChange(currentPage - 1)}
-                    className={`px-3 py-1 bg-ivao-blue text-white rounded-md ${
-                        currentPage === 1 ? 'cursor-not-allowed' : ''
-                    }`}
-                    disabled={currentPage === 1}
-                >
-                    <IconChevronLeft />
-                </button>
+            <button
+                onClick={() => onPageChange(currentPage - 1)}
+                className={`px-3 py-1 bg-ivao-blue text-white rounded-md ${
+                    currentPage === 1 ? 'cursor-not-allowed' : ''
+                }`}
+                disabled={currentPage === 1}
+            >
+                <IconChevronLeft/>
+            </button>
 
             {generatePageNumbers().map((page) => (
                 <button
@@ -42,15 +48,15 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
                     {page}
                 </button>
             ))}
-                <button
-                    onClick={() => onPageChange(currentPage + 1)}
-                    className={`px-3 py-1 bg-ivao-blue text-white rounded-md ${
-                        currentPage === totalPages ? 'cursor-not-allowed' : ''
-                    }`}
-                    disabled={currentPage === totalPages}
-                >
-                    <IconChevronRight />
-                </button>
+            <button
+                onClick={() => onPageChange(currentPage + 1)}
+                className={`px-3 py-1 bg-ivao-blue text-white rounded-md ${
+                    currentPage === totalPages ? 'cursor-not-allowed' : ''
+                }`}
+                disabled={currentPage === totalPages}
+            >
+                <IconChevronRight/>
+            </button>
         </div>
     );
 };

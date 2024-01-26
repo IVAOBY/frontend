@@ -1,11 +1,13 @@
-import {Container, createStyles, Flex, Paper, rem, Title, UnstyledButton} from '@mantine/core';
-import {IconCircleX,} from '@tabler/icons-react';
-import {useEffect, useState} from "react";
-import {useTranslation} from "react-i18next";
-import {notifications} from "@mantine/notifications";
-import {DocumentsCategoryType, DocumentsType} from "../../hooks/types";
-import {useNavigate} from "react-router-dom";
-import {useApi} from "../../context/ApiContext";
+import {useEffect, useState} from 'react';
+
+import {Container, createStyles, Flex, Paper, rem, Title, UnstyledButton,} from '@mantine/core';
+import {notifications} from '@mantine/notifications';
+import {IconCircleX} from '@tabler/icons-react';
+import {useTranslation} from 'react-i18next';
+import {useNavigate} from 'react-router-dom';
+
+import {useApi} from '../../context/ApiContext';
+import {DocumentsCategoryType, DocumentsType} from '../../hooks/types';
 
 const useStyles = createStyles((theme) => ({
     title: {
@@ -28,7 +30,7 @@ const useStyles = createStyles((theme) => ({
     },
     card: {
         minWidth: rem(100),
-        minHeight: rem(120)
+        minHeight: rem(120),
     },
     button: {
         position: 'relative',
@@ -43,33 +45,34 @@ const useStyles = createStyles((theme) => ({
     },
 }));
 
-
 export function DocumentsPilotPage() {
     const {classes, theme} = useStyles();
-    const [documentsCategory, setDocumentsCategory] = useState<DocumentsCategoryType[]>([]);
+    const [documentsCategory, setDocumentsCategory] = useState<
+        DocumentsCategoryType[]
+    >([]);
     const [documents, setDocuments] = useState<DocumentsType[]>([]);
     const {t, i18n} = useTranslation();
     const api = useApi();
 
     useEffect(() => {
-        api("/documents-category")
+        api('/documents-category')
             .then(function (response: any) {
                 if (response && Array.isArray(response)) {
                     setDocumentsCategory(response);
                 } else {
-                    console.error("Error: Unexpected API response structure");
+                    console.error('Error: Unexpected API response structure');
                 }
             })
             .catch(function (error: any) {
-                console.error("Error fetching data:", error);
+                console.error('Error fetching data:', error);
             });
 
         notifications.show({
             id: 'load-data',
             loading: true,
-            title: t("notif.loading.name"),
-            message: t("notif.loading.descritpion"),
-            radius: "lg",
+            title: t('notif.loading.name'),
+            message: t('notif.loading.descritpion'),
+            radius: 'lg',
             autoClose: false,
             withCloseButton: false,
         });
@@ -82,19 +85,19 @@ export function DocumentsPilotPage() {
                         category: documentdata.category,
                         name: documentdata.name,
                         content: documentdata.content,
-                        published: documentdata.published
+                        published: documentdata.published,
                     }));
                     setDocuments(documents);
 
-                    notifications.hide('load-data')
+                    notifications.hide('load-data');
                 } else {
                     console.error('Error: Unexpected API response structure');
                     notifications.update({
                         id: 'load-data',
                         color: 'red',
-                        title: t("notif.server.name"),
-                        message: t("notif.server.descritpion"),
-                        radius: "lg",
+                        title: t('notif.server.name'),
+                        message: t('notif.server.descritpion'),
+                        radius: 'lg',
                         icon: <IconCircleX/>,
                         withCloseButton: false,
                         autoClose: false,
@@ -106,9 +109,9 @@ export function DocumentsPilotPage() {
                 notifications.update({
                     id: 'load-data',
                     color: 'red',
-                    title: t("notif.server.name"),
-                    message: t("notif.server.descritpion"),
-                    radius: "lg",
+                    title: t('notif.server.name'),
+                    message: t('notif.server.descritpion'),
+                    radius: 'lg',
                     icon: <IconCircleX/>,
                     withCloseButton: false,
                     autoClose: false,
@@ -122,42 +125,56 @@ export function DocumentsPilotPage() {
     };
 
     return (
-        <Container size={"xl"} py={"xl"}>
-            {documentsCategory.filter(category => parseInt(category.id) === 2).map((category, index) => (
-                <><Title order={2} className={classes.title} ta="center" mt="sm">
-                    {category.name[i18n.language]}
-                </Title>
-                    <div key={index}>
-                        <Flex direction="column" align="center">
-                            <Flex
-                                id="staff-grid"
-                                mt={13}
-                                gap="md"
-                                justify="center"
-                                align="center"
-                                direction="row"
-                                wrap="wrap"
-                            >
-                                {documents
-                                    .filter((document) => document.category === category.id && document.published)
-                                    .map((documents, positionIndex) => (
-                                        <UnstyledButton key={documents.id} className={classes.button}
-                                                        style={{width: 'auto', height: 'auto'}}
-                                                        onClick={() => documentsRedirect(documents)}>
-                                            <Paper className={classes.card} shadow={"lg"} p={"xl"} radius="lg"
-                                                   key={positionIndex} bg="#fff">
-
-                                                <Title order={3} color={theme.colors.blue[9]} mt={20}>
-                                                    {documents.name[i18n.language]}
-                                                </Title>
-                                            </Paper>
-                                        </UnstyledButton>
-                                    ))}
+        <Container size={'xl'} py={'xl'}>
+            {documentsCategory
+                .filter((category) => parseInt(category.id) === 2)
+                .map((category, index) => (
+                    <>
+                        <Title order={2} className={classes.title} ta="center" mt="sm">
+                            {category.name[i18n.language]}
+                        </Title>
+                        <div key={index}>
+                            <Flex direction="column" align="center">
+                                <Flex
+                                    id="staff-grid"
+                                    mt={13}
+                                    gap="md"
+                                    justify="center"
+                                    align="center"
+                                    direction="row"
+                                    wrap="wrap"
+                                >
+                                    {documents
+                                        .filter(
+                                            (document) =>
+                                                document.category === category.id && document.published,
+                                        )
+                                        .map((documents, positionIndex) => (
+                                            <UnstyledButton
+                                                key={documents.id}
+                                                className={classes.button}
+                                                style={{width: 'auto', height: 'auto'}}
+                                                onClick={() => documentsRedirect(documents)}
+                                            >
+                                                <Paper
+                                                    className={classes.card}
+                                                    shadow={'lg'}
+                                                    p={'xl'}
+                                                    radius="lg"
+                                                    key={positionIndex}
+                                                    bg="#fff"
+                                                >
+                                                    <Title order={3} color={theme.colors.blue[9]} mt={20}>
+                                                        {documents.name[i18n.language]}
+                                                    </Title>
+                                                </Paper>
+                                            </UnstyledButton>
+                                        ))}
+                                </Flex>
                             </Flex>
-                        </Flex>
-                    </div>
-                </>
-            ))}
+                        </div>
+                    </>
+                ))}
         </Container>
     );
 }

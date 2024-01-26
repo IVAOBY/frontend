@@ -1,11 +1,11 @@
-import ruTranslations from "./ru";
-import beTranslations from "./be";
-import enTranslations from "./en";
+import beTranslations from './be';
+import enTranslations from './en';
+import ruTranslations from './ru';
 
 const resources = {
-    'be': beTranslations,
-    'en': enTranslations,
-    'ru': ruTranslations
-}
+    be: beTranslations,
+    en: enTranslations,
+    ru: ruTranslations,
+};
 
-export default resources
+export default resources;

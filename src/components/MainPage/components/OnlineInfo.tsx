@@ -1,17 +1,8 @@
-import {
-    createStyles,
-    Card,
-    SimpleGrid,
-    Container,
-    rem, Center, Flex,
-} from '@mantine/core';
-import {
-    IconPlaneTilt,
-    IconAirTrafficControl
-}
-    from '@tabler/icons-react';
-import {useTranslation} from "react-i18next";
-import {FeatureData} from "../../../types/Feture";
+import {Card, Center, Container, createStyles, Flex, rem, SimpleGrid,} from '@mantine/core';
+import {IconAirTrafficControl, IconPlaneTilt} from '@tabler/icons-react';
+import {useTranslation} from 'react-i18next';
+
+import {FeatureData} from '../../../types/Feture';
 
 const useStyles = createStyles((theme) => ({
     description: {
@@ -37,7 +28,7 @@ const useStyles = createStyles((theme) => ({
             maxWidth: '100%',
         },
         borderRadius: theme.radius.lg,
-        backgroundColor: "#fff",
+        backgroundColor: '#fff',
         marginTop: 20,
     },
     cardTitle: {
@@ -52,8 +43,8 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export function OnlineInfoComponent() {
-    const { classes } = useStyles();
-    const { t } = useTranslation();
+    const {classes} = useStyles();
+    const {t} = useTranslation();
     const data: FeatureData[] = [
         {
             title: t('onlinecomponent.first.title'),
@@ -64,12 +55,23 @@ export function OnlineInfoComponent() {
             title: t('onlinecomponent.second.title'),
             description: t('featuresection.second.subtitle'),
             icon: IconPlaneTilt,
-        }
+        },
     ];
     const features = data.map((feature) => (
-        <Card key={feature.title} shadow="md" radius="md" className={classes.card} padding="xl">
-            <Flex justify={"center"} align={"left"} direction={"column"}>
-                <feature.icon className={classes.icon} size={rem(70)} stroke={2} color="#fff"/>
+        <Card
+            key={feature.title}
+            shadow="md"
+            radius="md"
+            className={classes.card}
+            padding="xl"
+        >
+            <Flex justify={'center'} align={'left'} direction={'column'}>
+                <feature.icon
+                    className={classes.icon}
+                    size={rem(70)}
+                    stroke={2}
+                    color="#fff"
+                />
             </Flex>
         </Card>
     ));
@@ -77,7 +79,12 @@ export function OnlineInfoComponent() {
     return (
         <Container size="lg" py="xl">
             <Center>
-                <SimpleGrid cols={2} spacing="md" mt={"sm"} breakpoints={[{ maxWidth: 'md', cols: 1 }]}>
+                <SimpleGrid
+                    cols={2}
+                    spacing="md"
+                    mt={'sm'}
+                    breakpoints={[{maxWidth: 'md', cols: 1}]}
+                >
                     {features}
                 </SimpleGrid>
             </Center>
