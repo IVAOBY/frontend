@@ -102,17 +102,32 @@ export function Footer() {
               </h2>
               <ul className="font-medium text-gray-500 dark:text-gray-400">
                 <li className="mb-2">
-                  <a href="#" className="hover:underline">
+                  <a
+                    href="https://wiki.ivao.aero/en/home/ivao/privacypolicy"
+                    className="hover:underline"
+                    target={'_blank'}
+                    rel={'noreferrer'}
+                  >
                     {t('legal.privacypolicy')}
                   </a>
                 </li>
                 <li className="mb-2">
-                  <a href="#" className="hover:underline">
+                  <a
+                    href="https://wiki.ivao.aero/en/home/ivao/terms-of-use"
+                    className="hover:underline"
+                    target={'_blank'}
+                    rel={'noreferrer'}
+                  >
                     {t('legal.termsofuse')}
                   </a>
                 </li>
                 <li className="mb-2">
-                  <a href="#" className="hover:underline">
+                  <a
+                    href="https://wiki.ivao.aero/en/home/ivao/intellectual-property-policy"
+                    className="hover:underline"
+                    target={'_blank'}
+                    rel={'noreferrer'}
+                  >
                     {t('legal.ipp')}
                   </a>
                 </li>
