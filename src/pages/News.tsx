@@ -92,41 +92,41 @@ export function NewsPage() {
     <GeneralLayout>
       {newsItem ? (
         <>
-          <h2 className="text-center text-5xl font-bold text-ivao-blue">
+          <h2 className="text-center text-[48px] font-bold text-ivao-blue">
             {newsItem.name[i18n.language]}
           </h2>
-          <div className="mt-8 rounded-2xl bg-white p-6 shadow-lg">
-            <div className="flex flex-col gap-5 md:flex-row">
-              <img
-                src={newsItem.image_url}
-                alt={newsItem.name.en}
-                className="h-full max-w-full rounded-lg md:max-w-md"
-              />
-              <p className="text-base text-gray-700">
-                {newsItem.description[i18n.language]}
+          <div className="flex flex-row justify-center gap-[103.55px]">
+            <div className="flex flex-row gap-2">
+              <IconCalendarTime className="mt-1.5 text-ivao-blue"/>
+              <p className="text-[22px] font-bold text-gray-500">
+                {format(new Date(newsItem.publishedAt), 'dd.MM.yyyy')}
               </p>
             </div>
-            <div className="mt-4 flex items-center justify-between">
-              <div className="flex items-center">
-                <IconUser className="mr-1 text-ivao-blue" size={18}/>
-                <p className="text-base font-bold text-ivao-blue">
-                  {newsItem.user.staffPositions
+            <div className="flex flex-row gap-2">
+              <IconUser className="mt-1.5 text-ivao-blue"/>
+              <p className="text-[22px] font-bold text-gray-500">
+                {newsItem.user.staffPositions
                     ? newsItem.user.staffPositions
                         .map((position) => `BY-${position.id}`)
                         .filter(
-                          (value, index, self) => self.indexOf(value) === index,
+                            (value, index, self) => self.indexOf(value) === index,
                         )
                         .join('/')
                     : String(newsItem.user.id)}
-                </p>
-              </div>
-              <div className="flex items-center">
-                <IconCalendarTime className="mr-1 text-ivao-blue" size={18}/>
-                <p className="text-base font-bold text-ivao-blue">
-                  {format(new Date(newsItem.publishedAt), 'dd.MM.yyyy')}
-                </p>
-              </div>
+              </p>
             </div>
+          </div>
+          <div className="flex items-center justify-center">
+            <img
+                src={newsItem.image_url}
+                alt={newsItem.name.en}
+                className="mt-8 h-[393.75px] w-[700px] rounded-lg"
+            />
+          </div>
+          <div className="flex items-center justify-center text-justify">
+            <p className="mt-5 w-[700px] text-lg text-gray-700">
+              {newsItem.description[i18n.language]}
+            </p>
           </div>
         </>
       ) : (
