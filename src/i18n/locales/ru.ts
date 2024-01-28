@@ -54,8 +54,8 @@ const ruTranslations: { translations: Translations } = {
     },
     heropage: {
       title: 'Добро пожаловать в BY дивизион',
-      subtitle: 'Самый современный дивизион в IVAO.',
-      subtitle2: 'Присоединяйтесь прямо сейчас!',
+      subtitle: 'Самый современный дивизион.',
+      subtitle2: 'Присоединяйтесь сейчас!',
       joinbutton: 'Присоединиться!',
       transfer: 'Перейти в BY дивизион!',
     },
@@ -110,10 +110,8 @@ const ruTranslations: { translations: Translations } = {
       ivao: 'IVAO',
     },
     footer: {
-      copyrightMessage:
-        '© 2023 International Virtual Aviation Organisation - IVAO Belarus. All Rights Reserved.',
-      privacyPolicyName: 'Privacy Policy',
-      termsOfUseName: 'Terms of Use',
+      copyrightMessage: 'Все права защищены.',
+      followus: 'Социальные сети',
     },
     notif: {
       loading: {

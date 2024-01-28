@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import { useApi } from '../../context/ApiContext';
 import { DocumentsCategoryType, DocumentsType } from '../../hooks/types';
 
+
 const useStyles = createStyles((theme) => ({
   title: {
     fontSize: rem(34),

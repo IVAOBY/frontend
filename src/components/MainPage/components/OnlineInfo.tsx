@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 
 import { FeatureData } from '../../../types/Feture';
 
+
 const useStyles = createStyles((theme) => ({
   description: {
     maxWidth: 600,
@@ -85,7 +86,7 @@ export function OnlineInfoComponent() {
   ));
 
   return (
-    <Container size="lg" py="xl">
+      <Container size="lg">
       <Center>
         <SimpleGrid
           cols={2}

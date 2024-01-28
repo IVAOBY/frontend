@@ -10,6 +10,7 @@ import { useParams } from 'react-router-dom';
 import { GeneralLayout } from '../components/Layout';
 import { useApi } from '../context/ApiContext';
 
+
 interface News {
   id: number;
   user: {
@@ -91,7 +92,7 @@ export function NewsPage() {
     <GeneralLayout>
       {newsItem ? (
         <>
-          <h2 className="mt-4 text-center text-4xl font-bold text-ivao-blue">
+          <h2 className="text-center text-5xl font-bold text-ivao-blue">
             {newsItem.name[i18n.language]}
           </h2>
           <div className="mt-8 rounded-2xl bg-white p-6 shadow-lg">
@@ -107,7 +108,7 @@ export function NewsPage() {
             </div>
             <div className="mt-4 flex items-center justify-between">
               <div className="flex items-center">
-                <IconUser className="text-ivao-blue" size={18} />
+                <IconUser className="mr-1 text-ivao-blue" size={18}/>
                 <p className="text-base font-bold text-ivao-blue">
                   {newsItem.user.staffPositions
                     ? newsItem.user.staffPositions
@@ -120,9 +121,9 @@ export function NewsPage() {
                 </p>
               </div>
               <div className="flex items-center">
-                <IconCalendarTime className="text-ivao-blue" size={18} />
-                <p className="text-base text-ivao-blue">
-                  {format(new Date(newsItem.publishedAt), 'dd-MM-yyyy')}
+                <IconCalendarTime className="mr-1 text-ivao-blue" size={18}/>
+                <p className="text-base font-bold text-ivao-blue">
+                  {format(new Date(newsItem.publishedAt), 'dd.MM.yyyy')}
                 </p>
               </div>
             </div>
@@ -139,7 +140,7 @@ export function NewsPage() {
               {[1, 2, 3, 4, 5, 6].map((index) => (
                 <div
                   key={index}
-                  className="my-2 h-6 w-4/5 animate-pulse rounded-lg bg-ivao-grey"
+                  className="my-2 h-6 w-full animate-pulse rounded-lg bg-ivao-grey md:w-4/5"
                 ></div>
               ))}
             </div>

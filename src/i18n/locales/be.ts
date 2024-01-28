@@ -110,10 +110,8 @@ const beTranslations: { translations: Translations } = {
       ivao: 'IVAO',
     },
     footer: {
-      copyrightMessage:
-        '© 2023 International Virtual Aviation Organisation - IVAO Belarus. All Rights Reserved.',
-      privacyPolicyName: 'Privacy Policy',
-      termsOfUseName: 'Terms of Use',
+      copyrightMessage: 'Усе правы ахоўваюцца.',
+      followus: 'Сацыяльныя сеткі',
     },
     notif: {
       loading: {

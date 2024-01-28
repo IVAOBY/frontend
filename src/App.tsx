@@ -28,14 +28,19 @@ import { NotFound } from './pages/Error404';
 import { EventPage } from './pages/events/EventPage';
 import { FAQ } from './pages/FAQ';
 import { FirstStepP } from './pages/FirstStepPilot';
-import { Legal } from './pages/Legal';
 import { MapPage } from './pages/MapPage';
 import { NewsPage } from './pages/News';
 import { ScenaryPage } from './pages/Scenary';
 import { SectorFile } from './pages/SectorFile';
 import { Vehicles } from './pages/vehicles/Vehicles';
 
+
+
 import './App.css';
+
+
+
+
 
 export default function App() {
   const PrivateRoute: React.FC<{ path: string; element: React.ReactNode }> = ({
@@ -87,7 +92,6 @@ export default function App() {
                   <Route path="/pilots/first-step" element={<FirstStepP />} />
                   <Route path="/news/:id" element={<NewsPage />} />
                   <Route path="/map" element={<MapPage />} />
-                  <Route path="/legal" element={<Legal />} />
                   <Route path="/staff" element={<StaffMain />} />
                   <Route path="/vehicles" element={<Vehicles />} />
 

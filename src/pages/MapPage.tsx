@@ -3,6 +3,10 @@ import Map from 'react-map-gl';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 
+
+
+
+
 export function MapPage() {
   return (
     <Container>

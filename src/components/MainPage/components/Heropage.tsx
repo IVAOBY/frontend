@@ -1,133 +1,18 @@
 import { useCallback, useContext } from 'react';
 
-import {
-  Button,
-  Container,
-  createStyles,
-  Flex,
-  Group,
-  Overlay,
-  rem,
-  Text,
-  Title,
-} from '@mantine/core';
-import { useMediaQuery } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import { IconCircleX } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import Typed from 'react-typed';
 
 import { AuthContext } from '../../../context/UserContext';
+import { CustomButton } from '../../Button';
 
-const useStyles = createStyles((theme) => ({
-  wrapper: {
-    position: 'relative',
-    paddingTop: rem(180),
-    paddingBottom: rem(130),
-    backgroundImage:
-      'url(https://media.discordapp.net/attachments/1195071599481716767/1196526948084629635/orsha.jpg?ex=65b7f38e&is=65a57e8e&hm=d3fdb6b687ca4ee629e91770599ee023282f1b9f599525c9c1c4c6f26dc0a243&=&format=webp&width=1196&height=671)',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    height: 620,
-    overflow: 'hidden',
-
-    [theme.fn.smallerThan('xs')]: {
-      paddingTop: rem(80),
-      paddingBottom: rem(50),
-      height: 350,
-    },
-  },
-
-  inner: {
-    position: 'relative',
-    zIndex: 1,
-  },
-
-  title: {
-    fontWeight: 700,
-    fontSize: rem(50),
-    letterSpacing: rem(-1),
-    paddingLeft: theme.spacing.md,
-    paddingRight: theme.spacing.md,
-    color: theme.white,
-    marginBottom: theme.spacing.xs,
-    textAlign: 'center',
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-
-    [theme.fn.smallerThan('xs')]: {
-      fontSize: rem(28),
-    },
-  },
-
-  description: {
-    color: theme.white,
-    textAlign: 'center',
-    fontSize: 29,
-    maxWidth: '100%',
-
-    [theme.fn.smallerThan('xs')]: {
-      fontSize: theme.fontSizes.md,
-    },
-  },
-
-  controls: {
-    marginTop: `calc(${theme.spacing.xl} * 1.5)`,
-    display: 'flex',
-    justifyContent: 'center',
-    paddingLeft: theme.spacing.md,
-    paddingRight: theme.spacing.md,
-
-    [theme.fn.smallerThan('xs')]: {
-      flexDirection: 'column',
-    },
-  },
-
-  control: {
-    height: rem(42),
-    fontSize: theme.fontSizes.md,
-
-    '&:not(:first-of-type)': {
-      marginLeft: theme.spacing.md,
-    },
-
-    [theme.fn.smallerThan('xs')]: {
-      '&:not(:first-of-type)': {
-        marginTop: theme.spacing.md,
-        marginLeft: 0,
-      },
-    },
-  },
-
-  secondaryControl: {
-    color: theme.white,
-    backgroundColor: 'rgba(255, 255, 255, .4)',
-
-    '&:hover': {
-      backgroundColor: 'rgba(255, 255, 255, .45) !important',
-    },
-  },
-
-  joinButton: {
-    color: '#fff',
-    '&:hover': {
-      backgroundColor: '#fff',
-      color: '#0D2C99',
-    },
-  },
-  transButton: {
-    color: '#fff',
-    borderColor: '#fff',
-    '&:hover': {
-      backgroundColor: '#fff',
-      color: '#0D2C99',
-    },
-  },
-}));
 
 export function HeroText() {
-  const { classes } = useStyles();
+  // const { classes } = useStyles();
   const { t } = useTranslation();
-  const isSmallScreen = useMediaQuery('(max-width: 575px)');
+  // const isSmallScreen = useMediaQuery('(max-width: 575px)');
   const { signed, decodedToken } = useContext(AuthContext);
 
   const byTransferMail = useCallback(() => {
@@ -149,10 +34,10 @@ export function HeroText() {
       try {
         const emailBody = `Dear HQs and Membership Department!
 
-                I request to transfer me from the ${decodedToken?.userData.divisionId} division to the BY division.
+I request to transfer me from the ${decodedToken?.userData.divisionId} division to the BY division.
                 
-                Best wishes,
-                ${decodedToken?.userData.name.first} ${decodedToken?.userData.name.last}`;
+Best wishes,
+${decodedToken?.userData.name.first} ${decodedToken?.userData.name.last}`;
 
         window.open(
           `mailto:BY-hq@ivao.aero,${decodedToken?.userData.divisionId}-hq@ivao.aero?cc=members@ivao.aero&subject=Division%20transfer%20${decodedToken?.userData.id}&body=${encodeURIComponent(
@@ -171,54 +56,43 @@ export function HeroText() {
   }, []);
 
   return (
-    <div className={classes.wrapper}>
-      <Overlay color="#00000" opacity={0.45} zIndex={1} />
-      <Flex
-        mih={50}
-        gap="md"
-        justify="center"
-        align="center"
-        direction="row"
-        wrap="wrap"
-      >
-        <div className={classes.inner}>
-          <Title className={classes.title}>
-            {t('heropage.title')} {t('generic.ivao')}
-          </Title>
-          <Container size={640}>
-            <Text size="lg" className={`${classes.description}`}>
-              <Typed
-                strings={[t('heropage.subtitle'), t('heropage.subtitle2')]}
-                typeSpeed={90}
-                backSpeed={15}
-                loop
-              />
-            </Text>
-          </Container>
-          <div className={classes.controls}>
-            <Group position="center">
-              <Button
-                className={classes.joinButton}
-                variant="filled"
-                size={isSmallScreen ? 'sm' : 'md'}
-                onClick={() =>
-                  openLink('https://ivao.aero/members/person/register.htm')
-                }
-              >
-                {t('heropage.joinbutton')}
-              </Button>
-              <Button
-                className={classes.transButton}
-                variant="outline"
-                size={isSmallScreen ? 'sm' : 'md'}
-                onClick={byTransferMail}
-              >
-                {t('heropage.transfer')}
-              </Button>
-            </Group>
+    <div className="inline-flex max-w-screen-lg flex-col items-center justify-start gap-40 px-40 pb-14 pt-28">
+      <div className="flex h-[450px] flex-col items-start justify-center gap-14 self-stretch">
+        <div className="flex h-[236px] flex-col items-start justify-center gap-3 self-stretch">
+          <div className="self-stretch text-4xl font-bold leading-[80px] text-ivao-blue">
+            <Typed
+              strings={[t('heropage.subtitle'), t('heropage.subtitle2')]}
+              typeSpeed={90}
+              backSpeed={15}
+              loop
+            />
+          </div>
+          <div className="self-stretch">
+            <span className="text-lg  leading-loose text-fuselage-150">
+              Присоединяйтесь к белорусскому дивизиону IVAO и окунитесь в мир
+              виртуальной авиации. Опытные пилоты и контролеры, захватывающие
+              мероприятия и профессиональное сообщество. Присоединяйтесь прямо
+              сейчас!
+            </span>
           </div>
         </div>
-      </Flex>
+        <div className="inline-flex content-normal justify-start gap-4">
+          <CustomButton
+            title={t('heropage.joinbutton')}
+            variant={'secondary'}
+            size={'xl'}
+            onClick={() =>
+              openLink('https://ivao.aero/members/person/register.htm')
+            }
+          />
+          <CustomButton
+            title={t('heropage.transfer')}
+            variant={'muted'}
+            size={'xl'}
+            onClick={byTransferMail}
+          />
+        </div>
+      </div>
     </div>
   );
 }

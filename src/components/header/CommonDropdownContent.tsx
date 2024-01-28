@@ -18,7 +18,6 @@ import {
   IconEye,
   IconFileInfo,
   IconFocus2,
-  IconGavel,
   IconIdBadge2,
   IconInfoSquareRounded,
   IconLock,
@@ -150,12 +149,6 @@ export function CommonDropdownContent({
             onClick={() => navigate('faq')}
           >
             {t('navbar.division.faq')}
-          </Menu.Item>
-          <Menu.Item
-            icon={<IconGavel size={20} />}
-            onClick={() => navigate('/legal')}
-          >
-            {t('navbar.division.legal')}
           </Menu.Item>
         </Menu.Dropdown>
       </Menu>

@@ -7,6 +7,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import { DecodedTokenInt } from '../hooks/types';
 
+
 interface AuthProviderProps {
   children: React.ReactNode;
 }
@@ -75,9 +76,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       if (tokenFromUrl) {
         localStorage.setItem('token', tokenFromUrl);
-
         removeTokenFromUrl();
-
         setToken(tokenFromUrl);
 
         return;

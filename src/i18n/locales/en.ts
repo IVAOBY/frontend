@@ -54,7 +54,7 @@ const enTranslations: { translations: Translations } = {
     },
     heropage: {
       title: 'Welcome to the BY Division of',
-      subtitle: 'The most modern division in IVAO.',
+      subtitle: 'The most modern IVAO division.',
       subtitle2: 'Join now!',
       joinbutton: 'Join!',
       transfer: 'Transfer to BY division!',
@@ -110,10 +110,8 @@ const enTranslations: { translations: Translations } = {
       ivao: 'IVAO',
     },
     footer: {
-      copyrightMessage:
-        '© 2023 International Virtual Aviation Organisation - IVAO Belarus. All Rights Reserved.',
-      privacyPolicyName: 'Privacy Policy',
-      termsOfUseName: 'Terms of Use',
+      copyrightMessage: 'All Rights Reserved.',
+      followus: 'Follow Us',
     },
     notif: {
       loading: {

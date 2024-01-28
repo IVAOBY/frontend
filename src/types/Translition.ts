@@ -105,8 +105,7 @@ export interface Translations {
   };
   footer: {
     copyrightMessage: string;
-    privacyPolicyName: string;
-    termsOfUseName: string;
+    followus: string;
   };
   notif: {
     loading: {

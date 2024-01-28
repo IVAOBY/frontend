@@ -6,6 +6,7 @@ import axios from 'axios';
 
 import { AuthContext } from './UserContext';
 
+
 interface ApiContextType {
   api: (path: string, method?: string, body?: any) => Promise<any>;
 }
@@ -33,7 +34,8 @@ export const ApiProvider = ({ children }: ApiProviderProps) => {
     };
     try {
       const config = {
-        url: import.meta.env.VITE_API_URL_BASE + path,
+        url:
+          import.meta.env.VITE_API_URL_BASE + path || 'http://localhost:3000',
         method,
         headers,
         data: '',

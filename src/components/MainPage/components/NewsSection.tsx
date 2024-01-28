@@ -1,20 +1,8 @@
 import { useEffect, useState } from 'react';
 
-import {
-  createStyles,
-  Flex,
-  Group,
-  Image,
-  Paper,
-  rem,
-  SimpleGrid,
-  Skeleton,
-  Text,
-  Title,
-  UnstyledButton,
-} from '@mantine/core';
+import { createStyles, rem, Title } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
-import { IconCalendarTime, IconCircleX, IconUser } from '@tabler/icons-react';
+import { IconCircleX } from '@tabler/icons-react';
 import { format } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -22,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { useApi } from '../../../context/ApiContext';
 import { GeneralLayout } from '../../Layout';
 import Pagination from '../../Pagination';
+
 
 const useStyles = createStyles((theme) => {
   return {
@@ -229,7 +218,7 @@ export function NewsSection() {
   }, [api, t]);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 2;
+  const itemsPerPage = 4;
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -239,114 +228,57 @@ export function NewsSection() {
       <Title order={2} className={classes.title} ta="center" mt="sm">
         {t('news.title')}
       </Title>
-      <SimpleGrid
-        cols={1}
-        spacing="xl"
-        mt={rem(13)}
-        breakpoints={[{ maxWidth: 'md', cols: 1 }]}
-      >
+
+      <div className="-mx-4 mt-10 flex flex-wrap justify-center gap-6">
         {news === null
           ? Array.from({ length: itemsPerPage }).map((_, index) => (
-              <Paper
+                <div
                 key={index}
-                className={classes.card}
-                p="xl"
-                radius="lg"
-                shadow="lg"
-              >
-                <Flex className={classes.cardContent}>
-                  <div className={classes.cardImage}>
-                    <Skeleton height={rem(231)} radius="lg" maw={400} />
-                  </div>
-                  <div className={classes.skeleton}>
-                    <Skeleton height={10} radius="lg" maw={600} />
-                    <Skeleton height={10} radius="lg" maw={600} />
-                    <Skeleton height={10} radius="lg" maw={600} />
-                    <Skeleton height={10} radius="lg" maw={600} />
-                    <Skeleton height={10} radius="lg" maw={600} />
-                    <Skeleton height={10} radius="lg" maw={600} />
-                  </div>
-                </Flex>
-              </Paper>
+                className="relative h-[270px] w-[480px] items-center overflow-hidden rounded-xl bg-gray-400 blur-lg"
+                style={{cursor: 'wait'}}
+                ></div>
             ))
           : news.slice(startIndex, endIndex).map((newsItem) => (
-              <UnstyledButton
+                <div
                 key={newsItem.id}
-                className={classes.button}
-                style={{ width: 'auto', height: 'auto' }}
+                className="relative h-[270px] w-[480px] overflow-hidden rounded-xl duration-300 hover:scale-95 hover:transition-all"
                 onClick={() => newsRedirect(newsItem)}
+                style={{cursor: 'pointer'}}
               >
-                <Paper
-                  key={newsItem.id}
-                  className={classes.card}
-                  p="xl"
-                  radius="lg"
-                  shadow="lg"
+                  <div
+                      className="absolute inset-0"
+                      style={{
+                        backgroundImage: `url(${newsItem.image_url})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                      }}
                 >
-                  <Flex className={classes.cardContent}>
-                    <div className={classes.cardImage}>
-                      <Image
-                        src={newsItem.image_url}
-                        alt="newsimage"
-                        radius="lg"
-                      />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+                    <div className="absolute inset-0 flex flex-col items-start justify-end p-6 text-white">
+                      <div
+                          className="flex items-center justify-center gap-2.5 rounded-[999px] border border-white bg-white bg-opacity-0 px-2 py-1 backdrop-blur-[10px]">
+                        <div className="font-['Nunito Sans'] text-xs font-medium text-white">
+                          {format(new Date(newsItem.publishedAt), 'dd.MM.yyyy')}
+                        </div>
                     </div>
-                    <div>
-                      <Title className={classes.cardTitle}>
+                      <div className="font-['Nunito Sans'] text-3xl font-bold leading-9">
                         {newsItem.name[i18n.language]}
-                      </Title>
-                      <Text className={classes.cardDescription}>
-                        {newsItem.description[i18n.language].length > 300
-                          ? `${newsItem.description[i18n.language].slice(0, 300)}...`
-                          : newsItem.description[i18n.language]}
-                      </Text>
-
-                      <div className={classes.cardAuthorDate}>
-                        <Group>
-                          <IconUser
-                            size={18}
-                            color={theme.colors.blue[9]}
-                          ></IconUser>
-                          <Text
-                            size="md"
-                            fw="bold"
-                            color={theme.colors.blue[9]}
-                          >
-                            {newsItem.user.staffPositions
-                              ? newsItem.user.staffPositions
-                                  .map((position) => `BY-${position.id}`)
-                                  .filter(
-                                    (value, index, self) =>
-                                      self.indexOf(value) === index,
-                                  )
-                                  .join('/')
-                              : String(newsItem.user.id)}
-                          </Text>
-                        </Group>
-                        <Group position="right">
-                          <IconCalendarTime
-                            size={18}
-                            color={theme.colors.blue[9]}
-                          />
-                          <Text size="md" c={theme.colors.blue[9]}>
-                            {format(
-                              new Date(newsItem.publishedAt),
-                              'dd-MM-yyyy',
-                            )}
-                          </Text>
-                        </Group>
+                      </div>
+                      <div className="font-['Nunito Sans'] text-base font-normal leading-normal">
+                        {newsItem.description[i18n.language].length > 96
+                            ? `${newsItem.description[i18n.language].slice(0, 96)}...`
+                            : newsItem.description[i18n.language]}
                       </div>
                     </div>
-                  </Flex>
-                </Paper>
-              </UnstyledButton>
+                  </div>
+                </div>
             ))}
-      </SimpleGrid>
+      </div>
       <Pagination
         currentPage={currentPage}
         totalPages={Math.ceil(news ? news.length / itemsPerPage : 1)}
         onPageChange={setCurrentPage}
-        className="mt-4"
+        className="mt-16"
       />
     </GeneralLayout>
   );
