@@ -13,10 +13,6 @@ import {
 import { IconSearch } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 
-
-
-
-
 const useStyles = createStyles((theme) => ({
   title: {
     fontSize: rem(34),

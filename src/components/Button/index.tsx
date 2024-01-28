@@ -3,7 +3,7 @@ import { ButtonHTMLAttributes, ReactNode } from 'react';
 import { classNames } from '../../utils/styles';
 
 type ButtonVariants = 'primary' | 'secondary' | 'danger' | 'muted';
-type Sizes = 'sm' | 'md' | 'lg';
+type Sizes = 'sm' | 'md' | 'lg' | 'xl';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   title: string;
@@ -17,6 +17,7 @@ const sizesVariants: { [key in Sizes]: string } = {
   sm: 'px-2 py-1 text-xs',
   md: 'px-3 py-2 text-sm',
   lg: 'px-4 py-2 text-sm',
+  xl: 'px-3 py-2 text-sm md:px-5 md:py-3 md:text-lg',
 };
 
 const colorsVariants: { [key in ButtonVariants]: string } = {

@@ -10,7 +10,6 @@ import { useParams } from 'react-router-dom';
 import { GeneralLayout } from '../components/Layout';
 import { useApi } from '../context/ApiContext';
 
-
 interface News {
   id: number;
   user: {
@@ -108,7 +107,7 @@ export function NewsPage() {
             </div>
             <div className="mt-4 flex items-center justify-between">
               <div className="flex items-center">
-                <IconUser className="mr-1 text-ivao-blue" size={18}/>
+                <IconUser className="mr-1 text-ivao-blue" size={18} />
                 <p className="text-base font-bold text-ivao-blue">
                   {newsItem.user.staffPositions
                     ? newsItem.user.staffPositions
@@ -121,7 +120,7 @@ export function NewsPage() {
                 </p>
               </div>
               <div className="flex items-center">
-                <IconCalendarTime className="mr-1 text-ivao-blue" size={18}/>
+                <IconCalendarTime className="mr-1 text-ivao-blue" size={18} />
                 <p className="text-base font-bold text-ivao-blue">
                   {format(new Date(newsItem.publishedAt), 'dd.MM.yyyy')}
                 </p>

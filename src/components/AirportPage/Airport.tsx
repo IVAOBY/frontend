@@ -15,10 +15,6 @@ import {
   IconRoad,
 } from '@tabler/icons-react';
 
-
-
-
-
 const useStyles = createStyles(() => ({
   card: {
     minWidth: rem(300),

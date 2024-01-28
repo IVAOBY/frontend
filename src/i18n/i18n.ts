@@ -4,7 +4,6 @@ import { initReactI18next } from 'react-i18next';
 
 import translations from './locales';
 
-
 const storedLanguage = localStorage.getItem('language');
 
 const i18nConfig = {

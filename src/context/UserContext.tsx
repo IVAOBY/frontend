@@ -7,7 +7,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import { DecodedTokenInt } from '../hooks/types';
 
-
 interface AuthProviderProps {
   children: React.ReactNode;
 }

@@ -12,7 +12,6 @@ import { useNavigate } from 'react-router-dom';
 
 import errorimage from '../assets/image/en.svg';
 
-
 const useStyles = createStyles(() => ({
   root: {
     paddingTop: '80px',

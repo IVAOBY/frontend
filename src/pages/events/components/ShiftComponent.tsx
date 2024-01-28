@@ -29,7 +29,6 @@ import { useApi } from '../../../context/ApiContext';
 import { AuthContext } from '../../../context/UserContext';
 import { PartsEntity } from '../../../types/Events';
 
-
 const useStyles = createStyles((theme) => ({
   title: {
     fontSize: rem(34),

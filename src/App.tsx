@@ -8,7 +8,7 @@ import { I18nextProvider } from 'react-i18next';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { Airport } from './components/AirportPage/Airport';
-import { Footer } from './components/Footer';
+import { Index } from './components/Footer';
 import { HeaderResponsive } from './components/header/header';
 import { MainPage } from './components/MainPage/MainPage';
 import { MessageOverlay } from './components/MessageOverlay';
@@ -34,13 +34,7 @@ import { ScenaryPage } from './pages/Scenary';
 import { SectorFile } from './pages/SectorFile';
 import { Vehicles } from './pages/vehicles/Vehicles';
 
-
-
 import './App.css';
-
-
-
-
 
 export default function App() {
   const PrivateRoute: React.FC<{ path: string; element: React.ReactNode }> = ({
@@ -79,7 +73,7 @@ export default function App() {
               <AppShell
                 padding={0}
                 navbar={<HeaderResponsive />}
-                footer={<Footer />}
+                footer={<Index />}
               >
                 <Notifications />
                 <Routes>

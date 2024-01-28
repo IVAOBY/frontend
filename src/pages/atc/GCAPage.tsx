@@ -16,7 +16,6 @@ import { useTranslation } from 'react-i18next';
 import { useApi } from '../../context/ApiContext';
 import { DocumentsType } from '../../hooks/types';
 
-
 const useStyles = createStyles((theme) => ({
   title: {
     fontSize: rem(34),
