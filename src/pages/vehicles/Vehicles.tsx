@@ -17,7 +17,6 @@ import { useParams } from 'react-router-dom';
 
 import { useApi } from '../../context/ApiContext';
 
-
 const useStyles = createStyles((theme) => ({
   title: {
     fontSize: rem(34),

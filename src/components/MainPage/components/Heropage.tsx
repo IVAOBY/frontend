@@ -8,7 +8,6 @@ import Typed from 'react-typed';
 import { AuthContext } from '../../../context/UserContext';
 import { CustomButton } from '../../Button';
 
-
 export function HeroText() {
   // const { classes } = useStyles();
   const { t } = useTranslation();
@@ -56,10 +55,10 @@ ${decodedToken?.userData.name.first} ${decodedToken?.userData.name.last}`;
   }, []);
 
   return (
-    <div className="inline-flex max-w-screen-lg flex-col items-center justify-start gap-40 px-40 pb-14 pt-28">
+    <div className="inline-flex max-w-screen-lg flex-col items-center justify-start gap-40 px-5 pt-8 md:px-40 md:pb-14 md:pt-28">
       <div className="flex h-[450px] flex-col items-start justify-center gap-14 self-stretch">
         <div className="flex h-[236px] flex-col items-start justify-center gap-3 self-stretch">
-          <div className="self-stretch text-4xl font-bold leading-[80px] text-ivao-blue">
+          <div className="self-stretch text-4xl font-bold leading-10 text-ivao-blue md:leading-[80px]">
             <Typed
               strings={[t('heropage.subtitle'), t('heropage.subtitle2')]}
               typeSpeed={90}
@@ -68,7 +67,7 @@ ${decodedToken?.userData.name.first} ${decodedToken?.userData.name.last}`;
             />
           </div>
           <div className="self-stretch">
-            <span className="text-lg  leading-loose text-fuselage-150">
+            <span className="leading-loose text-fuselage-150 md:text-lg">
               Присоединяйтесь к белорусскому дивизиону IVAO и окунитесь в мир
               виртуальной авиации. Опытные пилоты и контролеры, захватывающие
               мероприятия и профессиональное сообщество. Присоединяйтесь прямо
@@ -76,7 +75,7 @@ ${decodedToken?.userData.name.first} ${decodedToken?.userData.name.last}`;
             </span>
           </div>
         </div>
-        <div className="inline-flex content-normal justify-start gap-4">
+        <div className="md:inline-flex content-normal justify-start gap-4">
           <CustomButton
             title={t('heropage.joinbutton')}
             variant={'secondary'}

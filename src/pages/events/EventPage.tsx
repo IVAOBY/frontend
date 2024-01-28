@@ -21,7 +21,6 @@ import { useApi } from '../../context/ApiContext';
 import { EventEntity } from '../../types/Events';
 import { ShiftComponent } from './components/ShiftComponent';
 
-
 const useStyles = createStyles((theme) => ({
   title: {
     fontSize: rem(34),

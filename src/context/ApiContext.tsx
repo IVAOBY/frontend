@@ -6,7 +6,6 @@ import axios from 'axios';
 
 import { AuthContext } from './UserContext';
 
-
 interface ApiContextType {
   api: (path: string, method?: string, body?: any) => Promise<any>;
 }
