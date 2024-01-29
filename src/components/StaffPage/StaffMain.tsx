@@ -1,47 +1,13 @@
 import { useEffect, useState } from 'react';
 
-import {
-  ActionIcon,
-  Container,
-  createStyles,
-  Flex,
-  Image,
-  Paper,
-  rem,
-  Text,
-  Title,
-  Tooltip,
-} from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { IconCircleX, IconIdBadge2, IconMailOpened } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 
 import { useApi } from '../../context/ApiContext';
-
-const useStyles = createStyles((theme) => ({
-  title: {
-    fontSize: rem(34),
-    fontWeight: 800,
-    color: theme.colors.blue[9],
-    [theme.fn.smallerThan('sm')]: {
-      fontSize: rem(24),
-    },
-    '&::after': {
-      content: '""',
-      display: 'block',
-      backgroundColor: theme.fn.primaryColor(),
-      width: rem(45),
-      height: rem(2),
-      marginTop: theme.spacing.sm,
-      marginLeft: 'auto',
-      marginRight: 'auto',
-    },
-  },
-  card: {
-    minWidth: rem(300),
-    minHeight: rem(300),
-  },
-}));
+import { GeneralLayout } from '../Layout';
+import { Tooltip } from '../Tooltip';
+import { Title } from '../Typography/Title';
 
 interface Department {
   id: string;
@@ -73,7 +39,6 @@ interface Position {
 }
 
 export function StaffMain() {
-  const { classes, theme } = useStyles();
   const [departments, setDepartments] = useState<Department[]>([]);
   const [positions, setPositions] = useState<Position[]>([]);
   const { t } = useTranslation();
@@ -158,45 +123,24 @@ export function StaffMain() {
   }, [api, t]);
 
   return (
-    <Container size={'xl'} py={'xl'}>
-      <Title order={2} className={classes.title} ta="center" mt="sm">
-        {t('staff.name')}
-      </Title>
+    <GeneralLayout>
+      <Title withUndreline>{t('staff.name')}</Title>
       {departments.map((department, index) => (
-        <div key={index}>
-          <Flex direction="column" align="center">
-            <Title
-              key={index}
-              ta="center"
-              order={2}
-              c={theme.colors.blue[9]}
-              pt={index === 0 ? 13 : 40}
-            >
+        <div key={index} className="mt-10">
+          <div className="flex flex-col items-center justify-items-center">
+            <Title key={index} className={`pt-${index === 0 ? 13 : 40}`}>
               {department.name}
             </Title>
-            <ActionIcon
-              variant="filled"
-              color={theme.colors.blue[9]}
-              size="lg"
-              aria-label="Send Email"
+            <div
+              className="mt-2 cursor-pointer rounded-xl bg-atmos-700 p-2 transition hover:bg-ocean-600"
               onClick={() => handleEmailClick(department.email)}
-              mt={10}
             >
-              <IconMailOpened
-                style={{ width: '60%', height: '60%' }}
-                color={theme.colors.blue[9]}
-                stroke={1.5}
-              />
-            </ActionIcon>
+              <IconMailOpened className={'text-white'} />
+            </div>
 
-            <Flex
+            <div
               id="staff-grid"
-              mt={40}
-              gap="md"
-              justify="center"
-              align="center"
-              direction="row"
-              wrap="wrap"
+              className="mt-5 flex flex-row flex-wrap items-center justify-center gap-2 text-center"
             >
               {positions
                 .filter(
@@ -214,30 +158,21 @@ export function StaffMain() {
                   }
                 })
                 .map((position, positionIndex) => (
-                  <Paper
-                    className={classes.card}
-                    shadow={'lg'}
-                    p={'xl'}
-                    radius="lg"
+                  <div
+                    className="min-w-[350px] rounded-2xl bg-white p-10 shadow-xl"
                     key={positionIndex}
-                    bg="#fff"
                   >
-                    <Flex
-                      direction={'column'}
-                      justify={'center'}
-                      align={'center'}
-                    >
-                      <Image
-                        radius={100}
-                        maw={150}
+                    <div className="flex flex-col items-center">
+                      <img
+                        className="max-h-[150px] max-w-[150px] rounded-[100px]"
                         src={
                           position.user.id
-                            ? `https://static.game-explore.space/staff/${position.user.id}.jpg`
+                            ? `https://xr.ivao.aero/images/staff_photo/${position.user.id}.jpg`
                             : 'https://static.game-explore.space/staff/vacant.png'
                         }
                         alt={'Staff Photo'}
                       />
-                      <Title order={3} color={theme.colors.blue[9]} mt={20}>
+                      <Title className="text-[24px]">
                         {position.user.id
                           ? position.user.name.last
                             ? `${position.user.name.first} ${position.user.name.last}`
@@ -245,56 +180,44 @@ export function StaffMain() {
                           : 'Вакантно'}
                       </Title>
                       <Tooltip
-                        label={position.name.en}
+                        content={position.name['en']}
                         position={'bottom'}
-                        radius={'lg'}
-                        withArrow
                       >
-                        <Text size={14} fw={600} c={theme.colors.gray[7]}>
-                          {position.prefix}-{position.id}
-                        </Text>
-                      </Tooltip>
-                      <Flex gap={10} mt={40}>
-                        <ActionIcon
-                          component="a"
-                          variant="filled"
-                          color={theme.colors.blue[9]}
-                          size="lg"
-                          radius="xl"
-                          aria-label="MAIL IVAO"
-                          href={`mailto:${position.prefix}-${position.id}@ivao.aero`}
-                          target="_blank"
+                        <p
+                          className={
+                            'text-base font-semibold text-fuselage-400'
+                          }
                         >
-                          <IconMailOpened
-                            style={{ width: '60%', height: '60%' }}
-                            color="white"
-                            stroke={1.5}
-                          />
-                        </ActionIcon>
-                        <ActionIcon
-                          component="a"
-                          variant="filled"
-                          color={theme.colors.blue[9]}
-                          size="lg"
-                          radius="xl"
-                          aria-label="IVAO"
+                          {position.prefix}-{position.id}
+                        </p>
+                      </Tooltip>
+                      <div className={'mt-20 flex flex-row gap-2'}>
+                        <div
+                          className="mt-2 cursor-pointer rounded-xl bg-atmos-700 p-2 transition hover:bg-ocean-600"
+                          onClick={() =>
+                            handleEmailClick(
+                              `${position.prefix}-${position.id}@ivao.aero\``,
+                            )
+                          }
+                        >
+                          <IconMailOpened className={'text-white'} />
+                        </div>
+                        <a
+                          className="mt-2 cursor-pointer rounded-xl bg-atmos-700 p-2 transition hover:bg-ocean-600"
                           href={`https://www.ivao.aero/staff/details.asp?Id=${position.prefix}-${position.id}`}
                           target="_blank"
+                          aria-label="IVAO"
                         >
-                          <IconIdBadge2
-                            style={{ width: '60%', height: '60%' }}
-                            color="white"
-                            stroke={1.5}
-                          />
-                        </ActionIcon>
-                      </Flex>
-                    </Flex>
-                  </Paper>
+                          <IconIdBadge2 className={'text-white'} />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
                 ))}
-            </Flex>
-          </Flex>
+            </div>
+          </div>
         </div>
       ))}
-    </Container>
+    </GeneralLayout>
   );
 }

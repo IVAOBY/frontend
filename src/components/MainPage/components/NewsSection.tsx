@@ -97,7 +97,7 @@ export function NewsSection() {
 
   return (
     <GeneralLayout>
-      <Title>{t('news.title')}</Title>
+      <Title withUndreline>{t('news.title')}</Title>
 
       <div className="-mx-4 mt-10 flex flex-wrap justify-center gap-6">
         {news === null

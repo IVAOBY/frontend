@@ -8,8 +8,8 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 import { GeneralLayout } from '../components/Layout';
+import { Title } from '../components/Typography/Title';
 import { useApi } from '../context/ApiContext';
-import { Title } from "../components/Typography/Title";
 
 interface News {
   id: number;
@@ -92,7 +92,10 @@ export function NewsPage() {
     <GeneralLayout>
       {newsItem ? (
         <>
-          <Title className="text-center text-2xl font-bold text-ivao-blue md:text-4xl">
+          <Title
+            className="text-center text-2xl font-bold text-ivao-blue md:text-4xl"
+            withUndreline
+          >
             {newsItem.name[i18n.language]}
           </Title>
           <div className="mt-5 flex flex-row justify-center gap-[103.55px]">
@@ -125,9 +128,12 @@ export function NewsPage() {
             />
           </div>
           <div className="flex items-center justify-center text-justify">
-            <p className="m-5 w-[700px] break-words text-gray-700 md:text-lg">
-              {newsItem.description[i18n.language]}
-            </p>
+            <p
+              className="m-5 w-[700px] break-words text-gray-700 md:text-lg"
+              dangerouslySetInnerHTML={{
+                __html: newsItem.description[i18n.language],
+              }}
+            />
           </div>
         </>
       ) : (

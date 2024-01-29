@@ -1,6 +1,3 @@
-// import { createStyles, rem } from '@mantine/core';
-// import { useTranslation } from 'react-i18next';
-
 import { GeneralLayout } from '../components/Layout';
 import { ListItem } from '../components/List';
 import { Title } from '../components/Typography/Title';
@@ -15,6 +12,7 @@ export function AboutUs() {
         <Title
           className="text-4xl"
           description={'История белорусского дивизиона'}
+          withUndreline
         >
           О нас
         </Title>
