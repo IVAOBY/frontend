@@ -9,7 +9,7 @@ import { useParams } from 'react-router-dom';
 
 import { GeneralLayout } from '../components/Layout';
 import { useApi } from '../context/ApiContext';
-
+import { Title } from "../components/Typography/Title";
 
 interface News {
   id: number;
@@ -92,39 +92,40 @@ export function NewsPage() {
     <GeneralLayout>
       {newsItem ? (
         <>
-          <h2 className="text-center text-[48px] font-bold text-ivao-blue">
+          <Title className="text-center text-2xl font-bold text-ivao-blue md:text-4xl">
             {newsItem.name[i18n.language]}
-          </h2>
-          <div className="flex flex-row justify-center gap-[103.55px]">
+          </Title>
+          <div className="mt-5 flex flex-row justify-center gap-[103.55px]">
             <div className="flex flex-row gap-2">
-              <IconCalendarTime className="mt-1.5 text-ivao-blue"/>
-              <p className="text-[22px] font-bold text-gray-500">
+              <IconCalendarTime className="ml-2 text-ivao-blue md:ml-0" />
+              <p className="text-base font-bold text-gray-500 md:text-lg">
                 {format(new Date(newsItem.publishedAt), 'dd.MM.yyyy')}
               </p>
             </div>
             <div className="flex flex-row gap-2">
-              <IconUser className="mt-1.5 text-ivao-blue"/>
-              <p className="text-[22px] font-bold text-gray-500">
+              <IconUser className="text-ivao-blue" />
+              <p className="mr-2 text-base font-bold text-gray-500 md:mr-0 md:text-lg">
                 {newsItem.user.staffPositions
-                    ? newsItem.user.staffPositions
-                        .map((position) => `BY-${position.id}`)
-                        .filter(
-                            (value, index, self) => self.indexOf(value) === index,
-                        )
-                        .join('/')
-                    : String(newsItem.user.id)}
+                  ? newsItem.user.staffPositions
+                      .map((position) => `BY-${position.id}`)
+                      .filter(
+                        (value, index, self) => self.indexOf(value) === index,
+                      )
+                      .join('/')
+                  : String(newsItem.user.id)}
               </p>
             </div>
           </div>
           <div className="flex items-center justify-center">
+            {/*TODO: ИСПРАВИТЬ ПОД МОБИЛЬНЫЕ УСТРОЙСТВА*/}
             <img
-                src={newsItem.image_url}
-                alt={newsItem.name.en}
-                className="mt-8 h-[393.75px] w-[700px] rounded-lg"
+              src={newsItem.image_url}
+              alt={newsItem.name.en}
+              className="mt-8 h-[393.75px] w-[700px] rounded-lg"
             />
           </div>
           <div className="flex items-center justify-center text-justify">
-            <p className="mt-5 w-[700px] text-lg text-gray-700">
+            <p className="m-5 w-[700px] break-words text-gray-700 md:text-lg">
               {newsItem.description[i18n.language]}
             </p>
           </div>

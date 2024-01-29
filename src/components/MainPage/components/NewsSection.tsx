@@ -126,14 +126,14 @@ export function NewsSection() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
                   <div className="absolute inset-0 flex flex-col items-start justify-end p-6 text-white">
                     <div className="flex items-center justify-center gap-2.5 rounded-[999px] border border-white bg-white bg-opacity-0 px-2 py-1 backdrop-blur-[10px]">
-                      <div className="font-['Nunito Sans'] text-xs font-medium text-white">
+                      <div className="text-xs font-medium text-white">
                         {format(new Date(newsItem.publishedAt), 'dd.MM.yyyy')}
                       </div>
                     </div>
-                    <div className="font-['Nunito Sans'] text-md font-bold leading-9 md:text-3xl">
+                    <div className="text-md font-bold leading-9 md:text-3xl">
                       {newsItem.name[i18n.language]}
                     </div>
-                    <div className="font-['Nunito Sans'] text-xs  font-normal leading-normal md:text-base">
+                    <div className="text-xs  font-normal leading-normal md:text-base">
                       {newsItem.description[i18n.language].length > 96
                         ? `${newsItem.description[i18n.language].slice(0, 96)}...`
                         : newsItem.description[i18n.language]}
