@@ -75,7 +75,7 @@ ${decodedToken?.userData.name.first} ${decodedToken?.userData.name.last}`;
             </span>
           </div>
         </div>
-        <div className="md:inline-flex content-normal justify-start gap-4">
+        <div className="content-normal justify-start gap-4 md:inline-flex">
           <CustomButton
             title={t('heropage.joinbutton')}
             variant={'secondary'}
