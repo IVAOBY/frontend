@@ -34,7 +34,7 @@ import {
   IconWorld,
 } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
-import { To, useNavigate } from 'react-router-dom';
+import { Link, To, useNavigate } from "react-router-dom";
 
 import discord from '../../assets/image/discord.svg';
 import ivaoLogo from '../../assets/image/logo_s_black.svg';
@@ -118,18 +118,20 @@ export function CommonDropdownContent({
           >
             {t('navbar.division.about')}
           </Menu.Item>
-          <Menu.Item
-            icon={<IconIdBadge2 size={20} />}
-            onClick={() => navigate('staff')}
-          >
-            {t('navbar.division.staff')}
-          </Menu.Item>
-          <Menu.Item
-            icon={<Image src={discord} width={19} alt={'Discord Icon'} />}
-            onClick={() => menuLink('https://discord.gg/7t7UJjZcad')}
-          >
-            {t('navbar.division.discord')}
-          </Menu.Item>
+          <Link to={'/staff'}>
+            <Menu.Item
+              icon={<IconIdBadge2 size={20} />}
+            >
+              {t('navbar.division.staff')}
+            </Menu.Item>
+          </Link>
+          <Link to={'/discord'}>
+            <Menu.Item
+              icon={<Image src={discord} width={19} alt={'Discord Icon'} />}
+            >
+              {t('navbar.division.discord')}
+            </Menu.Item>
+          </Link>
           <Menu.Item
             icon={<IconBook size={20} />}
             onClick={() =>

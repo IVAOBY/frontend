@@ -8,7 +8,7 @@ import { I18nextProvider } from 'react-i18next';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { Airport } from './components/AirportPage/Airport';
-import { Index } from './components/Footer';
+import { Index as Footer } from './components/Footer';
 import { HeaderResponsive } from './components/header/header';
 import { MainPage } from './components/MainPage/MainPage';
 import { MessageOverlay } from './components/MessageOverlay';
@@ -25,8 +25,8 @@ import { DocumentsATCPage } from './pages/documents/DocumentsATCPage';
 import { DocumentsMain } from './pages/documents/DocumentsPage';
 import { DocumentsPilotPage } from './pages/documents/DocumentsPilotPage';
 import { NotFound } from './pages/Error404';
-import { EventPage } from './pages/events/EventPage';
-import { FAQ } from './pages/FAQ';
+import { EventPage } from './pages/events';
+import { FAQ } from './pages/Faq/FAQ';
 import { FirstStepP } from './pages/FirstStepPilot';
 import { MapPage } from './pages/MapPage';
 import { NewsPage } from './pages/News';
@@ -35,6 +35,8 @@ import { SectorFile } from './pages/SectorFile';
 import { Vehicles } from './pages/vehicles/Vehicles';
 
 import './App.css';
+
+import { DiscordPage } from './pages/Discord';
 
 export default function App() {
   const PrivateRoute: React.FC<{ path: string; element: React.ReactNode }> = ({
@@ -73,7 +75,7 @@ export default function App() {
               <AppShell
                 padding={0}
                 navbar={<HeaderResponsive />}
-                footer={<Index />}
+                footer={<Footer />}
               >
                 <Notifications />
                 <Routes>
@@ -88,6 +90,13 @@ export default function App() {
                   <Route path="/map" element={<MapPage />} />
                   <Route path="/staff" element={<StaffMain />} />
                   <Route path="/vehicles" element={<Vehicles />} />
+
+                  <Route
+                    path="/discord/*"
+                    element={
+                      <PrivateRoute path="/discord" element={<DiscordPage />} />
+                    }
+                  />
 
                   {/* Документы */}
                   <Route path="/documents" element={<DocumentsMain />} />
