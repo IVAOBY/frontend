@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: '18'
 
-      - name: 🔨 Build Project
+      - name: 👌 Format and Lint
         run: |
           yarn install --force
           yarn format
