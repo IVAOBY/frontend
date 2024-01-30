@@ -18,21 +18,22 @@ jobs:
       with:
         node-version: '16'
       
-    - name: 🔨 Build Project
+    - name: 🧪 Format and Lint
       run: |
         yarn install --force
-        CI=false npm run build
+        yarn format
+        yarn lint --fix
 
-    - name: 📂 Sync files
-      uses: sand4rt/ftp-deployer@v1.7
-      with:
-        sftp: false
-        host: ${{ secrets.PRODUCTION_FTP_HOST }}
-        port: 21
-        username: ${{ secrets.PRODUCTION_FTP_USER }}
-        password: ${{ secrets.PRODUCTION_FTP_PASSWORD }}
-        local_folder: dist
-        remote_folder: ./by.ivao.systems/htdocs
-        cleanup: false
-        exclude: '[]'
-        passive: true
+#    - name: 📂 Sync files
+#      uses: sand4rt/ftp-deployer@v1.7
+#      with:
+#        sftp: false
+#        host: ${{ secrets.PRODUCTION_FTP_HOST }}
+#        port: 21
+#        username: ${{ secrets.PRODUCTION_FTP_USER }}
+#        password: ${{ secrets.PRODUCTION_FTP_PASSWORD }}
+#        local_folder: dist
+#        remote_folder: ./by.ivao.systems/htdocs
+#        cleanup: false
+#        exclude: '[]'
+#        passive: true
