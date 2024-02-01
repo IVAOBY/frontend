@@ -1,6 +1,6 @@
 on:
- push:
-  branches:
+  push:
+    branches:
 
 name: Push Action 🚀
 jobs:
@@ -12,17 +12,19 @@ jobs:
 
   build-project:
     name: Build 🎉
-    if: github.ref_name == 'main'
+    needs: check-format
     uses: ./.github/workflows/build.yaml
     permissions: write-all
 
   github-release:
     name: Create a release 🌐
+    needs: build-project
     uses: ./.github/workflows/release.yaml
     permissions: write-all
 
   ftp-deploy:
     name: Sync files 📂
     if: github.ref_name == 'main'
+    needs: build-project
     uses: ./.github/workflows/web-deploy.yaml
     permissions: write-all
