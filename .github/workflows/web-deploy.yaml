@@ -2,7 +2,7 @@ name: Web Deploy 🛠️
 on:
   workflow_call:
 jobs:
-  yarn-format:
+  web-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Get latest code 🚚
