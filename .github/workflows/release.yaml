@@ -4,7 +4,7 @@ on:
 jobs:
   release-project:
     name: Release 🌐
-    if: github.ref_name == 'main'️
+    if: github.ref_name == 'main'
     runs-on: ubuntu-latest
     steps:
       - name: Get latest code 🚚
@@ -48,7 +48,7 @@ jobs:
 
   release-stage:
     name: Stage Release 🌐
-    if: github.ref_name == 'dev'️
+    if: github.ref_name == 'dev'
     runs-on: ubuntu-latest
     steps:
       - name: Get latest code 🚚
