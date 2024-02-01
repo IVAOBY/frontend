@@ -23,5 +23,6 @@ jobs:
 
   ftp-deploy:
     name: Sync files 📂
+    if: github.ref_name == 'main'
     uses: ./.github/workflows/web-deploy.yaml
     permissions: write-all
