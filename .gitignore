@@ -12,6 +12,7 @@
 
 # production
 /build
+/stage-dist
 
 # misc
 .DS_Store
