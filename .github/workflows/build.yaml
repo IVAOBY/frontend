@@ -38,5 +38,5 @@ jobs:
       - name: Build Project 🔨
         run: |
           yarn install --force
-          yarn build
+          CI=false yarn build
           mv ./dist stage-dist
