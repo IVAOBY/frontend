@@ -2,7 +2,7 @@ on:
  push:
   branches:
 
-name: 🚀 Deploy website on push
+name: Push Action 🚀
 jobs:
   check-format:
     name: Format 🔍
@@ -10,12 +10,13 @@ jobs:
     permissions:
       contents: write
 
-  web-deploy:
+  build-project:
     name: Build 🎉
     if: github.ref_name == 'main'
     runs-on: ubuntu-latest
     steps:
-    - name: 🚚 Get latest code
+
+    - name: Get latest code 🚚
       uses: actions/checkout@v3
 
     - name: Set up Node.js 👾
@@ -23,22 +24,13 @@ jobs:
       with:
         node-version: '18'
 
-    - name: 🔨 Build Project
+    - name: Build Project 🔨
       run: |
         yarn install --force
-        CI=false npm run build
+        CI=false yarn build
 
-    - name: 📂 Sync files
-      uses: sand4rt/ftp-deployer@v1.7
-      if: github.ref_name == 'main'
-      with:
-        sftp: false
-        host: ${{ secrets.PRODUCTION_FTP_HOST }}
-        port: 21
-        username: ${{ secrets.PRODUCTION_FTP_USER }}
-        password: ${{ secrets.PRODUCTION_FTP_PASSWORD }}
-        local_folder: dist
-        remote_folder: ./by.ivao.systems/htdocs
-        cleanup: false
-        exclude: '[]'
-        passive: true
+  ftp-deploy:
+    name: Sync files 📂
+    if: github.ref_name == 'main'
+    uses: ./.github/workflows/web-deploy.yaml
+    permissions: write-all
