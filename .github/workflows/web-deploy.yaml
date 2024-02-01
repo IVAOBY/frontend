@@ -1,0 +1,26 @@
+name: Code Formatting 🛠️
+on:
+  workflow_call:
+jobs:
+  yarn-format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get latest code 🚚
+        uses: actions/checkout@v3
+        with:
+          sparse-checkout: |
+            dist
+
+      - name: Sync files 📂
+        uses: sand4rt/ftp-deployer@v1.7
+        with:
+          sftp: false
+          host: ${{ secrets.PRODUCTION_FTP_HOST }}
+          port: 21
+          username: ${{ secrets.PRODUCTION_FTP_USER }}
+          password: ${{ secrets.PRODUCTION_FTP_PASSWORD }}
+          local_folder: dist
+          remote_folder: ./by.ivao.systems/htdocs
+          cleanup: false
+          exclude: '[]'
+          passive: true
