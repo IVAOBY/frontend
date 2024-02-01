@@ -22,7 +22,7 @@ type ApiProviderProps = {
 export const ApiProvider = ({ children }: ApiProviderProps) => {
   const { token } = useContext(AuthContext);
 
-  const api = async (
+  const api: ApiContextType['api'] = async (
     path: string,
     method: string = 'GET',
     body: any = null,
@@ -78,5 +78,5 @@ export const ApiProvider = ({ children }: ApiProviderProps) => {
     }
   };
 
-  return <ApiContext.Provider value={api}>{children}</ApiContext.Provider>;
+  return <ApiContext.Provider value={{ api }}>{children}</ApiContext.Provider>;
 };
