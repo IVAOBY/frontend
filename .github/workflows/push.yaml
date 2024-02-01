@@ -1,18 +1,18 @@
 on:
  push:
-  branches: main
+  branches:
 
 name: 🚀 Deploy website on push
 jobs:
   check-format:
     name: Format 🔍
-    if: github.ref_name == 'main'
     uses: ./.github/workflows/check-format.yaml
     permissions:
       contents: write
 
   web-deploy:
     name: Build 🎉
+    if: github.ref_name == 'main'
     runs-on: ubuntu-latest
     steps:
     - name: 🚚 Get latest code
@@ -30,6 +30,7 @@ jobs:
 
     - name: 📂 Sync files
       uses: sand4rt/ftp-deployer@v1.7
+      if: github.ref_name == 'main'
       with:
         sftp: false
         host: ${{ secrets.PRODUCTION_FTP_HOST }}
