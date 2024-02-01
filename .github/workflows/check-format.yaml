@@ -18,11 +18,11 @@ jobs:
           yarn install --force
 
       - name: Format code ✨
-        if: ${{ hashFiles('**/.prettierrc') != '' }}
+        if: ${{ hashFiles('.prettierrc') != '' }}
         run: |
           yarn format
 
       - name: Lint code ⚙️
-        if: ${{ hashFiles('**/.eslintrc') != '' }}
+        if: ${{ hashFiles('.eslintrc') != '' }}
         run: |
           yarn lint --fix
