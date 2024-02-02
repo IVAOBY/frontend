@@ -207,6 +207,7 @@ export function StaffMain() {
                           href={`https://www.ivao.aero/staff/details.asp?Id=${position.prefix}-${position.id}`}
                           target="_blank"
                           aria-label="IVAO"
+                          rel="noreferrer"
                         >
                           <IconIdBadge2 className={'text-white'} />
                         </a>

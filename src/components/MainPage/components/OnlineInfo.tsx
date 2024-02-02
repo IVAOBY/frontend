@@ -3,10 +3,11 @@ import { useEffect, useState } from 'react';
 import { AtcResponse } from '@ivaoby/common/types/tracker/internal/atc-response';
 import { PilotResponse } from '@ivaoby/common/types/tracker/internal/pilots-response';
 import { IconAirTrafficControl, IconPlaneTilt } from '@tabler/icons-react';
-import { useTranslation } from 'react-i18next';
+
+// import { useTranslation } from 'react-i18next';
 
 import { useApi } from '../../../context/ApiContext';
-import { FeatureData } from '../../../types/Feture';
+// import { FeatureData } from '../../../types/Feture';
 import { GeneralLayout } from '../../Layout';
 
 export function OnlineInfoComponent() {

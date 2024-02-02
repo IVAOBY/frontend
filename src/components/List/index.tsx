@@ -1,7 +1,8 @@
 import { useCallback } from 'react';
 
+import { IconLink } from '@tabler/icons-react';
+
 import { CustomButton } from '../Button';
-import { IconLink } from "@tabler/icons-react";
 
 interface ListItemProps {
   date: string;
@@ -9,7 +10,7 @@ interface ListItemProps {
   description: string;
   link?: string;
   withButton?: boolean;
-  textButton: string;
+  textButton?: string;
 }
 
 export function ListItem({

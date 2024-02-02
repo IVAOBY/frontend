@@ -34,7 +34,7 @@ import {
   IconWorld,
 } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
-import { Link, To, useNavigate } from "react-router-dom";
+import { Link, To, useNavigate } from 'react-router-dom';
 
 import discord from '../../assets/image/discord.svg';
 import ivaoLogo from '../../assets/image/logo_s_black.svg';
@@ -119,9 +119,7 @@ export function CommonDropdownContent({
             {t('navbar.division.about')}
           </Menu.Item>
           <Link to={'/staff'}>
-            <Menu.Item
-              icon={<IconIdBadge2 size={20} />}
-            >
+            <Menu.Item icon={<IconIdBadge2 size={20} />}>
               {t('navbar.division.staff')}
             </Menu.Item>
           </Link>
