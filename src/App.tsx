@@ -26,12 +26,11 @@ import { DocumentsMain } from './pages/documents/DocumentsPage';
 import { DocumentsPilotPage } from './pages/documents/DocumentsPilotPage';
 import { NotFound } from './pages/Error404';
 import { EventPage } from './pages/events';
-import { FAQ } from "./pages/Faq";
+import { FAQ } from './pages/Faq';
 import { FirstStepP } from './pages/FirstStepPilot';
 import { MapPage } from './pages/MapPage';
 import { NewsPage } from './pages/News';
 import { ScenaryPage } from './pages/Scenary';
-import { SectorFile } from './pages/SectorFile';
 import { Vehicles } from './pages/vehicles/Vehicles';
 
 import './App.css';
@@ -111,7 +110,6 @@ export default function App() {
                   <Route path="/documents/atc" element={<DocumentsATCPage />} />
 
                   {/* ATC */}
-                  <Route path="/sector" element={<SectorFile />} />
                   <Route path="/atc/gca" element={<GCAPage />} />
 
                   {/* ИВЕНТЫ */}
