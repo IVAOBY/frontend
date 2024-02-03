@@ -92,7 +92,7 @@ const enTranslations: { translations: Translations } = {
       text: 'On this page you can download the sector file for IvAc.',
       wtitle: 'Please pay attention!',
       warning:
-        'IvAc is deprecated and no longer recommended to use! <br/> We strongly recommend using <a href={"https://ivao.aero/softdev/software/aurora.asp"} target={"_blank"} >Aurora</a>',
+        'IvAc is deprecated and no longer recommended to use! We strongly recommend using Aurora.',
       download: 'Download',
     },
     news: {

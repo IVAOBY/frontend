@@ -92,7 +92,7 @@ const beTranslations: { translations: Translations } = {
       text: ' На гэтай старонке вы можаце спампаваць сектар-файл для IvAc.',
       wtitle: 'Калі ласка, звярніце увагу!',
       warning:
-        'IvAc састарэлы и больш не раіцца да карыстання! <br/> Замест яго раіцца карыстацца <a href={"https://ivao.aero/softdev/software/aurora.asp"} target={"_blank"} >Aurora</a>',
+        'IvAc састарэлы и больш не раіцца да карыстання! Замест яго раіцца карыстацца Aurora.',
       download: 'Спампаваць',
     },
     news: {

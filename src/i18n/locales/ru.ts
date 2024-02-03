@@ -92,7 +92,7 @@ const ruTranslations: { translations: Translations } = {
       text: ' На этой странице вы можете загрузить сектор-файл для IvAc.',
       wtitle: 'Пожалуйста, обратие внимание!',
       warning:
-        'IvAc устарел и больше не рекомендуется к использованию! <br/> Вместно него рекомендуется использовать <a href={"https://ivao.aero/softdev/software/aurora.asp"} target={"_blank"} >Aurora</a>',
+        'IvAc устарел и больше не рекомендуется к использованию! Вместно него рекомендуется использовать Aurora.',
       download: 'Скачать',
     },
     news: {
