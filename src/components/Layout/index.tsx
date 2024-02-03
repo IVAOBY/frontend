@@ -1,6 +1,14 @@
-import React, { ReactNode } from 'react';
+import React, { FC, PropsWithChildren, ReactNode } from 'react';
 
 import { Title } from '../Typography/Title';
+
+export const Centered: FC<PropsWithChildren> = ({ children }) => {
+  return (
+    <div className="flex min-h-screen items-center justify-center">
+      {children}
+    </div>
+  );
+};
 
 export const GeneralLayout: React.FC<{ children: ReactNode }> = ({
   children,

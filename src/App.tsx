@@ -1,9 +1,7 @@
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 
 import { AppShell, MantineProvider } from '@mantine/core';
-import { Notifications, notifications } from '@mantine/notifications';
-import { IconCircleX } from '@tabler/icons-react';
-import { t } from 'i18next';
+import { Notifications } from '@mantine/notifications';
 import { I18nextProvider } from 'react-i18next';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
@@ -11,7 +9,6 @@ import { Airport } from './components/AirportPage/Airport';
 import { Index as Footer } from './components/Footer';
 import { HeaderResponsive } from './components/header/header';
 import { MainPage } from './components/MainPage/MainPage';
-import { MessageOverlay } from './components/MessageOverlay';
 import { StaffMain } from './components/StaffPage/StaffMain';
 import { ApiProvider } from './context/ApiContext';
 import { AuthContext, AuthProvider } from './context/UserContext';
@@ -35,6 +32,8 @@ import { Vehicles } from './pages/vehicles/Vehicles';
 
 import './App.css';
 
+import { Centered } from './components/Layout';
+import { Loader } from './components/Loader';
 import { DiscordPage } from './pages/Discord';
 
 export default function App() {
@@ -43,25 +42,15 @@ export default function App() {
   }) => {
     const { signed } = useContext(AuthContext);
     if (!signed) {
-      notifications.show({
-        id: 'auth-required',
-        color: 'red',
-        title: t('notif.auth.negative.name'),
-        message: t('notif.auth.negative.description'),
-        radius: 'lg',
-        icon: <IconCircleX />,
-        withCloseButton: true,
-        autoClose: 3000,
-      });
+      window.location.href = `https://api.ivao.systems/auth/login?goto=${encodeURIComponent(window.location.href)}`;
+
       return (
-        <MessageOverlay
-          message={t('notif.auth.negative.description')}
-          link={'/'}
-          linkTitle={'Вернуться на главную'}
-          title={t('notif.auth.negative.name')}
-        ></MessageOverlay>
+        <Centered>
+          <Loader />
+        </Centered>
       );
     }
+
     return <>{element}</>;
   };
 
