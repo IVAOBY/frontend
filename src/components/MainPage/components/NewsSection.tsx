@@ -99,7 +99,7 @@ export function NewsSection() {
     <GeneralLayout>
       <Title withUndreline>{t('news.title')}</Title>
 
-      <div className="-mx-4 mt-10 flex flex-wrap justify-center gap-6">
+      <div className=" mt-10 flex flex-wrap justify-center gap-6">
         {news === null
           ? Array.from({ length: itemsPerPage }).map((_, index) => (
               <div
@@ -130,7 +130,7 @@ export function NewsSection() {
                         {format(new Date(newsItem.publishedAt), 'dd.MM.yyyy')}
                       </div>
                     </div>
-                    <div className="text-md font-bold leading-9 md:text-3xl">
+                    <div className="text-sm font-bold md:text-3xl">
                       {newsItem.name[i18n.language]}
                     </div>
                     <div className="text-xs  font-normal leading-normal md:text-base">
@@ -147,7 +147,7 @@ export function NewsSection() {
         currentPage={currentPage}
         totalPages={Math.ceil(news ? news.length / itemsPerPage : 1)}
         onPageChange={setCurrentPage}
-        className="mt-16"
+        className="mt-5"
       />
     </GeneralLayout>
   );
