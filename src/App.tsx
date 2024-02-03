@@ -26,7 +26,7 @@ import { DocumentsMain } from './pages/documents/DocumentsPage';
 import { DocumentsPilotPage } from './pages/documents/DocumentsPilotPage';
 import { NotFound } from './pages/Error404';
 import { EventPage } from './pages/events';
-import { FAQ } from './pages/Faq/FAQ';
+import { FAQ } from "./pages/Faq";
 import { FirstStepP } from './pages/FirstStepPilot';
 import { MapPage } from './pages/MapPage';
 import { NewsPage } from './pages/News';

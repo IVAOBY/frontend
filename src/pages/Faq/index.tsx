@@ -32,7 +32,9 @@ export function FAQ() {
 
   return (
     <LayoutTitle title={t('FAQ.page.title')} withUnderline>
-      <Accordion items={items} />
+      <div className={'mt-5 p-2 lg:p-0'}>
+        <Accordion items={items} />
+      </div>
     </LayoutTitle>
   );
 }
