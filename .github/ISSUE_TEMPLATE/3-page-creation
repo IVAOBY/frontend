@@ -1,0 +1,51 @@
+name: 📄 New Page Creation
+description: Request for a new page or section in the application
+body:
+  - type: markdown
+    attributes:
+      value: |
+        If you believe that our application could benefit from a new page or section, you're in the right place!
+
+        Please fill out this form as completely as possible to describe the new page you're envisioning.
+  - type: input
+    attributes:
+      label: Page Title
+      description: What should the title of the new page be?
+      placeholder: 'Enter the title of the page here.'
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Purpose of the Page
+      description: Explain what the purpose of the page will be and what content it should include.
+      placeholder: 'Describe the purpose and content of the page.'
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Target Audience
+      description: Who is this page for? Describe the target audience.
+      placeholder: 'Detail the audience that would find this page useful.'
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Features and Functionalities
+      description: List the features and functionalities that the page should have.
+      placeholder: 'e.g., contact form, image gallery, live chat widget'
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Reference Sites or Pages
+      description: Provide URLs or references to similar pages or designs that you find relevant or inspiring.
+      placeholder: 'List any reference sites or pages here if applicable.'
+  - type: textarea
+    attributes:
+      label: Visuals and Design
+      description: Describe any specific visual elements or design principles the page should adhere to.
+      placeholder: 'Describe the page's desired look and feel.'
+  - type: textarea
+    attributes:
+      label: Additional Information
+      description: Any other details or context you'd like to add? Feel free to include it here.
