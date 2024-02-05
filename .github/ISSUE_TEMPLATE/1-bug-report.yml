@@ -55,5 +55,3 @@ body:
     attributes:
       label: Additional information
       description: Provide any additional information, screenshots, or context relevant to the bug report here.
-
-footer: If you have any screenshots or demo links, please add them to the 'Additional information' section.
