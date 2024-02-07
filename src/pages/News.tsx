@@ -120,11 +120,10 @@ export function NewsPage() {
             </div>
           </div>
           <div className="flex items-center justify-center">
-            {/*TODO: ИСПРАВИТЬ ПОД МОБИЛЬНЫЕ УСТРОЙСТВА*/}
             <img
               src={newsItem.image_url}
               alt={newsItem.name.en}
-              className="mt-8 h-[393.75px] w-[700px] rounded-lg"
+              className="mt-8 w-11/12 rounded-lg md:w-7/12"
             />
           </div>
           <div className="flex items-center justify-center text-justify">

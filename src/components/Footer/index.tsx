@@ -35,7 +35,7 @@ export function Index() {
               <img className="w-48 md:w-[220px]" src={bylogo} alt="BY Logo" />
             </a>
           </div>
-          <div className="flex flex-row justify-center gap-20">
+          <div className="flex flex-row justify-center gap-14 md:gap-20">
             <div>
               <h2 className="mb-4 text-sm font-semibold uppercase text-atmos-700 dark:text-white">
                 {t('footer.followus')}
@@ -90,7 +90,7 @@ export function Index() {
             </div>
           </div>
         </div>
-        <hr className="my-6 border-gray-200 sm:mx-auto lg:my-8 dark:border-gray-700" />
+        <hr className="my-6 border-gray-200 dark:border-gray-700 sm:mx-auto lg:my-8" />
         <div className="items-center justify-between text-center">
           <span className="w-screen text-center text-sm text-gray-500 dark:text-gray-400">
             © {currentYear}, International Virtual Aviation Organisation - IVAO

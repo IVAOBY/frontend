@@ -58,7 +58,7 @@ ${decodedToken?.userData.name.first} ${decodedToken?.userData.name.last}`;
     <div className="inline-flex max-w-screen-lg flex-col items-center justify-start gap-40 px-5 pt-8 md:px-40 md:pb-14 md:pt-28">
       <div className="flex h-[450px] flex-col items-start justify-center gap-14 self-stretch">
         <div className="flex h-[236px] flex-col items-start justify-center gap-3 self-stretch">
-          <div className="self-stretch text-4xl font-bold leading-10 text-ivao-blue md:leading-[80px]">
+          <div className="self-stretch text-3xl font-bold leading-10 text-ivao-blue md:text-4xl md:leading-[80px]">
             <Typed
               strings={[t('heropage.subtitle'), t('heropage.subtitle2')]}
               typeSpeed={90}
@@ -75,7 +75,7 @@ ${decodedToken?.userData.name.first} ${decodedToken?.userData.name.last}`;
             </span>
           </div>
         </div>
-        <div className="mt-2 flex flex-col gap-2 md:flex-row">
+        <div className="mt-2 flex h-10 w-11/12 flex-row justify-center gap-4 md:h-auto md:justify-normal md:gap-2">
           <CustomButton
             title={t('heropage.joinbutton')}
             variant={'secondary'}
