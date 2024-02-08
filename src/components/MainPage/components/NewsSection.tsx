@@ -111,7 +111,7 @@ export function NewsSection() {
           : news.slice(startIndex, endIndex).map((newsItem) => (
               <div
                 key={newsItem.id}
-                className="relative h-[170px] w-[280px] overflow-hidden rounded-xl duration-300 hover:scale-95 hover:transition-all md:h-[270px] md:w-[480px]"
+                className="md:w-280px relative h-[170px] w-11/12 overflow-hidden rounded-xl duration-300 hover:scale-95 hover:transition-all md:h-[270px] md:w-[480px]"
                 onClick={() => newsRedirect(newsItem)}
                 style={{ cursor: 'pointer' }}
               >
