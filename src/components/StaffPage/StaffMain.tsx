@@ -180,7 +180,7 @@ export function StaffMain() {
                         src={
                           position.user?.id
                             ? `https://static.ivao.systems/files/staff/${position.user?.id}.jpg`
-                            : 'https://cdn.discordapp.com/avatars/272094310927826944/38e4f452bc388248553f2d56d293b1cb?size=1024'
+                            : 'https://static.ivao.systems/files/staff/vacant.jpg'
                         }
                         alt={'Staff Photo'}
                       />
