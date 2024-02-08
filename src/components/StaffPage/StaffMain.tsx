@@ -35,7 +35,7 @@ interface Position {
     en: string;
     ru: string | null;
   } | null;
-  is_vacant: number; // new property
+  is_vacant: number;
 }
 
 export function StaffMain() {
@@ -72,25 +72,28 @@ export function StaffMain() {
     });
 
     api('/staff-positions')
-      .then((response: any) => {
+      .then((response: Position) => {
         if (response && Array.isArray(response)) {
-          const positions: Position[] = response.map((positionData) => ({
-            departmentId: positionData.departmentId,
-            id: positionData.id,
-            name: positionData.name,
-            prefix: positionData.prefix,
-            order: positionData.order,
-            user: {
-              id: positionData.user.id,
-              name: {
-                first: positionData.user.name.first,
-                last: positionData.user.name.last,
-              },
+          const updatedPositions: Position[] = response.map(
+            (positionData: Position) => {
+              const user = positionData.user
+                ? {
+                    id: positionData.user.id,
+                    name: {
+                      first: positionData.user.name.first,
+                      last:
+                        positionData.user.name.last ||
+                        positionData.user.id.toString(),
+                    },
+                  }
+                : null;
+              return {
+                ...positionData,
+                user,
+              };
             },
-            description: positionData.description,
-            is_vacant: positionData.is_vacant,
-          }));
-          setPositions(positions);
+          );
+          setPositions(updatedPositions);
 
           notifications.hide('load-data');
         } else {
@@ -146,12 +149,21 @@ export function StaffMain() {
                 .filter(
                   (position) =>
                     position.departmentId === department.id &&
-                    (position.user.id !== null || position.is_vacant === 1),
+                    (position.user || position.is_vacant === 1),
                 )
                 .sort((a, b) => {
-                  if (a.user.id === null && b.user.id !== null) {
+                  const aUserId = a.user?.id ?? Number.MAX_VALUE;
+                  const bUserId = b.user?.id ?? Number.MAX_VALUE;
+
+                  if (
+                    aUserId === Number.MAX_VALUE &&
+                    bUserId !== Number.MAX_VALUE
+                  ) {
                     return 1;
-                  } else if (a.user.id !== null && b.user.id === null) {
+                  } else if (
+                    aUserId !== Number.MAX_VALUE &&
+                    bUserId === Number.MAX_VALUE
+                  ) {
                     return -1;
                   } else {
                     return a.order - b.order;
@@ -166,14 +178,14 @@ export function StaffMain() {
                       <img
                         className="max-h-[150px] max-w-[150px] rounded-[100px]"
                         src={
-                          position.user.id
-                            ? `https://xr.ivao.aero/images/staff_photo/${position.user.id}.jpg`
-                            : 'https://static.game-explore.space/staff/vacant.png'
+                          position.user?.id
+                            ? `https://xr.ivao.aero/images/staff_photo/${position.user?.id}.jpg`
+                            : 'https://cdn.discordapp.com/avatars/272094310927826944/38e4f452bc388248553f2d56d293b1cb?size=1024'
                         }
                         alt={'Staff Photo'}
                       />
                       <Title className="text-[24px]">
-                        {position.user.id
+                        {position.user?.id
                           ? position.user.name.last
                             ? `${position.user.name.first} ${position.user.name.last}`
                             : `${position.user.name.first} ${position.user.id}`
