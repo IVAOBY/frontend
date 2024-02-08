@@ -11,15 +11,6 @@ export default {
     },
     extend: {
       colors: {
-        ivao: {
-            blue: '#0D2C99',
-            grey: '#D7D7DC',
-            lightBlue: '#3C55AC',
-            green: '#2EC662',
-            yellow: '#F9CC2C',
-            red: '#E93434',
-            infoBlue: '#7EA2D6',
-        },
         atmos: {
           50: '#B6C5F9',
           100: '#A4B6F7',

@@ -58,7 +58,7 @@ ${decodedToken?.userData.name.first} ${decodedToken?.userData.name.last}`;
     <div className="inline-flex max-w-screen-lg flex-col items-center justify-start gap-40 px-5 pt-8 md:px-40 md:pb-14 md:pt-28">
       <div className="flex h-[450px] flex-col items-start justify-center gap-14 self-stretch">
         <div className="flex h-[236px] flex-col items-start justify-center gap-3 self-stretch">
-          <div className="self-stretch text-3xl font-bold leading-10 text-ivao-blue md:text-4xl md:leading-[80px]">
+          <div className="self-stretch text-3xl font-bold leading-10 text-atmos-700 md:text-4xl md:leading-[80px]">
             <Typed
               strings={[t('heropage.subtitle'), t('heropage.subtitle2')]}
               typeSpeed={90}
