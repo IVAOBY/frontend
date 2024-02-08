@@ -179,7 +179,7 @@ export function StaffMain() {
                         className="max-h-[150px] max-w-[150px] rounded-[100px]"
                         src={
                           position.user?.id
-                            ? `https://xr.ivao.aero/images/staff_photo/${position.user?.id}.jpg`
+                            ? `https://static.ivao.systems/files/staff/${position.user?.id}.jpg`
                             : 'https://cdn.discordapp.com/avatars/272094310927826944/38e4f452bc388248553f2d56d293b1cb?size=1024'
                         }
                         alt={'Staff Photo'}
