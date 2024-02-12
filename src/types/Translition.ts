@@ -95,6 +95,7 @@ export interface Translations {
   };
   staff: {
     name: string;
+    nopositions: string;
   };
   AboutUs: {
     title: string;

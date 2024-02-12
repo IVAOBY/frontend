@@ -7,8 +7,6 @@ import { IconAirTrafficControl, IconPlaneTilt } from '@tabler/icons-react';
 // import { useTranslation } from 'react-i18next';
 
 import { useApi } from '../../../context/ApiContext';
-// import { FeatureData } from '../../../types/Feture';
-import { GeneralLayout } from '../../Layout';
 
 export function OnlineInfoComponent() {
   const api = useApi();
@@ -42,7 +40,7 @@ export function OnlineInfoComponent() {
   }, [api]);
 
   return (
-    <GeneralLayout>
+    <>
       <div className="flex flex-col items-center justify-center gap-2 md:flex-row">
         {/*ATC*/}
         <div
@@ -112,6 +110,6 @@ export function OnlineInfoComponent() {
           </div>
         </div>
       </div>
-    </GeneralLayout>
+    </>
   );
 }

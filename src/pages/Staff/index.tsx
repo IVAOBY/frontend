@@ -4,10 +4,10 @@ import { notifications } from '@mantine/notifications';
 import { IconCircleX, IconIdBadge2, IconMailOpened } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 
+import { GeneralLayout } from '../../components/Layout';
+import { Tooltip } from '../../components/Tooltip';
+import { Title } from '../../components/Typography/Title';
 import { useApi } from '../../context/ApiContext';
-import { GeneralLayout } from '../Layout';
-import { Tooltip } from '../Tooltip';
-import { Title } from '../Typography/Title';
 
 interface Department {
   id: string;
@@ -38,7 +38,7 @@ interface Position {
   is_vacant: number;
 }
 
-export function StaffMain() {
+export function StaffPage() {
   const [departments, setDepartments] = useState<Department[]>([]);
   const [positions, setPositions] = useState<Position[]>([]);
   const { t } = useTranslation();
@@ -227,6 +227,15 @@ export function StaffMain() {
                     </div>
                   </div>
                 ))}
+              {positions.filter(
+                (position) =>
+                  position.departmentId === department.id &&
+                  (position.is_vacant === 1 || position.user !== null),
+              ).length === 0 && (
+                <p className="font-semibold text-fuselage-300">
+                  {t('staff.nopositions')}
+                </p>
+              )}
             </div>
           </div>
         </div>

@@ -101,6 +101,7 @@ const beTranslations: { translations: Translations } = {
     },
     staff: {
       name: 'Кіраўніцтва дывізіёна',
+      nopositions: 'У гэтым дэпартаменце няма свабодных пасад',
     },
     AboutUs: {
       title: 'Пра нас',

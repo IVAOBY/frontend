@@ -101,6 +101,7 @@ const ruTranslations: { translations: Translations } = {
     },
     staff: {
       name: 'Руководство дивизиона',
+      nopositions: 'В этом департаменте нет свободных должностей',
     },
     AboutUs: {
       title: 'О нас',
