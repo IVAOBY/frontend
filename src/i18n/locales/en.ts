@@ -101,6 +101,7 @@ const enTranslations: { translations: Translations } = {
     },
     staff: {
       name: 'Division Staff',
+      nopositions: 'No available staff positions in this department',
     },
     AboutUs: {
       title: 'About us',

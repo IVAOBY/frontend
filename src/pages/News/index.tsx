@@ -7,9 +7,9 @@ import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
-import { GeneralLayout } from '../components/Layout';
-import { Title } from '../components/Typography/Title';
-import { useApi } from '../context/ApiContext';
+import { GeneralLayout } from '../../components/Layout';
+import { Title } from '../../components/Typography/Title';
+import { useApi } from '../../context/ApiContext';
 
 interface News {
   id: number;
@@ -100,22 +100,26 @@ export function NewsPage() {
           </Title>
           <div className="mt-5 flex flex-row justify-center gap-[103.55px]">
             <div className="flex flex-row gap-2">
-              <IconCalendarTime className="ml-2 text-ivao-blue md:ml-0" />
+              <IconCalendarTime className="ml-2 text-atmos-700 md:ml-0" />
               <p className="text-base font-bold text-gray-500 md:text-lg">
                 {format(new Date(newsItem.publishedAt), 'dd.MM.yyyy')}
               </p>
             </div>
             <div className="flex flex-row gap-2">
-              <IconUser className="text-ivao-blue" />
+              <IconUser className="text-atmos-700" />
               <p className="mr-2 text-base font-bold text-gray-500 md:mr-0 md:text-lg">
-                {newsItem.user.staffPositions
+                {newsItem.user &&
+                newsItem.user.staffPositions &&
+                newsItem.user.staffPositions.length > 0
                   ? newsItem.user.staffPositions
                       .map((position) => `BY-${position.id}`)
                       .filter(
                         (value, index, self) => self.indexOf(value) === index,
                       )
                       .join('/')
-                  : String(newsItem.user.id)}
+                  : newsItem.user
+                    ? `${newsItem.user.name.first} ${newsItem.user.id}`
+                    : 'IVAO BY HQ'}
               </p>
             </div>
           </div>

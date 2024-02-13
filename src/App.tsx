@@ -9,7 +9,6 @@ import { Airport } from './components/AirportPage/Airport';
 import { Index as Footer } from './components/Footer';
 import { HeaderResponsive } from './components/header/header';
 import { MainPage } from './components/MainPage/MainPage';
-import { StaffMain } from './components/StaffPage/StaffMain';
 import { ApiProvider } from './context/ApiContext';
 import { AuthContext, AuthProvider } from './context/UserContext';
 import i18n from './i18n/i18n';
@@ -21,13 +20,14 @@ import { DocumentContentPage } from './pages/documents/DocumentContentPage';
 import { DocumentsATCPage } from './pages/documents/DocumentsATCPage';
 import { DocumentsMain } from './pages/documents/DocumentsPage';
 import { DocumentsPilotPage } from './pages/documents/DocumentsPilotPage';
-import { NotFound } from './pages/Error404';
+import { NotFound } from './pages/Error/404';
 import { EventPage } from './pages/events';
 import { FAQ } from './pages/Faq';
 import { FirstStepP } from './pages/FirstStepPilot';
 import { MapPage } from './pages/MapPage';
 import { NewsPage } from './pages/News';
 import { ScenaryPage } from './pages/Scenary';
+import { StaffPage } from './pages/Staff';
 import { Vehicles } from './pages/vehicles/Vehicles';
 
 import './App.css';
@@ -76,7 +76,7 @@ export default function App() {
                   <Route path="/pilots/first-step" element={<FirstStepP />} />
                   <Route path="/news/:id" element={<NewsPage />} />
                   <Route path="/map" element={<MapPage />} />
-                  <Route path="/staff" element={<StaffMain />} />
+                  <Route path="/staff" element={<StaffPage />} />
                   <Route path="/vehicles" element={<Vehicles />} />
 
                   <Route
