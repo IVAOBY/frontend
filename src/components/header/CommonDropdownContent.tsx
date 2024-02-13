@@ -209,7 +209,7 @@ export function CommonDropdownContent({
           </Menu.Item>
           <Menu.Item
             icon={<IconArticle size={20} />}
-            onClick={() => navigate('documents/atc')}
+            onClick={() => navigate('documents/category/1')}
           >
             {t('navbar.atc.docs')}
           </Menu.Item>
@@ -272,7 +272,7 @@ export function CommonDropdownContent({
           </Menu.Item>
           <Menu.Item
             icon={<IconArticle size={20} />}
-            onClick={() => navigate('documents/pilots')}
+            onClick={() => navigate('documents/category/2')}
           >
             {t('navbar.atc.docs')}
           </Menu.Item>

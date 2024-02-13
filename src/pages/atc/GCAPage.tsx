@@ -76,7 +76,7 @@ export function GCAPage() {
       autoClose: false,
       withCloseButton: false,
     });
-    api('/documents/5')
+    api('/Documents/5')
       .then(function (response: DocumentsType) {
         if (response) {
           setDocumentItem(response);

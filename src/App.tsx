@@ -16,10 +16,9 @@ import { ivaoTheme } from './ivaoTheme';
 import { AboutUs } from './pages/AboutUs';
 import { GCAPage } from './pages/atc/GCAPage';
 import { GetInTouchSimple } from './pages/contact-us/ContactUs';
-import { DocumentContentPage } from './pages/documents/DocumentContentPage';
-import { DocumentsATCPage } from './pages/documents/DocumentsATCPage';
-import { DocumentsMain } from './pages/documents/DocumentsPage';
-import { DocumentsPilotPage } from './pages/documents/DocumentsPilotPage';
+import { DocumentsMain } from './pages/Documents';
+import { DocumentsCategory } from './pages/Documents/Category';
+import { DocumentView } from './pages/Documents/View';
 import { NotFound } from './pages/Error/404';
 import { EventPage } from './pages/events';
 import { FAQ } from './pages/Faq';
@@ -34,7 +33,6 @@ import './App.css';
 
 import { Centered } from './components/Layout';
 import { Loader } from './components/Loader';
-import { DiscordPage } from './pages/Discord';
 
 export default function App() {
   const PrivateRoute: React.FC<{ path: string; element: React.ReactNode }> = ({
@@ -79,24 +77,13 @@ export default function App() {
                   <Route path="/staff" element={<StaffPage />} />
                   <Route path="/vehicles" element={<Vehicles />} />
 
-                  <Route
-                    path="/discord/*"
-                    element={
-                      <PrivateRoute path="/discord" element={<DiscordPage />} />
-                    }
-                  />
-
                   {/* Документы */}
                   <Route path="/documents" element={<DocumentsMain />} />
+                  <Route path="/documents/:id" element={<DocumentView />} />
                   <Route
-                    path="/documents/:id"
-                    element={<DocumentContentPage />}
+                    path="/documents/category/:id"
+                    element={<DocumentsCategory />}
                   />
-                  <Route
-                    path="/documents/pilots"
-                    element={<DocumentsPilotPage />}
-                  />
-                  <Route path="/documents/atc" element={<DocumentsATCPage />} />
 
                   {/* ATC */}
                   <Route path="/atc/gca" element={<GCAPage />} />

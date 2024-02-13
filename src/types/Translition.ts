@@ -97,6 +97,11 @@ export interface Translations {
     name: string;
     nopositions: string;
   };
+  documents: {
+    error: {
+      nodoc: string;
+    };
+  };
   AboutUs: {
     title: string;
     text: string;

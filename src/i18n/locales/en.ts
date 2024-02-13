@@ -82,7 +82,7 @@ const enTranslations: { translations: Translations } = {
     },
     legal: {
       title: 'Legal information',
-      text: 'Yes, we collect and store your information. But we do so in accordance with the following documents:',
+      text: 'Yes, we collect and store your information. But we do so in accordance with the following Documents:',
       privacypolicy: 'Privacy Policy',
       termsofuse: 'Terms of Use',
       ipp: 'Intellectual Property Policy',
@@ -102,6 +102,11 @@ const enTranslations: { translations: Translations } = {
     staff: {
       name: 'Division Staff',
       nopositions: 'No available staff positions in this department',
+    },
+    documents: {
+      error: {
+        nodoc: 'No Documents for this category',
+      },
     },
     AboutUs: {
       title: 'About us',
