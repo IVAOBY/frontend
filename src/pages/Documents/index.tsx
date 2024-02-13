@@ -24,7 +24,7 @@ export function DocumentsMain() {
   useEffect(() => {
     setLoading(true);
     api('/Documents-category')
-      .then(function (response: any) {
+      .then(function (response: DocumentsCategoryType[]) {
         if (response && Array.isArray(response)) {
           setDocumentsCategory(response);
         } else {
@@ -36,7 +36,7 @@ export function DocumentsMain() {
       });
 
     api('/Documents')
-      .then((response: any) => {
+      .then((response: DocumentsType[]) => {
         if (response && Array.isArray(response)) {
           const documents: DocumentsType[] = response.map((documentdata) => ({
             id: documentdata.id,
