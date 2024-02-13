@@ -215,7 +215,7 @@ export function CommonDropdownContent({
           </Menu.Item>
           <Menu.Item
             icon={<IconWorld size={20} />}
-            onClick={() => navigate('atc/gca')}
+            onClick={() => navigate('documents/5')}
           >
             {t('navbar.atc.gca')}
           </Menu.Item>

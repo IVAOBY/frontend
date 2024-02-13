@@ -14,7 +14,6 @@ import { AuthContext, AuthProvider } from './context/UserContext';
 import i18n from './i18n/i18n';
 import { ivaoTheme } from './ivaoTheme';
 import { AboutUs } from './pages/AboutUs';
-import { GCAPage } from './pages/atc/GCAPage';
 import { GetInTouchSimple } from './pages/contact-us/ContactUs';
 import { DocumentsMain } from './pages/Documents';
 import { DocumentsCategory } from './pages/Documents/Category';
@@ -84,9 +83,6 @@ export default function App() {
                     path="/documents/category/:id"
                     element={<DocumentsCategory />}
                   />
-
-                  {/* ATC */}
-                  <Route path="/atc/gca" element={<GCAPage />} />
 
                   {/* ИВЕНТЫ */}
                   <Route path="/event/:id" element={<EventPage />} />
