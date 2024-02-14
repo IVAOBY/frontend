@@ -14,7 +14,9 @@ export const GeneralLayout: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   return (
-    <div className="container mx-auto max-w-screen-xl py-8">{children}</div>
+    <div className="container mx-auto max-w-screen-lg py-8 px-4 xl:px-0">
+      {children}
+    </div>
   );
 };
 
@@ -36,7 +38,7 @@ export const LayoutTitle: React.FC<LayoutTitleProps> = ({
   withUnderline,
 }) => {
   return (
-    <div className="container mx-auto max-w-screen-xl py-8">
+    <div className="container mx-auto max-w-screen-lg py-8 px-4 xl:px-0">
       <Title
         className={className}
         description={description}

@@ -1,68 +1,16 @@
 import { useEffect, useState } from 'react';
 
-import {
-  Container,
-  createStyles,
-  Paper,
-  rem,
-  Text,
-  Title,
-} from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { IconCircleX } from '@tabler/icons-react';
 import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
-import { useApi } from '../../context/ApiContext';
-import { DocumentsType } from '../../hooks/types';
+import { LayoutTitle } from '../../../components/Layout';
+import { useApi } from '../../../context/ApiContext';
+import { DocumentsType } from '../../../hooks/types';
 
-const useStyles = createStyles((theme) => ({
-  title: {
-    fontSize: rem(34),
-    fontWeight: 800,
-    color: theme.colors.blue[9],
-    '&::after': {
-      content: '""',
-      display: 'block',
-      backgroundColor: theme.fn.primaryColor(),
-      width: rem(45),
-      height: rem(2),
-      marginTop: theme.spacing.sm,
-      marginLeft: 'auto',
-      marginRight: 'auto',
-    },
-  },
-
-  image: {
-    maxWidth: '100%',
-    minWidth: '50%',
-    height: 'auto',
-    [theme.fn.largerThan('md')]: {
-      maxWidth: '50%',
-    },
-  },
-
-  cardContent: {
-    [theme.fn.smallerThan('sm')]: {
-      flexDirection: 'column',
-      alignItems: 'center',
-    },
-    wordBreak: 'break-word',
-  },
-
-  cardAuthorDate: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: rem(20),
-    marginLeft: rem(20),
-    color: theme.colors.gray,
-  },
-}));
-
-export function DocumentContentPage() {
-  const { classes } = useStyles();
+export function DocumentView() {
   const { t } = useTranslation();
   const { id } = useParams();
   const api = useApi();
@@ -117,22 +65,17 @@ export function DocumentContentPage() {
   }, [api, id, t]);
 
   return (
-    <Container size="lg" py="xl">
+    <LayoutTitle title={documentItem?.name[i18n.language]} withUnderline>
       {documentItem && (
-        <>
-          <Title order={2} className={classes.title} ta="center" mt="sm">
-            {documentItem.name[i18n.language]}
-          </Title>
-          <Paper p={'lg'} bg={'#fff'} shadow={'lg'} radius={'lg'} mt={rem(13)}>
-            <Text
-              dangerouslySetInnerHTML={{
-                __html: documentItem.content[i18n.language] || '',
-              }}
-              mt={rem(10)}
-            ></Text>
-          </Paper>
-        </>
+        <div className="mt-13">
+          <p
+            dangerouslySetInnerHTML={{
+              __html: documentItem.content[i18n.language] || '',
+            }}
+            className="mt-4 text-gray-500"
+          ></p>
+        </div>
       )}
-    </Container>
+    </LayoutTitle>
   );
 }
