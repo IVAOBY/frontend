@@ -28,7 +28,7 @@ export function Index() {
   const currentYear = new Date().getUTCFullYear();
   return (
     <footer className="bg-white dark:bg-gray-900">
-      <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
+      <div className="mx-auto w-full max-w-screen-lg p-4 py-6 lg:py-8">
         <div className="flex flex-col md:flex-row md:justify-between">
           <div className="mb-6 flex items-center justify-center md:mb-0 md:mr-10 lg:mr-0">
             <a href="/">

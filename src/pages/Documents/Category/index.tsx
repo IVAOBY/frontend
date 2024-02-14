@@ -107,7 +107,7 @@ export function DocumentsCategory() {
           {documents.filter((document) => document.published).length === 0 && (
             <div className="p-4 shadow-lg rounded-xl bg-white">
               <p className="text-atmos-700 font-semibold">
-                {t('Documents.error.nodoc')}
+                {t('documents.error.nodoc')}
               </p>
             </div>
           )}
