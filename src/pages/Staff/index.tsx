@@ -179,8 +179,8 @@ export function StaffPage() {
                         className="max-h-[150px] max-w-[150px] rounded-[100px]"
                         src={
                           position.user?.id
-                            ? `https://static.ivao.systems/files/staff/${position.user?.id}.jpg`
-                            : 'https://static.ivao.systems/files/staff/vacant.jpg'
+                            ? `https://files.ivao.systems/files/staff/${position.user?.id}.jpg`
+                            : 'https://files.ivao.systems/files/staff/vacant.jpg'
                         }
                         alt={'Staff Photo'}
                       />

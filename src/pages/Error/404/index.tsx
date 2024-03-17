@@ -26,7 +26,7 @@ export function NotFound() {
         </div>
         <img
           className="w-5/6"
-          src={'https://static.ivao.systems/files/logos/404.svg'}
+          src={'https://files.ivao.systems/files/logos/404.svg'}
         />
       </div>
     </GeneralLayout>
