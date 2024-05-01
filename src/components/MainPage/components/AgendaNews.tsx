@@ -34,7 +34,7 @@ interface News {
   publishedAt: Date;
 }
 
-export function NewsSection() {
+export function AgendaNews() {
   const { t, i18n } = useTranslation();
   const [news, setNews] = useState<News[] | null>(null);
   const api = useApi();

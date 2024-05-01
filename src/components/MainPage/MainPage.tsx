@@ -1,14 +1,16 @@
 import { GeneralLayout } from '../Layout';
+import { AgendaNews } from './components/AgendaNews';
 import { HeroText } from './components/Heropage';
-import { NewsSection } from './components/NewsSection';
 import { OnlineInfoComponent } from './components/OnlineInfo';
+import { Widgets } from './components/Widgets';
 
 export function MainPage() {
   return (
     <GeneralLayout>
       <HeroText />
+      <Widgets />
+      <AgendaNews></AgendaNews>
       <OnlineInfoComponent></OnlineInfoComponent>
-      <NewsSection></NewsSection>
     </GeneralLayout>
   );
 }
