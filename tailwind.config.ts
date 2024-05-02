@@ -51,6 +51,9 @@ export default {
           800: '#191A23',
           900: '#181922',
         },
+        ivaoby: {
+          darkgray: '#1E1E21',
+        },
         semantic: {
           red: {
             50: '#FBDADA',

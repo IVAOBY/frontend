@@ -54,7 +54,7 @@ ${decodedToken?.userData.name.first} ${decodedToken?.userData.name.last}`;
 
   return (
     <>
-      <div className="justify-left inline-flex max-w-screen-lg flex-col gap-40 pt-8 text-left md:py-48 md:pb-48">
+      <div className="justify-left inline-flex max-w-screen-lg flex-col gap-40 pt-8 text-left md:py-48">
         <div>
           <span className="font-['Futura PT'] text-6xl font-bold leading-10 text-atmos-100">
             ЗНАКОМЬТЕСЬ,

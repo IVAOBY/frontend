@@ -93,7 +93,7 @@ export function NewsPage() {
       {newsItem ? (
         <>
           <Title
-            className="text-center text-2xl font-bold text-ivao-blue md:text-4xl"
+            className="text-ivao-blue text-center text-2xl font-bold md:text-4xl"
             withUndreline
           >
             {newsItem.name[i18n.language]}
@@ -142,15 +142,15 @@ export function NewsPage() {
       ) : (
         <>
           <h2 className="mt-4 text-center text-3xl font-bold text-blue-900">
-            <div className="mx-auto mb-4 h-6 w-1/2 animate-pulse rounded-lg bg-ivao-blue"></div>
+            <div className="bg-ivao-blue mx-auto mb-4 h-6 w-1/2 animate-pulse rounded-lg"></div>
           </h2>
           <div className="mt-8 flex flex-col gap-5 rounded-lg bg-white p-6 shadow-lg md:flex-row">
-            <div className="h-40 animate-pulse rounded-lg bg-ivao-grey md:w-1/2"></div>
+            <div className="bg-ivao-grey h-40 animate-pulse rounded-lg md:w-1/2"></div>
             <div className="md:w-1/2">
               {[1, 2, 3, 4, 5, 6].map((index) => (
                 <div
                   key={index}
-                  className="my-2 h-6 w-full animate-pulse rounded-lg bg-ivao-grey md:w-4/5"
+                  className="bg-ivao-grey my-2 h-6 w-full animate-pulse rounded-lg md:w-4/5"
                 ></div>
               ))}
             </div>

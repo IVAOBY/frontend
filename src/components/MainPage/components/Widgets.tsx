@@ -60,17 +60,17 @@ ${decodedToken?.userData.name.first} ${decodedToken?.userData.name.last}`;
             ПЕРВЫЕ ШАГИ
           </div>
         </div>
-        <div className="flex flex-row gap-6 columns-2">
-          <div className="w-96 h-48 relative bg-white rounded-3xl border border-stone-300"></div>
+        <div className="flex columns-2 flex-row gap-6">
+          <div className="relative h-48 w-96 rounded-3xl border border-stone-300 bg-white"></div>
           <div className="inline-flex h-48 w-64 flex-col items-center justify-start rounded-3xl bg-gray-900 pb-48">
-            <div className="font-['Futura PT'] w-64 mt-4 text-4xl text-center font-bold tracking-tighter text-white">
+            <div className="font-['Futura PT'] mt-4 w-64 text-center text-4xl font-bold tracking-tighter text-white">
               ПИЛОТАМ
             </div>
           </div>
         </div>
-        <div className="flex flex-row gap-6 columns-2">
+        <div className="flex columns-2 flex-row gap-6">
           <div className="inline-flex h-48 w-64 flex-col items-center justify-start rounded-3xl bg-indigo-500 pb-48"></div>
-          <div className="w-96 h-48 relative bg-gray-900 rounded-3xl border border-stone-300"></div>
+          <div className="relative h-48 w-96 rounded-3xl border border-stone-300 bg-gray-900"></div>
         </div>
       </div>
     </>

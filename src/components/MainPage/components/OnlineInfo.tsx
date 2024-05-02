@@ -2,11 +2,14 @@ import { useEffect, useState } from 'react';
 
 import { AtcResponse } from '@ivaoby/common/types/tracker/internal/atc-response';
 import { PilotResponse } from '@ivaoby/common/types/tracker/internal/pilots-response';
-import { IconAirTrafficControl, IconPlaneTilt } from '@tabler/icons-react';
 
+import atcicon from '../../../assets/icons/atc-icon.svg';
+//import { IconAirTrafficControl, IconPlaneTilt } from '@tabler/icons-react';
+import banner from '../../../assets/image/onlineinfobaner.png';
 // import { useTranslation } from 'react-i18next';
 
 import { useApi } from '../../../context/ApiContext';
+import { GeneralLayout } from '../../Layout';
 
 export function OnlineInfoComponent() {
   const api = useApi();
@@ -40,76 +43,37 @@ export function OnlineInfoComponent() {
   }, [api]);
 
   return (
-    <>
-      <div className="flex flex-col items-center justify-center gap-2 md:flex-row">
-        {/*ATC*/}
+    <GeneralLayout>
+      <div className="relative flex columns-2 flex-row gap-6">
         <div
-          key="ATC"
-          className="flex w-[350px] flex-row rounded-xl bg-white p-5 shadow-lg first:mb-2 md:w-[500px] md:first:mb-0 md:first:mr-5"
-        >
-          <div className="flex flex-col">
-            <IconAirTrafficControl
-              className="rounded-2xl bg-atmos-700 p-5"
-              size={'70px'}
-              stroke={2}
-              color="#fff"
-            />
-          </div>
-          <div>
-            {atcItems &&
-              atcItems.map((atc) => (
-                <span
-                  onClick={() =>
-                    window.open(
-                      `https://tracker.ivao.aero/sessions/${atc.id}`,
-                      '_blank',
-                    )
-                  }
-                  key={atc.id}
-                  className="me-2 ml-3 rounded border border-green-400 bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800"
-                >
-                  {atc.composePosition} ({Math.round(atc.time / 60).toString()}{' '}
-                  minutes)
-                </span>
-              ))}
-          </div>
-        </div>
-        {/*PILOTS*/}
-        <div
-          key="Pilots"
-          className="flex w-[350px] flex-row rounded-xl bg-white p-5 shadow-lg first:mb-2 md:w-[500px] md:first:mb-0 md:first:mr-5"
-        >
-          <div className="flex flex-col">
-            <IconPlaneTilt
-              className="rounded-2xl bg-atmos-700 p-5"
-              size={'70px'}
-              stroke={2}
-              color="#fff"
-            />
-          </div>
-          <div>
-            {pilotsItem ? (
-              pilotsItem.map((pilot) => (
-                <span
-                  onClick={() =>
-                    window.open(
-                      `https://tracker.ivao.aero/sessions/${pilot.id}`,
-                      '_blank',
-                    )
-                  }
-                  key={pilot.id}
-                  className="me-2 ml-3 rounded border border-green-400 bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800"
-                >
-                  {pilot.callsign} ({Math.round(pilot.time / 60).toString()}{' '}
-                  minutes)
-                </span>
-              ))
-            ) : (
-              <p className="ml-3 font-bold text-atmos-700">No pilots</p>
-            )}
+          className="relative h-[445px] w-full rounded-3xl border border-stone-300"
+          style={{ backgroundImage: `url(${banner})` }}
+        ></div>
+        <div className="absolute inset-0 flex w-full items-center justify-end">
+          <div className="relative h-full w-[616px] rounded-l-[100px] rounded-r-2xl bg-ivaoby-darkgray">
+            <div className="flex flex-col items-center">
+              <div className="font-['Futura PT'] pt-10 text-center text-3xl font-bold uppercase text-white">
+                онлайн
+              </div>
+              <div className="relative flex w-full items-center justify-center">
+                <div className="mt-[36px] flex h-[110px] w-[334px] rounded-2xl bg-[#0D2C99]">
+                  <div
+                    className="relative h-full w-[50%] bg-center bg-no-repeat"
+                    style={{ backgroundImage: `url(${atcicon})` }}
+                  ></div>
+                  <div className="relative h-full w-[50%] bg-center bg-no-repeat">
+                    <div className="h-[21px] max-w-[138px] rounded-2xl bg-white">
+                      <p className="font-['Futura PT'] text-xs font-medium text-[#000000]">
+                        UMMS TWR
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </>
+    </GeneralLayout>
   );
 }
