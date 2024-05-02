@@ -56,16 +56,35 @@ export function OnlineInfoComponent() {
                 онлайн
               </div>
               <div className="relative flex w-full items-center justify-center">
-                <div className="mt-[36px] flex h-[110px] w-[334px] rounded-2xl bg-[#0D2C99]">
+                <div className="mt-[36px] flex h-[110px] w-[334px] rounded-2xl bg-[#0D2C99] relative shadow-xl">
                   <div
                     className="relative h-full w-[50%] bg-center bg-no-repeat"
                     style={{ backgroundImage: `url(${atcicon})` }}
                   ></div>
-                  <div className="relative h-full w-[50%] bg-center bg-no-repeat">
-                    <div className="h-[21px] max-w-[138px] rounded-2xl bg-white">
-                      <p className="font-['Futura PT'] text-xs font-medium text-[#000000]">
-                        UMMS TWR
-                      </p>
+                  <div className="relative h-full w-[50%] bg-center bg-no-repeat pt-4 flex flex-col">
+                    <div>
+                      {atcItems && atcItems.slice(0, 3).map((atc) => (
+                          <>
+                            <div className="h-[21px] max-w-[138px] rounded-2xl bg-white flex flex-row items-center justify-between mt-2">
+                              <p
+                                className="font-['Futura PT'] text-xs font-medium text-[#000000] text-center ml-2 hover:cursor-pointer"
+                                onClick={() =>
+                                  window.open(
+                                    `https://tracker.ivao.aero/sessions/${atc.id}`,
+                                    '_blank',
+                                  )
+                                }
+                              >
+                                {atc.composePosition}
+                              </p>
+                              <span className="h-[25px] w-[51px] rounded-2xl bg-[#1E1E21] flex items-center justify-center">
+                                <p className="font-['Futura PT'] text-xs font-medium text-white">
+                                  {`${String(Math.floor(atc.time / 3600)).padStart(2, '0')}:${String(Math.floor((atc.time % 3600) / 60)).padStart(2, '0')}`}
+                                </p>
+                              </span>
+                            </div>
+                          </>
+                        ))}
                     </div>
                   </div>
                 </div>
