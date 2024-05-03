@@ -40,7 +40,7 @@ export function ListItem({
         <CustomButton
           title={textButton}
           variant={'primary'}
-          icon={<IconLink size={22} />}
+          // icon={<IconLink size={22} />}
           size={'md'}
           onClick={() => openLink(link)}
         ></CustomButton>
