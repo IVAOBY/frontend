@@ -4,8 +4,9 @@ import { notifications } from '@mantine/notifications';
 import { IconCircleX } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 
-import belavia from '../../../assets/image/belaviakrylo.svg';
 import airport from '../../../assets/image/airport.svg';
+import belavia from '../../../assets/image/belaviakrylo.svg';
+import discord from '../../../assets/image/discord2.svg';
 import charts from '../../../assets/image/charts.svg';
 import { AuthContext } from '../../../context/UserContext';
 import { CustomButton } from '../../Button';
@@ -97,15 +98,33 @@ ${decodedToken?.userData.name.first} ${decodedToken?.userData.name.last}`;
             </div>
           </div>
           <div className="flex columns-2 flex-row gap-6 pt-7">
-            <div className="inline-flex h-[270px] w-[355px] flex-col items-center justify-start rounded-3xl bg-indigo-500 pb-48">
-
+            <div
+                className="flex flex-col h-[270px] w-[355px] items-center justify-start rounded-3xl bg-indigo-500 pb-48 gap-5">
+              <img
+                  src={discord}
+                  alt="Discord logo"
+                  className="mt-[28px]"
+              />
+              <div className="bg-white w-[248px] p-3 rounded-2xl rounded-bl-none">
+                <p className="text-black text-[20px] font-semibold">
+                  А где весь движ?🛩️
+                </p>
+              </div>
+              <div className="flex flex-col w-[293px] bg-gray-900 p-3 rounded-2xl rounded-br-none">
+                <p className="text-white text-[20px] font-semibold">
+                  Воу-воу, скорее заходи:
+                </p>
+                <p className="text-white text-[20px] font-semibold">
+                  discord.by.ivao.aero
+                </p>
+              </div>
             </div>
             <div
-                className="flex relative h-[270px] pr-10 w-full rounded-3xl border border-stone-300 bg-gray-900 justify-end items-center">
+                className="flex relative h-[270px] pr-10 w-[741px] rounded-3xl border border-stone-300 bg-gray-900 justify-end items-center">
               <img
                   src={airport}
                   alt="UMMS Aurora"
-                  className="absolute -left-[220px] top-0 rounded-l-b-2xl w-full h-full z-10 pb-0 mb-0"
+                className="absolute -left-[170px] top-0 rounded-l-b-2xl w-full h-full z-10 pb-0 mb-0"
               />
               <p className="font-['Montserrat'] text-right text-[70px] font-bold tracking-tighter text-white uppercase">
                 сценарии

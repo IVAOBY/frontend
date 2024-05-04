@@ -128,7 +128,9 @@ export function OnlineInfoComponent() {
                           </div>
                         ))
                       ) : (
-                        <p className="text-white">Нет данных для отображения</p>
+                          <p className="items-center justify-center pr-4 text-center font-bold text-white">
+                            Никого нет в сети
+                          </p>
                       )}
                     </div>
                   </div>
