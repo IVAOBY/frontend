@@ -1,0 +1,30 @@
+on:
+  push:
+    branches:
+
+name: Push Action 🚀
+jobs:
+  check-format:
+    name: Format 🔍
+    uses: ./.github/workflows/check-format.yaml
+    permissions:
+      contents: write
+
+  build-project:
+    name: Build 🎉
+    needs: check-format
+    uses: ./.github/workflows/build.yaml
+    permissions: write-all
+
+  github-release:
+    name: Create a release 🌐
+    needs: build-project
+    uses: ./.github/workflows/release.yaml
+    permissions: write-all
+
+  ftp-deploy:
+    name: Sync files 📂
+    if: github.ref_name == 'main'
+    needs: build-project
+    uses: ./.github/workflows/web-deploy.yaml
+    permissions: write-all

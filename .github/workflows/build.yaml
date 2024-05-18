@@ -1,0 +1,42 @@
+name: Build 🚧️
+on:
+  workflow_call:
+jobs:
+  build-project:
+    name: Build 🎉
+    if: github.ref_name == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get latest code 🚚
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js 👾
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+
+      - name: Build Project 🔨
+        run: |
+          yarn install --force
+          CI=false yarn build
+
+  build-stage:
+    if: github.ref_name == 'dev'
+    name: Stage Build 🎉
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get latest code 🚚
+        uses: actions/checkout@v3
+        with:
+          ref: dev
+
+      - name: Set up Node.js 👾
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+
+      - name: Build Project 🔨
+        run: |
+          yarn install --force
+          CI=false yarn build
+          mv ./dist stage-dist

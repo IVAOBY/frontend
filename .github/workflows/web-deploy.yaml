@@ -1,29 +1,17 @@
+name: Web Deploy 🛠️
 on:
-  push:
-    branches: main
-    pull_request:
-      branches: main
-
-name: 🚀 Deploy website on push
+  workflow_call:
 jobs:
   web-deploy:
-    name: 🎉 Deploy
     runs-on: ubuntu-latest
     steps:
-      - name: 🚚 Get latest code
+      - name: Get latest code 🚚
         uses: actions/checkout@v3
-
-      - name: Use Node.js 16
-        uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          sparse-checkout: |
+            dist
 
-      - name: 🔨 Build Project
-        run: |
-          yarn install --force
-          CI=false npm run build
-
-      - name: 📂 Sync files
+      - name: Sync files 📂
         uses: sand4rt/ftp-deployer@v1.7
         with:
           sftp: false
