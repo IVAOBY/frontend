@@ -125,7 +125,7 @@ export function NewsSection() {
                 >
                   <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
                   <div className="absolute inset-0 flex flex-col items-start justify-end p-6 text-white">
-                    <div className="flex items-center justify-center gap-2.5 rounded-[999px] border border-white bg-white bg-opacity-0 px-2 py-1 backdrop-blur-[10px]">
+                    <div className="flex items-center justify-center gap-2.5 rounded-[999px] border border-white bg-white/0 px-2 py-1 backdrop-blur-[10px]">
                       <div className="text-xs font-medium text-white">
                         {format(new Date(newsItem.publishedAt), 'dd.MM.yyyy')}
                       </div>

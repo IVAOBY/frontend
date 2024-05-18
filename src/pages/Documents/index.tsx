@@ -87,7 +87,7 @@ export function DocumentsMain() {
       {documentsCategory.map((category, index) => (
         <div key={index} className="my-10">
           <H3 className="text-atmos-700">{category.name[i18n.language]}</H3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {documents
               .filter(
                 (document) =>
@@ -96,10 +96,10 @@ export function DocumentsMain() {
               .map((document) => (
                 <div
                   key={document.id}
-                  className="p-4 shadow-lg rounded-xl cursor-pointer bg-white duration-300 hover:bg-gray-50 hover:-translate-y-1 hover:-scale-10 "
+                  className="hover:-scale-10 cursor-pointer rounded-xl bg-white p-4 shadow-lg duration-300 hover:-translate-y-1 hover:bg-gray-50 "
                   onClick={() => documentsRedirect(document)}
                 >
-                  <p className="text-atmos-700 font-semibold">
+                  <p className="font-semibold text-atmos-700">
                     {document.name[i18n.language]}
                   </p>
                 </div>
@@ -108,8 +108,8 @@ export function DocumentsMain() {
               (document) =>
                 document.category === category.id && document.published,
             ).length === 0 && (
-              <div className="p-4 shadow-lg rounded-xl bg-white">
-                <p className="text-atmos-700 font-semibold">
+              <div className="rounded-xl bg-white p-4 shadow-lg">
+                <p className="font-semibold text-atmos-700">
                   {t('documents.error.nodoc')}
                 </p>
               </div>

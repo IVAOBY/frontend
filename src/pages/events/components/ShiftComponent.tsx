@@ -1,4 +1,3 @@
-//@ts-nocheck
 import { useContext, useEffect, useState } from 'react';
 
 import {
@@ -161,7 +160,6 @@ export function ShiftComponent() {
         try {
           await api(
             `/events-booking/book?atcPositionId=${atcPositionId}`,
-            'v3',
             'POST',
             {
               atcPositionId: atcPositionId,
@@ -197,7 +195,7 @@ export function ShiftComponent() {
         booking.bookedUser?.id === decodedToken?.userData.id
       );
     });
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+
     return booking ? booking.id : undefined;
   }
 

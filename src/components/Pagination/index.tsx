@@ -20,7 +20,7 @@ const Pagination: React.FC<PaginationProps> = ({
     for (let i = 1; i <= totalPages; i++) {
       pages.push(i);
     }
-    return pages;
+    return pages; // TODO: fix unsafe return
   };
 
   return (
@@ -38,8 +38,8 @@ const Pagination: React.FC<PaginationProps> = ({
       {generatePageNumbers().map((page) => (
         <button
           key={page}
-          onClick={() => onPageChange(page)}
-          className={`transition min-w-10 px-3 py-1 ${
+          onClick={() => onPageChange(page)} // TODO: fix unsafe argument
+          className={`min-w-10 px-3 py-1 transition ${
             currentPage === page
               ? 'rounded-md bg-atmos-700 text-white'
               : 'rounded-md bg-gray-300 text-gray-700 hover:bg-ocean-600 hover:text-white'

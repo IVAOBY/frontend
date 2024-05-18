@@ -11,9 +11,9 @@ export function NotFound() {
 
   return (
     <GeneralLayout>
-      <div className="pl-4 pr-4 grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-20">
+      <div className="grid grid-cols-1 gap-2 px-4 md:grid-cols-2 md:gap-20">
         <div className="flex flex-col gap-2">
-          <Title className="text-semantic-red-500 text-left">
+          <Title className="text-left text-semantic-red-500">
             {t('errorpage.notfoundtext')}
           </Title>
           <p className="text-fuselage-300">{t('errorpage.notfoundsubtext')}</p>
@@ -26,6 +26,7 @@ export function NotFound() {
         </div>
         <img
           className="w-5/6"
+          alt="404 image"
           src={'https://files.ivao.systems/files/logos/404.svg'}
         />
       </div>

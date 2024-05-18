@@ -11,6 +11,7 @@ interface ApiContextType {
 const ApiContext = createContext<ApiContextType | undefined>(undefined);
 
 export const useApi = () => {
+  // TODO: react-refresh/only-export-components
   const context = useContext(ApiContext);
 
   if (!context) {
