@@ -54,7 +54,7 @@ const enTranslations: { translations: Translations } = {
     },
     heropage: {
       title: 'Welcome to the BY Division of',
-      subtitle: 'The most modern division in IVAO.',
+      subtitle: 'The most modern IVAO division.',
       subtitle2: 'Join now!',
       joinbutton: 'Join!',
       transfer: 'Transfer to BY division!',
@@ -82,7 +82,7 @@ const enTranslations: { translations: Translations } = {
     },
     legal: {
       title: 'Legal information',
-      text: 'Yes, we collect and store your information. But we do so in accordance with the following documents:',
+      text: 'Yes, we collect and store your information. But we do so in accordance with the following Documents:',
       privacypolicy: 'Privacy Policy',
       termsofuse: 'Terms of Use',
       ipp: 'Intellectual Property Policy',
@@ -92,7 +92,7 @@ const enTranslations: { translations: Translations } = {
       text: 'On this page you can download the sector file for IvAc.',
       wtitle: 'Please pay attention!',
       warning:
-        'IvAc is deprecated and no longer recommended to use! <br/> We strongly recommend using <a href={"https://ivao.aero/softdev/software/aurora.asp"} target={"_blank"} >Aurora</a>',
+        'IvAc is deprecated and no longer recommended to use! We strongly recommend using Aurora.',
       download: 'Download',
     },
     news: {
@@ -101,6 +101,12 @@ const enTranslations: { translations: Translations } = {
     },
     staff: {
       name: 'Division Staff',
+      nopositions: 'No available staff positions in this department',
+    },
+    documents: {
+      error: {
+        nodoc: 'No Documents for this category',
+      },
     },
     AboutUs: {
       title: 'About us',
@@ -110,10 +116,8 @@ const enTranslations: { translations: Translations } = {
       ivao: 'IVAO',
     },
     footer: {
-      copyrightMessage:
-        '© 2023 International Virtual Aviation Organisation - IVAO Belarus. All Rights Reserved.',
-      privacyPolicyName: 'Privacy Policy',
-      termsOfUseName: 'Terms of Use',
+      copyrightMessage: 'All Rights Reserved.',
+      followus: 'Follow Us',
     },
     notif: {
       loading: {

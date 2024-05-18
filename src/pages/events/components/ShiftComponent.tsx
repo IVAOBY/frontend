@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { useContext, useEffect, useState } from 'react';
 
 import {
@@ -169,7 +170,7 @@ export function ShiftComponent() {
             },
           );
 
-          api(`/events-parts/event/${id}`).then((response: any) => {
+          await api(`/events-parts/event/${id}`).then((response: any) => {
             if (response && Array.isArray(response)) {
               setPartItem(response);
             }
@@ -203,8 +204,8 @@ export function ShiftComponent() {
   const handleUnbook = (bookingId: number) => {
     if (signed) {
       api(`/events-booking/unbook/${bookingId}`, 'v3', 'DELETE')
-        .then(() => {
-          api(`/events-parts/event/${id}`).then((response: any) => {
+        .then(async () => {
+          await api(`/events-parts/event/${id}`).then((response: any) => {
             if (response && Array.isArray(response)) {
               setPartItem(response);
             }

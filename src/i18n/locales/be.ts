@@ -92,7 +92,7 @@ const beTranslations: { translations: Translations } = {
       text: ' На гэтай старонке вы можаце спампаваць сектар-файл для IvAc.',
       wtitle: 'Калі ласка, звярніце увагу!',
       warning:
-        'IvAc састарэлы и больш не раіцца да карыстання! <br/> Замест яго раіцца карыстацца <a href={"https://ivao.aero/softdev/software/aurora.asp"} target={"_blank"} >Aurora</a>',
+        'IvAc састарэлы и больш не раіцца да карыстання! Замест яго раіцца карыстацца Aurora.',
       download: 'Спампаваць',
     },
     news: {
@@ -101,6 +101,12 @@ const beTranslations: { translations: Translations } = {
     },
     staff: {
       name: 'Кіраўніцтва дывізіёна',
+      nopositions: 'У гэтым дэпартаменце няма свабодных пасад',
+    },
+    documents: {
+      error: {
+        nodoc: 'Няма дакументаў для гэтай катэгорыі',
+      },
     },
     AboutUs: {
       title: 'Пра нас',
@@ -110,10 +116,8 @@ const beTranslations: { translations: Translations } = {
       ivao: 'IVAO',
     },
     footer: {
-      copyrightMessage:
-        '© 2023 International Virtual Aviation Organisation - IVAO Belarus. All Rights Reserved.',
-      privacyPolicyName: 'Privacy Policy',
-      termsOfUseName: 'Terms of Use',
+      copyrightMessage: 'Усе правы ахоўваюцца.',
+      followus: 'Сацыяльныя сеткі',
     },
     notif: {
       loading: {

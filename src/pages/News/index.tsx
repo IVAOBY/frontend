@@ -7,8 +7,9 @@ import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
-import { GeneralLayout } from '../components/Layout';
-import { useApi } from '../context/ApiContext';
+import { GeneralLayout } from '../../components/Layout';
+import { Title } from '../../components/Typography/Title';
+import { useApi } from '../../context/ApiContext';
 
 interface News {
   id: number;
@@ -91,55 +92,65 @@ export function NewsPage() {
     <GeneralLayout>
       {newsItem ? (
         <>
-          <h2 className="mt-4 text-center text-4xl font-bold text-ivao-blue">
+          <Title
+            className="text-ivao-blue text-center text-2xl font-bold md:text-4xl"
+            withUndreline
+          >
             {newsItem.name[i18n.language]}
-          </h2>
-          <div className="mt-8 rounded-2xl bg-white p-6 shadow-lg">
-            <div className="flex flex-col gap-5 md:flex-row">
-              <img
-                src={newsItem.image_url}
-                alt={newsItem.name.en}
-                className="h-full max-w-full rounded-lg md:max-w-md"
-              />
-              <p className="text-base text-gray-700">
-                {newsItem.description[i18n.language]}
+          </Title>
+          <div className="mt-5 flex flex-row justify-center gap-[103.55px]">
+            <div className="flex flex-row gap-2">
+              <IconCalendarTime className="ml-2 text-atmos-700 md:ml-0" />
+              <p className="text-base font-bold text-gray-500 md:text-lg">
+                {format(new Date(newsItem.publishedAt), 'dd.MM.yyyy')}
               </p>
             </div>
-            <div className="mt-4 flex items-center justify-between">
-              <div className="flex items-center">
-                <IconUser className="text-ivao-blue" size={18} />
-                <p className="text-base font-bold text-ivao-blue">
-                  {newsItem.user.staffPositions
-                    ? newsItem.user.staffPositions
-                        .map((position) => `BY-${position.id}`)
-                        .filter(
-                          (value, index, self) => self.indexOf(value) === index,
-                        )
-                        .join('/')
-                    : String(newsItem.user.id)}
-                </p>
-              </div>
-              <div className="flex items-center">
-                <IconCalendarTime className="text-ivao-blue" size={18} />
-                <p className="text-base text-ivao-blue">
-                  {format(new Date(newsItem.publishedAt), 'dd-MM-yyyy')}
-                </p>
-              </div>
+            <div className="flex flex-row gap-2">
+              <IconUser className="text-atmos-700" />
+              <p className="mr-2 text-base font-bold text-gray-500 md:mr-0 md:text-lg">
+                {newsItem.user &&
+                newsItem.user.staffPositions &&
+                newsItem.user.staffPositions.length > 0
+                  ? newsItem.user.staffPositions
+                      .map((position) => `BY-${position.id}`)
+                      .filter(
+                        (value, index, self) => self.indexOf(value) === index,
+                      )
+                      .join('/')
+                  : newsItem.user
+                    ? `${newsItem.user.name.first} ${newsItem.user.id}`
+                    : 'IVAO BY HQ'}
+              </p>
             </div>
+          </div>
+          <div className="flex items-center justify-center">
+            <img
+              src={newsItem.image_url}
+              alt={newsItem.name.en}
+              className="mt-8 w-11/12 rounded-lg md:w-7/12"
+            />
+          </div>
+          <div className="flex items-center justify-center text-justify">
+            <p
+              className="m-5 w-[700px] break-words text-gray-700 md:text-lg"
+              dangerouslySetInnerHTML={{
+                __html: newsItem.description[i18n.language],
+              }}
+            />
           </div>
         </>
       ) : (
         <>
           <h2 className="mt-4 text-center text-3xl font-bold text-blue-900">
-            <div className="mx-auto mb-4 h-6 w-1/2 animate-pulse rounded-lg bg-ivao-blue"></div>
+            <div className="bg-ivao-blue mx-auto mb-4 h-6 w-1/2 animate-pulse rounded-lg"></div>
           </h2>
           <div className="mt-8 flex flex-col gap-5 rounded-lg bg-white p-6 shadow-lg md:flex-row">
-            <div className="h-40 animate-pulse rounded-lg bg-ivao-grey md:w-1/2"></div>
+            <div className="bg-ivao-grey h-40 animate-pulse rounded-lg md:w-1/2"></div>
             <div className="md:w-1/2">
               {[1, 2, 3, 4, 5, 6].map((index) => (
                 <div
                   key={index}
-                  className="my-2 h-6 w-4/5 animate-pulse rounded-lg bg-ivao-grey"
+                  className="bg-ivao-grey my-2 h-6 w-full animate-pulse rounded-lg md:w-4/5"
                 ></div>
               ))}
             </div>

@@ -1,9 +1,6 @@
 import React, { createContext, useCallback, useEffect, useState } from 'react';
 
-import { notifications } from '@mantine/notifications';
-import { IconCircleX } from '@tabler/icons-react';
 import jwtDecode from 'jwt-decode';
-import { useLocation, useNavigate } from 'react-router-dom';
 
 import { DecodedTokenInt } from '../hooks/types';
 
@@ -15,7 +12,7 @@ interface AuthContextProps {
   signed: boolean;
   token: string;
   decodedToken: DecodedTokenInt | null;
-  signIn: (ivaoToken: string) => Promise<void>;
+  signIn: (ivaoToken: string) => void;
   signOut: () => void;
   refreshToken: () => void;
 }
@@ -24,8 +21,7 @@ export const AuthContext = createContext<AuthContextProps>({
   signed: false,
   token: '',
   decodedToken: null,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  signIn: (_: string) => Promise.reject(),
+  signIn: () => {},
   signOut: () => {},
   refreshToken: () => {},
 });
@@ -42,8 +38,6 @@ function removeTokenFromUrl() {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const location = useLocation();
-  const navigate = useNavigate();
   const [token, setToken] = useState<string>(
     localStorage.getItem('token') || '',
   );
@@ -51,41 +45,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
     null,
   );
 
-  // eslint-disable-next-line @typescript-eslint/require-await
-  const signIn = useCallback(async () => {
+  const signIn = useCallback((ivaoToken: string) => {
     try {
-      const urlSearchParams = new URLSearchParams(window.location.search);
-      const tokenFromUrl = urlSearchParams.get('token');
-
-      //Добавить перевод
-      if (token) {
-        removeTokenFromUrl();
-        notifications.show({
-          id: 'auth-already',
-          color: 'red',
-          title: 'Ошибка!',
-          message: 'Вы уже авторизированы на сайте!',
-          radius: 'lg',
-          icon: <IconCircleX />,
-          withCloseButton: true,
-          autoClose: 3000,
-        });
-        return;
-      }
-
-      if (tokenFromUrl) {
-        localStorage.setItem('token', tokenFromUrl);
-
-        removeTokenFromUrl();
-
-        setToken(tokenFromUrl);
-
-        return;
-      }
+      localStorage.setItem('token', ivaoToken);
+      removeTokenFromUrl();
+      setToken(ivaoToken);
     } catch (error) {
       console.error('Ошибка при аутентификации:', error);
     }
-  }, [token]);
+  }, []);
 
   const signOut = useCallback(() => {
     localStorage.removeItem('token');
@@ -93,9 +61,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, []);
 
   const refreshToken = useCallback(() => {
-    signOut();
-    navigate('/', { state: { from: location } });
-  }, [navigate, signOut, location]);
+    window.location.href = `https://api.ivao.systems/auth/login?goto=${encodeURIComponent(window.location.href)}`;
+  }, []);
 
   useEffect(() => {
     if (!token) {
@@ -103,34 +70,37 @@ export function AuthProvider({ children }: AuthProviderProps) {
       return;
     }
 
-    const currentTimestampSec = Math.floor(Date.now() / 1000);
-    const decoded = jwtDecode<DecodedTokenInt>(token);
+    try {
+      const currentTimestampSec = Math.floor(Date.now() / 1000);
+      const decoded = jwtDecode<DecodedTokenInt>(token);
 
-    if (currentTimestampSec > decoded.exp) {
+      if (currentTimestampSec > decoded.exp) {
+        refreshToken();
+      } else {
+        const mappedToken: DecodedTokenInt = {
+          iat: decoded.iat,
+          exp: decoded.exp,
+          userData: decoded.userData,
+        };
+
+        setDecodedToken(mappedToken);
+      }
+    } catch (error) {
+      console.error('Ошибка при декодировании токена:', error);
       refreshToken();
-    } else {
-      const mappedToken: DecodedTokenInt = {
-        iat: decoded.iat,
-        exp: decoded.exp,
-        userData: decoded.userData,
-      };
-
-      setDecodedToken(mappedToken);
     }
   }, [refreshToken, token]);
 
+  const contextValue: AuthContextProps = {
+    signIn,
+    signOut,
+    refreshToken,
+    signed: !!token,
+    token,
+    decodedToken,
+  };
+
   return (
-    <AuthContext.Provider
-      value={{
-        signIn,
-        signOut,
-        refreshToken,
-        signed: !!token,
-        token,
-        decodedToken,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
 }

@@ -1,59 +1,48 @@
-import {
-  Container,
-  createStyles,
-  Image,
-  Paper,
-  rem,
-  Text,
-  Title,
-} from '@mantine/core';
-import { useTranslation } from 'react-i18next';
-
-import baner from '../assets/image/joinbaner.png';
-
-const useStyles = createStyles((theme) => ({
-  title: {
-    fontSize: rem(34),
-    fontWeight: 800,
-    color: theme.colors.blue[9],
-    [theme.fn.smallerThan('sm')]: {
-      fontSize: rem(24),
-    },
-    '&::after': {
-      content: '""',
-      display: 'block',
-      backgroundColor: theme.fn.primaryColor(),
-      width: rem(45),
-      height: rem(2),
-      marginTop: theme.spacing.sm,
-      marginLeft: 'auto',
-      marginRight: 'auto',
-    },
-  },
-  image: {},
-}));
+import { GeneralLayout } from '../components/Layout';
+import { ListItem } from '../components/List';
+import { Title } from '../components/Typography/Title';
 
 export function AboutUs() {
-  const { classes, theme } = useStyles();
-  const { t } = useTranslation();
+  // const { classes, theme } = useStyles();
+  // const { t } = useTranslation();
 
   return (
-    <Container size="lg" py="xl">
-      <Title order={2} className={classes.title} ta="center" mt="sm">
-        {t('AboutUs.title')}
-      </Title>
-      <Text color={theme.colors.blue[9]} fw={600} mt={rem(12)}>
-        {t('AboutUs.text')}
-      </Text>
-      <Paper shadow={'lg'} radius={'lg'}>
-        <Image
-          className={classes.image}
-          src={baner}
-          mt={20}
-          radius={'lg'}
-          alt={'About Us Image'}
-        ></Image>
-      </Paper>
-    </Container>
+    <GeneralLayout>
+      <div className="flex h-[93px] flex-col items-center justify-start self-stretch px-2 md:px-48">
+        <Title
+          className="text-4xl"
+          description={'История белорусского дивизиона'}
+          withUndreline
+        >
+          О нас
+        </Title>
+        <ol className="relative mt-10 border-s border-gray-200 dark:border-gray-700">
+          <ListItem
+            date={'Февраль 2022'}
+            title={'Пук Никиты'}
+            description={
+              'Никита смачно перданул, когда ему было 6. Возможно, это стало ключевым событием в создании дивизиона.'
+            }
+            withButton
+            link={'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}
+            textButton={'Смотреть видео'}
+          />
+          <ListItem
+            date={'Март 2022'}
+            title={'Никита ударился башкой'}
+            description={
+              'Из-за неизвестных нам обстоятельств, Никита решил хорошенько так ударился головой. Это и добавило дивизиону тонких ноток диктатуры.'
+            }
+          />
+          <ListItem
+            date={'Апрель 2022'}
+            title={'"Я устал, я ухожу"'}
+            description={
+              'Недавно Никита Кудрявцев заявил о своём уходе. Все в тайне ждали этого момента со своего рождения.'
+            }
+          />
+        </ol>
+      </div>
+    </GeneralLayout>
   );
 }

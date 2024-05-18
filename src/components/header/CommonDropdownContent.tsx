@@ -18,7 +18,6 @@ import {
   IconEye,
   IconFileInfo,
   IconFocus2,
-  IconGavel,
   IconIdBadge2,
   IconInfoSquareRounded,
   IconLock,
@@ -35,7 +34,7 @@ import {
   IconWorld,
 } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
-import { To, useNavigate } from 'react-router-dom';
+import { Link, To, useNavigate } from 'react-router-dom';
 
 import discord from '../../assets/image/discord.svg';
 import ivaoLogo from '../../assets/image/logo_s_black.svg';
@@ -119,18 +118,18 @@ export function CommonDropdownContent({
           >
             {t('navbar.division.about')}
           </Menu.Item>
-          <Menu.Item
-            icon={<IconIdBadge2 size={20} />}
-            onClick={() => navigate('staff')}
-          >
-            {t('navbar.division.staff')}
-          </Menu.Item>
-          <Menu.Item
-            icon={<Image src={discord} width={19} alt={'Discord Icon'} />}
-            onClick={() => menuLink('https://discord.gg/7t7UJjZcad')}
-          >
-            {t('navbar.division.discord')}
-          </Menu.Item>
+          <Link to={'/staff'}>
+            <Menu.Item icon={<IconIdBadge2 size={20} />}>
+              {t('navbar.division.staff')}
+            </Menu.Item>
+          </Link>
+          <Link to={'/discord'}>
+            <Menu.Item
+              icon={<Image src={discord} width={19} alt={'Discord Icon'} />}
+            >
+              {t('navbar.division.discord')}
+            </Menu.Item>
+          </Link>
           <Menu.Item
             icon={<IconBook size={20} />}
             onClick={() =>
@@ -150,12 +149,6 @@ export function CommonDropdownContent({
             onClick={() => navigate('faq')}
           >
             {t('navbar.division.faq')}
-          </Menu.Item>
-          <Menu.Item
-            icon={<IconGavel size={20} />}
-            onClick={() => navigate('/legal')}
-          >
-            {t('navbar.division.legal')}
           </Menu.Item>
         </Menu.Dropdown>
       </Menu>
@@ -216,13 +209,13 @@ export function CommonDropdownContent({
           </Menu.Item>
           <Menu.Item
             icon={<IconArticle size={20} />}
-            onClick={() => navigate('documents/atc')}
+            onClick={() => navigate('documents/category/1')}
           >
             {t('navbar.atc.docs')}
           </Menu.Item>
           <Menu.Item
             icon={<IconWorld size={20} />}
-            onClick={() => navigate('atc/gca')}
+            onClick={() => navigate('documents/5')}
           >
             {t('navbar.atc.gca')}
           </Menu.Item>
@@ -279,7 +272,7 @@ export function CommonDropdownContent({
           </Menu.Item>
           <Menu.Item
             icon={<IconArticle size={20} />}
-            onClick={() => navigate('documents/pilots')}
+            onClick={() => navigate('documents/category/2')}
           >
             {t('navbar.atc.docs')}
           </Menu.Item>

@@ -1,7 +1,7 @@
 import type {Config} from 'tailwindcss';
 
 export default {
-    content: ['src/**/*.{ts,tsx}'],
+    content: ['src/**/*.{ts,tsx}', 'src/**/**/*.{ts,tsx}\''],
   theme: {
     fontFamily: {
       sans: ['Montserrat', 'sans-serif'],
@@ -11,15 +11,6 @@ export default {
     },
     extend: {
       colors: {
-        ivao: {
-            blue: '#0D2C99',
-            grey: '#D7D7DC',
-            lightBlue: '#3C55AC',
-            green: '#2EC662',
-            yellow: '#F9CC2C',
-            red: '#E93434',
-            infoBlue: '#7EA2D6',
-        },
         atmos: {
           50: '#B6C5F9',
           100: '#A4B6F7',
@@ -59,6 +50,9 @@ export default {
           700: '#1D1E2B',
           800: '#191A23',
           900: '#181922',
+        },
+        ivaoby: {
+          darkgray: '#1E1E21',
         },
         semantic: {
           red: {

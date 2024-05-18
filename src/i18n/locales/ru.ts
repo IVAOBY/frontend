@@ -54,8 +54,8 @@ const ruTranslations: { translations: Translations } = {
     },
     heropage: {
       title: 'Добро пожаловать в BY дивизион',
-      subtitle: 'Самый современный дивизион в IVAO.',
-      subtitle2: 'Присоединяйтесь прямо сейчас!',
+      subtitle: 'Самый современный дивизион.',
+      subtitle2: 'Присоединяйтесь сейчас!',
       joinbutton: 'Присоединиться!',
       transfer: 'Перейти в BY дивизион!',
     },
@@ -92,7 +92,7 @@ const ruTranslations: { translations: Translations } = {
       text: ' На этой странице вы можете загрузить сектор-файл для IvAc.',
       wtitle: 'Пожалуйста, обратие внимание!',
       warning:
-        'IvAc устарел и больше не рекомендуется к использованию! <br/> Вместно него рекомендуется использовать <a href={"https://ivao.aero/softdev/software/aurora.asp"} target={"_blank"} >Aurora</a>',
+        'IvAc устарел и больше не рекомендуется к использованию! Вместно него рекомендуется использовать Aurora.',
       download: 'Скачать',
     },
     news: {
@@ -101,6 +101,12 @@ const ruTranslations: { translations: Translations } = {
     },
     staff: {
       name: 'Руководство дивизиона',
+      nopositions: 'В этом департаменте нет свободных должностей',
+    },
+    documents: {
+      error: {
+        nodoc: 'Нет документов для данной категории',
+      },
     },
     AboutUs: {
       title: 'О нас',
@@ -110,10 +116,8 @@ const ruTranslations: { translations: Translations } = {
       ivao: 'IVAO',
     },
     footer: {
-      copyrightMessage:
-        '© 2023 International Virtual Aviation Organisation - IVAO Belarus. All Rights Reserved.',
-      privacyPolicyName: 'Privacy Policy',
-      termsOfUseName: 'Terms of Use',
+      copyrightMessage: 'Все права защищены.',
+      followus: 'Социальные сети',
     },
     notif: {
       loading: {
