@@ -1,0 +1,43 @@
+name: ✨ Feature Request
+description: Suggest an idea for this project
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the time to suggest a feature request!
+
+        Please fill out the following template to clarify your idea and what problem it would solve.
+  - type: input
+    attributes:
+      label: Feature Summary
+      description: A concise description of the feature or enhancement you're proposing.
+      placeholder: 'A brief summary of the feature.'
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Detailed Explanation
+      description: Provide a more detailed explanation of your feature request.
+      placeholder: 'The more details you provide, the easier it will be for us to understand and evaluate your request.'
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Problem It Solves
+      description: Describe the problem you are trying to solve with this feature.
+    validations:
+      required: true
+  - type: checkboxes
+    attributes:
+      label: Have you seen this feature anywhere else?
+      description: Please tick if this feature exists in another project or context and provide details below.
+      options:
+        - label: Yes, I have seen this feature elsewhere.
+  - type: textarea
+    attributes:
+      label: Similar Feature Details
+      description: If you've seen a similar feature somewhere else, please describe it and provide reference links if possible.
+  - type: textarea
+    attributes:
+      label: Mockups or Examples
+      description: Share any mockups, examples, or additional documentation that could help visualize the feature.
