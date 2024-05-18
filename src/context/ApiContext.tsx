@@ -1,75 +1,71 @@
-import {createContext, ReactNode, useContext} from 'react';
-import {notifications} from '@mantine/notifications';
-import axios from 'axios';
-import {IconCircleX} from "@tabler/icons-react";
-import {AuthContext} from "./UserContext";
+import { createContext, ReactNode, useContext } from 'react';
 
-const ApiContext = createContext({} as any);
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
-export const useApi = () => useContext(ApiContext);
+import { AuthContext } from './UserContext';
+
+interface ApiContextType {
+  api: (path: string, method?: string, body?: any) => Promise<any>;
+}
+
+const ApiContext = createContext<ApiContextType | undefined>(undefined);
+
+export const useApi = () => {
+  const context = useContext(ApiContext);
+
+  if (!context) {
+    throw new Error('useApi must be used within an ApiProvider');
+  }
+
+  return context.api;
+};
 
 type ApiProviderProps = {
-    children: ReactNode;
+  children: ReactNode;
 };
 
 export const ApiProvider = ({ children }: ApiProviderProps) => {
-    const apiURL = 'http://164.92.184.135:3000';
-    const { token } = useContext(AuthContext);
+  const { token } = useContext(AuthContext);
 
-    const api = async (path: string, method: string = 'GET', body: any = null) => {
-        const headers = {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
-        };
-
-        var data;
-        try {
-            const config = {
-                url: apiURL + path,
-                method,
-                headers,
-                data
-            };
-
-            if (body !== null) {
-                config.data = body;
-            }
-
-            const response = await axios(config);
-
-            const result = response.data;
-            if (result && !result.status) {
-                return result;
-            } else {
-                return false;
-            }
-        } catch (error: any) {
-            if (error.response) {
-                const errorMessage = error.response.data.message || 'Something went wrong';
-                notifications.show({
-                    title: 'Oops',
-                    message: errorMessage,
-                    color: 'red',
-                    radius: "lg",
-                    icon: <IconCircleX />,
-                });
-                return false;
-            } else {
-                notifications.show({
-                    title: 'Oops',
-                    message: error.message || 'Something went wrong',
-                    color: 'red',
-                    radius: "lg",
-                    icon: <IconCircleX />,
-                });
-            }
-            return false;
-        }
+  const api: ApiContextType['api'] = async (
+    path: string,
+    method: string = 'GET',
+    body: any = null,
+  ) => {
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token,
     };
 
-    return (
-        <ApiContext.Provider value={api}>
-            {children}
-        </ApiContext.Provider>
-    );
+    const config: AxiosRequestConfig = {
+      url: import.meta.env.VITE_API_URL_BASE + path || 'http://localhost:3000',
+      method,
+      headers,
+      data: body || '', // Set data to empty string if body is null
+    };
+
+    try {
+      const response: AxiosResponse<any> = await axios(config);
+
+      const result = response.data;
+      if (result && !result.status) {
+        return result;
+      } else {
+        return false;
+      }
+    } catch (error: any) {
+      if (error.response) {
+        return false;
+      }
+      return false;
+    }
+  };
+
+  const contextValue: ApiContextType = {
+    api,
+  };
+
+  return (
+    <ApiContext.Provider value={contextValue}>{children}</ApiContext.Provider>
+  );
 };

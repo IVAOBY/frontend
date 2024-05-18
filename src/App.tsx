@@ -1,111 +1,112 @@
-import {AppShell, MantineProvider} from '@mantine/core';
-import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom';
-import {I18nextProvider} from 'react-i18next';
+import React, { useContext } from 'react';
+
+import { AppShell, MantineProvider } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
+import { I18nextProvider } from 'react-i18next';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+
+import { Airport } from './components/AirportPage/Airport';
+import { Index as Footer } from './components/Footer';
+import { HeaderResponsive } from './components/header/header';
+import { MainPage } from './components/MainPage/MainPage';
+import { ApiProvider } from './context/ApiContext';
+import { AuthContext, AuthProvider } from './context/UserContext';
 import i18n from './i18n/i18n';
-import {HeaderResponsive} from './components/header/header';
-import {Footer} from './components/Footer';
-import {MainPage} from './components/MainPage/MainPage';
-import {StaffMain} from './components/StaffPage/StaffMain';
-import {Airport} from './components/AirportPage/Airport';
-import {NotFound} from './pages/Error404';
-import {ivaoTheme} from './ivaoTheme';
-import {AboutUs} from './pages/AboutUs';
-import {FAQ} from './pages/FAQ';
-import {ScenaryPage} from './pages/Scenary';
-import {GetInTouchSimple} from './pages/contact-us/ContactUs';
-import {FirstStepP} from './pages/FirstStepPilot';
-import {NewsPage} from './pages/News';
-import {DocumentsMain} from './pages/documents/DocumentsPage';
-import {DocumentContentPage} from './pages/documents/DocumentContentPage';
-import {MapPage} from './pages/MapPage';
-import {GCAPage} from './pages/atc/GCAPage';
-import {Notifications, notifications} from '@mantine/notifications';
-import {IconCircleX} from "@tabler/icons-react";
-import {MessageOverlay} from "./components/MessageOverlay";
-import {t} from "i18next";
-import {DocumentsPilotPage} from "./pages/documents/DocumentsPilotPage";
-import {DocumentsATCPage} from "./pages/documents/DocumentsATCPage";
-import {EventPage} from "./pages/events/EventPage";
-import {Legal} from "./pages/Legal";
-import {SectorFile} from "./pages/SectorFile";
-import {AuthContext, AuthProvider} from "./context/UserContext";
-import {useContext} from "react";
-import {ApiProvider} from "./context/ApiContext";
+import { ivaoTheme } from './ivaoTheme';
+import { AboutUs } from './pages/AboutUs';
+import { GetInTouchSimple } from './pages/contact-us/ContactUs';
+import { DocumentsMain } from './pages/Documents';
+import { DocumentsCategory } from './pages/Documents/Category';
+import { DocumentView } from './pages/Documents/View';
+import { NotFound } from './pages/Error/404';
+import { EventPage } from './pages/events';
+import { FAQ } from './pages/Faq';
+import { FirstStepP } from './pages/FirstStepPilot';
+import { MapPage } from './pages/MapPage';
+import { NewsPage } from './pages/News';
+import { ScenaryPage } from './pages/Scenary';
+import { StaffPage } from './pages/Staff';
+import { Vehicles } from './pages/vehicles/Vehicles';
+
+import './App.css';
+
+import { Centered } from './components/Layout';
+import { Loader } from './components/Loader';
 
 export default function App() {
+  const PrivateRoute: React.FC<{ path: string; element: React.ReactNode }> = ({
+    element,
+  }) => {
+    const { signed } = useContext(AuthContext);
+    if (!signed) {
+      window.location.href = `https://api.ivao.systems/auth/login?goto=${encodeURIComponent(window.location.href)}`;
 
-    const PrivateRoute: React.FC<{ path: string; element: React.ReactNode }> = ({
-                                                                                    element,
-                                                                                }) => {
-        const { signed } = useContext(AuthContext);
-        if (!signed) {
-            notifications.show({
-                id: 'auth-required',
-                color: 'red',
-                title: t('notif.auth.negative.name'),
-                message: t('notif.auth.negative.description'),
-                radius: 'lg',
-                icon: <IconCircleX />,
-                withCloseButton: true,
-                autoClose: 3000,
-            });
-            return <MessageOverlay message={t('notif.auth.negative.description')} link={"/"} linkTitle={"Вернуться на главную"}
-                                   title={t('notif.auth.negative.name')}></MessageOverlay>;
-        }
-        return <>{element}</>;
-    };
+      return (
+        <Centered>
+          <Loader />
+        </Centered>
+      );
+    }
 
-    return (
-        <MantineProvider withCSSVariables withGlobalStyles withNormalizeCSS theme={ivaoTheme}>
-            <I18nextProvider i18n={i18n}>
-                <BrowserRouter>
-                    <ApiProvider>
-                    <AuthProvider>
-                    <AppShell padding={0} navbar={<HeaderResponsive/>} footer={<Footer/>}>
-                        <Notifications/>
-                        <Routes>
-                            <Route path="/" element={<MainPage/>}/>
-                            <Route path="/airport" element={<Airport/>}/>
-                            <Route path="/about-us" element={<AboutUs/>}/>
-                            <Route path="/faq" element={<FAQ/>}/>
-                            <Route path="/scenery" element={<ScenaryPage/>}/>
-                            <Route path="/scenery/:id" element={<ScenaryPage/>}/>
-                            <Route path="/pilots/first-step" element={<FirstStepP/>}/>
-                            <Route path="/news/:id" element={<NewsPage/>}/>
-                            <Route path="/map" element={<MapPage/>}/>
-                            <Route path="/legal" element={<Legal/>}/>
-                            <Route path="/staff" element={<StaffMain/>}/>
+    return <>{element}</>;
+  };
 
-                            {/* Документы */}
-                            <Route path="/documents" element={<DocumentsMain/>}/>
-                            <Route path="/documents/:id" element={<DocumentContentPage/>}/>
-                            <Route path="/documents/pilots" element={<DocumentsPilotPage/>}/>
-                            <Route path="/documents/atc" element={<DocumentsATCPage/>}/>
+  return (
+    <MantineProvider theme={ivaoTheme}>
+      <I18nextProvider i18n={i18n}>
+        <BrowserRouter>
+          <AuthProvider>
+            <ApiProvider>
+              <AppShell
+                padding={0}
+                navbar={<HeaderResponsive />}
+                footer={<Footer />}
+              >
+                <Notifications />
+                <Routes>
+                  <Route path="/" element={<MainPage />} />
+                  <Route path="/airport" element={<Airport />} />
+                  <Route path="/about-us" element={<AboutUs />} />
+                  <Route path="/faq" element={<FAQ />} />
+                  <Route path="/scenery" element={<ScenaryPage />} />
+                  <Route path="/scenery/:id" element={<ScenaryPage />} />
+                  <Route path="/pilots/first-step" element={<FirstStepP />} />
+                  <Route path="/news/:id" element={<NewsPage />} />
+                  <Route path="/map" element={<MapPage />} />
+                  <Route path="/staff" element={<StaffPage />} />
+                  <Route path="/vehicles" element={<Vehicles />} />
 
-                            {/* ATC */}
-                            <Route path="/sector" element={<SectorFile/>}/>
-                            <Route path="/atc/gca" element={<GCAPage/>}/>
+                  {/* Документы */}
+                  <Route path="/documents" element={<DocumentsMain />} />
+                  <Route path="/documents/:id" element={<DocumentView />} />
+                  <Route
+                    path="/documents/category/:id"
+                    element={<DocumentsCategory />}
+                  />
 
-                            {/* ИВЕНТЫ */}
-                            <Route path="/event/:id" element={<EventPage />} />
+                  {/* ИВЕНТЫ */}
+                  <Route path="/event/:id" element={<EventPage />} />
 
-                            {/* NotFound */}
-                            <Route path="404" element={<NotFound/>}/>
-                            <Route path="*" element={<Navigate to="/404" />} />
+                  {/* NotFound */}
+                  <Route path="404" element={<NotFound />} />
+                  <Route path="*" element={<Navigate to="/404" />} />
 
-                            {/* Private route*/}
-                            <Route
-                                path="/contact-us/*"
-                                element={
-                                    <PrivateRoute path="/contact-us" element={<GetInTouchSimple/>}/>
-                                }
-                            />
-                        </Routes>
-                    </AppShell>
-                    </ AuthProvider>
-                    </ApiProvider>
-                </BrowserRouter>
-            </I18nextProvider>
-        </MantineProvider>
-    );
+                  {/* Private route*/}
+                  <Route
+                    path="/contact-us/*"
+                    element={
+                      <PrivateRoute
+                        path="/contact-us"
+                        element={<GetInTouchSimple />}
+                      />
+                    }
+                  />
+                </Routes>
+              </AppShell>
+            </ApiProvider>
+          </AuthProvider>
+        </BrowserRouter>
+      </I18nextProvider>
+    </MantineProvider>
+  );
 }
