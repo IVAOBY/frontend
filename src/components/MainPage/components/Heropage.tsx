@@ -3,6 +3,7 @@ import { useCallback, useContext } from 'react';
 import { notifications } from '@mantine/notifications';
 import { IconCircleX } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
+import Typed from 'react-typed';
 
 import { AuthContext } from '../../../context/UserContext';
 import { CustomButton } from '../../Button';
@@ -58,7 +59,12 @@ ${decodedToken?.userData.name.first} ${decodedToken?.userData.name.last}`;
       <div className="flex h-[450px] flex-col items-start justify-center gap-14 self-stretch">
         <div className="flex h-[236px] flex-col items-start justify-center gap-3 self-stretch">
           <div className="self-stretch text-3xl font-bold leading-10 text-atmos-700 md:text-4xl md:leading-[80px]">
-            {t('heropage.subtitle')}
+            <Typed
+              strings={[t('heropage.subtitle'), t('heropage.subtitle2')]}
+              typeSpeed={90}
+              backSpeed={15}
+              loop
+            />
           </div>
           <div className="self-stretch">
             <span className="leading-loose text-fuselage-150 md:text-lg">
