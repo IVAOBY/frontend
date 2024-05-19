@@ -1,30 +1,44 @@
 on:
   push:
-    branches:
+  pull_request:
 
-name: Push Action 🚀
+name: 🚀 Lint and Format
 jobs:
-  check-format:
-    name: Format 🔍
-    uses: ./.github/workflows/check-format.yaml
-    permissions:
-      contents: write
+  lint-format:
+    name: 🎉 Lint & Format
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v3
 
-  build-project:
-    name: Build 🎉
-    needs: check-format
-    uses: ./.github/workflows/build.yaml
-    permissions: write-all
+      - name: 🟢 Use Node.js 20
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
 
-  github-release:
-    name: Create a release 🌐
-    needs: build-project
-    uses: ./.github/workflows/release.yaml
-    permissions: write-all
+      - name: Install Yarn
+        run: npm install -g yarn
 
-  ftp-deploy:
-    name: Sync files 📂
-    if: github.ref_name == 'main'
-    needs: build-project
-    uses: ./.github/workflows/web-deploy.yaml
-    permissions: write-all
+      - name: 🔐 Auth with token
+        run: |
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.AUTH_TOKEN }}
+          @ivaoby:registry=https://npm.pkg.github.com/
+          @ivaoaero:registry=https://npm.pkg.github.com/" > ~/.npmrc
+
+      - name: 📥 Install dependencies
+        run: yarn --force --legacy-peer-deps
+
+      - name: ✨ Format code
+        run: yarn format
+
+      - name: 🔍 Lint code
+        run: yarn lint --fix
+
+      - name: 📤 Upload artifacts
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: lint-format-logs
+          path: |
+            **/eslint.log
+            **/prettier.log
