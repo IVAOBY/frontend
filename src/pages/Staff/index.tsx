@@ -5,8 +5,6 @@ import { IconCircleX, IconIdBadge2, IconMailOpened } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 
 import { GeneralLayout } from '../../components/Layout';
-import { Tooltip } from '../../components/Tooltip';
-import { Title } from '../../components/Typography/Title';
 import { useApi } from '../../context/ApiContext';
 
 interface Department {
@@ -50,16 +48,16 @@ export function StaffPage() {
 
   useEffect(() => {
     api('/staff-departments')
-      .then(function (response: any) {
-        if (response && Array.isArray(response)) {
-          setDepartments(response);
-        } else {
-          console.error('Error: Unexpected API response structure');
-        }
-      })
-      .catch(function (error: any) {
-        console.error('Error fetching data:', error);
-      });
+        .then((response: any) => {
+          if (response && Array.isArray(response)) {
+            setDepartments(response);
+          } else {
+            console.error('Error: Unexpected API response structure');
+          }
+        })
+        .catch((error: any) => {
+          console.error('Error fetching data:', error);
+        });
 
     notifications.show({
       id: 'load-data',
@@ -72,32 +70,46 @@ export function StaffPage() {
     });
 
     api('/staff-positions')
-      .then((response: Position) => {
-        if (response && Array.isArray(response)) {
-          const updatedPositions: Position[] = response.map(
-            (positionData: Position) => {
-              const user = positionData.user
-                ? {
-                    id: positionData.user.id,
-                    name: {
-                      first: positionData.user.name.first,
-                      last:
-                        positionData.user.name.last ||
-                        positionData.user.id.toString(),
-                    },
-                  }
-                : null;
-              return {
-                ...positionData,
-                user,
-              };
-            },
-          );
-          setPositions(updatedPositions);
+        .then((response: Position) => {
+          if (response && Array.isArray(response)) {
+            const updatedPositions: Position[] = response.map(
+                (positionData: Position) => {
+                  const user = positionData.user
+                      ? {
+                        id: positionData.user.id,
+                        name: {
+                          first: positionData.user.name.first,
+                          last:
+                              positionData.user.name.last ||
+                              positionData.user.id.toString(),
+                        },
+                      }
+                      : null;
+                  return {
+                    ...positionData,
+                    user,
+                  };
+                },
+            );
+            setPositions(updatedPositions);
 
-          notifications.hide('load-data');
-        } else {
-          console.error('Error: Unexpected API response structure');
+            notifications.hide('load-data');
+          } else {
+            console.error('Error: Unexpected API response structure');
+            notifications.update({
+              id: 'load-data',
+              color: 'red',
+              title: t('notif.server.name'),
+              message: t('notif.server.descritpion'),
+              radius: 'lg',
+              icon: <IconCircleX />,
+              withCloseButton: false,
+              autoClose: false,
+            });
+          }
+        })
+        .catch((error: any) => {
+          console.error('Error fetching staff positions:', error);
           notifications.update({
             id: 'load-data',
             color: 'red',
@@ -108,138 +120,127 @@ export function StaffPage() {
             withCloseButton: false,
             autoClose: false,
           });
-        }
-      })
-      .catch((error: any) => {
-        console.error('Error fetching staff positions:', error);
-        notifications.update({
-          id: 'load-data',
-          color: 'red',
-          title: t('notif.server.name'),
-          message: t('notif.server.descritpion'),
-          radius: 'lg',
-          icon: <IconCircleX />,
-          withCloseButton: false,
-          autoClose: false,
         });
-      });
   }, [api, t]);
 
   return (
-    <GeneralLayout>
-      <Title withUndreline>{t('staff.name')}</Title>
-      {departments.map((department, index) => (
-        <div key={index} className="mt-10">
-          <div className="flex flex-col items-center justify-items-center">
-            <Title key={index} className={`pt-${index === 0 ? 13 : 40}`}>
-              {department.name}
-            </Title>
-            <div
-              className="mt-2 cursor-pointer rounded-xl bg-atmos-700 p-2 transition hover:bg-ocean-600"
-              onClick={() => handleEmailClick(department.email)}
-            >
-              <IconMailOpened className={'text-white'} />
-            </div>
-
-            <div
-              id="staff-grid"
-              className="mt-5 flex flex-row flex-wrap items-center justify-center gap-2 text-center"
-            >
-              {positions
-                .filter(
-                  (position) =>
-                    position.departmentId === department.id &&
-                    (position.user || position.is_vacant === 1),
-                )
-                .sort((a, b) => {
-                  const aUserId = a.user?.id ?? Number.MAX_VALUE;
-                  const bUserId = b.user?.id ?? Number.MAX_VALUE;
-
-                  if (
-                    aUserId === Number.MAX_VALUE &&
-                    bUserId !== Number.MAX_VALUE
-                  ) {
-                    return 1;
-                  } else if (
-                    aUserId !== Number.MAX_VALUE &&
-                    bUserId === Number.MAX_VALUE
-                  ) {
-                    return -1;
-                  } else {
-                    return a.order - b.order;
-                  }
-                })
-                .map((position, positionIndex) => (
-                  <div
-                    className="min-w-[350px] rounded-2xl bg-white p-10 shadow-xl"
-                    key={positionIndex}
-                  >
-                    <div className="flex flex-col items-center">
-                      <img
-                        className="max-h-[150px] max-w-[150px] rounded-[100px]"
-                        src={
-                          position.user?.id
-                            ? `https://files.ivao.systems/files/staff/${position.user?.id}.jpg`
-                            : 'https://files.ivao.systems/files/staff/vacant.jpg'
-                        }
-                        alt={'Staff Photo'}
-                      />
-                      <Title className="text-[24px]">
-                        {position.user?.id
-                          ? position.user.name.last
-                            ? `${position.user.name.first} ${position.user.name.last}`
-                            : `${position.user.name.first} ${position.user.id}`
-                          : 'Вакантно'}
-                      </Title>
-                      <Tooltip
-                        content={position.name['en']}
-                        position={'bottom'}
-                      >
-                        <p
-                          className={
-                            'text-base font-semibold text-fuselage-400'
-                          }
-                        >
-                          {position.prefix}-{position.id}
-                        </p>
-                      </Tooltip>
-                      <div className={'mt-20 flex flex-row gap-2'}>
-                        <div
-                          className="mt-2 cursor-pointer rounded-xl bg-atmos-700 p-2 transition hover:bg-ocean-600"
-                          onClick={() =>
-                            handleEmailClick(
-                              `${position.prefix}-${position.id}@ivao.aero\``,
-                            )
-                          }
-                        >
-                          <IconMailOpened className={'text-white'} />
-                        </div>
-                        <a
-                          className="mt-2 cursor-pointer rounded-xl bg-atmos-700 p-2 transition hover:bg-ocean-600"
-                          href={`https://www.ivao.aero/staff/details.asp?Id=${position.prefix}-${position.id}`}
-                          target="_blank"
-                          aria-label="IVAO"
-                          rel="noreferrer"
-                        >
-                          <IconIdBadge2 className={'text-white'} />
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              {positions.filter(
-                (position) =>
-                  position.departmentId === department.id &&
-                  (position.is_vacant === 1 || position.user !== null),
-              ).length === 0 && (
-                <p className="font-semibold text-fuselage-300">
-                  {t('staff.nopositions')}
-                </p>
-              )}
-            </div>
-          </div>
+      <GeneralLayout>
+        <div className="text-3xl font-bold text-black md:text-5xl">
+          {t('staff.name')}
         </div>
-      ))}
-    </GeneralLayout>
+        {departments.map((department) => (
+            <div key={department.id} className="mt-4 md:mt-10">
+              <div className="flex items-center text-xl font-bold text-blue-900 md:text-4xl">
+                <div>{department.name}</div>
+                <div
+                    className="ml-2 cursor-pointer"
+                    onClick={() => handleEmailClick(department.email)}
+                >
+                  <IconMailOpened className="w-6 self-start stroke-blue-900 stroke-[2.5px] md:w-8" />
+                </div>
+              </div>
+              <div className="flex flex-col">
+                <div id="staff-grid" className="mt-4 w-full flex flex-wrap gap-2 md:mt-5">
+                  {positions
+                      .filter(
+                          (position) =>
+                              position.departmentId === department.id &&
+                              (position.user || position.is_vacant === 1),
+                      )
+                      .sort((a, b) => {
+                        const aUserId = a.user?.id ?? Number.MAX_VALUE;
+                        const bUserId = b.user?.id ?? Number.MAX_VALUE;
+
+                        if (
+                            aUserId === Number.MAX_VALUE &&
+                            bUserId !== Number.MAX_VALUE
+                        ) {
+                          return 1;
+                        } else if (
+                            aUserId !== Number.MAX_VALUE &&
+                            bUserId === Number.MAX_VALUE
+                        ) {
+                          return -1;
+                        } else {
+                          return a.order - b.order;
+                        }
+                      })
+                      .map((position) => (
+                          <div
+                              key={position.id}
+                              className="flex w-full flex-col md:w-80"
+                          >
+                            {/*TODO: Mobile optimization, 2 cols*/}
+                            <img
+                                loading="lazy"
+                                src={
+                                  position.user?.id
+                                      ? `https://files.by.ivao.aero/files/staff/${position.user?.id}.jpg`
+                                      : 'https://files.by.ivao.aero/files/staff/vacant.jpg'
+                                }
+                                alt="Staff Photo"
+                                className="aspect-square w-full rounded-t-2xl"
+                            />
+                            <div className="flex w-full flex-col items-start rounded-b-2xl bg-white p-5 pl-2 py-2 md:py-5 md:pl-8">
+                              <div className="rounded-2xl bg-stone-300 px-3 py-1 md:px-3 md:py-1 font-medium leading-5 text-black text-sm md:text-md">
+                                {position.name.en}
+                              </div>
+                              <div className="mt-2 text-2xl font-bold leading-6 md:leading-8 tracking-tighter text-black md:mt-3 md:text-4xl">
+                                {position.user?.id ? (
+                                    <>
+                                      <span>{position.user.name.first}</span>
+                                      <br />
+                                      <span>
+                              {position.user.name.last || position.user.id}
+                            </span>
+                                    </>
+                                ) : (
+                                    'Вакантно'
+                                )}
+                              </div>
+
+                              <div className="mt-2 flex gap-2.5 md:mt-3">
+                                <div className="flex flex-row gap-2">
+                                  <div
+                                      className="cursor-pointer rounded-xl bg-atmos-700 p-1.5 size-9 md:size-10 md:p-2 transition hover:bg-ocean-600"
+                                      onClick={() =>
+                                          handleEmailClick(
+                                              `${position.prefix.toLowerCase()}-${position.id.toLowerCase()}@ivao.aero`,
+                                          )
+                                      }
+                                  >
+                                    <IconMailOpened className="text-white" />
+                                    {/*TODO: Change mail to staff application*/}
+                                  </div>
+                                  {position.user && (
+                                      <a
+                                          className="cursor-pointer rounded-xl bg-atmos-700 p-1.5 size-9 md:size-10 md:p-2 transition hover:bg-ocean-600"
+                                          href={`https://www.ivao.aero/staff/details.asp?Id=${position.prefix}-${position.id}`}
+                                          target="_blank"
+                                          aria-label="IVAO"
+                                          rel="noreferrer"
+                                      >
+                                        <IconIdBadge2 className="text-white" />
+                                      </a>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                      ))}
+                  {positions.filter(
+                      (position) =>
+                          position.departmentId === department.id &&
+                          (position.is_vacant === 1 || position.user !== null),
+                  ).length === 0 && (
+                      <div className="text-base leading-5 text-neutral-400 md:text-xl">
+                        {t('staff.nopositions')}
+                      </div>
+                  )}
+                </div>
+              </div>
+            </div>
+        ))}
+      </GeneralLayout>
   );
 }
