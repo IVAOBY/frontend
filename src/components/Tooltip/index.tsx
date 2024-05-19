@@ -40,7 +40,7 @@ export function Tooltip({ children, content, position = 'top' }: TooltipProps) {
             'transition-opacity',
           )}
         >
-          <div className="tooltip-content min-w-[200px] rounded rounded-2xl bg-black px-2 py-1 text-sm text-white opacity-100">
+          <div className="tooltip-content min-w-[200px] rounded-2xl bg-black px-2 py-1 text-sm text-white opacity-100">
             {content}
           </div>
         </div>

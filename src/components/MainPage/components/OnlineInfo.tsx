@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 
 import { AtcResponse } from '@ivaoby/common/types/tracker/internal/atc-response';
 import { PilotResponse } from '@ivaoby/common/types/tracker/internal/pilots-response';
-import { IconMoodCry, IconMoodSad } from '@tabler/icons-react';
+
+// import { IconMoodCry, IconMoodSad } from '@tabler/icons-react';
 
 import atcicon from '../../../assets/icons/atc-icon.svg';
 import piloticon from '../../../assets/icons/Plane.svg';
@@ -59,10 +60,10 @@ export function OnlineInfoComponent() {
               <div className="relative flex w-full flex-col items-center justify-center">
                 <div className="relative mt-[36px] flex h-[110px] w-[334px] rounded-2xl bg-[#0D2C99] shadow-xl">
                   <div
-                    className="relative h-full w-[50%] bg-center bg-no-repeat"
+                    className="relative h-full w-1/2 bg-center bg-no-repeat"
                     style={{ backgroundImage: `url(${atcicon})` }}
                   ></div>
-                  <div className="relative flex h-full w-[50%] flex-col bg-center bg-no-repeat pt-4">
+                  <div className="relative flex h-full w-1/2 flex-col bg-center bg-no-repeat pt-4">
                     <div>
                       {atcItems && atcItems.length > 0 ? (
                         atcItems.slice(0, 3).map((atc) => (
@@ -98,10 +99,10 @@ export function OnlineInfoComponent() {
                 </div>
                 <div className="relative mt-[36px] flex h-[110px] w-[334px] rounded-2xl bg-[#0D2C99] shadow-xl">
                   <div
-                    className="relative h-full w-[50%] bg-center bg-no-repeat"
+                    className="relative h-full w-1/2 bg-center bg-no-repeat"
                     style={{ backgroundImage: `url(${piloticon})` }}
                   ></div>
-                  <div className="relative flex h-full w-[50%] flex-col bg-center bg-no-repeat pt-4">
+                  <div className="relative flex h-full w-1/2 flex-col bg-center bg-no-repeat pt-4">
                     <div>
                       {pilotsItem && pilotsItem.length > 0 ? (
                         pilotsItem.slice(0, 3).map((pilot) => (
@@ -128,9 +129,9 @@ export function OnlineInfoComponent() {
                           </div>
                         ))
                       ) : (
-                          <p className="items-center justify-center pr-4 text-center font-bold text-white">
-                            Никого нет в сети
-                          </p>
+                        <p className="items-center justify-center pr-4 text-center font-bold text-white">
+                          Никого нет в сети
+                        </p>
                       )}
                     </div>
                   </div>

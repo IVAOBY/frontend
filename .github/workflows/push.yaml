@@ -40,5 +40,4 @@ jobs:
         with:
           name: lint-format-logs
           path: |
-            **/eslint.log
-            **/prettier.log
+            **/.eslintcache

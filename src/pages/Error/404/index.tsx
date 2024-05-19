@@ -20,11 +20,12 @@ export function NotFound() {
           <CustomButton
             title={t('errorpage.homebutton')}
             size={'lg'}
-            variant={'danger'}
+            variant={'destructive'}
             onClick={() => navigate('/')}
           />
         </div>
         <img
+          alt="404 Error"
           className="w-5/6"
           src={'https://files.ivao.systems/files/logos/404.svg'}
         />
