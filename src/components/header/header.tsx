@@ -164,7 +164,7 @@ export function HeaderResponsive() {
 
   const { signed, decodedToken } = useContext(AuthContext);
 
-  const serverUrl = `https://api.ivao.systems/auth/login?goto=${encodeURIComponent(window.location.href)}`;
+  const serverUrl = `https://api.by.ivao.aero/auth/login?goto=${encodeURIComponent(window.location.href)}`;
 
   useEffect(() => {
     const handleScroll = () => {
