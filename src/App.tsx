@@ -39,7 +39,7 @@ export default function App() {
   }) => {
     const { signed } = useContext(AuthContext);
     if (!signed) {
-      window.location.href = `https://${process.env.VITE_API_URL_BASE}/auth/login?goto=${encodeURIComponent(window.location.href)}`;
+      window.location.href = `https://api.by.ivao.aero/auth/login?goto=${encodeURIComponent(window.location.href)}`;
 
       return (
         <Centered>

@@ -176,7 +176,6 @@ export function StaffPage() {
                   >
                     {/*TODO: Mobile optimization, 2 cols*/}
                     <img
-                      loading="lazy"
                       src={
                         position.user?.id
                           ? `https://files.by.ivao.aero/files/staff/${position.user?.id}.jpg`

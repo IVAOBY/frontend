@@ -38,7 +38,7 @@ export const ApiProvider = ({ children }: ApiProviderProps) => {
     };
 
     const config: AxiosRequestConfig = {
-      url: import.meta.env.VITE_API_URL_BASE + path || 'http://localhost:3000',
+      url: 'https://api.by.ivao.aero' + path || 'http://localhost:3000',
       method,
       headers,
       data: body || '', // Set data to empty string if body is null
