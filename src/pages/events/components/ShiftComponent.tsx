@@ -201,7 +201,7 @@ export function ShiftComponent() {
 
   const handleUnbook = (bookingId: number) => {
     if (signed) {
-      api(`/events-booking/unbook/${bookingId}`, 'v3', 'DELETE')
+      api(`/events-booking/unbook/${bookingId}`, 'DELETE')
         .then(async () => {
           await api(`/events-parts/event/${id}`).then((response: any) => {
             if (response && Array.isArray(response)) {
