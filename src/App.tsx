@@ -65,7 +65,7 @@ export default function App() {
                 <Notifications />
                 <Routes>
                   <Route path="/" element={<MainPage />} />
-                  <Route path="/airport" element={<Airport />} />
+                  <Route path="/airports" element={<Airport />} />
                   <Route path="/about-us" element={<AboutUs />} />
                   <Route path="/faq" element={<FAQ />} />
                   <Route path="/scenery" element={<ScenaryPage />} />

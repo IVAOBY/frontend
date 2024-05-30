@@ -67,6 +67,9 @@ export default {
             800: '#690B0B',
             900: '#370606',
           },
+            military: {
+              700: '#708E36'
+            },
           green: {
             50: '#BCEFCE',
             100: '#ACECC1',
