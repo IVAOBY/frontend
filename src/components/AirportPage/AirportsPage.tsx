@@ -1,37 +1,16 @@
-import { GeneralLayout } from "../Layout";
+import {GeneralLayout} from "../Layout";
 import {IconChevronLeft, IconInfoSquareRounded} from "@tabler/icons-react";
 import {useCallback, useEffect, useState} from "react";
-import { notifications } from "@mantine/notifications";
-import { useTranslation } from "react-i18next";
-import { useApi } from "../../context/ApiContext";
+import {notifications} from "@mantine/notifications";
+import {useTranslation} from "react-i18next";
+import {useApi} from "../../context/ApiContext";
 import i18n from "../../i18n/i18n";
 import {useNavigate} from "react-router-dom";
+import {Airport} from "../../types/Airport";
 
-interface Airport {
-    icao: string;
-    iata: string | null;
-    airportTypeId: number | null;
-    description: {
-        en: string | null;
-        ru: string | null;
-        be: string | null;
-    };
-    name: {
-        en: string | null;
-        ru: string | null;
-        be: string | null;
-    };
-    latitude: number;
-    longitude: number;
-    elevation: number;
-    magnetic: number;
-    status: boolean | null;
-    image_url: string | null;
-}
-
-export function Airport() {
+export function AirportsPage() {
     const [airports, setAirports] = useState<Airport[]>([]);
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const api = useApi();
     const navigate = useNavigate();
 

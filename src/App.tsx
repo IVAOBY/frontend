@@ -5,7 +5,7 @@ import { Notifications } from '@mantine/notifications';
 import { I18nextProvider } from 'react-i18next';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
-import { Airport } from './components/AirportPage/Airport';
+import { AirportsPage } from './components/AirportPage/AirportsPage';
 import { Index as Footer } from './components/Footer';
 import { HeaderResponsive } from './components/header/header';
 import { MainPage } from './components/MainPage/MainPage';
@@ -32,6 +32,7 @@ import './App.css';
 
 import { Centered } from './components/Layout';
 import { Loader } from './components/Loader';
+import {AirportPage} from "./components/AirportPage/AirportPage";
 
 export default function App() {
   const PrivateRoute: React.FC<{ path: string; element: React.ReactNode }> = ({
@@ -65,7 +66,8 @@ export default function App() {
                 <Notifications />
                 <Routes>
                   <Route path="/" element={<MainPage />} />
-                  <Route path="/airports" element={<Airport />} />
+                  <Route path="/airports" element={<AirportsPage />} />
+                  <Route path="/airport/:icao" element={<AirportPage />} />
                   <Route path="/about-us" element={<AboutUs />} />
                   <Route path="/faq" element={<FAQ />} />
                   <Route path="/scenery" element={<ScenaryPage />} />
