@@ -5,6 +5,7 @@ export interface Translations {
       about: string;
       faq: string;
       staff: string;
+      airports: string;
       discord: string;
       contact: string;
       rules: string;

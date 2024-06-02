@@ -26,9 +26,8 @@ import {
   IconMapCog,
   IconMessageCircle2,
   IconMessages,
-  IconPlane,
   IconPlaneDeparture,
-  IconPlaneTilt,
+  IconPlaneTilt, IconSchool,
   IconUsers,
   IconUsersGroup,
   IconWorld,
@@ -118,32 +117,37 @@ export function CommonDropdownContent({
           >
             {t('navbar.division.about')}
           </Menu.Item>
+          <Menu.Item
+              icon={<IconBook size={20} />}
+              onClick={() =>
+                  menuLink('https://wiki.ivao.aero/en/home/ivao/information')
+              }
+          >
+            {t('navbar.division.rules')}
+          </Menu.Item>
           <Link to={'/staff'}>
             <Menu.Item icon={<IconIdBadge2 size={20} />}>
               {t('navbar.division.staff')}
             </Menu.Item>
           </Link>
+          <Menu.Item
+              icon={<IconMailForward size={20} />}
+              onClick={() => navigate('contact-us')}
+          >
+            {t('navbar.division.contact')}
+          </Menu.Item>
           <Link to={'/discord'}>
             <Menu.Item
-              icon={<Image src={discord} width={19} alt={'Discord Icon'} />}
+                icon={<Image src={discord} width={19} alt={'Discord Icon'} />}
             >
               {t('navbar.division.discord')}
             </Menu.Item>
           </Link>
-          <Menu.Item
-            icon={<IconBook size={20} />}
-            onClick={() =>
-              menuLink('https://wiki.ivao.aero/en/home/ivao/information')
-            }
-          >
-            {t('navbar.division.rules')}
-          </Menu.Item>
-          <Menu.Item
-            icon={<IconMailForward size={20} />}
-            onClick={() => navigate('contact-us')}
-          >
-            {t('navbar.division.contact')}
-          </Menu.Item>
+          <Link to={'/airports'}>
+            <Menu.Item icon={<IconPlaneDeparture size={20} />}>
+              {t('navbar.division.airports')}
+            </Menu.Item>
+          </Link>
           <Menu.Item
             icon={<IconMessages size={20} />}
             onClick={() => navigate('faq')}
@@ -264,12 +268,12 @@ export function CommonDropdownContent({
           >
             {t('navbar.pilots.charts')}
           </Menu.Item>
-          <Menu.Item
-            icon={<IconPlane size={20} />}
-            onClick={() => menuLink('https://google.com')}
-          >
-            {t('navbar.pilots.airlines')}
-          </Menu.Item>
+          {/*<Menu.Item*/}
+          {/*  icon={<IconPlane size={20} />}*/}
+          {/*  onClick={() => menuLink('https://google.com')}*/}
+          {/*>*/}
+          {/*  {t('navbar.pilots.airlines')}*/}
+          {/*</Menu.Item>*/}
           <Menu.Item
             icon={<IconArticle size={20} />}
             onClick={() => navigate('documents/category/2')}
@@ -312,6 +316,12 @@ export function CommonDropdownContent({
             {t('navbar.community.events')}
           </Menu.Item>
           <Menu.Item
+              icon={<IconSchool size={20} />}
+              onClick={() => menuLink('https://google.com')}
+          >
+            {t('navbar.community.training')}
+          </Menu.Item>
+          <Menu.Item
             icon={<IconArticle size={20} />}
             onClick={() => navigate('documents')}
           >
@@ -324,16 +334,16 @@ export function CommonDropdownContent({
             {t('navbar.community.forum')}
           </Menu.Item>
           <Menu.Item
-            icon={<IconEye size={20} />}
-            onClick={() => menuLink('https://webeye.ivao.aero')}
-          >
-            {t('navbar.community.webeye')}
-          </Menu.Item>
-          <Menu.Item
             icon={<Image src={ivaoLogo} width={20} alt={'IVAO Icon'} />}
             onClick={() => menuLink('https://ivao.aero')}
           >
             {t('navbar.community.ivao')}
+          </Menu.Item>
+          <Menu.Item
+              icon={<IconEye size={20} />}
+              onClick={() => menuLink('https://webeye.ivao.aero')}
+          >
+            {t('navbar.community.webeye')}
           </Menu.Item>
           <Menu.Item
             icon={<IconFocus2 size={20} />}

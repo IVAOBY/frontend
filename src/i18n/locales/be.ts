@@ -1,4 +1,4 @@
-import { Translations } from '../../types/Translition';
+import { Translations } from '../../types/Translations';
 
 const beTranslations: { translations: Translations } = {
   translations: {
@@ -8,6 +8,7 @@ const beTranslations: { translations: Translations } = {
         about: 'Пра нас',
         faq: 'FAQ',
         staff: 'Кіраўніцтва дывізіёна',
+        airports: 'Аэрапорты',
         discord: 'Дыскорд',
         contact: 'Сувязь з намі',
         rules: 'Правілы IVAO',
@@ -33,7 +34,7 @@ const beTranslations: { translations: Translations } = {
       },
       community: {
         index: 'Супольнасць',
-        training: 'Трэніровачны кампус',
+        training: 'Адукацыя',
         events: 'Івэнты',
         forum: 'Форум BY',
         webeye: 'WebEye',
