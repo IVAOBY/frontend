@@ -1,4 +1,4 @@
-import { Translations } from '../../types/Translition';
+import { Translations } from '../../types/Translations';
 
 const enTranslations: { translations: Translations } = {
   translations: {
@@ -8,6 +8,7 @@ const enTranslations: { translations: Translations } = {
         about: 'About us',
         faq: 'FAQ',
         staff: 'Division Staff',
+        airports: 'Airports',
         discord: 'Discord',
         contact: 'Contact us',
         rules: 'IVAO rules',
@@ -33,7 +34,7 @@ const enTranslations: { translations: Translations } = {
       },
       community: {
         index: 'Community',
-        training: 'Training campus',
+        training: 'Training',
         events: 'Events',
         forum: 'BY Forum',
         webeye: 'WebEye',

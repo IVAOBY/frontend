@@ -121,7 +121,7 @@ export function Widgets() {
               <img
                 src={airport}
                 alt="UMMS Aurora"
-                className="rounded-l-b-2xl absolute left-[170px] top-0 z-10 mb-0 size-full pb-0"
+                className="rounded-l-b-2xl absolute -left-[170px] top-0 z-10 mb-0 size-full pb-0"
               />
               <p className="text-right font-['Montserrat'] text-[70px] font-bold uppercase tracking-tighter text-white">
                 сценарии
