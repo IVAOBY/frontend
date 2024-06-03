@@ -6,11 +6,13 @@ import { Widgets } from './components/Widgets';
 
 export function MainPage() {
   return (
-    <GeneralLayout>
+    <>
       <HeroText />
-      <Widgets />
-      <AgendaNews></AgendaNews>
-      <OnlineInfoComponent></OnlineInfoComponent>
-    </GeneralLayout>
+      <GeneralLayout>
+        <Widgets />
+        <AgendaNews></AgendaNews>
+        <OnlineInfoComponent></OnlineInfoComponent>
+      </GeneralLayout>
+    </>
   );
 }

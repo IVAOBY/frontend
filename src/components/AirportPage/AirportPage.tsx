@@ -1,7 +1,6 @@
 import {GeneralLayout} from "../Layout";
 import {IconChevronLeft, IconInfoSquareRounded} from "@tabler/icons-react";
 import {useEffect, useState} from "react";
-import {notifications} from "@mantine/notifications";
 import {useTranslation} from "react-i18next";
 import {useApi} from "../../context/ApiContext";
 import i18n from "../../i18n/i18n";
@@ -32,40 +31,17 @@ export function AirportPage() {
 
 
     useEffect(() => {
-        notifications.show({
-            id: 'load-data',
-            loading: true,
-            title: t('notif.loading.name'),
-            message: t('notif.loading.description'),
-            radius: 'lg',
-            autoClose: false,
-            withCloseButton: false,
-        });
 
         api(`/airports?search=${icao}`)
             .then((response: Airport[]) => {
                 if (response) {
                     setAirports(response);
-                    notifications.update({
-                        id: 'load-data',
-                        title: t('notif.success.name'),
-                        message: t('notif.success.description'),
-                        color: 'teal',
-                        autoClose: 2000,
-                    });
                 } else {
                     console.error('Error: Unexpected API response structure');
                 }
             })
             .catch((error: any) => {
                 console.error('Error fetching data:', error);
-                notifications.update({
-                    id: 'load-data',
-                    title: t('notif.error.name'),
-                    message: t('notif.error.description'),
-                    color: 'red',
-                    autoClose: 2000,
-                });
             });
     }, [api, t]);
 
@@ -77,22 +53,36 @@ export function AirportPage() {
                 <span className="font-['Montserrat']">На главную</span>
             </div>
             {airports.map((airport) => (
-                <div className="flex flex-row gap-12">
-                    <div className="text-3xl font-bold text-black md:text-5xl">
-                        {airport.name[i18n.language]}
+                <div>
+                    <div className="flex flex-row gap-12">
+                        <p className="text-3xl font-bold text-black md:text-5xl">
+                            {airport.name[i18n.language]}
+                        </p>
+                        <div className="flex flex-row gap-3">
+                            <div
+                                className="justify-center font-bold w-min h-min mt-2 px-4 py-2 text-xl leading-4 text-center text-white bg-black rounded-xl">
+                                {airport.icao}
+                            </div>
+                            <div
+                                className="justify-center font-bold w-min h-min mt-2 px-4 py-2 text-xl leading-4 text-center text-gray-200 bg-gray-400 rounded-xl">
+                                {airport.iata}
+                            </div>
+                            <div
+                                className="ml-auto mr-4 text-right font-bold mt-2 px-4 py-2 text-xl leading-4 text-gray-600">
+                                {decimalToDMS(airport.latitude, airport.longitude)} | {airport.elevation} ft
+                            </div>
+                        </div>
                     </div>
-                    <div className="flex flex-row gap-3">
-                        <div
-                            className="justify-center font-bold w-min h-min mt-2 px-4 py-2 text-xl leading-4 text-center text-white bg-black rounded-xl">
-                            {airport.icao}
-                        </div>
-                        <div
-                            className="justify-center font-bold w-min h-min mt-2 px-4 py-2 text-xl leading-4 text-center text-gray-200 bg-gray-400 rounded-xl">
-                            {airport.iata}
-                        </div>
-                        <div
-                            className="ml-auto mr-4 text-right font-bold mt-2 px-4 py-2 text-xl leading-4 text-gray-600">
-                            {decimalToDMS(airport.latitude, airport.longitude)} | {airport.elevation} ft
+                    <div className="flex flex-row gap-5 mt-20">
+                        <img className="w-[750px]" alt={airport.name.en}
+                             src={`https://files.by.ivao.aero/files/airports/v/${airport.icao}.png`}/>
+                        <div className="relative flex items-center justify-center w-full">
+                            <div className="relative flex items-center justify-center">
+                                <p className="absolute text-[325px] font-bold opacity-50 text-[#E7E7E7]">{airport.iata}</p>
+                                <p className="relative text-center text-4xl tracking-tighter leading-[39px] text-neutral-400">
+                                    {airport.description[i18n.language] || airport.description.en || 'No Description'}
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -111,7 +101,7 @@ export function AirportPage() {
                                 <div className="flex gap-4 font-bold">
                                     <div
                                         className="justify-center px-4 py-2 text-xl tracking-tighter leading-4 text-center text-white whitespace-nowrap bg-black rounded-xl">
-                                        {airport.icao}
+                                    {airport.icao}
                                     </div>
                                     <div className="flex-auto my-auto text-3xl leading-7 text-black">
                                         {airport.name[i18n.language] || airport.name.en}
