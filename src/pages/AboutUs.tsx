@@ -1,6 +1,8 @@
+import { IconChevronLeft } from '@tabler/icons-react';
+
+import joinbanner from '../assets/image/joinbaner.png';
 import { GeneralLayout } from '../components/Layout';
 import { ListItem } from '../components/List';
-import { Title } from '../components/Typography/Title';
 
 export function AboutUs() {
   // const { classes, theme } = useStyles();
@@ -8,14 +10,42 @@ export function AboutUs() {
 
   return (
     <GeneralLayout>
-      <div className="flex h-[93px] flex-col items-center justify-start self-stretch px-2 md:px-48">
-        <Title
-          className="text-4xl"
-          description={'История белорусского дивизиона'}
-          withUndreline
-        >
-          О нас
-        </Title>
+      <div className="flex flex-row text-gray-300">
+        <IconChevronLeft />
+        <span className="font-['Montserrat']">На главную</span>
+      </div>
+      <div className="mt-[29px] flex flex-col items-center justify-start self-stretch px-2">
+        <img
+          src={joinbanner}
+          className="rounded-2xl 2xl:min-w-[1536px]"
+          alt={'join banner'}
+        />
+        <div className="mt-10 rounded-2xl bg-white px-[31px] py-[42px] shadow-md md:pt-[60px] 2xl:w-[1536px]">
+          <h2 className="mb-4 text-2xl font-bold text-black md:text-[55px]">
+            Что такое IVAO?
+          </h2>
+          <p className="text-lg font-medium leading-6 text-black md:mt-[40px] md:text-[25px] md:leading-[29px]">
+            <a href="https://www.ivao.aero/" className="text-atmos-700">
+              International Virtual Aviation Organisation
+            </a>
+            , сокращенно IVAO, была основана в 1998 году с целью создания
+            онлайн-платформы для любителей авиасимуляторов, позволяющей им
+            наслаждаться своим хобби в моделируемой реальной среде, в компании
+            других людей, летающих или предоставляющих услуги по управлению
+            воздушным движением.
+          </p>
+          <p className="mt-4 text-lg font-medium leading-6 text-black md:text-[25px] md:leading-[29px]">
+            IVAO является юридически зарегистрированной некоммерческой
+            организацией (НКО) в соответствии с бельгийским законодательством.
+            Она имеет многоуровневую структуру управления, обеспечивающую ее
+            стратегическое управление на справедливой, законной и прозрачной
+            основе. Все услуги и программное обеспечение IVAO всегда
+            предоставляются бесплатно, поскольку расходы организации покрываются
+            за счет частных пожертвований и корпоративной спонсорской помощи.
+            Для получения более подробной информации о том, как осуществляется
+            управление НКО, посетите страницу Ассоциации.
+          </p>
+        </div>
         <ol className="relative mt-10 border-s border-gray-200 dark:border-gray-700">
           <ListItem
             date={'Февраль 2022'}
