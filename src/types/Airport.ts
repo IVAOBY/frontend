@@ -23,6 +23,18 @@ export interface Airport {
   magnetic: number;
   status: boolean | null;
   image_url: string | null;
+  atcPositions: {
+    id: number;
+    callsign: string;
+    frequency: string;
+    airportIcao: string;
+    fra: number;
+    name: {
+      en: string | null;
+      ru: string | null;
+      be: string | null;
+    };
+  }[];
   metar?: IvaoMetar;
   taf?: IvaoTAF;
 }
