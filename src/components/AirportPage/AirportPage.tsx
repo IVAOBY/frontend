@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
-
 import { notifications } from '@mantine/notifications';
 import { IconChevronLeft, IconInfoSquareRounded } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-
 import { useApi } from '../../context/ApiContext';
 import i18n from '../../i18n/i18n';
 import { Airport } from '../../types/Airport';
@@ -68,7 +66,7 @@ export function AirportPage() {
           autoClose: 2000,
         });
       });
-  }, [api, t]);
+  }, [api, t, icao]);
 
   return (
     <GeneralLayout>
@@ -77,7 +75,7 @@ export function AirportPage() {
         <span className="font-['Montserrat']">На главную</span>
       </div>
       {airports.map((airport) => (
-        <div className="flex flex-row gap-12">
+        <div key={airport.icao} className="flex flex-row gap-12">
           <div className="text-3xl font-bold text-black md:text-5xl">
             {airport.name[i18n.language]}
           </div>
