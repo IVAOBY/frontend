@@ -27,7 +27,8 @@ import {
   IconMessageCircle2,
   IconMessages,
   IconPlaneDeparture,
-  IconPlaneTilt, IconSchool,
+  IconPlaneTilt,
+  IconSchool,
   IconUsers,
   IconUsersGroup,
   IconWorld,
@@ -118,10 +119,10 @@ export function CommonDropdownContent({
             {t('navbar.division.about')}
           </Menu.Item>
           <Menu.Item
-              icon={<IconBook size={20} />}
-              onClick={() =>
-                  menuLink('https://wiki.ivao.aero/en/home/ivao/information')
-              }
+            icon={<IconBook size={20} />}
+            onClick={() =>
+              menuLink('https://wiki.ivao.aero/en/home/ivao/information')
+            }
           >
             {t('navbar.division.rules')}
           </Menu.Item>
@@ -131,14 +132,14 @@ export function CommonDropdownContent({
             </Menu.Item>
           </Link>
           <Menu.Item
-              icon={<IconMailForward size={20} />}
-              onClick={() => navigate('contact-us')}
+            icon={<IconMailForward size={20} />}
+            onClick={() => navigate('contact-us')}
           >
             {t('navbar.division.contact')}
           </Menu.Item>
           <Link to={'/discord'}>
             <Menu.Item
-                icon={<Image src={discord} width={19} alt={'Discord Icon'} />}
+              icon={<Image src={discord} width={19} alt={'Discord Icon'} />}
             >
               {t('navbar.division.discord')}
             </Menu.Item>
@@ -316,8 +317,8 @@ export function CommonDropdownContent({
             {t('navbar.community.events')}
           </Menu.Item>
           <Menu.Item
-              icon={<IconSchool size={20} />}
-              onClick={() => menuLink('https://google.com')}
+            icon={<IconSchool size={20} />}
+            onClick={() => menuLink('https://google.com')}
           >
             {t('navbar.community.training')}
           </Menu.Item>
@@ -340,8 +341,8 @@ export function CommonDropdownContent({
             {t('navbar.community.ivao')}
           </Menu.Item>
           <Menu.Item
-              icon={<IconEye size={20} />}
-              onClick={() => menuLink('https://webeye.ivao.aero')}
+            icon={<IconEye size={20} />}
+            onClick={() => menuLink('https://webeye.ivao.aero')}
           >
             {t('navbar.community.webeye')}
           </Menu.Item>
