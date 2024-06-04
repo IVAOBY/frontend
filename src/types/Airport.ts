@@ -35,6 +35,14 @@ export interface Airport {
       be: string | null;
     };
   }[];
+  sceneries: {
+    id: number;
+    title: string;
+    license: 'freeware' | 'payware';
+    link: string;
+    simulator: 'fs9' | 'fsx' | 'p3d' | 'xp11' | 'xp12' | 'msfs';
+    icao: string;
+  }[];
   metar?: IvaoMetar;
   taf?: IvaoTAF;
 }

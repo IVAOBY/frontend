@@ -17,6 +17,7 @@ import { useApi } from '../../context/ApiContext';
 import i18n from '../../i18n/i18n';
 import { Airport } from '../../types/Airport';
 import { GeneralLayout } from '../Layout';
+import {CustomButton} from "../Button";
 
 const positionIcons = {
   ground: <IconCar size={41} />,
@@ -27,9 +28,9 @@ const positionIcons = {
 
 const positionColors = {
   ground: 'bg-yellow-500',
-  tower: 'bg-red-500',
-  radar: 'bg-blue-500',
-  approach: 'bg-indigo-500',
+  tower: 'bg-semantic-red-500',
+  radar: 'bg-ocean-600',
+  approach: 'bg-atmos-700',
 };
 
 export function AirportPage() {
@@ -193,54 +194,69 @@ export function AirportPage() {
             >
             </div>
           </div>
-          <div className="flex flex-row mt-[30px]">
+          <div className="flex flex-row mt-[30px] gap-5">
             <div className="flex flex-col gap-3">
               <div className="bg-white rounded-2xl shadow-md p-4">
                 {airport.atcPositions
-                  ?.map((position) => {
-                    const callsign = position.callsign.toLowerCase();
-                    let positionType = '';
-                    if (callsign.includes('gnd')) {
-                      positionType = 'ground';
-                    } else if (callsign.includes('twr')) {
-                      positionType = 'tower';
-                    } else if (callsign.includes('r_app')) {
-                      positionType = 'radar';
-                    } else {
-                      positionType = 'approach';
-                    }
-                    return { position, type: positionType };
-                  })
-                  .sort((a, b) => {
-                    const typeOrder = {
-                      ground: 0,
-                      tower: 1,
-                      radar: 2,
-                      approach: 3,
-                    };
-                    return typeOrder[a.type] - typeOrder[b.type];
-                  })
-                  .map(({ position, type }) => (
-                    <div
-                      key={position.id}
-                      className="flex flex-row items-center gap-3 mb-4 w-[338px]"
-                    >
-                      <div
-                        className={`flex items-center justify-center w-14 h-14 rounded-2xl ${positionColors[type]}`}
-                      >
-                        {positionIcons[type]}
-                      </div>
-                      <div>
-                        <div className="text-2xl font-semibold text-black">
-                          {position.name[i18n.language]}
+                    ?.map((position) => {
+                      const callsign = position.callsign.toLowerCase();
+                      let positionType = '';
+                      if (callsign.includes('gnd')) {
+                        positionType = 'ground';
+                      } else if (callsign.includes('twr')) {
+                        positionType = 'tower';
+                      } else if (callsign.includes('r_app')) {
+                        positionType = 'radar';
+                      } else {
+                        positionType = 'approach';
+                      }
+                      return {position, type: positionType};
+                    })
+                    .sort((a, b) => {
+                      const typeOrder = {
+                        ground: 0,
+                        tower: 1,
+                        radar: 2,
+                        approach: 3,
+                      };
+                      return typeOrder[a.type] - typeOrder[b.type];
+                    })
+                    .map(({position, type}) => (
+                        <div
+                            key={position.id}
+                            className="flex flex-row items-center gap-3 mb-4 w-[338px]"
+                        >
+                          <div
+                              className={`flex items-center justify-center w-14 h-14 rounded-2xl ${positionColors[type]}`}
+                          >
+                            {positionIcons[type]}
+                          </div>
+                          <div>
+                            <div className="text-2xl font-semibold text-black">
+                              {position.name[i18n.language]}
+                            </div>
+                            <div className="text-[#ABA7A7] font-semibold text-[15px]">
+                              {position.callsign}, {position.frequency}
+                            </div>
+                          </div>
                         </div>
-                        <div className="text-[#ABA7A7] font-semibold text-[15px]">
-                          {position.callsign}, {position.frequency}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+                    ))}
               </div>
+            </div>
+            <div className="bg-white p-4 rounded-xl shadow-md w-[565px]">
+              <h2 className="text-3xl font-semibold mb-4 text-black uppercase">Сценарии</h2>
+              <ul>
+                {airport.sceneries.map((scenery) => (
+                    <li key={scenery.id} className="flex justify-between items-center mb-2">
+                      <span className="text-neutral-400">{scenery.simulator}</span>
+                      {scenery.license === 'payware' ? (
+                          <CustomButton>{t('Buy')}</CustomButton>
+                      ) : (
+                          <CustomButton>{t('Download')}</CustomButton>
+                      )}
+                    </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
