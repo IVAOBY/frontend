@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
+
 import { notifications } from '@mantine/notifications';
 import { IconChevronLeft, IconInfoSquareRounded } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
+
 import { useApi } from '../../context/ApiContext';
 import i18n from '../../i18n/i18n';
 import { Airport } from '../../types/Airport';
