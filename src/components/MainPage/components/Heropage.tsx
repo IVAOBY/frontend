@@ -103,7 +103,7 @@ ${decodedToken?.userData.name.first} ${decodedToken?.userData.name.last}`;
           </CustomButton>
         </div>
       </div>
-      <div className="absolute bottom-0 left-0 w-full h-[200px] md:h-[390px] bg-gradient-to-t from-white to-transparent"></div>
+      <div className="absolute bottom-0 left-0 w-full h-[200px] md:h-[390px] bg-gradient-to-t from-background-body to-transparent"></div>
       {/*        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 cursor-pointer"
              onClick={scrollToNextSection}>
           <IconArrowDown stroke={2} size={90}
