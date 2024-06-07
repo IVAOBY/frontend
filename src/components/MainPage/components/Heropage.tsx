@@ -87,7 +87,9 @@ ${decodedToken?.userData.name.first} ${decodedToken?.userData.name.last}`;
           <CustomButton
             size={'xl'}
             className={'rounded-xl'}
-            onClick={byTransferMail}
+            onClick={() =>
+                openLink('https://ivao.aero/members/person/register.htm')
+            }
           >
             Регистрация
           </CustomButton>
@@ -95,9 +97,7 @@ ${decodedToken?.userData.name.first} ${decodedToken?.userData.name.last}`;
             size={'xl'}
             className={'rounded-xl'}
             variant={'white'}
-            onClick={() =>
-              openLink('https://ivao.aero/members/person/register.htm')
-            }
+            onClick={byTransferMail}
           >
             {t('heropage.transfer')}
           </CustomButton>
