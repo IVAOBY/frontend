@@ -58,7 +58,7 @@ const beTranslations: { translations: Translations } = {
       subtitle: 'Самы сучасны дывізіён у IVAO.',
       subtitle2: 'Далучайцеся зараз!',
       joinbutton: 'Далучыцца!',
-      transfer: 'Перайсці ў BY дывізіён!',
+      transfer: 'Перайсці ў BY',
     },
     onlinecomponent: {
       title: 'Activity of division in the Network',

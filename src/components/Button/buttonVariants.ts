@@ -6,7 +6,7 @@ export const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          'bg-atmos-700 text-white shadow hover:opacity-90 dark:bg-semantic-green-500',
+          'bg-atmos-700 text-white shadow hover:bg-atmos-600 dark:bg-semantic-green-500',
         secondary:
           'hover:bg-fuselage-250 dark:text-fuselage-250 bg-fuselage-200 text-fuselage-600 shadow-sm dark:bg-fuselage-800 dark:hover:bg-fuselage-700',
         destructive:
@@ -16,7 +16,7 @@ export const buttonVariants = cva(
         ghost:
           'text-fuselage-550 dark:text-fuselage-450 dark:hover:text-fuselage-250 hover:bg-fuselage-200 hover:text-fuselage-700 dark:hover:bg-fuselage-700',
         link: 'text-atmos-600 underline-offset-4 hover:underline dark:text-semantic-green-400',
-        white: 'bg-white text-black',
+        white: 'bg-white text-black hover:bg-neutral-100',
       },
       size: {
         sm: 'h-8 px-3 text-xs',
