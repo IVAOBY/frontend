@@ -58,7 +58,7 @@ const ruTranslations: { translations: Translations } = {
       subtitle: 'Самый современный дивизион.',
       subtitle2: 'Присоединяйтесь сейчас!',
       joinbutton: 'Присоединиться!',
-      transfer: 'Перейти в BY дивизион!',
+      transfer: 'Перейти в BY',
     },
     onlinecomponent: {
       title: 'Activity of division in the Network',
