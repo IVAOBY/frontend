@@ -1,70 +1,45 @@
-// import { useCallback, useContext } from 'react';
-//
-// import { notifications } from '@mantine/notifications';
-// import { IconCircleX } from '@tabler/icons-react';
-// import { useTranslation } from 'react-i18next';
-//
-// import { AuthContext } from '../../../context/UserContext';
+import React, { useEffect, useState } from 'react';
+import {CustomButton} from "../../Button";
 
 export function HeroText() {
-  // const { classes } = useStyles();
-  // const { t } = useTranslation();
-  // // const isSmallScreen = useMediaQuery('(max-width: 575px)');
-  // const { signed, decodedToken } = useContext(AuthContext);
+  const [timeOfDay, setTimeOfDay] = useState('day');
 
-  //   const byTransferMail = useCallback(() => {
-  //     if (!signed) {
-  //       notifications.show({
-  //         id: 'auth-required',
-  //         color: 'red',
-  //         title: t('notif.auth.negative.name'),
-  //         message: t('notif.auth.negative.description'),
-  //         radius: 'lg',
-  //         icon: <IconCircleX />,
-  //         withCloseButton: true,
-  //         autoClose: 3000,
-  //       });
-  //       return;
-  //     }
-  //
-  //     if (signed) {
-  //       try {
-  //         const emailBody = `Dear HQs and Membership Department!
-  //
-  // I request to transfer me from the ${decodedToken?.userData.divisionId} division to the BY division.
-  //
-  // Best wishes,
-  // ${decodedToken?.userData.name.first} ${decodedToken?.userData.name.last}`;
-  //
-  //         window.open(
-  //           `mailto:BY-hq@ivao.aero,${decodedToken?.userData.divisionId}-hq@ivao.aero?cc=members@ivao.aero&subject=Division%20transfer%20${decodedToken?.userData.id}&body=${encodeURIComponent(
-  //             emailBody,
-  //           )}`,
-  //           '_blank',
-  //         );
-  //       } catch (error) {
-  //         console.error('Error decoding token:', error);
-  //       }
-  //     }
-  //   }, [decodedToken, signed, t]);
-  //
-  //   const openLink = useCallback(function (link: string | undefined) {
-  //     window.open(link, '_blank');
-  //   }, []);
+  useEffect(() => {
+    const hours = new Date().getHours();
+    if (hours >= 6 && hours < 12) {
+      setTimeOfDay('morning');
+    } else if (hours >= 12 && hours < 18) {
+      setTimeOfDay('day');
+    } else {
+      setTimeOfDay('evening');
+    }
+  }, []);
+
+  const backgroundImage = {
+    morning: "url('/src/assets/image/bg/morning.jpg')",
+    day: "url('/src/assets/image/bg/day.jpg')",
+    evening: "url('/src/assets/image/bg/evening.jpg')",
+  };
 
   return (
-    <>
-      <div className="justify-left inline-flex max-w-screen-lg flex-col gap-40 pt-8 text-left md:py-48">
-        <div>
-          <span className="font-['Futura PT'] text-6xl font-bold leading-10 text-atmos-100">
+    <div
+      className="w-full h-[487px] md:h-[1080px] flex items-center justify-center bg-cover bg-center"
+      style={{ backgroundImage: backgroundImage[timeOfDay] }}
+    >
+      <div className="max-w-screen-2xl mx-auto flex flex-col gap-4 pt-8">
+        <div className="leading-none">
+          <p className="font-['Futura PT'] drop-shadow-lg text-[32px] sm:text-[40px] md:text-[70px] lg:text-[100px] font-bold text-white">
             ЗНАКОМЬТЕСЬ,
-            <br />
-          </span>
-          <span className="font-['Futura PT'] leading-12 text-9xl font-bold text-atmos-100">
+          </p>
+          <p className="font-['Futura PT'] ml-[-4px] md:ml-[-8px] xl:ml-[-20px] drop-shadow-lg text-[60px] sm:text-[80px] md:text-[125px] xl:text-[250px] font-bold text-white mt-[-10px] mb-[-10px] md:mt-[-20px]">
             БЕЛАРУСЬ
-          </span>
+          </p>
+        </div>
+        <div className="flex flex-row gap-4">
+          <CustomButton size={'xl'} className={'rounded-xl'}>Регистрация</CustomButton>
+          <CustomButton size={'xl'} className={'rounded-xl'} variant={'white'}>Перейти в BY</CustomButton>
         </div>
       </div>
-    </>
+    </div>
   );
 }
