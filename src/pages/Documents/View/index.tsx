@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 
 import { notifications } from '@mantine/notifications';
-import { IconCircleX } from '@tabler/icons-react';
+import { IconChevronLeft, IconCircleX } from '@tabler/icons-react';
 import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
-import { LayoutTitle } from '../../../components/Layout';
+import { GeneralLayout } from '../../../components/Layout';
 import { useApi } from '../../../context/ApiContext';
 import { DocumentsType } from '../../../hooks/types';
 
@@ -65,17 +65,28 @@ export function DocumentView() {
   }, [api, id, t]);
 
   return (
-    <LayoutTitle title={documentItem?.name[i18n.language]} withUnderline>
-      {documentItem && (
-        <div className="mt-13">
-          <p
-            dangerouslySetInnerHTML={{
-              __html: documentItem.content[i18n.language] || '',
-            }}
-            className="mt-4 text-gray-500"
-          ></p>
-        </div>
-      )}
-    </LayoutTitle>
+    <GeneralLayout>
+      <div className="flex flex-row text-gray-300">
+        <IconChevronLeft />
+        <span className="font-['Montserrat']">На главную</span>
+      </div>
+      <div className="flex flex-col gap-[50px] mt-[30px]">
+        {documentItem && (
+          <>
+            <h4 className="text-3xl leading-8 md:text-[55px] font-bold text-black">
+              {documentItem.name[i18n.language]}
+            </h4>
+            <div className="bg-white shadow-md py-[41px] px-[32px] rounded-[25px]">
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: documentItem.content[i18n.language] || '',
+                }}
+                className="text-[#494949] font-medium"
+              ></p>
+            </div>
+          </>
+        )}
+      </div>
+    </GeneralLayout>
   );
 }
