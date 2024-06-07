@@ -1,10 +1,11 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 
+import { useTranslation } from 'react-i18next';
+
 //import { IconArrowDown } from '@tabler/icons-react';
 
 import { AuthContext } from '../../../context/UserContext';
 import { CustomButton } from '../../Button';
-import {useTranslation} from "react-i18next";
 
 export function HeroText() {
   const [timeOfDay, setTimeOfDay] = useState('day');
@@ -25,18 +26,18 @@ export function HeroText() {
   }, []);
 
   const backgroundImage = {
-    morning: "url('/src/assets/image/bg/morning.jpg')",
-    day: "url('/src/assets/image/bg/day.jpg')",
-    evening: "url('/src/assets/image/bg/evening.jpg')",
-    night: "url('/src/assets/image/bg/night.jpg')",
+    morning: "url('https://files.by.ivao.aero/files/banners/main/M.png')",
+    day: "url('https://files.by.ivao.aero/files/banners/main/D.png')",
+    evening: "url('https://files.by.ivao.aero/files/banners/main/E.png')",
+    night: "url('https://files.by.ivao.aero/files/banners/main/N.png')",
   };
 
   /*  const scrollToNextSection = () => {
-        window.scrollTo({
-          top: window.innerHeight,
-          behavior: 'smooth'
-        });
-      };*/
+          window.scrollTo({
+            top: window.innerHeight,
+            behavior: 'smooth'
+          });
+        };*/
 
   const byTransferMail = useCallback(() => {
     if (!signed) {
@@ -95,16 +96,15 @@ ${decodedToken?.userData.name.first} ${decodedToken?.userData.name.last}`;
             className={'rounded-xl'}
             variant={'white'}
             onClick={() =>
-                openLink('https://ivao.aero/members/person/register.htm')
+              openLink('https://ivao.aero/members/person/register.htm')
             }
           >
             {t('heropage.transfer')}
           </CustomButton>
         </div>
       </div>
-      {/*        <div
-            className="absolute bottom-0 left-0 w-full h-[200px] md:h-[390px] bg-gradient-to-t from-white to-transparent"></div>
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 cursor-pointer"
+      <div className="absolute bottom-0 left-0 w-full h-[200px] md:h-[390px] bg-gradient-to-t from-white to-transparent"></div>
+      {/*        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 cursor-pointer"
              onClick={scrollToNextSection}>
           <IconArrowDown stroke={2} size={90}
                          className="text-atmos-700 absolute bottom-4 left-1/2 transform -translate-x-1/2 cursor-pointer"/>
