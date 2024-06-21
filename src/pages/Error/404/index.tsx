@@ -1,35 +1,35 @@
-import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import {useTranslation} from 'react-i18next';
+import {useNavigate} from 'react-router-dom';
 
-import { CustomButton } from '../../../components/Button';
-import { GeneralLayout } from '../../../components/Layout';
-import { Title } from '../../../components/Typography/Title';
+import {GeneralLayout} from '../../../components/Layout';
+import {IconChevronLeft} from "@tabler/icons-react";
+import {useCallback} from "react";
 
 export function NotFound() {
-  const { t } = useTranslation();
-  const navigate = useNavigate();
+    const {t} = useTranslation();
+    const navigate = useNavigate();
+    const goBackHandler = useCallback(() => {
+        navigate(-3)
+    }, [navigate]);
 
-  return (
-    <GeneralLayout>
-      <div className="grid grid-cols-1 gap-2 px-4 md:grid-cols-2 md:gap-20">
-        <div className="flex flex-col gap-2">
-          <Title className="text-left text-semantic-red-500">
-            {t('errorpage.notfoundtext')}
-          </Title>
-          <p className="text-fuselage-300">{t('errorpage.notfoundsubtext')}</p>
-          <CustomButton
-            title={t('errorpage.homebutton')}
-            size={'lg'}
-            variant={'destructive'}
-            onClick={() => navigate('/')}
-          />
+    return (
+        <div className="bg-semantic-red-500 w-screen h-screen">
+            <GeneralLayout>
+                <div className="flex hover:cursor-pointer mt-3 flex-row text-white font-bold" onClick={goBackHandler}>
+                    <IconChevronLeft/>
+                    <span className="font-['Montserrat']">Назад</span>
+                </div>
+                <div className="flex flex-col gap-20">
+                    <div className="text-7xl mt-3 text-white font-bold md:text-6xl">
+                        {t('errorpage.notfoundtext')}
+                    </div>
+                    <img
+                        alt="404 Error"
+                        className="w-7/12 -ml-2"
+                        src={'https://files.by.ivao.aero/files/logos/error_404.svg'}
+                    />
+                </div>
+            </GeneralLayout>
         </div>
-        <img
-          alt="404 Error"
-          className="w-5/6"
-          src={'https://files.ivao.systems/files/logos/404.svg'}
-        />
-      </div>
-    </GeneralLayout>
-  );
+    );
 }

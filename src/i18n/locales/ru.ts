@@ -48,7 +48,7 @@ const ruTranslations: { translations: Translations } = {
       },
     },
     errorpage: {
-      notfoundtext: 'Что-то не так!',
+      notfoundtext: 'Cтраница не найдена',
       notfoundsubtext:
         'Кажется, вы попытались открыть страницу, которой нет. Хорошо, что мы приготовили для вас крутую кнопку:',
       homebutton: 'Домой!',

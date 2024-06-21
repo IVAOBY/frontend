@@ -48,7 +48,7 @@ const enTranslations: { translations: Translations } = {
       },
     },
     errorpage: {
-      notfoundtext: 'Something is not right!',
+      notfoundtext: 'Page not found!',
       notfoundsubtext:
         "It seems like you tried to open a page that doesn't exist. Good thing we have a cool button for you:",
       homebutton: 'Home!',

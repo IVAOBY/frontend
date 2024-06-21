@@ -48,7 +48,7 @@ const beTranslations: { translations: Translations } = {
       },
     },
     errorpage: {
-      notfoundtext: 'Нешта не так!',
+      notfoundtext: 'Старонку скралі масоны!',
       notfoundsubtext:
         'Здаецца, вы паспрабавалі адкрыць старонку, якой няма. Добра, што мы падрыхтавалі для вас крутую кнопку:',
       homebutton: 'Дадому!',
