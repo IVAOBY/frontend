@@ -118,7 +118,7 @@ export function AirportPage() {
             </div>
           </div>
           {airport.airportTypeId === 1 && (
-            <div className="flex flex-col lg:flex-row gap-5 mt-20">
+            <div className="flex flex-col lg:flex-row gap-10 mt-20">
               <img
                 className="w-[750px]"
                 alt={airport.name.en}
@@ -126,10 +126,10 @@ export function AirportPage() {
               />
               <div className="relative flex items-center justify-center w-full">
                 <div className="relative flex items-center justify-center">
-                  <p className="absolute text-[120px] lg:text-[165px] xl:text-[325px] font-bold opacity-50 text-[#E7E7E7]">
+                  <p className="absolute text-[120px] lg:text-[165px] 2xl:text-[325px] font-bold opacity-50 text-[#E7E7E7]">
                     {airport.iata}
                   </p>
-                  <p className="relative text-center text-lg lg:text-2xl xl:text-4xl tracking-tighter leading-[39px] text-neutral-400">
+                  <p className="relative text-center text-lg lg:text-2xl 2xl:text-4xl tracking-tighter leading-[39px] text-neutral-400">
                     {airport.description[i18n.language] ||
                       airport.description.en ||
                       'No Description'}
@@ -141,19 +141,15 @@ export function AirportPage() {
           <div className="flex flex-col lg:flex-row gap-5 mt-16">
             <div className="flex flex-col gap-3 max-w-[855px]">
               <div className="flex flex-col md:flex-row gap-3">
-                <div className="flex items-center shadow-md rounded-lg bg-white overflow-hidden w-full md:max-w-[250px]">
-                  <div className="bg-atmos-700 font-semibold text-white px-4 py-2">
-                    TA
-                  </div>
-                  <div className="px-4 py-2 text-black font-semibold text-center">
+                <div className="flex items-center shadow-md rounded-lg bg-atmos-700 overflow-hidden w-full md:max-w-[250px]">
+                  <div className="font-semibold text-white px-4 py-2">TA</div>
+                  <div className="px-4 py-2 text-black font-semibold content-center text-center bg-white w-full h-full">
                     6000ft
                   </div>
                 </div>
-                <div className="flex items-center shadow-md rounded-lg bg-white overflow-hidden w-full">
-                  <div className="bg-atmos-700 font-semibold text-white px-4 py-2">
-                    TL
-                  </div>
-                  <p className="px-4 py-2 text-neutral-400 font-semibold">
+                <div className="bg-atmos-700 flex items-center shadow-md rounded-lg overflow-hidden w-full">
+                  <div className="font-semibold text-white px-4 py-2">TL</div>
+                  <p className="px-4 py-2 text-neutral-400 text-center font-semibold bg-white w-full">
                     <span className="text-black">FL80</span> или{' '}
                     <span className="text-black">FL90</span> (если QNH меньше
                     977hPa)
@@ -161,11 +157,11 @@ export function AirportPage() {
                 </div>
               </div>
               <div className="bg-white">
-                <div className="flex items-center shadow-md rounded-lg overflow-hidden">
-                  <div className="bg-atmos-700 py-4 px-1">
+                <div className="flex bg-atmos-700 items-center shadow-md rounded-lg overflow-hidden">
+                  <div className="py-4 px-1 h-full">
                     <img alt={airport.name.en} src={metaricon} />
                   </div>
-                  <div className="px-4 py-2 text-black font-semibold">
+                  <div className="px-4 py-2 text-black content-center font-semibold bg-white w-full min-h-[80px]">
                     {airport.metar.metar ? (
                       <>
                         <span className="text-atmos-700">METAR</span>{' '}
@@ -177,21 +173,19 @@ export function AirportPage() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white">
-                <div className="flex items-center shadow-md rounded-lg overflow-hidden">
-                  <div className="bg-atmos-700 py-9 px-1">
-                    <IconRadar2 size={50} />
-                  </div>
-                  <div className="px-4 py-2 text-black font-semibold">
-                    {airport.taf.taf ? (
-                      <>
-                        <span className="text-atmos-700">TAF</span>{' '}
-                        {airport.taf.taf}{' '}
-                      </>
-                    ) : (
-                      <p className="text-red-500">{airport.taf.message}</p>
-                    )}
-                  </div>
+              <div className="bg-atmos-700  flex items-center shadow-md rounded-lg overflow-hidden">
+                <div className="py-9 px-1">
+                  <IconRadar2 size={50} />
+                </div>
+                <div className="px-4 py-2 text-black font-semibold content-center bg-white w-[855px] min-h-[122px]">
+                  {airport.taf.taf ? (
+                    <>
+                      <span className="text-atmos-700">TAF</span>{' '}
+                      {airport.taf.taf}{' '}
+                    </>
+                  ) : (
+                    <p className="text-red-500">{airport.taf.message}</p>
+                  )}
                 </div>
               </div>
             </div>
@@ -201,8 +195,8 @@ export function AirportPage() {
             ></div>
           </div>
           <div className="flex flex-col sm:flex-row mt-[30px] gap-5">
-            <div className="flex flex-col gap-3">
-              <div className="bg-white rounded-2xl shadow-md p-4">
+            {airport.atcPositions?.length > 0 && (
+              <div className="bg-white rounded-2xl shadow-md p-[19px] flex flex-col gap-3">
                 {airport.atcPositions
                   ?.map((position) => {
                     const callsign = position.callsign.toLowerCase();
@@ -230,7 +224,7 @@ export function AirportPage() {
                   .map(({ position, type }) => (
                     <div
                       key={position.id}
-                      className="flex flex-row items-center gap-3 mb-4 w-[338px]"
+                      className="flex flex-row items-center gap-3 w-[338px]"
                     >
                       <div
                         className={`flex items-center justify-center w-14 h-14 rounded-2xl ${positionColors[type]}`}
@@ -248,42 +242,44 @@ export function AirportPage() {
                     </div>
                   ))}
               </div>
-            </div>
-            <div className="bg-white p-4 rounded-xl shadow-md sm:w-[565px]">
-              <h2 className="text-3xl font-semibold mb-4 text-black uppercase">
-                Сценарии
-              </h2>
-              <ul>
-                {airport.sceneries.map((scenery) => (
-                  <li
-                    key={scenery.id}
-                    className="flex justify-between items-center mb-2"
-                  >
-                    <span className="text-neutral-400 uppercase">
-                      {scenery.simulator}
-                    </span>
-                    <div className="flex-grow-1 mx-2 w-full">
-                      <div className="border-t-2"></div>
-                    </div>
-                    {scenery.license === 'payware' ? (
-                      <CustomButton
-                        className="flex flex-row gap-1 text-lg"
-                        onClick={() => openLink(scenery.link)}
-                      >
-                        <IconShoppingBag stroke={2} /> {t('Buy')}
-                      </CustomButton>
-                    ) : (
-                      <CustomButton
-                        className="flex flex-row gap-1 text-lg"
-                        onClick={() => openLink(scenery.link)}
-                      >
-                        <IconDownload stroke={2} /> {t('Download')}
-                      </CustomButton>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            )}
+            {airport.sceneries.length > 0 && (
+              <div className="bg-white p-4 rounded-xl shadow-md sm:w-[565px]">
+                <h2 className="text-3xl font-semibold mb-4 text-black uppercase">
+                  Сценарии
+                </h2>
+                <ul>
+                  {airport.sceneries.map((scenery) => (
+                    <li
+                      key={scenery.id}
+                      className="flex justify-between items-center mb-2"
+                    >
+                      <span className="text-neutral-400 uppercase">
+                        {scenery.simulator}
+                      </span>
+                      <div className="flex-grow-1 mx-2 w-full">
+                        <div className="border-t-2"></div>
+                      </div>
+                      {scenery.license === 'payware' ? (
+                        <CustomButton
+                          className="flex flex-row gap-1 text-lg"
+                          onClick={() => openLink(scenery.link)}
+                        >
+                          <IconShoppingBag stroke={2} /> {t('Buy')}
+                        </CustomButton>
+                      ) : (
+                        <CustomButton
+                          className="flex flex-row gap-1 text-lg"
+                          onClick={() => openLink(scenery.link)}
+                        >
+                          <IconDownload stroke={2} /> {t('Download')}
+                        </CustomButton>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </div>
       ))}
