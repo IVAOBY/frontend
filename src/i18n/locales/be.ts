@@ -48,7 +48,7 @@ const beTranslations: { translations: Translations } = {
       },
     },
     errorpage: {
-      notfoundtext: 'Нешта не так!',
+      notfoundtext: 'Старонку скралі масоны!',
       notfoundsubtext:
         'Здаецца, вы паспрабавалі адкрыць старонку, якой няма. Добра, што мы падрыхтавалі для вас крутую кнопку:',
       homebutton: 'Дадому!',
@@ -58,7 +58,7 @@ const beTranslations: { translations: Translations } = {
       subtitle: 'Самы сучасны дывізіён у IVAO.',
       subtitle2: 'Далучайцеся зараз!',
       joinbutton: 'Далучыцца!',
-      transfer: 'Перайсці ў BY дывізіён!',
+      transfer: 'Перайсці ў BY',
     },
     onlinecomponent: {
       title: 'Activity of division in the Network',

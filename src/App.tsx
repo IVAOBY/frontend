@@ -30,9 +30,9 @@ import { Vehicles } from './pages/vehicles/Vehicles';
 
 import './App.css';
 
+import { AirportPage } from './components/AirportPage/AirportPage';
 import { Centered } from './components/Layout';
 import { Loader } from './components/Loader';
-import {AirportPage} from "./components/AirportPage/AirportPage";
 
 export default function App() {
   const PrivateRoute: React.FC<{ path: string; element: React.ReactNode }> = ({

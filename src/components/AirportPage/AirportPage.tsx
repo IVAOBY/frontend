@@ -102,15 +102,13 @@ export function AirportPage() {
                 {airport.name[i18n.language]}
               </p>
               <div className="flex flex-row gap-3">
-                <div
-                    className="justify-center font-bold w-min h-min mt-2 px-4 py-2 text-xl leading-4 text-center text-white bg-black rounded-xl">
+                <div className="justify-center font-bold w-min h-min mt-2 px-4 py-2 text-xl leading-4 text-center text-white bg-black rounded-xl">
                   {airport.icao}
                 </div>
                 {airport.iata && (
-                    <div
-                        className="justify-center font-bold w-min h-min mt-2 px-4 py-2 text-xl leading-4 text-center text-[#958F8F] bg-[#D7D7DC] rounded-xl">
-                      {airport.iata}
-                    </div>
+                  <div className="justify-center font-bold w-min h-min mt-2 px-4 py-2 text-xl leading-4 text-center text-[#958F8F] bg-[#D7D7DC] rounded-xl">
+                    {airport.iata}
+                  </div>
                 )}
               </div>
               <div className="md:ml-auto md:text-end font-bold mt-2 text-xl leading-4 text-gray-600">
@@ -120,7 +118,7 @@ export function AirportPage() {
             </div>
           </div>
           {airport.airportTypeId === 1 && (
-              <div className="flex flex-col lg:flex-row gap-5 mt-20">
+            <div className="flex flex-col lg:flex-row gap-5 mt-20">
               <img
                 className="w-[750px]"
                 alt={airport.name.en}

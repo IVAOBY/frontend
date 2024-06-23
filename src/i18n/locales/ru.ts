@@ -48,7 +48,7 @@ const ruTranslations: { translations: Translations } = {
       },
     },
     errorpage: {
-      notfoundtext: 'Что-то не так!',
+      notfoundtext: 'Cтраница не найдена',
       notfoundsubtext:
         'Кажется, вы попытались открыть страницу, которой нет. Хорошо, что мы приготовили для вас крутую кнопку:',
       homebutton: 'Домой!',
@@ -58,7 +58,7 @@ const ruTranslations: { translations: Translations } = {
       subtitle: 'Самый современный дивизион.',
       subtitle2: 'Присоединяйтесь сейчас!',
       joinbutton: 'Присоединиться!',
-      transfer: 'Перейти в BY дивизион!',
+      transfer: 'Перейти в BY',
     },
     onlinecomponent: {
       title: 'Activity of division in the Network',

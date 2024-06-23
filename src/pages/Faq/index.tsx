@@ -1,13 +1,13 @@
 import {
+  IconChevronLeft,
   IconLanguage,
   IconPlugConnectedX,
   IconUsers,
 } from '@tabler/icons-react';
 import { t } from 'i18next';
-import { useTranslation } from 'react-i18next';
 
 import Accordion from '../../components/Accordion';
-import { LayoutTitle } from '../../components/Layout';
+import { GeneralLayout } from '../../components/Layout';
 
 const items = [
   {
@@ -28,13 +28,16 @@ const items = [
 ];
 
 export function FAQ() {
-  const { t } = useTranslation();
-
   return (
-    <LayoutTitle title={t('FAQ.page.title')} withUnderline>
-      <div className={'mt-5 p-2 lg:p-0'}>
+    <GeneralLayout>
+      <div className="flex flex-row text-gray-300">
+        <IconChevronLeft />
+        <span className="font-['Montserrat']">На главную</span>
+      </div>
+      <h4 className="text-[55px] font-bold text-black">FAQ</h4>
+      <div className={'mt-5 w-full lg:p-0'}>
         <Accordion items={items} />
       </div>
-    </LayoutTitle>
+    </GeneralLayout>
   );
 }
