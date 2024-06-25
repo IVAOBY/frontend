@@ -2,12 +2,12 @@ import React from 'react';
 
 import { useTranslation } from 'react-i18next';
 
+import discordIcon from '../../assets/icons/footer/discord.svg';
 import facebookIcon from '../../assets/icons/footer/facebook.svg';
 import instagramIcon from '../../assets/icons/footer/Instagram.svg';
-import twitterIcon from '../../assets/icons/footer/Twitter.svg';
-import discordIcon from '../../assets/icons/footer/discord.svg';
-import youtubeIcon from '../../assets/icons/footer/youtube.svg';
 import telegramIcon from '../../assets/icons/footer/Telegram.svg';
+import twitterIcon from '../../assets/icons/footer/Twitter.svg';
+import youtubeIcon from '../../assets/icons/footer/youtube.svg';
 import bylogo from '../../assets/image/logobyblue.svg';
 
 export interface FooterProps {
@@ -21,7 +21,7 @@ export const FooterItem: React.FC<FooterProps> = ({ to, text, className }) => (
     href={to}
     target="_blank"
     rel="noopener noreferrer"
-    className={`text-fuselage-400 transition hover:text-ocean-600 ${className}`}
+    className={`text-[12px] leading-[12px] sm:text-[16px] text-fuselage-400 transition hover:text-fuselage-200 ${className}`}
   >
     {text}
   </a>
@@ -30,19 +30,23 @@ export const FooterItem: React.FC<FooterProps> = ({ to, text, className }) => (
 const FooterLinkSection = ({
   titleKey,
   links,
+  classname,
+  titleclassname,
 }: {
   titleKey: string;
   links: FooterProps[];
+  classname?: string;
+  titleclassname?: string;
 }) => {
   const { t } = useTranslation();
   return (
-    <div>
-      <h2 className="mb-4 text-sm font-semibold uppercase text-atmos-700 dark:text-white">
+    <div className={`${classname}`}>
+      <h2 className={`mb-4 text-sm font-semibold uppercase text-atmos-700 dark:text-white text-center ${titleclassname}`}>
         {t(titleKey)}
       </h2>
-      <ul className="font-medium text-gray-500 dark:text-gray-400">
+      <ul className="font-medium text-gray-500 dark:text-gray-400 text-center">
         {links.map((link, index) => (
-          <li key={index} className="mb-2">
+          <li key={index} className="lg:mb-2">
             <FooterItem to={link.to} text={t(link.text)} />
           </li>
         ))}
@@ -51,10 +55,23 @@ const FooterLinkSection = ({
   );
 };
 
-const SocialIcon = ({ href, src, alt }: { href: string; src: string; alt: string }) => (
-    <a href={href} target="_blank" rel="noopener noreferrer" className="mx-2 bg-atmos-700 p-2 rounded-lg hover:opacity-90 transition">
-      <img src={src} alt={alt} className="w-6 h-6" />
-    </a>
+const SocialIcon = ({
+  href,
+  src,
+  alt,
+}: {
+  href: string;
+  src: string;
+  alt: string;
+}) => (
+  <a
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="mx-2 bg-atmos-700 p-2 rounded-lg hover:opacity-90 transition"
+  >
+    <img src={src} alt={alt} className="w-6 h-6" />
+  </a>
 );
 
 export const Footer = () => {
@@ -75,52 +92,81 @@ export const Footer = () => {
     },
   ];
   return (
-      <footer className="bg-white dark:bg-gray-900">
-        <div className="container mx-auto px-4 py-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-            <div className="mb-6 flex items-center justify-center md:mb-0">
-              <a href="/">
-                <img className="w-32 md:w-48" src={bylogo} alt="Company Logo" />
-              </a>
-            </div>
-            <div className="flex flex-row gap-2 content-cente">
-              <FooterLinkSection titleKey="footer.legal.title" links={legalLinks} />
-              <FooterLinkSection
-                  titleKey="footer.community.title"
-                  links={[
-                    { to: 'https://youtube.com/', text: 'footer.community.ivao' },
-                    {
-                      to: 'https://facebook.com/',
-                      text: 'footer.community.ivaofamily',
-                    },
-                    {
-                      to: 'https://www.instagram.com/ivao_by/',
-                      text: 'footer.community.forum',
-                    },
-                  ]}
+    <footer className="bg-white dark:bg-gray-900">
+      <div className="container mx-auto px-4 py-6">
+        <div className="flex flex-row gap-14 justify-between items-center">
+          <div className="mb-6 flex items-center justify-center lg:mb-0">
+            <a href="/">
+              <img className="w-48 md:w-48" src={bylogo} alt="Company Logo" />
+            </a>
+          </div>
+          <div className="flex flex-col lg:flex-row gap-14 items-center justify-center">
+            <FooterLinkSection
+              titleKey="footer.legal.title"
+              links={legalLinks}
+              titleclassname={'hidden lg:block'}
+            />
+            <FooterLinkSection
+              titleKey="footer.community.title"
+              classname="hidden lg:block"
+              links={[
+                { to: 'https://youtube.com/', text: 'footer.community.ivao' },
+                {
+                  to: 'https://facebook.com/',
+                  text: 'footer.community.ivaofamily',
+                },
+                {
+                  to: 'https://www.instagram.com/ivao_by/',
+                  text: 'footer.community.forum',
+                },
+              ]}
+            />
+          </div>
+          <div className="hidden lg:flex flex-col justify-center gap-3">
+            <div className="flex flex-row">
+              <SocialIcon
+                href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                src={facebookIcon}
+                alt="Facebook"
+              />
+              <SocialIcon
+                href="https://www.youtube.com/watch?v=IiHFnmI8pxg"
+                src={instagramIcon}
+                alt="Instagram"
+              />
+              <SocialIcon
+                href="https://www.youtube.com/watch?v=b3rNUhDqciM"
+                src={twitterIcon}
+                alt="Twitter"
               />
             </div>
-            <div className="flex flex-col gap-3">
-              <div className="flex flex-row">
-                <SocialIcon href="https://facebook.com/" src={facebookIcon} alt="Facebook" />
-                <SocialIcon href="https://www.instagram.com/ivao_by/" src={instagramIcon} alt="Instagram" />
-                <SocialIcon href="https://twitter.com/" src={twitterIcon} alt="Twitter" />
-              </div>
-              <div className="flex flex-row">
-                <SocialIcon href="https://discord.com/" src={discordIcon} alt="Discord" />
-                <SocialIcon href="https://youtube.com/" src={youtubeIcon} alt="YouTube" />
-                <SocialIcon href="https://telegram.org/" src={telegramIcon} alt="Telegram" />
-              </div>
+            <div className="flex flex-row">
+              <SocialIcon
+                href="https://discord.by.ivao.aero/"
+                src={discordIcon}
+                alt="Discord"
+              />
+              <SocialIcon
+                href="https://www.youtube.com/watch?v=Z54FdjHqPgM"
+                src={youtubeIcon}
+                alt="YouTube"
+              />
+              <SocialIcon
+                href="https://www.youtube.com/watch?v=NVDB-OUDWYI"
+                src={telegramIcon}
+                alt="Telegram"
+              />
             </div>
           </div>
-          <hr className="my-6 border-gray-200 dark:border-gray-700" />
-          <div className="text-center">
+        </div>
+        <hr className="my-6 border-gray-200 dark:border-gray-700" />
+        <div className="text-center">
           <span className="text-sm text-gray-500 dark:text-gray-400">
             © {currentYear}, International Virtual Aviation Organisation - IVAO
             Belarus. {t('footer.copyrightMessage')}
           </span>
-          </div>
         </div>
-      </footer>
+      </div>
+    </footer>
   );
 };
