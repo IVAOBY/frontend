@@ -6,7 +6,7 @@ import { I18nextProvider } from 'react-i18next';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { AirportsPage } from './components/AirportPage/AirportsPage';
-import { Index as Footer } from './components/Footer';
+import { Footer } from './components/Footer';
 import { HeaderResponsive } from './components/header/header';
 import { MainPage } from './components/MainPage/MainPage';
 import { ApiProvider } from './context/ApiContext';

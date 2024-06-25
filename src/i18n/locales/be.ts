@@ -81,13 +81,6 @@ const beTranslations: { translations: Translations } = {
       training: 'Неабходна трэніроўка',
       caption: 'Для працы ТС неабходна актыўная пазіцыя КПР (GND+)',
     },
-    legal: {
-      title: 'Прававая інфармацыя',
-      text: 'Так, мы збіраем и захоўваем вашу інфармацыю. Але робім гэта у адпаведнасці з наступнымі дакументамі:',
-      privacypolicy: 'Палітыка канфідэнцыяльнасці',
-      termsofuse: 'Умовы карыстання',
-      ipp: 'Палітыка інтэлектуальнай уласнасці',
-    },
     sector: {
       title: 'Сектар-файл',
       text: ' На гэтай старонке вы можаце спампаваць сектар-файл для IvAc.',
@@ -118,7 +111,18 @@ const beTranslations: { translations: Translations } = {
     },
     footer: {
       copyrightMessage: 'Усе правы ахоўваюцца.',
-      followus: 'Сацыяльныя сеткі',
+      legal: {
+        title: 'Прававая інфармацыя',
+        privacypolicy: 'Палітыка канфідэнцыяльнасці',
+        termsofuse: 'Умовы карыстання',
+        ipp: 'Палітыка інтэлектуальнай уласнасці',
+      },
+      community: {
+        title: 'Супольнасць',
+        forum: 'IVAO форум Беларусь',
+        ivao: 'Сайт IVAO',
+        ivaofamily: 'Сям`я IVAO',
+      },
     },
     notif: {
       loading: {

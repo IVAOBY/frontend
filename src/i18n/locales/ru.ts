@@ -81,13 +81,6 @@ const ruTranslations: { translations: Translations } = {
       training: 'Необходима тренировка',
       caption: 'Для работы ТС необходима активная позиция УВД (GND+)',
     },
-    legal: {
-      title: 'Правовая информация',
-      text: 'Да, мы собираем и храним вашу информацию. Но делаем это в соответвии со следующими документами:',
-      privacypolicy: 'Политика конфиденциальности',
-      termsofuse: 'Условия использования',
-      ipp: 'Политика интеллектуальной собственности',
-    },
     sector: {
       title: 'Сектор-файл',
       text: ' На этой странице вы можете загрузить сектор-файл для IvAc.',
@@ -118,7 +111,18 @@ const ruTranslations: { translations: Translations } = {
     },
     footer: {
       copyrightMessage: 'Все права защищены.',
-      followus: 'Социальные сети',
+      legal: {
+        title: 'Правовая информация',
+        privacypolicy: 'Политика конфиденциальности',
+        termsofuse: 'Правила использования',
+        ipp: 'Политика интеллектуальной собственности',
+      },
+      community: {
+        title: 'Сообщество',
+        forum: 'IVAO форум Беларусь',
+        ivao: 'Сайт IVAO',
+        ivaofamily: 'Семья IVAO',
+      },
     },
     notif: {
       loading: {

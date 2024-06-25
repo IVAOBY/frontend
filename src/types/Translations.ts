@@ -76,12 +76,20 @@ export interface Translations {
     training: string;
     caption: string;
   };
-  legal: {
-    title: string;
-    text: string;
-    privacypolicy: string;
-    termsofuse: string;
-    ipp: string;
+  footer: {
+    copyrightMessage: string;
+    legal: {
+      title: string;
+      privacypolicy: string;
+      termsofuse: string;
+      ipp: string;
+    };
+    community: {
+      title: string;
+      forum: string;
+      ivao: string;
+      ivaofamily: string;
+    };
   };
   sector: {
     title: string;
@@ -109,10 +117,6 @@ export interface Translations {
   };
   generic: {
     ivao: string;
-  };
-  footer: {
-    copyrightMessage: string;
-    followus: string;
   };
   notif: {
     loading: {
