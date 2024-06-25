@@ -81,13 +81,6 @@ const enTranslations: { translations: Translations } = {
       training: 'Training is required',
       caption: 'Active ATC position (GND+) is required for vehicle operation',
     },
-    legal: {
-      title: 'Legal information',
-      text: 'Yes, we collect and store your information. But we do so in accordance with the following Documents:',
-      privacypolicy: 'Privacy Policy',
-      termsofuse: 'Terms of Use',
-      ipp: 'Intellectual Property Policy',
-    },
     sector: {
       title: 'Sector file',
       text: 'On this page you can download the sector file for IvAc.',
@@ -117,8 +110,19 @@ const enTranslations: { translations: Translations } = {
       ivao: 'IVAO',
     },
     footer: {
-      copyrightMessage: 'All Rights Reserved.',
-      followus: 'Follow Us',
+      copyrightMessage: 'All rights reserved.',
+      legal: {
+        title: 'Legal information',
+        privacypolicy: 'Privacy Policy',
+        termsofuse: 'Terms of use',
+        ipp: 'Intellectual Property Policy',
+      },
+      community: {
+        title: 'Community',
+        forum: 'IVAO Belarus Forum',
+        ivao: 'IVAO Website',
+        ivaofamily: 'IVAO Family',
+      },
     },
     notif: {
       loading: {
