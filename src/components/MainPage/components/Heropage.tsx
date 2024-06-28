@@ -71,24 +71,24 @@ ${decodedToken?.userData.name.first} ${decodedToken?.userData.name.last}`;
 
   return (
     <div
-      className="relative w-full h-[487px] md:h-[1080px] flex items-center justify-center bg-cover bg-center"
+      className="relative flex h-[487px] w-full items-center justify-center bg-cover bg-center md:h-[1080px]"
       style={{ backgroundImage: backgroundImage[timeOfDay] }}
     >
-      <div className="container mx-auto max-w-screen-2xl px-4 py-8 flex flex-col gap-4 pt-8 z-10">
+      <div className="container z-10 mx-auto flex max-w-screen-2xl flex-col gap-4 px-4 py-8">
         <div className="leading-none">
-          <p className="font-['Futura PT'] drop-shadow-lg text-[32px] sm:text-[40px] md:text-[70px] lg:text-[100px] font-bold text-white">
+          <p className="font-['Futura PT'] text-[32px] font-bold text-white drop-shadow-lg sm:text-[40px] md:text-[70px] lg:text-[100px]">
             ЗНАКОМЬТЕСЬ,
           </p>
-          <p className="font-['Futura PT'] ml-[-4px] md:ml-[-8px] xl:ml-[-20px] drop-shadow-lg text-[60px] sm:text-[80px] md:text-[125px] xl:text-[250px] font-bold text-white mt-[-10px] mb-[-10px] md:mt-[-20px]">
+          <p className="font-['Futura PT'] my-[-10px] ml-[-4px] text-[60px] font-bold text-white drop-shadow-lg sm:text-[80px] md:ml-[-8px] md:mt-[-20px] md:text-[125px] xl:ml-[-20px] xl:text-[250px]">
             БЕЛАРУСЬ
           </p>
         </div>
-        <div className="flex flex-row gap-4 mt-8">
+        <div className="mt-8 flex flex-row gap-4">
           <CustomButton
             size={'xl'}
             className={'rounded-xl'}
             onClick={() =>
-                openLink('https://ivao.aero/members/person/register.htm')
+              openLink('https://ivao.aero/members/person/register.htm')
             }
           >
             Регистрация
@@ -103,7 +103,7 @@ ${decodedToken?.userData.name.first} ${decodedToken?.userData.name.last}`;
           </CustomButton>
         </div>
       </div>
-      <div className="absolute bottom-0 left-0 w-full h-[200px] md:h-[390px] bg-gradient-to-t from-background-body to-transparent"></div>
+      <div className="absolute bottom-0 left-0 h-[200px] w-full bg-gradient-to-t from-background-body to-transparent md:h-[390px]"></div>
       {/*        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 cursor-pointer"
              onClick={scrollToNextSection}>
           <IconArrowDown stroke={2} size={90}

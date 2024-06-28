@@ -70,18 +70,18 @@ export function DocumentView() {
         <IconChevronLeft />
         <span className="font-['Montserrat']">На главную</span>
       </div>
-      <div className="flex flex-col gap-[50px] mt-[30px]">
+      <div className="mt-[30px] flex flex-col gap-[50px]">
         {documentItem && (
           <>
-            <h4 className="text-3xl leading-8 md:text-[55px] font-bold text-black">
+            <h4 className="text-3xl font-bold leading-8 text-black md:text-[55px]">
               {documentItem.name[i18n.language]}
             </h4>
-            <div className="bg-white shadow-md py-[41px] px-[32px] rounded-[25px]">
+            <div className="rounded-[25px] bg-white px-[32px] py-[41px] shadow-md">
               <p
                 dangerouslySetInnerHTML={{
                   __html: documentItem.content[i18n.language] || '',
                 }}
-                className="text-[#494949] font-medium"
+                className="font-medium text-[#494949]"
               ></p>
             </div>
           </>

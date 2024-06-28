@@ -1,130 +1,132 @@
-import {
-  useCallback,
-  // useContext
-} from 'react';
+import { useNavigate } from 'react-router-dom';
 
-// import { notifications } from '@mantine/notifications';
-// import { IconCircleX } from '@tabler/icons-react';
-// import { useTranslation } from 'react-i18next';
-
-import airport from '../../../assets/image/airport.svg';
+import discord from '../../../assets/icons/footer/discord.svg';
 import belavia from '../../../assets/image/belaviakrylo.svg';
 import charts from '../../../assets/image/charts.svg';
-import discord from '../../../assets/image/discord2.svg';
-// import { AuthContext } from '../../../context/UserContext';
-import { CustomButton } from '../../Button';
 
 export function Widgets() {
-  // const { classes } = useStyles();
-  // const { t } = useTranslation();
-  // const isSmallScreen = useMediaQuery('(max-width: 575px)');
-  // const { signed, decodedToken } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-  //   const byTransferMail = useCallback(() => {
-  //     if (!signed) {
-  //       notifications.show({
-  //         id: 'auth-required',
-  //         color: 'red',
-  //         title: t('notif.auth.negative.name'),
-  //         message: t('notif.auth.negative.description'),
-  //         radius: 'lg',
-  //         icon: <IconCircleX />,
-  //         withCloseButton: true,
-  //         autoClose: 3000,
-  //       });
-  //       return;
-  //     }
-  //
-  //     if (signed) {
-  //       try {
-  //         const emailBody = `Dear HQs and Membership Department!
-  //
-  // I request to transfer me from the ${decodedToken?.userData.divisionId} division to the BY division.
-  //
-  // Best wishes,
-  // ${decodedToken?.userData.name.first} ${decodedToken?.userData.name.last}`;
-  //
-  //         window.open(
-  //           `mailto:BY-hq@ivao.aero,${decodedToken?.userData.divisionId}-hq@ivao.aero?cc=members@ivao.aero&subject=Division%20transfer%20${decodedToken?.userData.id}&body=${encodeURIComponent(
-  //             emailBody,
-  //           )}`,
-  //           '_blank',
-  //         );
-  //       } catch (error) {
-  //         console.error('Error decoding token:', error);
-  //       }
-  //     }
-  //   }, [decodedToken, signed, t]);
-
-  const openLink = useCallback(function (link: string | undefined) {
+  const handleExternalLink = (link) => {
     window.open(link, '_blank');
-  }, []);
+  };
+
+  const handleInternalLink = (path) => {
+    navigate(path);
+  };
 
   return (
     <>
-      <div className="flex flex-row gap-5">
-        <div className="relative inline-flex h-[570px] w-[379px] flex-col items-center justify-start rounded-3xl bg-atmos-700 pt-[4.375rem]">
+      <div className="mt-[-80px] flex flex-col gap-5 lg:flex-row">
+        <div
+          onClick={() => handleInternalLink('/pilots/first-step')}
+          className="relative inline-flex h-[148px] w-full cursor-pointer flex-col items-center justify-start rounded-3xl bg-atmos-700 pt-[25px] transition-transform hover:scale-105 md:pt-[50px] lg:h-[320px] xl:h-[570px] xl:w-[379px] xl:pt-[4.375rem]"
+        >
           <img
             src={belavia}
             alt="Belavia plane"
-            className="rounded-l-b-2xl absolute left-0 top-[153px] z-10 mb-0 h-[73%] w-full pb-0"
+            className="absolute left-0 top-[93px] z-10 mb-0 hidden h-[70%] w-full rounded-l-xl pb-0 xl:top-[153.5px] xl:block xl:h-[73%]"
           />
-          <div className="flex flex-col">
-            <p className="font-['Futura PT'] z-4 relative ml-6 text-7xl font-bold uppercase tracking-tighter text-white">
+          <div className="flex flex-col items-center md:justify-center xl:-mt-6">
+            <p className="font-['Futura PT'] z-4 relative text-center text-[60px] font-bold uppercase leading-[50px] tracking-tighter text-white md:text-[90px] md:leading-10 lg:mt-7 lg:leading-[80px] xl:mx-3 xl:text-7xl">
               первые шаги
             </p>
-            <CustomButton
-              variant={'white'}
-              size={'md'}
-              className="z-20 ml-7 mt-2 max-w-32"
-              onClick={() =>
-                openLink('https://ivao.aero/members/person/register.htm')
-              }
-            >
-              Регистрация
-            </CustomButton>
           </div>
         </div>
 
-        <div className="flex-col">
-          <div className="flex columns-2 flex-row gap-6">
-            <div className="relative h-[270px] w-[747px] rounded-3xl border border-stone-300 bg-white"></div>
-            <div className="relative inline-flex h-[270px] w-[355px] flex-col items-center justify-start rounded-3xl bg-gray-900 pb-48">
-              <p className="mt-[15px] text-center font-['Montserrat'] text-[60px] font-bold uppercase tracking-tighter text-white">
+        <div className="flex w-full flex-col gap-6">
+          <div className="flex flex-col gap-6 xl:flex-row">
+            <div
+              onClick={() =>
+                handleExternalLink(
+                  'https://www.ban.by/en/aeronautical-information-aip/amdt',
+                )
+              }
+              className="relative hidden h-[270px] w-full cursor-pointer rounded-3xl border border-stone-300 bg-white transition-transform hover:scale-105 xl:flex xl:w-[747px] xl:flex-row"
+            >
+              <img
+                src="https://s3-alpha-sig.figma.com/img/bb7b/f296/1dcedadfedae0d0d0b98e429a3278763?Expires=1720396800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=gKvrZn8ha2I2yRwCCHqKAgFvvOc-5Z2922U64wwyg7tRl~oU7sWtMfeBywBfjg~MI5euUSlFlI5Z4vGUMICwjMcqVmFwEcOPjfo3kGU0x-n6uDC18D6Y0iteJcpL1JVVpZzZ~lKzm5V6iBnMPHwT8F6r4obFDo9tNsvJ863PHjpx~AWdi3sUS-5P7hs0DtsSA8Bn2A4VJXVmly06dttLCBRTan1gfX0T~G6-jxiaM5vgeBUcYUXg3NLOSVfGE30CY5~pJW5kRP2mXARl2AdLNZS2AGxIlkF4eC8u231raP0qQ30fc70GXSoS0QkmKUPeDaM2TU5JnrhVuRdRHd6tKA__"
+                alt="Belarus in IVAO"
+                className="h-full w-1/2 rounded-l-3xl object-cover"
+              />
+              <div className="flex flex-col justify-center break-words pl-4 font-bold">
+                <p className="text-[60px] leading-none text-black">БЕЛАРУСЬ</p>
+                <div className="flex items-center gap-4">
+                  <span className="text-[100px] leading-none text-black">
+                    В
+                  </span>
+                  <span className="text-[100px] leading-none text-atmos-700">
+                    IVAO
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div
+              onClick={() =>
+                handleExternalLink(
+                  'https://www.ban.by/en/aeronautical-information-aip/amdt',
+                )
+              }
+              className="relative inline-flex h-[148px] w-full cursor-pointer flex-col items-center justify-center rounded-3xl bg-gray-900 transition-transform hover:scale-105 md:justify-start xl:h-[270px] xl:w-[355px]"
+            >
+              <p className="text-center font-['Montserrat'] text-[60px] font-bold uppercase tracking-tighter text-white md:mt-0 md:text-[90px] xl:mt-[15px] xl:text-[60px]">
                 схемы
               </p>
               <img
                 src={charts}
                 alt="Charts image"
-                className="rounded-l-b-2xl absolute left-0 top-[81px] z-10 mb-0 h-[70%] w-full pb-0"
+                className="rounded-l-b-2xl absolute left-0 top-[52px] z-10 mb-0 hidden h-[65%] w-full pb-0 xl:top-[81px] xl:block xl:h-[70%]"
               />
             </div>
           </div>
-          <div className="flex columns-2 flex-row gap-6 pt-7">
-            <div className="flex h-[270px] w-[355px] flex-col items-center justify-start gap-5 rounded-3xl bg-indigo-500 pb-48">
-              <img src={discord} alt="Discord logo" className="mt-[28px]" />
-              <div className="w-[248px] rounded-2xl rounded-bl-none bg-white p-3">
-                <p className="text-[20px] font-semibold text-black">
-                  А где весь движ?🛩️
-                </p>
-              </div>
-              <div className="flex w-[293px] flex-col rounded-2xl rounded-br-none bg-gray-900 p-3">
-                <p className="text-[20px] font-semibold text-white">
-                  Воу-воу, скорее заходи:
-                </p>
-                <p className="text-[20px] font-semibold text-white">
-                  discord.by.ivao.aero
-                </p>
+          <div className="flex flex-col gap-6 xl:flex-row xl:pt-1">
+            <div
+              onClick={() => handleExternalLink('https://discord.by.ivao.aero')}
+              className="flex h-[148px] w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-3xl bg-indigo-500 transition-transform hover:scale-105 md:justify-start xl:h-[270px] xl:w-[355px] xl:gap-5 xl:pb-48"
+            >
+              <p className="block text-center font-['Montserrat'] text-[60px] font-bold uppercase tracking-tighter text-white md:text-[90px] xl:mt-[15px] xl:hidden xl:text-[60px]">
+                Discord
+              </p>
+              <div className="hidden xl:block">
+                <div
+                  onClick={() =>
+                    handleExternalLink('https://discord.by.ivao.aero')
+                  }
+                  className="flex h-[270px] w-[355px] flex-col items-center justify-center gap-5 rounded-3xl bg-indigo-500 md:justify-start"
+                >
+                  <img
+                    src={discord}
+                    alt="Discord logo"
+                    className="mt-[28px] w-12"
+                  />
+                  <div className="-ml-16 w-[248px] rounded-2xl rounded-bl-none bg-white p-3">
+                    <p className="text-[20px] font-semibold text-black">
+                      А где весь движ?🛩️
+                    </p>
+                  </div>
+                  <div className="-mt-2 ml-6 flex w-[293px] flex-col rounded-2xl rounded-br-none bg-gray-900 p-3">
+                    <p className="text-[20px] font-semibold text-white">
+                      Воу-воу, скорее заходи:
+                    </p>
+                    <p className="text-[20px] font-semibold text-white">
+                      discord.by.ivao.aero
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="relative flex h-[270px] w-[741px] items-center justify-end rounded-3xl border border-stone-300 bg-gray-900 pr-10">
-              <img
+            <div
+              onClick={() => handleInternalLink('/airports')}
+              className="relative hidden cursor-pointer items-center justify-end rounded-3xl border border-stone-300 bg-gray-900 pr-10 transition-transform hover:scale-105 xl:ml-2 xl:flex xl:h-[270px] xl:w-[741px]"
+            >
+              {/*<img
                 src={airport}
                 alt="UMMS Aurora"
-                className="rounded-l-b-2xl absolute -left-[170px] top-0 z-10 mb-0 size-full pb-0"
-              />
-              <p className="text-right font-['Montserrat'] text-[70px] font-bold uppercase tracking-tighter text-white">
-                сценарии
+                className="rounded-l-b-2xl absolute -left-[1px] top-[-1px] z-10 mb-0 h-[270px] w-[35%] rounded-l-xl pb-0 object-cover"
+              />*/}
+              <p className="z-20 text-right font-['Montserrat'] text-[70px] font-bold uppercase leading-[66.5px] tracking-tighter text-white">
+                аэродромы дивизиона
               </p>
             </div>
           </div>
