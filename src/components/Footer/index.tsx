@@ -21,7 +21,7 @@ export const FooterItem: React.FC<FooterProps> = ({ to, text, className }) => (
     href={to}
     target="_blank"
     rel="noopener noreferrer"
-    className={`text-[12px] leading-[12px] sm:text-[16px] text-fuselage-400 transition hover:text-fuselage-200 ${className}`}
+    className={`text-[12px] leading-[12px] text-fuselage-400 transition hover:text-fuselage-200 sm:text-[16px] ${className}`}
   >
     {text}
   </a>
@@ -41,10 +41,12 @@ const FooterLinkSection = ({
   const { t } = useTranslation();
   return (
     <div className={`${classname}`}>
-      <h2 className={`mb-4 text-sm font-semibold uppercase text-atmos-700 dark:text-white text-center ${titleclassname}`}>
+      <h2
+        className={`mb-4 text-center text-sm font-semibold uppercase text-atmos-700 dark:text-white ${titleclassname}`}
+      >
         {t(titleKey)}
       </h2>
-      <ul className="font-medium text-gray-500 dark:text-gray-400 text-center">
+      <ul className="text-center font-medium text-gray-500 dark:text-gray-400">
         {links.map((link, index) => (
           <li key={index} className="lg:mb-2">
             <FooterItem to={link.to} text={t(link.text)} />
@@ -68,9 +70,9 @@ const SocialIcon = ({
     href={href}
     target="_blank"
     rel="noopener noreferrer"
-    className="mx-2 bg-atmos-700 p-2 rounded-lg hover:opacity-90 transition"
+    className="mx-2 rounded-lg bg-atmos-700 p-2 transition hover:opacity-90"
   >
-    <img src={src} alt={alt} className="w-6 h-6" />
+    <img src={src} alt={alt} className="size-6" />
   </a>
 );
 
@@ -94,13 +96,13 @@ export const Footer = () => {
   return (
     <footer className="bg-white dark:bg-gray-900">
       <div className="container mx-auto px-4 py-6">
-        <div className="flex flex-row gap-14 justify-between items-center">
+        <div className="flex flex-row items-center justify-between gap-14">
           <div className="mb-6 flex items-center justify-center lg:mb-0">
             <a href="/">
               <img className="w-48 md:w-48" src={bylogo} alt="Company Logo" />
             </a>
           </div>
-          <div className="flex flex-col lg:flex-row gap-14 items-center justify-center">
+          <div className="flex flex-col items-center justify-center gap-14 lg:flex-row">
             <FooterLinkSection
               titleKey="footer.legal.title"
               links={legalLinks}
@@ -122,7 +124,7 @@ export const Footer = () => {
               ]}
             />
           </div>
-          <div className="hidden lg:flex flex-col justify-center gap-3">
+          <div className="hidden flex-col justify-center gap-3 lg:flex">
             <div className="flex flex-row">
               <SocialIcon
                 href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
