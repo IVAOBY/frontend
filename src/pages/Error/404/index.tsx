@@ -30,7 +30,7 @@ export function NotFound() {
           <img
             alt="404 Error"
             className="-ml-2 w-7/12"
-            src={'https://files.by.ivao.aero/files/logos/error_404.svg'}
+            src={'https://cdn.by.ivao.aero/logos/error_404.svg'}
           />
         </div>
       </GeneralLayout>

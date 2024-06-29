@@ -122,7 +122,7 @@ export function AirportPage() {
               <img
                 className="w-[750px]"
                 alt={airport.name.en}
-                src={`https://files.by.ivao.aero/files/airports/v/${airport.icao}.png`}
+                src={`https://cdn.by.ivao.aero/images/airports/v/${airport.icao}.png`}
               />
               <div className="relative flex w-full items-center justify-center">
                 <div className="relative flex items-center justify-center">

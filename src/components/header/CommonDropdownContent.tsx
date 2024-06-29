@@ -14,7 +14,6 @@ import {
   IconArticle,
   IconBook,
   IconCalendarEvent,
-  IconCar,
   IconEye,
   IconFileInfo,
   IconFocus2,
@@ -26,12 +25,10 @@ import {
   IconMapCog,
   IconMessageCircle2,
   IconMessages,
-  IconPlaneDeparture,
   IconPlaneTilt,
   IconSchool,
   IconUsers,
   IconUsersGroup,
-  IconWorld,
 } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import { Link, To, useNavigate } from 'react-router-dom';
@@ -137,18 +134,19 @@ export function CommonDropdownContent({
           >
             {t('navbar.division.contact')}
           </Menu.Item>
-          <Link to={'/discord'}>
             <Menu.Item
+                onClick={() =>
+                    menuLink('https://discord.by.ivao.aero/')
+                }
               icon={<Image src={discord} width={19} alt={'Discord Icon'} />}
             >
               {t('navbar.division.discord')}
             </Menu.Item>
-          </Link>
-          <Link to={'/airports'}>
-            <Menu.Item icon={<IconPlaneDeparture size={20} />}>
-              {t('navbar.division.airports')}
-            </Menu.Item>
-          </Link>
+          {/*<Link to={'/airports'}>*/}
+          {/*  <Menu.Item icon={<IconPlaneDeparture size={20} />}>*/}
+          {/*    {t('navbar.division.airports')}*/}
+          {/*  </Menu.Item>*/}
+          {/*</Link>*/}
           <Menu.Item
             icon={<IconMessages size={20} />}
             onClick={() => navigate('faq')}
@@ -202,28 +200,28 @@ export function CommonDropdownContent({
           </Menu.Item>
           <Menu.Item
             icon={<IconLock size={20} />}
-            onClick={() => menuLink('https://ivao.aero/fras/list.asp?id=BY')}
+            onClick={() => menuLink('https://atc.ivao.aero/fras?division=BY')}
           >
             {t('navbar.atc.fra')}
           </Menu.Item>
-          <Menu.Item
-            icon={<IconCar size={20} />}
-            onClick={() => navigate('vehicles')}
-          >
-            {t('navbar.atc.vehicles')}
-          </Menu.Item>
+          {/*<Menu.Item*/}
+          {/*  icon={<IconCar size={20} />}*/}
+          {/*  onClick={() => navigate('vehicles')}*/}
+          {/*>*/}
+          {/*  {t('navbar.atc.vehicles')}*/}
+          {/*</Menu.Item>*/}
           <Menu.Item
             icon={<IconArticle size={20} />}
             onClick={() => navigate('documents/category/1')}
           >
             {t('navbar.atc.docs')}
           </Menu.Item>
-          <Menu.Item
-            icon={<IconWorld size={20} />}
-            onClick={() => navigate('documents/5')}
-          >
-            {t('navbar.atc.gca')}
-          </Menu.Item>
+          {/*<Menu.Item*/}
+          {/*  icon={<IconWorld size={20} />}*/}
+          {/*  onClick={() => navigate('documents/5')}*/}
+          {/*>*/}
+          {/*  {t('navbar.atc.gca')}*/}
+          {/*</Menu.Item>*/}
         </Menu.Dropdown>
       </Menu>
       <Menu
@@ -253,12 +251,12 @@ export function CommonDropdownContent({
           >
             {t('navbar.pilots.start')}
           </Menu.Item>
-          <Menu.Item
-            icon={<IconPlaneDeparture size={20} />}
-            onClick={() => navigate('scenery')}
-          >
-            {t('navbar.pilots.scenarios')}
-          </Menu.Item>
+          {/*<Menu.Item*/}
+          {/*  icon={<IconPlaneDeparture size={20} />}*/}
+          {/*  onClick={() => navigate('scenery')}*/}
+          {/*>*/}
+          {/*  {t('navbar.pilots.scenarios')}*/}
+          {/*</Menu.Item>*/}
           <Menu.Item
             icon={<IconFileInfo size={20} />}
             onClick={() =>

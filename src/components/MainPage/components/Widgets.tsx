@@ -20,12 +20,12 @@ export function Widgets() {
       <div className="mt-[-80px] flex flex-col gap-5 lg:flex-row">
         <div
           onClick={() => handleInternalLink('/pilots/first-step')}
-          className="relative inline-flex h-[148px] w-full cursor-pointer flex-col items-center justify-start rounded-3xl bg-atmos-700 pt-[25px] transition-transform hover:scale-105 md:pt-[50px] lg:h-[320px] xl:h-[570px] xl:w-[379px] xl:pt-[4.375rem]"
+          className="relative inline-flex h-[148px] w-full cursor-pointer flex-col items-center justify-start rounded-3xl bg-atmos-700 pt-[25px] md:pt-[50px] lg:h-[320px] xl:h-[570px] xl:w-[379px] xl:pt-[4.375rem]"
         >
           <img
             src={belavia}
             alt="Belavia plane"
-            className="absolute left-0 top-[93px] z-10 mb-0 hidden h-[70%] w-full rounded-l-xl pb-0 xl:top-[153.5px] xl:block xl:h-[73%]"
+            className="absolute left-0 top-[93px] z-10 mb-0 hidden h-[70%] w-full rounded-l-3xl pb-0 xl:top-[153.5px] xl:block xl:h-[73%]"
           />
           <div className="flex flex-col items-center md:justify-center xl:-mt-6">
             <p className="font-['Futura PT'] z-4 relative text-center text-[60px] font-bold uppercase leading-[50px] tracking-tighter text-white md:text-[90px] md:leading-10 lg:mt-7 lg:leading-[80px] xl:mx-3 xl:text-7xl">
@@ -42,7 +42,7 @@ export function Widgets() {
                   'https://www.ban.by/en/aeronautical-information-aip/amdt',
                 )
               }
-              className="relative hidden h-[270px] w-full cursor-pointer rounded-3xl border border-stone-300 bg-white transition-transform hover:scale-105 xl:flex xl:w-[747px] xl:flex-row"
+              className="relative hidden h-[270px] w-full cursor-pointer rounded-3xl border border-stone-300 bg-white xl:flex xl:w-[747px] xl:flex-row"
             >
               <img
                 src="https://s3-alpha-sig.figma.com/img/bb7b/f296/1dcedadfedae0d0d0b98e429a3278763?Expires=1720396800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=gKvrZn8ha2I2yRwCCHqKAgFvvOc-5Z2922U64wwyg7tRl~oU7sWtMfeBywBfjg~MI5euUSlFlI5Z4vGUMICwjMcqVmFwEcOPjfo3kGU0x-n6uDC18D6Y0iteJcpL1JVVpZzZ~lKzm5V6iBnMPHwT8F6r4obFDo9tNsvJ863PHjpx~AWdi3sUS-5P7hs0DtsSA8Bn2A4VJXVmly06dttLCBRTan1gfX0T~G6-jxiaM5vgeBUcYUXg3NLOSVfGE30CY5~pJW5kRP2mXARl2AdLNZS2AGxIlkF4eC8u231raP0qQ30fc70GXSoS0QkmKUPeDaM2TU5JnrhVuRdRHd6tKA__"
@@ -68,7 +68,7 @@ export function Widgets() {
                   'https://www.ban.by/en/aeronautical-information-aip/amdt',
                 )
               }
-              className="relative inline-flex h-[148px] w-full cursor-pointer flex-col items-center justify-center rounded-3xl bg-gray-900 transition-transform hover:scale-105 md:justify-start xl:h-[270px] xl:w-[355px]"
+              className="relative inline-flex h-[148px] w-full cursor-pointer flex-col items-center justify-center rounded-3xl bg-gray-900 md:justify-start xl:h-[270px] xl:w-[355px]"
             >
               <p className="text-center font-['Montserrat'] text-[60px] font-bold uppercase tracking-tighter text-white md:mt-0 md:text-[90px] xl:mt-[15px] xl:text-[60px]">
                 схемы
@@ -83,7 +83,7 @@ export function Widgets() {
           <div className="flex flex-col gap-6 xl:flex-row xl:pt-1">
             <div
               onClick={() => handleExternalLink('https://discord.by.ivao.aero')}
-              className="flex h-[148px] w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-3xl bg-indigo-500 transition-transform hover:scale-105 md:justify-start xl:h-[270px] xl:w-[355px] xl:gap-5 xl:pb-48"
+              className="flex h-[148px] w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-3xl bg-indigo-500 md:justify-start xl:h-[270px] xl:w-[355px] xl:gap-5 xl:pb-48"
             >
               <p className="block text-center font-['Montserrat'] text-[60px] font-bold uppercase tracking-tighter text-white md:text-[90px] xl:mt-[15px] xl:hidden xl:text-[60px]">
                 Discord
@@ -118,7 +118,7 @@ export function Widgets() {
             </div>
             <div
               onClick={() => handleInternalLink('/airports')}
-              className="relative hidden cursor-pointer items-center justify-end rounded-3xl border border-stone-300 bg-gray-900 pr-10 transition-transform hover:scale-105 xl:ml-2 xl:flex xl:h-[270px] xl:w-[741px]"
+              className="relative hidden cursor-pointer items-center justify-end rounded-3xl border border-stone-300 bg-gray-900 pr-10 xl:ml-2 xl:flex xl:h-[270px] xl:w-[741px]"
             >
               {/*<img
                 src={airport}
