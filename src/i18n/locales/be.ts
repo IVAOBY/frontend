@@ -121,7 +121,7 @@ const beTranslations: { translations: Translations } = {
         title: 'Супольнасць',
         forum: 'IVAO форум Беларусь',
         ivao: 'Сайт IVAO',
-        ivaofamily: 'Сям`я IVAO',
+        ivaofamily: 'Сям\'я IVAO',
       },
     },
     notif: {
