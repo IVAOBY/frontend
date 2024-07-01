@@ -85,6 +85,7 @@ export function HeaderResponsive() {
   const location = useLocation();
 
   useEffect(() => {
+    console.log(window.location.pathname)
     setCurrentPath(location.pathname);
   }, [location.pathname]);
 
@@ -224,7 +225,7 @@ function CommonDropdownContent({ scrollPosition, category }) {
   return (
     <Menu>
       <MenuButton
-        className={`flex items-center space-x-2 px-1 py-2 font-bold hover:text-gray-300 ${scrollPosition > 0 && !isSmallScreen ? 'text-blue-900' : 'text-white'}`}
+        className={`flex items-center space-x-2 px-1 py-2 font-bold ${scrollPosition > 0 && !isSmallScreen ? 'hover:text-ocean-600  text-blue-900' : 'hover:text-gray-200 text-white'}`}
       >
         {category.icon}
         <span>{t(category.label)}</span>

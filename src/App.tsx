@@ -33,6 +33,7 @@ import './App.css';
 import { AirportPage } from './components/AirportPage/AirportPage';
 import { Centered } from './components/Layout';
 import { Loader } from './components/Loader';
+import {Training} from "./pages/training";
 
 export default function App() {
   const PrivateRoute: React.FC<{ path: string; element: React.ReactNode }> = ({
@@ -77,6 +78,7 @@ export default function App() {
                   <Route path="/map" element={<MapPage />} />
                   <Route path="/staff" element={<StaffPage />} />
                   <Route path="/vehicles" element={<Vehicles />} />
+                  <Route path="/training" element={<Training />} />
 
                   {/* Документы */}
                   <Route path="/documents" element={<DocumentsMain />} />
