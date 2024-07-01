@@ -14,7 +14,7 @@ export const GeneralLayout: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   return (
-    <div className="container mx-auto max-w-screen-2xl px-4 py-8">
+    <div className="container mx-auto max-w-screen-2xl px-4 py-8 pt-36">
       {children}
     </div>
   );
