@@ -26,10 +26,10 @@ export function HeroText() {
   }, []);
 
   const backgroundImage = {
-    morning: "url('https://files.by.ivao.aero/files/banners/main/M.png')",
-    day: "url('https://files.by.ivao.aero/files/banners/main/D.png')",
-    evening: "url('https://files.by.ivao.aero/files/banners/main/E.png')",
-    night: "url('https://files.by.ivao.aero/files/banners/main/N.png')",
+    morning: "url('https://cdn.by.ivao.aero/images/main_page_morning.png')",
+    day: "url('https://cdn.by.ivao.aero/images/main_page_day.png')",
+    evening: "url('https://cdn.by.ivao.aero/images/main_page_evening.png')",
+    night: "url('https://cdn.by.ivao.aero/images/main_page_night.png')",
   };
 
   /*  const scrollToNextSection = () => {
@@ -71,7 +71,7 @@ ${decodedToken?.userData.name.first} ${decodedToken?.userData.name.last}`;
 
   return (
     <div
-      className="relative flex h-[487px] w-full items-center justify-center bg-cover bg-center md:h-[1080px]"
+      className="relative flex h-[487px] w-full items-center justify-center bg-cover bg-center md:h-[900px]"
       style={{ backgroundImage: backgroundImage[timeOfDay] }}
     >
       <div className="container z-10 mx-auto flex max-w-screen-2xl flex-col gap-4 px-4 py-8">

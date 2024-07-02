@@ -2,7 +2,6 @@ import { IconChevronLeft } from '@tabler/icons-react';
 
 import joinbanner from '../assets/image/joinbaner.png';
 import { GeneralLayout } from '../components/Layout';
-import { ListItem } from '../components/List';
 
 export function AboutUs() {
   // const { classes, theme } = useStyles();
@@ -46,32 +45,32 @@ export function AboutUs() {
             управление НКО, посетите страницу Ассоциации.
           </p>
         </div>
-        <ol className="relative mt-10 border-s border-gray-200 dark:border-gray-700">
-          <ListItem
-            date={'Февраль 2022'}
-            title={'Пук Никиты'}
-            description={
-              'Никита смачно перданул, когда ему было 6. Возможно, это стало ключевым событием в создании дивизиона.'
-            }
-            withButton
-            link={'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}
-            textButton={'Смотреть видео'}
-          />
-          <ListItem
-            date={'Март 2022'}
-            title={'Никита ударился башкой'}
-            description={
-              'Из-за неизвестных нам обстоятельств, Никита решил хорошенько так ударился головой. Это и добавило дивизиону тонких ноток диктатуры.'
-            }
-          />
-          <ListItem
-            date={'Апрель 2022'}
-            title={'"Я устал, я ухожу"'}
-            description={
-              'Недавно Никита Кудрявцев заявил о своём уходе. Все в тайне ждали этого момента со своего рождения.'
-            }
-          />
-        </ol>
+        {/*<ol className="relative mt-10 border-s border-gray-200 dark:border-gray-700">*/}
+        {/*  <ListItem*/}
+        {/*    date={'Февраль 2022'}*/}
+        {/*    title={'Пук Никиты'}*/}
+        {/*    description={*/}
+        {/*      'Никита смачно перданул, когда ему было 6. Возможно, это стало ключевым событием в создании дивизиона.'*/}
+        {/*    }*/}
+        {/*    withButton*/}
+        {/*    link={'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}*/}
+        {/*    textButton={'Смотреть видео'}*/}
+        {/*  />*/}
+        {/*  <ListItem*/}
+        {/*    date={'Март 2022'}*/}
+        {/*    title={'Никита ударился башкой'}*/}
+        {/*    description={*/}
+        {/*      'Из-за неизвестных нам обстоятельств, Никита решил хорошенько так ударился головой. Это и добавило дивизиону тонких ноток диктатуры.'*/}
+        {/*    }*/}
+        {/*  />*/}
+        {/*  <ListItem*/}
+        {/*    date={'Апрель 2022'}*/}
+        {/*    title={'"Я устал, я ухожу"'}*/}
+        {/*    description={*/}
+        {/*      'Недавно Никита Кудрявцев заявил о своём уходе. Все в тайне ждали этого момента со своего рождения.'*/}
+        {/*    }*/}
+        {/*  />*/}
+        {/*</ol>*/}
       </div>
     </GeneralLayout>
   );

@@ -178,8 +178,8 @@ export function StaffPage() {
                     <img
                       src={
                         position.user?.id
-                          ? `https://files.by.ivao.aero/files/staff/${position.user?.id}.jpg`
-                          : 'https://files.by.ivao.aero/files/staff/vacant.jpg'
+                          ? `https://cdn.by.ivao.aero/images/staff/${position.user?.id}.jpg`
+                          : 'https://cdn.by.ivao.aero/images/staff/vacant.jpg'
                       }
                       alt="Staff Photo"
                       className="aspect-square w-full rounded-t-2xl"
