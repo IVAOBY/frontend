@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom';
 
 import discord from '../../../assets/icons/footer/discord.svg';
 import belavia from '../../../assets/image/belaviakrylo.svg';
-import charts from '../../../assets/image/charts.svg';
 
 export function Widgets() {
   const navigate = useNavigate();
@@ -17,7 +16,7 @@ export function Widgets() {
 
   return (
     <>
-      <div className="mt-[-80px] flex flex-col gap-5 lg:flex-row">
+      <div className="mt-[-180px] flex flex-col gap-5 lg:flex-row">
         <div
           onClick={() => handleInternalLink('/pilots/first-step')}
           className="relative inline-flex h-[148px] w-full cursor-pointer flex-col items-center justify-start rounded-3xl bg-atmos-700 pt-[25px] md:pt-[50px] lg:h-[320px] xl:h-[570px] xl:w-[379px] xl:pt-[4.375rem]"
@@ -37,17 +36,13 @@ export function Widgets() {
         <div className="flex w-full flex-col gap-6">
           <div className="flex flex-col gap-6 xl:flex-row">
             <div
-              onClick={() =>
-                handleExternalLink(
-                  'https://www.ban.by/en/aeronautical-information-aip/amdt',
-                )
-              }
+                onClick={() => handleInternalLink('/about-us')}
               className="relative hidden h-[270px] w-full cursor-pointer rounded-3xl border border-stone-300 bg-white xl:flex xl:w-[747px] xl:flex-row"
             >
               <img
-                src="https://s3-alpha-sig.figma.com/img/bb7b/f296/1dcedadfedae0d0d0b98e429a3278763?Expires=1720396800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=gKvrZn8ha2I2yRwCCHqKAgFvvOc-5Z2922U64wwyg7tRl~oU7sWtMfeBywBfjg~MI5euUSlFlI5Z4vGUMICwjMcqVmFwEcOPjfo3kGU0x-n6uDC18D6Y0iteJcpL1JVVpZzZ~lKzm5V6iBnMPHwT8F6r4obFDo9tNsvJ863PHjpx~AWdi3sUS-5P7hs0DtsSA8Bn2A4VJXVmly06dttLCBRTan1gfX0T~G6-jxiaM5vgeBUcYUXg3NLOSVfGE30CY5~pJW5kRP2mXARl2AdLNZS2AGxIlkF4eC8u231raP0qQ30fc70GXSoS0QkmKUPeDaM2TU5JnrhVuRdRHd6tKA__"
+                src="https://cdn.by.ivao.aero/images/widget_about.png"
                 alt="Belarus in IVAO"
-                className="h-full w-1/2 rounded-l-3xl object-cover"
+                className="h-full w-full rounded-l-3xl object-cover"
               />
               <div className="flex flex-col justify-center break-words pl-4 font-bold">
                 <p className="text-[60px] leading-none text-black">БЕЛАРУСЬ</p>
@@ -74,9 +69,9 @@ export function Widgets() {
                 схемы
               </p>
               <img
-                src={charts}
+                src="https://cdn.by.ivao.aero/images/widget_charts.png"
                 alt="Charts image"
-                className="rounded-l-b-2xl absolute left-0 top-[52px] z-10 mb-0 hidden h-[65%] w-full pb-0 xl:top-[81px] xl:block xl:h-[70%]"
+                className="rounded-l-b-2xl absolute left-0 top-[52px] z-10 mb-0 hidden h-[65%] w-full pb-0 xl:top-[-0px] xl:block xl:h-full xl:w-full"
               />
             </div>
           </div>
@@ -120,11 +115,11 @@ export function Widgets() {
               onClick={() => handleInternalLink('/airports')}
               className="relative hidden cursor-pointer items-center justify-end rounded-3xl border border-stone-300 bg-gray-900 pr-10 xl:ml-2 xl:flex xl:h-[270px] xl:w-[741px]"
             >
-              {/*<img
-                src={airport}
+              <img
+                src="https://cdn.by.ivao.aero/images/widget_airports.png"
                 alt="UMMS Aurora"
-                className="rounded-l-b-2xl absolute -left-[1px] top-[-1px] z-10 mb-0 h-[270px] w-[35%] rounded-l-xl pb-0 object-cover"
-              />*/}
+                className="rounded-l-b-2xl absolute -left-[1px] top-[-0px] z-10 mb-0 h-full w-full rounded-l-3xl pb-0 object-cover"
+              />
               <p className="z-20 text-right font-['Montserrat'] text-[70px] font-bold uppercase leading-[66.5px] tracking-tighter text-white">
                 аэродромы дивизиона
               </p>
