@@ -11,7 +11,7 @@ export const Breadcrumb = () => {
   const navigate = useNavigate()
 
   return (
-      <div className="flex flex-row text-gray-400 hover:text-gray-300 transition duration-300 mb-3 max-w-16" onClick={()=> navigate('/')}>
+      <div className="flex flex-row text-gray-400 hover:text-gray-300 transition duration-300 mb-3 max-w-36 hover:cursor-pointer" onClick={()=> navigate('/')}>
           <IconChevronLeft/>
           <span className="font-bold font-['Montserrat']">{t('breadcrumb.title')}</span>
       </div>
