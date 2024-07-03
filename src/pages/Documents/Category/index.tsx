@@ -10,9 +10,9 @@ import { useApi } from '../../../context/ApiContext';
 import { DocumentsCategoryType, DocumentsType } from '../../../hooks/types';
 
 export function DocumentsCategory() {
-  const [documentsCategory, setDocumentsCategory] =
+  const [, setDocumentsCategory] =
     useState<DocumentsCategoryType | null>(null);
-  const [, setDocuments] = useState<DocumentsType[]>([]);
+  const [documents, setDocuments] = useState<DocumentsType[]>([]);
   const { t, i18n } = useTranslation();
   const api = useApi();
   const { id } = useParams();
