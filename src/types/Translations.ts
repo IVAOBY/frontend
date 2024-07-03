@@ -91,6 +91,9 @@ export interface Translations {
       ivaofamily: string;
     };
   };
+  breadcrumb: {
+    title: string;
+  },
   sector: {
     title: string;
     text: string;

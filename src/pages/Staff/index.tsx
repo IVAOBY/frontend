@@ -4,7 +4,7 @@ import { notifications } from '@mantine/notifications';
 import { IconCircleX, IconIdBadge2, IconMailOpened } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 
-import { GeneralLayout } from '../../components/Layout';
+import {BreadcrumbLayout} from '../../components/Layout';
 import { useApi } from '../../context/ApiContext';
 
 interface Department {
@@ -125,7 +125,7 @@ export function StaffPage() {
   }, [api, t]);
 
   return (
-    <GeneralLayout>
+    <BreadcrumbLayout>
       <div className="text-3xl font-bold text-black md:text-5xl">
         {t('staff.name')}
       </div>
@@ -242,6 +242,6 @@ export function StaffPage() {
           </div>
         </div>
       ))}
-    </GeneralLayout>
+    </BreadcrumbLayout>
   );
 }

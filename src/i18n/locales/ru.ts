@@ -81,6 +81,9 @@ const ruTranslations: { translations: Translations } = {
       training: 'Необходима тренировка',
       caption: 'Для работы ТС необходима активная позиция УВД (GND+)',
     },
+    breadcrumb: {
+      title: 'На главную',
+    },
     sector: {
       title: 'Сектор-файл',
       text: ' На этой странице вы можете загрузить сектор-файл для IvAc.',

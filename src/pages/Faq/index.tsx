@@ -1,5 +1,4 @@
 import {
-  IconChevronLeft,
   IconLanguage,
   IconPlugConnectedX,
   IconUsers,
@@ -7,7 +6,7 @@ import {
 import { t } from 'i18next';
 
 import Accordion from '../../components/Accordion';
-import { GeneralLayout } from '../../components/Layout';
+import {BreadcrumbLayout} from '../../components/Layout';
 
 const items = [
   {
@@ -29,15 +28,11 @@ const items = [
 
 export function FAQ() {
   return (
-    <GeneralLayout>
-      <div className="flex flex-row text-gray-300">
-        <IconChevronLeft />
-        <span className="font-['Montserrat']">На главную</span>
-      </div>
+    <BreadcrumbLayout>
       <h4 className="text-[55px] font-bold text-black">FAQ</h4>
       <div className={'mt-5 w-full lg:p-0'}>
         <Accordion items={items} />
       </div>
-    </GeneralLayout>
+    </BreadcrumbLayout>
   );
 }

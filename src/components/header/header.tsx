@@ -3,7 +3,28 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 
 
 import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react';
-import { IconAirTrafficControl, IconArticle, IconBook, IconEye, IconFileInfo, IconFocus2, IconIdBadge2, IconInfoSquareRounded, IconLanguage, IconLock, IconLogin2, IconLogout, IconMap2, IconMessageCircle2, IconMessages, IconPlaneDeparture, IconPlaneTilt, IconUsers, IconUsersGroup } from '@tabler/icons-react';
+import {
+  IconAirTrafficControl,
+  IconArticle,
+  IconBook,
+  IconEye,
+  IconFileInfo,
+  IconFocus2,
+  IconIdBadge2,
+  IconInfoSquareRounded,
+  IconLanguage,
+  IconLock,
+  IconLogin2,
+  IconLogout,
+  IconMap2,
+  IconMessageCircle2,
+  IconMessages,
+  IconPlaneDeparture,
+  IconPlaneTilt,
+  IconUsers,
+  IconUsersGroup,
+  IconWorld
+} from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
@@ -41,10 +62,10 @@ const categories = [
       { href: '/atc/first-step', label: 'navbar.atc.start', icon: <img src={steps} width={20} alt="ATC First Step" /> },
       //{ href: '/sector', label: 'navbar.atc.sector', icon: <IconMapCog size={20} /> },
       { href: 'https://www.ban.by/en/aeronautical-information-aip/amdt', label: 'navbar.atc.charts', icon: <IconFileInfo size={20} />, external: true },
-      { href: 'https://ivao.aero/fras/list.asp?id=BY', label: 'navbar.atc.fra', icon: <IconLock size={20} />, external: true },
+      { href: 'https://atc.ivao.aero/fras?division=BY', label: 'navbar.atc.fra', icon: <IconLock size={20} />, external: true },
       //{ href: '/vehicles', label: 'navbar.atc.vehicles', icon: <IconCar size={20} /> },
       { href: '/documents/category/1', label: 'navbar.atc.docs', icon: <IconArticle size={20} /> },
-      //{ href: '/documents/5', label: 'navbar.atc.gca', icon: <IconWorld size={20} /> },
+      { href: '/documents/5', label: 'navbar.atc.gca', icon: <IconWorld size={20} /> },
     ]
   },
   {
@@ -52,7 +73,7 @@ const categories = [
     icon: <IconPlaneTilt size={20} />,
     links: [
       { href: 'https://wiki.ivao.aero/en/home/devops/manuals/altitude-first-step', label: 'navbar.pilots.start', icon: <img src={steps} width={20} alt="PilotFS Icon" />, external: true },
-      { href: '/scenery', label: 'navbar.pilots.scenarios', icon: <IconPlaneDeparture size={20} /> },
+      { href: '/airports', label: 'navbar.pilots.scenarios', icon: <IconPlaneDeparture size={20} /> },
       { href: 'https://www.ban.by/en/aeronautical-information-aip/amdt', label: 'navbar.pilots.charts', icon: <IconFileInfo size={20} />, external: true },
       { href: '/documents/category/2', label: 'navbar.atc.docs', icon: <IconArticle size={20} /> },
       { href: 'https://tours.th.ivao.aero', label: 'navbar.pilots.tours', icon: <IconMap2 size={20} />, external: true },
@@ -124,7 +145,7 @@ export function HeaderResponsive() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-500 ${
         opened && isSmallScreen
-          ? 'bg-atmos-700 transition-none' // изменено здесь: хедер становится белым, если меню открыто на малом экране
+          ? 'bg-atmos-700 transition-none'
           : scrollPosition > 0
             ? 'bg-white shadow-lg'
             : currentPath === '/'
@@ -172,7 +193,7 @@ export function HeaderResponsive() {
         <button
           className={`md:hidden ${
               opened && isSmallScreen
-                  ? 'text-white' // изменено здесь: хедер становится белым, если меню открыто на малом экране
+                  ? 'text-white'
                   : scrollPosition > 0
                       ? 'text-atmos-700'
                       : currentPath === '/'

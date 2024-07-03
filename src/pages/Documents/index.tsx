@@ -5,10 +5,9 @@ import { IconCircleX } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
-import { Centered, GeneralLayout } from '../../components/Layout';
+import {BreadcrumbLayout, Centered} from '../../components/Layout';
 import { Loader } from '../../components/Loader';
 import { H3 } from '../../components/Typography/H3';
-import { Title } from '../../components/Typography/Title';
 import { useApi } from '../../context/ApiContext';
 import { DocumentsCategoryType, DocumentsType } from '../../hooks/types';
 
@@ -82,10 +81,9 @@ export function DocumentsMain() {
   };
 
   return (
-    <GeneralLayout>
-      <Title withUndreline>{t('navbar.atc.docs')}</Title>
+    <BreadcrumbLayout>
       {documentsCategory.map((category, index) => (
-        <div key={index} className="my-10">
+        <div key={index} className="mb-10">
           <H3 className="text-atmos-700">{category.name[i18n.language]}</H3>
           <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {documents
@@ -122,6 +120,6 @@ export function DocumentsMain() {
           <Loader />
         </Centered>
       )}
-    </GeneralLayout>
+    </BreadcrumbLayout>
   );
 }

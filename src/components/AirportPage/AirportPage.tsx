@@ -3,7 +3,6 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   IconAirTrafficControl,
   IconCar,
-  IconChevronLeft,
   IconDownload,
   IconPlane,
   IconRadar,
@@ -18,7 +17,7 @@ import { useApi } from '../../context/ApiContext';
 import i18n from '../../i18n/i18n';
 import { Airport } from '../../types/Airport';
 import { CustomButton } from '../Button';
-import { GeneralLayout } from '../Layout';
+import {BreadcrumbLayout} from '../Layout';
 
 const positionIcons = {
   ground: <IconCar size={41} />,
@@ -89,11 +88,7 @@ export function AirportPage() {
   }, []);
 
   return (
-    <GeneralLayout>
-      <div className="flex flex-row text-gray-300">
-        <IconChevronLeft />
-        <span className="font-['Montserrat']">На главную</span>
-      </div>
+    <BreadcrumbLayout>
       {airports.map((airport) => (
         <div key={airport.icao}>
           <div className="flex w-full flex-col md:flex-row md:gap-12">
@@ -283,6 +278,6 @@ export function AirportPage() {
           </div>
         </div>
       ))}
-    </GeneralLayout>
+    </BreadcrumbLayout>
   );
 }

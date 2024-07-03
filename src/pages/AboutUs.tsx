@@ -1,19 +1,13 @@
-import { IconChevronLeft } from '@tabler/icons-react';
-
 import joinbanner from '../assets/image/joinbaner.png';
-import { GeneralLayout } from '../components/Layout';
+import {BreadcrumbLayout} from '../components/Layout';
 
 export function AboutUs() {
   // const { classes, theme } = useStyles();
   // const { t } = useTranslation();
 
   return (
-    <GeneralLayout>
-      <div className="flex flex-row text-gray-300">
-        <IconChevronLeft />
-        <span className="font-['Montserrat']">На главную</span>
-      </div>
-      <div className="mt-[29px] flex flex-col items-center justify-start self-stretch px-2">
+    <BreadcrumbLayout>
+      <div className="flex flex-col items-center justify-start self-stretch px-2">
         <img
           src={joinbanner}
           className="rounded-2xl 2xl:min-w-[1536px]"
@@ -72,6 +66,6 @@ export function AboutUs() {
         {/*  />*/}
         {/*</ol>*/}
       </div>
-    </GeneralLayout>
+    </BreadcrumbLayout>
   );
 }
