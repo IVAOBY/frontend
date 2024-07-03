@@ -1,43 +1,19 @@
-import {
-  IconChevronLeft,
-  IconLanguage,
-  IconPlugConnectedX,
-  IconUsers,
-} from '@tabler/icons-react';
 import { t } from 'i18next';
-
 import Accordion from '../../components/Accordion';
-import { GeneralLayout } from '../../components/Layout';
+import { BreadcrumbLayout } from '../../components/Layout';
 
-const items = [
-  {
-    title: `${t('FAQ.questions.1')}`,
-    content: `${t('FAQ.answers.1')}`,
-    icon: <IconPlugConnectedX />,
-  },
-  {
-    title: `${t('FAQ.questions.2')}`,
-    content: `${t('FAQ.answers.2')}`,
-    icon: <IconUsers />,
-  },
-  {
-    title: `${t('FAQ.questions.3')}`,
-    content: `${t('FAQ.answers.3')}`,
-    icon: <IconLanguage />,
-  },
-];
+const items = Array.from({ length: 9 }, (_, index) => ({
+  title: t(`FAQ.questions.${index + 1}`),
+  content: t(`FAQ.answers.${index + 1}`),
+}));
 
 export function FAQ() {
   return (
-    <GeneralLayout>
-      <div className="flex flex-row text-gray-300">
-        <IconChevronLeft />
-        <span className="font-['Montserrat']">На главную</span>
-      </div>
-      <h4 className="text-[55px] font-bold text-black">FAQ</h4>
-      <div className={'mt-5 w-full lg:p-0'}>
-        <Accordion items={items} />
-      </div>
-    </GeneralLayout>
+      <BreadcrumbLayout>
+        <h4 className="text-[55px] font-bold text-black">FAQ</h4>
+        <div className={'mt-5 w-full lg:p-0'}>
+          <Accordion items={items} />
+        </div>
+      </BreadcrumbLayout>
   );
 }

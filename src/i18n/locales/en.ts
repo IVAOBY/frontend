@@ -81,6 +81,9 @@ const enTranslations: { translations: Translations } = {
       training: 'Training is required',
       caption: 'Active ATC position (GND+) is required for vehicle operation',
     },
+    breadcrumb: {
+      title: 'Home',
+    },
     sector: {
       title: 'Sector file',
       text: 'On this page you can download the sector file for IvAc.',

@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { notifications } from '@mantine/notifications';
-import { IconChevronLeft, IconInfoSquareRounded } from '@tabler/icons-react';
+import { IconInfoSquareRounded } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { useApi } from '../../context/ApiContext';
 import i18n from '../../i18n/i18n';
 import { Airport } from '../../types/Airport';
-import { GeneralLayout } from '../Layout';
+import {BreadcrumbLayout} from '../Layout';
 
 export function AirportsPage() {
   const [airports, setAirports] = useState<Airport[]>([]);
@@ -62,11 +62,7 @@ export function AirportsPage() {
   );
 
   return (
-    <GeneralLayout>
-      <div className="flex flex-row text-gray-300">
-        <IconChevronLeft />
-        <span className="font-['Montserrat']">На главную</span>
-      </div>
+    <BreadcrumbLayout>
       <div className="text-3xl font-bold text-black md:text-5xl">Аэропорты</div>
       <div className="mt-8">
         <p className="mb-6 text-4xl font-semibold leading-5 text-atmos-700">
@@ -189,6 +185,6 @@ export function AirportsPage() {
             ))}
         </div>
       </div>
-    </GeneralLayout>
+    </BreadcrumbLayout>
   );
 }

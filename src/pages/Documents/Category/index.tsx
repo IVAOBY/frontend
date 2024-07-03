@@ -5,12 +5,12 @@ import { IconCircleX } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { LayoutTitle } from '../../../components/Layout';
+import {BreadcrumbLayout} from '../../../components/Layout';
 import { useApi } from '../../../context/ApiContext';
 import { DocumentsCategoryType, DocumentsType } from '../../../hooks/types';
 
 export function DocumentsCategory() {
-  const [documentsCategory, setDocumentsCategory] =
+  const [, setDocumentsCategory] =
     useState<DocumentsCategoryType | null>(null);
   const [documents, setDocuments] = useState<DocumentsType[]>([]);
   const { t, i18n } = useTranslation();
@@ -88,9 +88,9 @@ export function DocumentsCategory() {
   };
 
   return (
-    <LayoutTitle title={documentsCategory?.name[i18n.language]} withUnderline>
+    <BreadcrumbLayout>
       <div>
-        <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {documents
             .filter((document) => document.published)
             .map((document) => (
@@ -113,6 +113,6 @@ export function DocumentsCategory() {
           )}
         </div>
       </div>
-    </LayoutTitle>
+    </BreadcrumbLayout>
   );
 }

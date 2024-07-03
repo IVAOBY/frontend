@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 
 import { notifications } from '@mantine/notifications';
-import { IconChevronLeft, IconCircleX } from '@tabler/icons-react';
+import { IconCircleX } from '@tabler/icons-react';
 import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
-import { GeneralLayout } from '../../../components/Layout';
+import {BreadcrumbLayout} from '../../../components/Layout';
 import { useApi } from '../../../context/ApiContext';
 import { DocumentsType } from '../../../hooks/types';
 
@@ -65,11 +65,7 @@ export function DocumentView() {
   }, [api, id, t]);
 
   return (
-    <GeneralLayout>
-      <div className="flex flex-row text-gray-300">
-        <IconChevronLeft />
-        <span className="font-['Montserrat']">На главную</span>
-      </div>
+    <BreadcrumbLayout>
       <div className="mt-[30px] flex flex-col gap-[50px]">
         {documentItem && (
           <>
@@ -87,6 +83,6 @@ export function DocumentView() {
           </>
         )}
       </div>
-    </GeneralLayout>
+    </BreadcrumbLayout>
   );
 }

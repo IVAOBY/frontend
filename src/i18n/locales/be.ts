@@ -81,6 +81,9 @@ const beTranslations: { translations: Translations } = {
       training: 'Неабходна трэніроўка',
       caption: 'Для працы ТС неабходна актыўная пазіцыя КПР (GND+)',
     },
+    breadcrumb: {
+      title: 'На галоўную',
+    },
     sector: {
       title: 'Сектар-файл',
       text: ' На гэтай старонке вы можаце спампаваць сектар-файл для IvAc.',
