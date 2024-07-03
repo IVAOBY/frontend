@@ -12,7 +12,7 @@ import { DocumentsCategoryType, DocumentsType } from '../../../hooks/types';
 export function DocumentsCategory() {
   const [documentsCategory, setDocumentsCategory] =
     useState<DocumentsCategoryType | null>(null);
-  const [documents, setDocuments] = useState<DocumentsType[]>([]);
+  const [, setDocuments] = useState<DocumentsType[]>([]);
   const { t, i18n } = useTranslation();
   const api = useApi();
   const { id } = useParams();
