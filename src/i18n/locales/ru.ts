@@ -53,12 +53,23 @@ const ruTranslations: { translations: Translations } = {
         'Кажется, вы попытались открыть страницу, которой нет. Хорошо, что мы приготовили для вас крутую кнопку:',
       homebutton: 'Домой!',
     },
-    heropage: {
-      title: 'Добро пожаловать в BY дивизион',
-      subtitle: 'Самый современный дивизион.',
-      subtitle2: 'Присоединяйтесь сейчас!',
-      joinbutton: 'Присоединиться!',
-      transfer: 'Перейти в BY',
+    mainpage: {
+      heropage: {
+        title: 'Знакомьтесь',
+        title2: 'Беларусь',
+        joinbutton: 'Регистрация',
+        transfer: 'Перейти в BY',
+      },
+      widgets: {
+        first: 'Первые шаги',
+        discord: {
+          message: 'А где весь движ? 🛩️',
+          message2: 'Воу-воу, скорее заходи:',
+        },
+        airports: 'Аэродромы Дивизиона',
+        charts: 'Схемы',
+        about: 'В',
+      },
     },
     onlinecomponent: {
       title: 'Activity of division in the Network',

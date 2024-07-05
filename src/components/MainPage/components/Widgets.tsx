@@ -2,9 +2,11 @@ import { useNavigate } from 'react-router-dom';
 
 import discord from '../../../assets/icons/footer/discord.svg';
 import belavia from '../../../assets/image/belaviakrylo.svg';
+import {useTranslation} from "react-i18next";
 
 export function Widgets() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleExternalLink = (link) => {
     window.open(link, '_blank');
@@ -28,7 +30,7 @@ export function Widgets() {
           />
           <div className="flex flex-col items-center md:justify-center xl:-mt-6">
             <p className="font-['Futura PT'] z-4 relative text-center text-[60px] font-bold uppercase leading-[50px] tracking-tighter text-white md:text-[90px] md:leading-10 lg:mt-7 lg:leading-[80px] xl:mx-3 xl:text-7xl">
-              первые шаги
+              {t('mainpage.widgets.first')}
             </p>
           </div>
         </div>
@@ -45,10 +47,10 @@ export function Widgets() {
                 className="h-full w-full rounded-l-3xl object-cover"
               />
               <div className="flex flex-col justify-center break-words pl-4 font-bold">
-                <p className="text-[60px] leading-none text-black">БЕЛАРУСЬ</p>
+                <p className="text-[60px] leading-none text-black uppercase">{t('mainpage.heropage.title2')}</p>
                 <div className="flex items-center gap-4">
-                  <span className="text-[100px] leading-none text-black">
-                    В
+                  <span className="text-[100px] leading-none text-black uppercase">
+                    {t('mainpage.widgets.about')}
                   </span>
                   <span className="text-[100px] leading-none text-atmos-700">
                     IVAO
@@ -66,7 +68,7 @@ export function Widgets() {
               className="relative inline-flex h-[148px] w-full cursor-pointer flex-col items-center justify-center rounded-3xl bg-gray-900 md:justify-start xl:h-[270px] xl:w-[355px]"
             >
               <p className="text-center font-['Montserrat'] text-[60px] font-bold uppercase tracking-tighter text-white md:mt-0 md:text-[90px] xl:mt-[15px] xl:text-[60px]">
-                схемы
+                {t('mainpage.widgets.charts')}
               </p>
               <img
                 src="https://cdn.by.ivao.aero/images/widget_charts.png"
@@ -97,12 +99,12 @@ export function Widgets() {
                   />
                   <div className="-ml-16 w-[248px] rounded-2xl rounded-bl-none bg-white p-3">
                     <p className="text-[20px] font-semibold text-black">
-                      А где весь движ?🛩️
+                      {t('mainpage.widgets.discord.message')}
                     </p>
                   </div>
                   <div className="-mt-2 ml-6 flex w-[293px] flex-col rounded-2xl rounded-br-none bg-gray-900 p-3">
                     <p className="text-[20px] font-semibold text-white">
-                      Воу-воу, скорее заходи:
+                      {t('mainpage.widgets.discord.message2')}
                     </p>
                     <p className="text-[20px] font-semibold text-white">
                       discord.by.ivao.aero
@@ -120,8 +122,8 @@ export function Widgets() {
                 alt="UMMS Aurora"
                 className="rounded-l-b-2xl absolute -left-[1px] top-[-0px] z-10 mb-0 h-full w-full rounded-l-3xl pb-0 object-cover"
               />
-              <p className="z-20 text-right font-['Montserrat'] text-[70px] font-bold uppercase leading-[66.5px] tracking-tighter text-white">
-                аэродромы дивизиона
+              <p className="z-20 text-right font-['Montserrat'] text-[70px] font-bold uppercase leading-[66.5px] tracking-tighter text-white max-w-[511px]">
+                {t('mainpage.widgets.airports')}
               </p>
             </div>
           </div>

@@ -16,6 +16,7 @@ export function AboutUs() {
         <div className="mt-10 rounded-2xl bg-white px-[31px] py-[42px] shadow-md md:pt-[60px] 2xl:w-[1536px]">
           <h2 className="mb-4 text-2xl font-bold text-black md:text-[55px]">
             Что такое IVAO?
+
           </h2>
           <p className="text-lg font-medium leading-6 text-black md:mt-[40px] md:text-[25px] md:leading-[29px]">
             <a href="https://www.ivao.aero/" className="text-atmos-700">

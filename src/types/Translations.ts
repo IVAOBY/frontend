@@ -49,12 +49,23 @@ export interface Translations {
     notfoundsubtext: string;
     homebutton: string;
   };
-  heropage: {
-    title: string;
-    subtitle: string;
-    subtitle2: string;
-    joinbutton: string;
-    transfer: string;
+  mainpage: {
+    heropage: {
+      title: string;
+      title2: string;
+      joinbutton: string;
+      transfer: string;
+    };
+    widgets: {
+      first: string;
+      discord: {
+        message: string;
+        message2: string;
+      };
+      airports: string;
+      charts: string;
+      about: string;
+    };
   };
   onlinecomponent: {
     title: string;

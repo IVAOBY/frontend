@@ -53,12 +53,23 @@ const beTranslations: { translations: Translations } = {
         'Здаецца, вы паспрабавалі адкрыць старонку, якой няма. Добра, што мы падрыхтавалі для вас крутую кнопку:',
       homebutton: 'Дадому!',
     },
-    heropage: {
-      title: 'Сардэчна запрашаем у BY дывізіён',
-      subtitle: 'Самы сучасны дывізіён у IVAO.',
-      subtitle2: 'Далучайцеся зараз!',
-      joinbutton: 'Далучыцца!',
-      transfer: 'Перайсці ў BY',
+    mainpage: {
+      heropage: {
+        title: 'Знаёмцеся',
+        title2: 'Беларусь',
+        joinbutton: 'Рэгістрацыя',
+        transfer: 'Перайсці ў BY',
+      },
+      widgets: {
+        first: 'Першыя крокі',
+        discord: {
+          message: 'А дзе ўвесь двіж? 🛩️',
+          message2: 'Воу-воу, хутчэй заходзь:',
+        },
+        airports: 'Аэрадромы Дывізіёна',
+        charts: 'Схема',
+        about: 'у',
+      },
     },
     onlinecomponent: {
       title: 'Activity of division in the Network',

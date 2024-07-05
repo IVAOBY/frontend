@@ -53,12 +53,23 @@ const enTranslations: { translations: Translations } = {
         "It seems like you tried to open a page that doesn't exist. Good thing we have a cool button for you:",
       homebutton: 'Home!',
     },
-    heropage: {
-      title: 'Welcome to the BY Division of',
-      subtitle: 'The most modern IVAO division.',
-      subtitle2: 'Join now!',
-      joinbutton: 'Join!',
-      transfer: 'Transfer to BY',
+    mainpage: {
+      heropage: {
+        title: 'Meet',
+        title2: 'Belarus',
+        joinbutton: 'Register',
+        transfer: 'Transfer to BY',
+      },
+      widgets: {
+        first: 'First Steps',
+        discord: {
+          message: 'And where is all the movement? 🛩️',
+          message2: 'Whoa, come in soon:',
+        },
+        airports: 'Division Airfields',
+        charts: 'Charts',
+        about: 'In',
+      },
     },
     onlinecomponent: {
       title: 'Activity of division in the Network',
