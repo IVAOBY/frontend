@@ -5,16 +5,15 @@ import {
   IconAirTrafficControl,
   IconCar,
   IconCircleX,
-  IconClockCheck,
   IconPlane,
   IconRadar,
+  IconSquareRoundedPlus,
 } from '@tabler/icons-react';
 import { format } from 'date-fns';
 import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
-import { CustomButton } from '../../../components/Button';
 import { useApi } from '../../../context/ApiContext';
 import { AuthContext } from '../../../context/UserContext';
 import { PartsEntity } from '../../../types/Events';
@@ -149,12 +148,12 @@ export function ShiftComponent() {
   };
 
   return (
-    <div className="container mx-auto py-4">
+    <div>
       {partItem &&
         partItem.map((part) => (
           <div key={part.id} className="mb-8">
-            <div className="flex flex-row items-center gap-[35px]">
-              <h2 className="text-atmos-700 text-[45px] font-semibold">
+            <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-[35px] mb-10 first:mt-[50px]">
+              <h2 className="text-atmos-700 text-[45px] leading-10 font-semibold">
                 Диспетчерская смена {part.id}
               </h2>
               <div className="flex gap-1.5 py-1.5 px-3.5 text-[18px] h-[30px] justify-center items-center font-semibold leading-4 text-white bg-atmos-700 rounded-xl backdrop-blur-[5px]">
@@ -190,90 +189,127 @@ export function ShiftComponent() {
                     };
                     return typeOrder[a.type] - typeOrder[b.type];
                   })
-                  .map(({ position, type }) => (
-                    <div
-                      key={position.id}
-                      className="flex flex-col p-[19px] rounded-2xl shadow-lg bg-white w-[300px]"
-                    >
+                  .map(({ position, type }) => {
+                    const bookingsForPosition = part.booking.filter(
+                      (bookingItem) =>
+                        bookingItem.atcPosition?.id === position.atcPositionId,
+                    );
+                    const hasStatusOne = bookingsForPosition.some(
+                      (booking) => booking.status === 1,
+                    );
+
+                    return (
                       <div
-                        className={'flex w-[338px] flex-row items-center gap-3'}
+                        key={position.id}
+                        className="flex flex-col p-[19px] rounded-2xl shadow-lg bg-white w-[300px]"
                       >
                         <div
-                          className={`flex size-14 items-center justify-center rounded-2xl ${positionColors[type]}`}
+                          className={
+                            'flex w-[338px] flex-row items-center gap-3'
+                          }
                         >
-                          {positionIcons[type]}
-                        </div>
-                        <div>
-                          <div className="text-2xl font-semibold text-black">
-                            {position.position.name[i18n.language]}
-                          </div>
-                          <div className="text-[15px] font-semibold text-[#ABA7A7]">
-                            {position.position.callsign},{' '}
-                            {position.position.frequency}
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex flex-col gap-2">
-                        {part.booking?.map((booking) => (
                           <div
-                            key={booking.id}
-                            className="flex items-center justify-between"
+                            className={`flex size-14 items-center justify-center rounded-2xl ${positionColors[type]}`}
                           >
-                            <span
-                              className={`px-2 py-1 rounded-xl font-semibold ${
-                                booking.status === 0
-                                  ? 'text-atmos-700 bg-[#E7EAF5]'
-                                  : booking.status === 1
-                                    ? 'text-[#2EC662] bg-[#EAF9EF]'
-                                    : 'text-[#E93434] bg-[#FDEBEB]'
-                              }`}
-                            >
-                              {booking.bookedUser?.name.first}{' '}
-                              {booking.bookedUser?.id}
-                            </span>
+                            {positionIcons[type]}
                           </div>
-                        ))}
-
-                        <div className="flex mt-4">
-                          {signed &&
-                          isBookedForPosition(
-                            part.booking,
-                            position.atcPositionId,
-                          ) ? (
-                            <div
-                              onClick={() => {
-                                const bookingId: number =
-                                  getBookingIdForPosition(
-                                    part.booking,
-                                    position.atcPositionId,
-                                  );
-                                if (typeof bookingId !== 'undefined') {
-                                  handleUnbook(bookingId);
-                                } else {
-                                  console.log('Booking ID is undefined');
-                                }
-                              }}
-                              className="flex w-1/2 gap-1.5 px-1.5 text-lg font-semibold leading-16 text-white bg-atmos-700 rounded-xl backdrop-blur-[5px]"
-                            >
-                              <IconClockCheck className="mt-0.5" />
-                              <div className="flex-auto ml-2 my-auto">
-                                {t('events.booking.unbook')}
-                              </div>
+                          <div>
+                            <div className="text-2xl font-semibold text-black">
+                              {position.position.name[i18n.language]}
                             </div>
-                          ) : signed ? (
-                            <CustomButton
-                              variant={'link'}
-                              onClick={() =>
-                                handleBook(part.id, position.atcPositionId)
-                              }
-                            >
-                              {t('events.booking.book')}
-                            </CustomButton>
-                          ) : null}
+                            <div className="text-[15px] font-semibold text-[#ABA7A7]">
+                              {position.position.callsign},{' '}
+                              {position.position.frequency}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex flex-col gap-2 mt-[15px]">
+                          {bookingsForPosition.length > 0 &&
+                            (hasStatusOne
+                              ? bookingsForPosition
+                                  .filter((booking) => booking.status === 1 || (booking.bookedUser.id == decodedToken.userData.id))
+                                  .map((booking) => (
+                                    <div
+                                      key={booking.id}
+                                      className="flex items-center justify-between"
+                                    >
+                                      <span
+                                        className={`px-2 py-1 rounded-xl font-semibold ${
+                                          booking.status === 0
+                                            ? 'text-atmos-700 bg-[#E7EAF5]'
+                                            : booking.status === 1
+                                              ? 'text-[#2EC662] bg-[#EAF9EF]'
+                                              : 'text-[#E93434] bg-[#FDEBEB]'
+                                        }`}
+                                      >
+                                        {booking.bookedUser?.name.first}{' '}
+                                        {booking.bookedUser?.id}
+                                      </span>
+                                    </div>
+                                  ))
+                              : bookingsForPosition.map((booking) => (
+                                  <div
+                                    key={booking.id}
+                                    className="flex items-center justify-between"
+                                  >
+                                    <span
+                                      className={`px-2 py-1 rounded-xl font-semibold ${
+                                        booking.status === 0
+                                          ? 'text-atmos-700 bg-[#E7EAF5]'
+                                          : booking.status === 1
+                                            ? 'text-[#2EC662] bg-[#EAF9EF]'
+                                            : 'text-[#E93434] bg-[#FDEBEB]'
+                                      }`}
+                                    >
+                                      {booking.bookedUser?.name.first}{' '}
+                                      {booking.bookedUser?.id}
+                                    </span>
+                                  </div>
+                                )))}
+                          <div className="flex mt-[20px]">
+                            {signed &&
+                            isBookedForPosition(
+                              part.booking,
+                              position.atcPositionId,
+                            ) ? (
+                              <div
+                                onClick={() => {
+                                  const bookingId: number =
+                                    getBookingIdForPosition(
+                                      part.booking,
+                                      position.atcPositionId,
+                                    );
+                                  if (typeof bookingId !== 'undefined') {
+                                    handleUnbook(bookingId);
+                                  } else {
+                                    console.log('Booking ID is undefined');
+                                  }
+                                }}
+                                className="flex gap-1.5 px-1.5 text-lg font-semibold leading-16 text-white bg-[#E93434] rounded-xl backdrop-blur-[5px] hover:bg-opacity-80 transition duration-500 hover:cursor-pointer"
+                              >
+                                <IconSquareRoundedPlus className="mt-0.5" />
+                                <div className="flex-auto my-auto">
+                                  {t('events.booking.unbook')}
+                                </div>
+                              </div>
+                            ) : signed ? (
+                              <div
+                                onClick={() =>
+                                  handleBook(part.id, position.atcPositionId)
+                                }
+                                className="flex gap-1.5 px-1.5 text-lg font-semibold leading-16 text-white bg-atmos-700 rounded-xl backdrop-blur-[5px] hover:bg-opacity-90 transition duration-500 hover:cursor-pointer"
+                              >
+                                <IconSquareRoundedPlus className="mt-0.5" />
+                                <div className="flex-auto my-auto">
+                                  {t('events.booking.book')}
+                                </div>
+                              </div>
+                            ) : null}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))
+                    );
+                  })
               ) : (
                 <div>{t('events.booking.none')}</div>
               )}
