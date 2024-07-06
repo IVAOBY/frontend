@@ -152,11 +152,11 @@ export function ShiftComponent() {
       {partItem &&
         partItem.map((part) => (
           <div key={part.id} className="mb-8">
-            <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-[35px] mb-10 first:mt-[50px]">
-              <h2 className="text-atmos-700 text-[45px] leading-10 font-semibold">
+            <div className="mb-10 flex flex-col gap-4 first:mt-[50px] md:flex-row md:items-center md:gap-[35px]">
+              <h2 className="text-[45px] font-semibold leading-10 text-atmos-700">
                 Диспетчерская смена {part.id}
               </h2>
-              <div className="flex gap-1.5 py-1.5 px-3.5 text-[18px] h-[30px] justify-center items-center font-semibold leading-4 text-white bg-atmos-700 rounded-xl backdrop-blur-[5px]">
+              <div className="flex h-[30px] items-center justify-center gap-1.5 rounded-xl bg-atmos-700 px-3.5 py-1.5 text-[18px] font-semibold leading-4 text-white backdrop-blur-[5px]">
                 {`${format(new Date(part.startDate), 'HH:mm')} – ${format(
                   new Date(part.endDate),
                   'HH:mm',
@@ -201,7 +201,7 @@ export function ShiftComponent() {
                     return (
                       <div
                         key={position.id}
-                        className="flex flex-col p-[19px] rounded-2xl shadow-lg bg-white w-[300px]"
+                        className="flex w-[300px] flex-col rounded-2xl bg-white p-[19px] shadow-lg"
                       >
                         <div
                           className={
@@ -223,23 +223,28 @@ export function ShiftComponent() {
                             </div>
                           </div>
                         </div>
-                        <div className="flex flex-col gap-2 mt-[15px]">
+                        <div className="mt-[15px] flex flex-col gap-2">
                           {bookingsForPosition.length > 0 &&
                             (hasStatusOne
                               ? bookingsForPosition
-                                  .filter((booking) => booking.status === 1 || (booking.bookedUser.id == decodedToken.userData.id))
+                                  .filter(
+                                    (booking) =>
+                                      booking.status === 1 ||
+                                      booking.bookedUser.id ==
+                                        decodedToken.userData.id,
+                                  )
                                   .map((booking) => (
                                     <div
                                       key={booking.id}
                                       className="flex items-center justify-between"
                                     >
                                       <span
-                                        className={`px-2 py-1 rounded-xl font-semibold ${
+                                        className={`rounded-xl px-2 py-1 font-semibold ${
                                           booking.status === 0
-                                            ? 'text-atmos-700 bg-[#E7EAF5]'
+                                            ? 'bg-[#E7EAF5] text-atmos-700'
                                             : booking.status === 1
-                                              ? 'text-[#2EC662] bg-[#EAF9EF]'
-                                              : 'text-[#E93434] bg-[#FDEBEB]'
+                                              ? 'bg-[#EAF9EF] text-[#2EC662]'
+                                              : 'bg-[#FDEBEB] text-[#E93434]'
                                         }`}
                                       >
                                         {booking.bookedUser?.name.first}{' '}
@@ -253,12 +258,12 @@ export function ShiftComponent() {
                                     className="flex items-center justify-between"
                                   >
                                     <span
-                                      className={`px-2 py-1 rounded-xl font-semibold ${
+                                      className={`rounded-xl px-2 py-1 font-semibold ${
                                         booking.status === 0
-                                          ? 'text-atmos-700 bg-[#E7EAF5]'
+                                          ? 'bg-[#E7EAF5] text-atmos-700'
                                           : booking.status === 1
-                                            ? 'text-[#2EC662] bg-[#EAF9EF]'
-                                            : 'text-[#E93434] bg-[#FDEBEB]'
+                                            ? 'bg-[#EAF9EF] text-[#2EC662]'
+                                            : 'bg-[#FDEBEB] text-[#E93434]'
                                       }`}
                                     >
                                       {booking.bookedUser?.name.first}{' '}
@@ -266,7 +271,7 @@ export function ShiftComponent() {
                                     </span>
                                   </div>
                                 )))}
-                          <div className="flex mt-[20px]">
+                          <div className="mt-[20px] flex">
                             {signed &&
                             isBookedForPosition(
                               part.booking,
@@ -285,22 +290,32 @@ export function ShiftComponent() {
                                     console.log('Booking ID is undefined');
                                   }
                                 }}
-                                className="flex gap-1.5 px-1.5 text-lg font-semibold leading-16 text-white bg-[#E93434] rounded-xl backdrop-blur-[5px] hover:bg-opacity-80 transition duration-500 hover:cursor-pointer"
+                                className="leading-16 hover:bg-opacity-80/80 flex gap-1.5 rounded-xl bg-[#E93434] px-1.5 text-lg font-semibold text-white backdrop-blur-[5px] transition duration-500 hover:cursor-pointer"
                               >
                                 <IconSquareRoundedPlus className="mt-0.5" />
-                                <div className="flex-auto my-auto">
+                                <div className="my-auto flex-auto">
                                   {t('events.booking.unbook')}
                                 </div>
                               </div>
                             ) : signed ? (
                               <div
-                                onClick={() =>
-                                  handleBook(part.id, position.atcPositionId)
-                                }
-                                className="flex gap-1.5 px-1.5 text-lg font-semibold leading-16 text-white bg-atmos-700 rounded-xl backdrop-blur-[5px] hover:bg-opacity-90 transition duration-500 hover:cursor-pointer"
+                                onClick={async () => {
+                                  try {
+                                    await handleBook(
+                                      part.id,
+                                      position.atcPositionId,
+                                    );
+                                  } catch (error) {
+                                    console.error(
+                                      'Error while booking:',
+                                      error,
+                                    );
+                                  }
+                                }}
+                                className="leading-16 hover:bg-opacity-80/80 flex gap-1.5 rounded-xl bg-atmos-700 px-1.5 text-lg font-semibold text-white backdrop-blur-[5px] transition duration-500 hover:cursor-pointer"
                               >
                                 <IconSquareRoundedPlus className="mt-0.5" />
-                                <div className="flex-auto my-auto">
+                                <div className="my-auto flex-auto">
                                   {t('events.booking.book')}
                                 </div>
                               </div>

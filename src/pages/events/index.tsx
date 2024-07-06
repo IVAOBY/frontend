@@ -90,17 +90,17 @@ export function EventPage() {
 
   return (
     <GeneralLayout>
-      <div className="flex text-gray-300 flex-row mb-4">
+      <div className="mb-4 flex flex-row text-gray-300">
         <IconChevronLeft />
         <span className="font-['Montserrat']">На главную</span>
       </div>
       {eventItem && (
         <>
-          <div className="text-3xl font-bold text-black md:text-5xl mb-4">
+          <div className="mb-4 text-3xl font-bold text-black md:text-5xl">
             {eventItem.name[i18n.language]}
           </div>
-          <div className="w-full flex flex-wrap mt-2 gap-2">
-            <div className="justify-center px-3 py-2 text-sm font-semibold leading-4 text-center text-white rounded-xl bg-zinc-900">
+          <div className="mt-2 flex w-full flex-wrap gap-2">
+            <div className="justify-center rounded-xl bg-zinc-900 px-3 py-2 text-center text-sm font-semibold leading-4 text-white">
               {`${format(new Date(eventItem.startDate), 'dd.MM')} ${new Date(
                 eventItem.startDate,
               ).toLocaleTimeString('eu', {
@@ -117,32 +117,32 @@ export function EventPage() {
               })}`}
             </div>
             {registrationStatus === 'open' ? (
-              <div className="flex gap-1.5 px-1.5 text-lg font-semibold leading-4 text-white bg-green-500 rounded-xl backdrop-blur-[5px]">
+              <div className="flex gap-1.5 rounded-xl bg-green-500 px-1.5 text-lg font-semibold leading-4 text-white backdrop-blur-[5px]">
                 <IconClockCheck className="mt-1" />
-                <div className="flex-auto my-auto">Запись открыта</div>
+                <div className="my-auto flex-auto">Запись открыта</div>
               </div>
             ) : (
-              <div className="flex gap-1.5 px-1.5 text-lg font-semibold leading-4 text-white bg-semantic-red-500 rounded-xl backdrop-blur-[5px]">
+              <div className="flex gap-1.5 rounded-xl bg-semantic-red-500 px-1.5 text-lg font-semibold leading-4 text-white backdrop-blur-[5px]">
                 <IconClockCancel className="mt-1" />
-                <div className="flex-auto my-auto">Запись закрыта</div>
+                <div className="my-auto flex-auto">Запись закрыта</div>
               </div>
             )}
           </div>
-          <div className="mt-8 flex flex-col lg:flex-row gap-12">
-            <div className="w-full xl:w-1/2 rounded-2xl">
+          <div className="mt-8 flex flex-col gap-12 lg:flex-row">
+            <div className="w-full rounded-2xl xl:w-1/2">
               <img
                 src={eventItem.imageUrl}
                 alt={eventItem.name.en}
-                className="rounded-3xl shadow-gray-400 shadow-lg w-full h-full object-cover"
+                className="size-full rounded-3xl object-cover shadow-lg shadow-gray-400"
               />
             </div>
-            <div className="bg-white w-full xl:w-1/2 rounded-2xl font-['Montserrat'] shadow-gray-400 shadow-lg">
+            <div className="w-full rounded-2xl bg-white font-['Montserrat'] shadow-lg shadow-gray-400 xl:w-1/2">
               <div className="mx-8 my-10">
                 <p className="text-3xl font-semibold leading-5 text-black">
                   Основная информация
                 </p>
                 <div
-                  className="text-xl mt-8 font-medium tracking-tighter leading-6 text-black max-w-[647px] break-words"
+                  className="mt-8 max-w-[647px] break-words text-xl font-medium leading-6 tracking-tighter text-black"
                   dangerouslySetInnerHTML={{
                     __html:
                       eventItem.description[i18n.language] || 'Failed to load',
