@@ -76,7 +76,14 @@ export interface EventAtcPositions {
 }
 
 export interface AtcEntity {
-  id: string;
+  id: number;
   callsign: string;
+  frequency: string;
+  airportIcao: string;
   fra: number;
+  name: {
+    en: string | null;
+    ru: string | null;
+    be: string | null;
+  };
 }
