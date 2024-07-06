@@ -1,4 +1,4 @@
-import { Translations } from '../../types/Translition';
+import { Translations } from '../../types/Translations';
 
 const beTranslations: { translations: Translations } = {
   translations: {
@@ -8,6 +8,7 @@ const beTranslations: { translations: Translations } = {
         about: 'Пра нас',
         faq: 'FAQ',
         staff: 'Кіраўніцтва дывізіёна',
+        airports: 'Аэрапорты',
         discord: 'Дыскорд',
         contact: 'Сувязь з намі',
         rules: 'Правілы IVAO',
@@ -33,7 +34,7 @@ const beTranslations: { translations: Translations } = {
       },
       community: {
         index: 'Супольнасць',
-        training: 'Трэніровачны кампус',
+        training: 'Адукацыя',
         events: 'Івэнты',
         forum: 'Форум BY',
         webeye: 'WebEye',
@@ -47,17 +48,28 @@ const beTranslations: { translations: Translations } = {
       },
     },
     errorpage: {
-      notfoundtext: 'Нешта не так!',
+      notfoundtext: 'Старонку скралі масоны!',
       notfoundsubtext:
         'Здаецца, вы паспрабавалі адкрыць старонку, якой няма. Добра, што мы падрыхтавалі для вас крутую кнопку:',
       homebutton: 'Дадому!',
     },
-    heropage: {
-      title: 'Сардэчна запрашаем у BY дывізіён',
-      subtitle: 'Самы сучасны дывізіён у IVAO.',
-      subtitle2: 'Далучайцеся зараз!',
-      joinbutton: 'Далучыцца!',
-      transfer: 'Перайсці ў BY дывізіён!',
+    mainpage: {
+      heropage: {
+        title: 'Знаёмцеся',
+        title2: 'Беларусь',
+        joinbutton: 'Рэгістрацыя',
+        transfer: 'Перайсці ў BY',
+      },
+      widgets: {
+        first: 'Першыя крокі',
+        discord: {
+          message: 'А дзе ўвесь двіж? 🛩️',
+          message2: 'Воу-воу, хутчэй заходзь:',
+        },
+        airports: 'Аэрадромы Дывізіёна',
+        charts: 'Схема',
+        about: 'у',
+      },
     },
     onlinecomponent: {
       title: 'Activity of division in the Network',
@@ -80,12 +92,8 @@ const beTranslations: { translations: Translations } = {
       training: 'Неабходна трэніроўка',
       caption: 'Для працы ТС неабходна актыўная пазіцыя КПР (GND+)',
     },
-    legal: {
-      title: 'Прававая інфармацыя',
-      text: 'Так, мы збіраем и захоўваем вашу інфармацыю. Але робім гэта у адпаведнасці з наступнымі дакументамі:',
-      privacypolicy: 'Палітыка канфідэнцыяльнасці',
-      termsofuse: 'Умовы карыстання',
-      ipp: 'Палітыка інтэлектуальнай уласнасці',
+    breadcrumb: {
+      title: 'На галоўную',
     },
     sector: {
       title: 'Сектар-файл',
@@ -117,7 +125,18 @@ const beTranslations: { translations: Translations } = {
     },
     footer: {
       copyrightMessage: 'Усе правы ахоўваюцца.',
-      followus: 'Сацыяльныя сеткі',
+      legal: {
+        title: 'Прававая інфармацыя',
+        privacypolicy: 'Палітыка канфідэнцыяльнасці',
+        termsofuse: 'Умовы карыстання',
+        ipp: 'Палітыка інтэлектуальнай уласнасці',
+      },
+      community: {
+        title: 'Супольнасць',
+        forum: 'IVAO форум Беларусь',
+        ivao: 'Сайт IVAO',
+        ivaofamily: 'Сям\'я IVAO',
+      },
     },
     notif: {
       loading: {

@@ -5,6 +5,7 @@ export interface Translations {
       about: string;
       faq: string;
       staff: string;
+      airports: string;
       discord: string;
       contact: string;
       rules: string;
@@ -48,12 +49,23 @@ export interface Translations {
     notfoundsubtext: string;
     homebutton: string;
   };
-  heropage: {
-    title: string;
-    subtitle: string;
-    subtitle2: string;
-    joinbutton: string;
-    transfer: string;
+  mainpage: {
+    heropage: {
+      title: string;
+      title2: string;
+      joinbutton: string;
+      transfer: string;
+    };
+    widgets: {
+      first: string;
+      discord: {
+        message: string;
+        message2: string;
+      };
+      airports: string;
+      charts: string;
+      about: string;
+    };
   };
   onlinecomponent: {
     title: string;
@@ -75,13 +87,24 @@ export interface Translations {
     training: string;
     caption: string;
   };
-  legal: {
-    title: string;
-    text: string;
-    privacypolicy: string;
-    termsofuse: string;
-    ipp: string;
+  footer: {
+    copyrightMessage: string;
+    legal: {
+      title: string;
+      privacypolicy: string;
+      termsofuse: string;
+      ipp: string;
+    };
+    community: {
+      title: string;
+      forum: string;
+      ivao: string;
+      ivaofamily: string;
+    };
   };
+  breadcrumb: {
+    title: string;
+  },
   sector: {
     title: string;
     text: string;
@@ -108,10 +131,6 @@ export interface Translations {
   };
   generic: {
     ivao: string;
-  };
-  footer: {
-    copyrightMessage: string;
-    followus: string;
   };
   notif: {
     loading: {

@@ -1,16 +1,11 @@
-import React, { ReactNode, useState } from 'react';
+import React, { useState } from 'react';
 
 interface AccordionItemProps {
   title: string;
-  content: ReactNode;
-  icon?: ReactNode;
+  content: string;
 }
 
-const AccordionItem: React.FC<AccordionItemProps> = ({
-  title,
-  content,
-  icon,
-}) => {
+const AccordionItem: React.FC<AccordionItemProps> = ({ title, content }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleToggle = () => {
@@ -18,35 +13,41 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
   };
 
   return (
-    <>
-      <h2>
-        <button
-          type="button"
-          className="flex w-full items-center justify-between gap-3 rounded-t-xl border border-b-0 border-gray-200 bg-white p-5 font-medium text-gray-500 transition hover:bg-gray-50 rtl:text-right"
-          data-accordion-target={`#accordion-collapse-body-${title}`}
-          aria-expanded={isOpen}
-          aria-controls={`accordion-collapse-body-${title}`}
-          onClick={handleToggle}
-        >
-          <span className={`row flex gap-2 text-atmos-700 md:text-base`}>
-            <span className={`${icon ? 'hidden sm:flex' : ''}`}>{icon}</span>{' '}
-            {title}
-          </span>
-        </button>
-      </h2>
       <div
-        id={`accordion-collapse-body-${title}`}
-        className={`${
-          isOpen ? '' : 'hidden'
-        } border border-b-0 border-gray-200 bg-white p-5 dark:border-gray-700`}
-        aria-labelledby={`accordion-collapse-heading-${title}`}
+          className={`mt-2 w-full max-w-screen-xl ${isOpen ? 'border border-[#D7D7DC]' : ''} rounded-xl transition-all duration-200`}
       >
-        <p
-          className={'text-gray-700'}
-          dangerouslySetInnerHTML={{ __html: content || 'Failed to load' }}
-        />
+        <h2>
+          <button
+              type="button"
+              className={`flex w-full items-center justify-between break-words rounded-xl pb-[16px] pl-[28px] pr-[25px] pt-[14px] text-left font-medium text-gray-900 ${isOpen ? 'rounded-b-none bg-white' : 'bg-[#EBEBEB]'} transition-colors duration-200`}
+              onClick={handleToggle}
+              aria-expanded={isOpen}
+          >
+            {title}
+            <svg
+                className={`w-6 h-6 transform ${isOpen ? 'rotate-180' : ''} transition-transform duration-200`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </button>
+        </h2>
+        <div
+            className={`transition-max-height overflow-hidden duration-700 ease-in-out ${isOpen ? 'max-h-96' : 'max-h-0'}`}
+        >
+          <div className="rounded-b-xl bg-white pb-[14px] pl-[28px] pr-[25px] pt-[5px]">
+            <div className="break-words text-gray-700" dangerouslySetInnerHTML={{ __html: content }} />
+          </div>
+        </div>
       </div>
-    </>
   );
 };
 
@@ -56,16 +57,11 @@ interface AccordionProps {
 
 const Accordion: React.FC<AccordionProps> = ({ items }) => {
   return (
-    <div id="accordion-collapse" data-accordion="collapse">
-      {items.map((item, index) => (
-        <AccordionItem
-          key={index}
-          title={item.title}
-          content={item.content}
-          icon={item.icon}
-        />
-      ))}
-    </div>
+      <div className="mx-auto w-full">
+        {items.map((item, index) => (
+            <AccordionItem key={index} title={item.title} content={item.content} />
+        ))}
+      </div>
   );
 };
 

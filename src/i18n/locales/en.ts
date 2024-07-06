@@ -1,4 +1,4 @@
-import { Translations } from '../../types/Translition';
+import { Translations } from '../../types/Translations';
 
 const enTranslations: { translations: Translations } = {
   translations: {
@@ -8,6 +8,7 @@ const enTranslations: { translations: Translations } = {
         about: 'About us',
         faq: 'FAQ',
         staff: 'Division Staff',
+        airports: 'Airports',
         discord: 'Discord',
         contact: 'Contact us',
         rules: 'IVAO rules',
@@ -33,7 +34,7 @@ const enTranslations: { translations: Translations } = {
       },
       community: {
         index: 'Community',
-        training: 'Training campus',
+        training: 'Training',
         events: 'Events',
         forum: 'BY Forum',
         webeye: 'WebEye',
@@ -47,17 +48,28 @@ const enTranslations: { translations: Translations } = {
       },
     },
     errorpage: {
-      notfoundtext: 'Something is not right!',
+      notfoundtext: 'Page not found!',
       notfoundsubtext:
         "It seems like you tried to open a page that doesn't exist. Good thing we have a cool button for you:",
       homebutton: 'Home!',
     },
-    heropage: {
-      title: 'Welcome to the BY Division of',
-      subtitle: 'The most modern IVAO division.',
-      subtitle2: 'Join now!',
-      joinbutton: 'Join!',
-      transfer: 'Transfer to BY division!',
+    mainpage: {
+      heropage: {
+        title: 'Meet',
+        title2: 'Belarus',
+        joinbutton: 'Register',
+        transfer: 'Transfer to BY',
+      },
+      widgets: {
+        first: 'First Steps',
+        discord: {
+          message: 'And where is all the movement? 🛩️',
+          message2: 'Whoa, come in soon:',
+        },
+        airports: 'Division Airfields',
+        charts: 'Charts',
+        about: 'In',
+      },
     },
     onlinecomponent: {
       title: 'Activity of division in the Network',
@@ -80,12 +92,8 @@ const enTranslations: { translations: Translations } = {
       training: 'Training is required',
       caption: 'Active ATC position (GND+) is required for vehicle operation',
     },
-    legal: {
-      title: 'Legal information',
-      text: 'Yes, we collect and store your information. But we do so in accordance with the following Documents:',
-      privacypolicy: 'Privacy Policy',
-      termsofuse: 'Terms of Use',
-      ipp: 'Intellectual Property Policy',
+    breadcrumb: {
+      title: 'Home',
     },
     sector: {
       title: 'Sector file',
@@ -116,8 +124,19 @@ const enTranslations: { translations: Translations } = {
       ivao: 'IVAO',
     },
     footer: {
-      copyrightMessage: 'All Rights Reserved.',
-      followus: 'Follow Us',
+      copyrightMessage: 'All rights reserved.',
+      legal: {
+        title: 'Legal information',
+        privacypolicy: 'Privacy Policy',
+        termsofuse: 'Terms of use',
+        ipp: 'Intellectual Property Policy',
+      },
+      community: {
+        title: 'Community',
+        forum: 'IVAO Belarus Forum',
+        ivao: 'IVAO Website',
+        ivaofamily: 'IVAO Family',
+      },
     },
     notif: {
       loading: {

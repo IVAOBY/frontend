@@ -1,32 +1,24 @@
 import { useEffect, useState } from 'react';
 
 import { notifications } from '@mantine/notifications';
-import {
-  IconChevronLeft,
-  IconCircleX,
-  IconClockCancel,
-  IconClockCheck,
-} from '@tabler/icons-react';
+import { IconCircleX } from '@tabler/icons-react';
 import { format } from 'date-fns';
 import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
-import { GeneralLayout } from '../../components/Layout';
 import { useApi } from '../../context/ApiContext';
 import { EventEntity } from '../../types/Events';
 import { ShiftComponent } from './components/ShiftComponent';
 
+
 export function EventPage() {
+  const { classes, theme } = useStyles();
   const { t } = useTranslation();
   const { id } = useParams();
   const api = useApi();
 
   const [eventItem, setEventItem] = useState<EventEntity | null>(null);
-  const [registrationStatus, setRegistrationStatus] = useState<
-    'open' | 'closed'
-  >('closed');
-
   useEffect(() => {
     notifications.show({
       id: 'load-data',
@@ -46,19 +38,6 @@ export function EventPage() {
         ) {
           setEventItem(response);
           notifications.hide('load-data');
-
-          // Check registration status
-          const eventStartDate = new Date(response.startDate);
-          const currentTime = new Date();
-          const sixHoursBeforeEvent = new Date(
-            eventStartDate.getTime() - 6 * 60 * 60 * 1000,
-          );
-
-          if (currentTime < sixHoursBeforeEvent) {
-            setRegistrationStatus('open');
-          } else {
-            setRegistrationStatus('closed');
-          }
         } else {
           console.error('Invalid response from API:', response);
           notifications.update({
@@ -154,6 +133,6 @@ export function EventPage() {
           <ShiftComponent />
         </>
       )}
-    </GeneralLayout>
+    </Container>
   );
 }

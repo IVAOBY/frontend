@@ -1,70 +1,114 @@
-// import { useCallback, useContext } from 'react';
-//
-// import { notifications } from '@mantine/notifications';
-// import { IconCircleX } from '@tabler/icons-react';
-// import { useTranslation } from 'react-i18next';
-//
-// import { AuthContext } from '../../../context/UserContext';
+import { useCallback, useContext, useEffect, useState } from 'react';
+
+import { useTranslation } from 'react-i18next';
+
+//import { IconArrowDown } from '@tabler/icons-react';
+
+import { AuthContext } from '../../../context/UserContext';
+import { CustomButton } from '../../Button';
 
 export function HeroText() {
-  // const { classes } = useStyles();
-  // const { t } = useTranslation();
-  // // const isSmallScreen = useMediaQuery('(max-width: 575px)');
-  // const { signed, decodedToken } = useContext(AuthContext);
+  const [timeOfDay, setTimeOfDay] = useState('day');
+  const { signed, decodedToken } = useContext(AuthContext);
+  const { t } = useTranslation();
 
-  //   const byTransferMail = useCallback(() => {
-  //     if (!signed) {
-  //       notifications.show({
-  //         id: 'auth-required',
-  //         color: 'red',
-  //         title: t('notif.auth.negative.name'),
-  //         message: t('notif.auth.negative.description'),
-  //         radius: 'lg',
-  //         icon: <IconCircleX />,
-  //         withCloseButton: true,
-  //         autoClose: 3000,
-  //       });
-  //       return;
-  //     }
-  //
-  //     if (signed) {
-  //       try {
-  //         const emailBody = `Dear HQs and Membership Department!
-  //
-  // I request to transfer me from the ${decodedToken?.userData.divisionId} division to the BY division.
-  //
-  // Best wishes,
-  // ${decodedToken?.userData.name.first} ${decodedToken?.userData.name.last}`;
-  //
-  //         window.open(
-  //           `mailto:BY-hq@ivao.aero,${decodedToken?.userData.divisionId}-hq@ivao.aero?cc=members@ivao.aero&subject=Division%20transfer%20${decodedToken?.userData.id}&body=${encodeURIComponent(
-  //             emailBody,
-  //           )}`,
-  //           '_blank',
-  //         );
-  //       } catch (error) {
-  //         console.error('Error decoding token:', error);
-  //       }
-  //     }
-  //   }, [decodedToken, signed, t]);
-  //
-  //   const openLink = useCallback(function (link: string | undefined) {
-  //     window.open(link, '_blank');
-  //   }, []);
+  useEffect(() => {
+    const hours = new Date().getHours();
+    if (hours >= 6 && hours < 12) {
+      setTimeOfDay('morning');
+    } else if (hours >= 12 && hours < 18) {
+      setTimeOfDay('day');
+    } else if (hours >= 18 && hours < 22) {
+      setTimeOfDay('evening');
+    } else {
+      setTimeOfDay('night');
+    }
+  }, []);
+
+  const backgroundImage = {
+    morning: "url('https://cdn.by.ivao.aero/images/main_page_morning.png')",
+    day: "url('https://cdn.by.ivao.aero/images/main_page_day.png')",
+    evening: "url('https://cdn.by.ivao.aero/images/main_page_evening.png')",
+    night: "url('https://cdn.by.ivao.aero/images/main_page_night.png')",
+  };
+
+  /*  const scrollToNextSection = () => {
+          window.scrollTo({
+            top: window.innerHeight,
+            behavior: 'smooth'
+          });
+        };*/
+
+  const byTransferMail = useCallback(() => {
+    if (!signed) {
+      return;
+    }
+
+    if (signed) {
+      try {
+        const emailBody = `Dear HQs and Membership Department!
+
+I request to transfer me from the ${decodedToken?.userData.divisionId} division to the BY division.
+                
+Best wishes,
+${decodedToken?.userData.name.first} ${decodedToken?.userData.name.last}`;
+
+        window.open(
+          `mailto:BY-hq@ivao.aero,${decodedToken?.userData.divisionId}-hq@ivao.aero?cc=members@ivao.aero&subject=Division%20transfer%20${decodedToken?.userData.id}&body=${encodeURIComponent(
+            emailBody,
+          )}`,
+          '_blank',
+        );
+      } catch (error) {
+        console.error('Error decoding token:', error);
+      }
+    }
+  }, [decodedToken, signed]);
+
+  const openLink = useCallback(function (link: string | undefined) {
+    window.open(link, '_blank');
+  }, []);
 
   return (
-    <>
-      <div className="justify-left inline-flex max-w-screen-lg flex-col gap-40 pt-8 text-left md:py-48">
-        <div>
-          <span className="font-['Futura PT'] text-6xl font-bold leading-10 text-atmos-100">
-            ЗНАКОМЬТЕСЬ,
-            <br />
-          </span>
-          <span className="font-['Futura PT'] leading-12 text-9xl font-bold text-atmos-100">
-            БЕЛАРУСЬ
-          </span>
+    <div
+      className="relative flex h-[487px] w-full items-center justify-center bg-cover bg-center md:h-[900px]"
+      style={{ backgroundImage: backgroundImage[timeOfDay] }}
+    >
+      <div className="container z-10 mx-auto flex max-w-screen-2xl flex-col gap-4 px-4 py-8">
+        <div className="leading-none">
+          <p className="font-['Futura PT'] text-[32px] font-bold text-white drop-shadow-lg sm:text-[40px] md:text-[70px] lg:text-[100px] uppercase">
+            {t('mainpage.heropage.title')},
+          </p>
+          <p className="font-['Futura PT'] my-[-10px] ml-[-4px] text-[60px] font-bold text-white drop-shadow-lg sm:text-[80px] md:ml-[-8px] md:mt-[-20px] md:text-[125px] xl:ml-[-20px] xl:text-[250px] uppercase">
+            {t('mainpage.heropage.title2')}
+          </p>
+        </div>
+        <div className="mt-8 flex flex-row gap-4">
+          <CustomButton
+            size={'xl'}
+            className={'rounded-xl'}
+            onClick={() =>
+              openLink('https://ivao.aero/members/person/register.htm')
+            }
+          >
+            {t('mainpage.heropage.joinbutton')}
+          </CustomButton>
+          <CustomButton
+            size={'xl'}
+            className={'rounded-xl'}
+            variant={'white'}
+            onClick={byTransferMail}
+          >
+            {t('mainpage.heropage.transfer')}
+          </CustomButton>
         </div>
       </div>
-    </>
+      <div className="absolute bottom-0 left-0 h-[200px] w-full bg-gradient-to-t from-background-body to-transparent md:h-[390px]"></div>
+      {/*        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 cursor-pointer"
+             onClick={scrollToNextSection}>
+          <IconArrowDown stroke={2} size={90}
+                         className="text-atmos-700 absolute bottom-4 left-1/2 transform -translate-x-1/2 cursor-pointer"/>
+        </div>*/}
+    </div>
   );
 }

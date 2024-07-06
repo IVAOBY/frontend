@@ -6,7 +6,7 @@ import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
-import { LayoutTitle } from '../../../components/Layout';
+import {BreadcrumbLayout} from '../../../components/Layout';
 import { useApi } from '../../../context/ApiContext';
 import { DocumentsType } from '../../../hooks/types';
 
@@ -65,17 +65,24 @@ export function DocumentView() {
   }, [api, id, t]);
 
   return (
-    <LayoutTitle title={documentItem?.name[i18n.language]} withUnderline>
-      {documentItem && (
-        <div className="mt-13">
-          <p
-            dangerouslySetInnerHTML={{
-              __html: documentItem.content[i18n.language] || '',
-            }}
-            className="mt-4 text-gray-500"
-          ></p>
-        </div>
-      )}
-    </LayoutTitle>
+    <BreadcrumbLayout>
+      <div className="mt-[30px] flex flex-col gap-[50px]">
+        {documentItem && (
+          <>
+            <h4 className="text-3xl font-bold leading-8 text-black md:text-[55px]">
+              {documentItem.name[i18n.language]}
+            </h4>
+            <div className="rounded-[25px] bg-white px-[32px] py-[41px] shadow-md">
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: documentItem.content[i18n.language] || '',
+                }}
+                className="font-medium text-[#494949]"
+              ></p>
+            </div>
+          </>
+        )}
+      </div>
+    </BreadcrumbLayout>
   );
 }

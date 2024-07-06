@@ -1,4 +1,4 @@
-import { Translations } from '../../types/Translition';
+import { Translations } from '../../types/Translations';
 
 const ruTranslations: { translations: Translations } = {
   translations: {
@@ -8,6 +8,7 @@ const ruTranslations: { translations: Translations } = {
         about: 'О нас',
         faq: 'FAQ',
         staff: 'Руководство дивизиона',
+        airports: 'Аэропорты',
         discord: 'Дискорд',
         contact: 'Связь с нами',
         rules: 'Правила IVAO',
@@ -33,7 +34,7 @@ const ruTranslations: { translations: Translations } = {
       },
       community: {
         index: 'Сообщество',
-        training: 'Тренировочный кампус',
+        training: 'Обучение',
         events: 'Ивенты',
         forum: 'Форум BY',
         webeye: 'WebEye',
@@ -47,17 +48,28 @@ const ruTranslations: { translations: Translations } = {
       },
     },
     errorpage: {
-      notfoundtext: 'Что-то не так!',
+      notfoundtext: 'Cтраница не найдена',
       notfoundsubtext:
         'Кажется, вы попытались открыть страницу, которой нет. Хорошо, что мы приготовили для вас крутую кнопку:',
       homebutton: 'Домой!',
     },
-    heropage: {
-      title: 'Добро пожаловать в BY дивизион',
-      subtitle: 'Самый современный дивизион.',
-      subtitle2: 'Присоединяйтесь сейчас!',
-      joinbutton: 'Присоединиться!',
-      transfer: 'Перейти в BY дивизион!',
+    mainpage: {
+      heropage: {
+        title: 'Знакомьтесь',
+        title2: 'Беларусь',
+        joinbutton: 'Регистрация',
+        transfer: 'Перейти в BY',
+      },
+      widgets: {
+        first: 'Первые шаги',
+        discord: {
+          message: 'А где весь движ? 🛩️',
+          message2: 'Воу-воу, скорее заходи:',
+        },
+        airports: 'Аэродромы Дивизиона',
+        charts: 'Схемы',
+        about: 'В',
+      },
     },
     onlinecomponent: {
       title: 'Activity of division in the Network',
@@ -80,12 +92,8 @@ const ruTranslations: { translations: Translations } = {
       training: 'Необходима тренировка',
       caption: 'Для работы ТС необходима активная позиция УВД (GND+)',
     },
-    legal: {
-      title: 'Правовая информация',
-      text: 'Да, мы собираем и храним вашу информацию. Но делаем это в соответвии со следующими документами:',
-      privacypolicy: 'Политика конфиденциальности',
-      termsofuse: 'Условия использования',
-      ipp: 'Политика интеллектуальной собственности',
+    breadcrumb: {
+      title: 'На главную',
     },
     sector: {
       title: 'Сектор-файл',
@@ -117,7 +125,18 @@ const ruTranslations: { translations: Translations } = {
     },
     footer: {
       copyrightMessage: 'Все права защищены.',
-      followus: 'Социальные сети',
+      legal: {
+        title: 'Правовая информация',
+        privacypolicy: 'Политика конфиденциальности',
+        termsofuse: 'Правила использования',
+        ipp: 'Политика интеллектуальной собственности',
+      },
+      community: {
+        title: 'Сообщество',
+        forum: 'IVAO форум Беларусь',
+        ivao: 'Сайт IVAO',
+        ivaofamily: 'Семья IVAO',
+      },
     },
     notif: {
       loading: {

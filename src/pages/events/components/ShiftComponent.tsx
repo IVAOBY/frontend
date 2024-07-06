@@ -1,38 +1,108 @@
 import { useContext, useEffect, useState } from 'react';
 
+import {
+  Badge,
+  Box,
+  Card,
+  Center,
+  Container,
+  createStyles,
+  Flex,
+  Image,
+  rem,
+  Text,
+  Tooltip,
+} from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import {
   IconAirTrafficControl,
-  IconCar,
+  IconBrandFlightradar24,
   IconCircleX,
-  IconPlane,
   IconRadar,
-  IconSquareRoundedPlus,
 } from '@tabler/icons-react';
 import { format } from 'date-fns';
-import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
+import { CustomButton } from '../../../components/Button';
 import { useApi } from '../../../context/ApiContext';
 import { AuthContext } from '../../../context/UserContext';
 import { PartsEntity } from '../../../types/Events';
 
-const positionIcons = {
-  ground: <IconCar size={41} />,
-  tower: <IconAirTrafficControl size={41} />,
-  radar: <IconRadar size={41} />,
-  approach: <IconPlane size={41} />,
-};
+const useStyles = createStyles((theme) => ({
+  title: {
+    fontSize: rem(34),
+    fontWeight: 800,
+    color: theme.colors.blue[9],
+  },
+  subtitle: {
+    fontSize: rem(18),
+    fontWeight: 800,
+    color: theme.colors.blue[9],
+    '&::after': {
+      content: '""',
+      display: 'block',
+      backgroundColor: theme.fn.primaryColor(),
+      width: rem(45),
+      height: rem(2),
+      marginTop: theme.spacing.sm,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
+  },
 
-const positionColors = {
-  ground: 'bg-yellow-500',
-  tower: 'bg-semantic-red-500',
-  radar: 'bg-ocean-600',
-  approach: 'bg-atmos-700',
-};
+  image: {
+    maxWidth: '30%',
+  },
+
+  icon: {
+    backgroundColor: theme.colors.blue[9],
+    borderRadius: theme.radius.lg,
+    padding: theme.spacing.md,
+  },
+
+  cardContent: {
+    wordBreak: 'break-word',
+  },
+
+  cardAuthorDate: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: rem(20),
+    marginLeft: rem(20),
+    color: theme.colors.gray,
+  },
+
+  card: {
+    border: `${rem(2)} solid ${theme.colors.lightBlue[6]}`,
+  },
+
+  cardTitle: {
+    color: theme.colors.blue[9],
+    '&::after': {
+      content: '""',
+      display: 'block',
+      backgroundColor: theme.fn.primaryColor(),
+      width: rem(45),
+      height: rem(2),
+      marginTop: theme.spacing.sm,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
+  },
+
+  badge: {
+    margin: rem(5),
+    '&:hover': {
+      cursor: 'pointer',
+      transform: 'scale(1.02)',
+    },
+  },
+}));
 
 export function ShiftComponent() {
+  const { classes } = useStyles();
   const { t } = useTranslation();
   const { id } = useParams();
   const api = useApi();
@@ -130,7 +200,7 @@ export function ShiftComponent() {
 
   const handleUnbook = (bookingId: number) => {
     if (signed) {
-      api(`/events-booking/unbook/${bookingId}`, 'DELETE')
+      api(`/events-booking/unbook/${bookingId}`, 'v3', 'DELETE')
         .then(async () => {
           const response = await api(`/events-parts/event/${id}`);
           if (response && Array.isArray(response)) {
@@ -154,7 +224,7 @@ export function ShiftComponent() {
   };
 
   return (
-    <div>
+    <Container size="lg" py="xl">
       {partItem &&
         partItem.map((part) => (
           <div key={part.id} className="mb-8">
@@ -214,9 +284,6 @@ export function ShiftComponent() {
                             'flex w-[338px] flex-row items-center gap-3'
                           }
                         >
-                          <div
-                            className={`flex size-14 items-center justify-center rounded-2xl ${positionColors[type]}`}
-                          >
                             {positionIcons[type]}
                           </div>
                           <div>
@@ -323,11 +390,11 @@ export function ShiftComponent() {
                     );
                   })
               ) : (
-                <div>{t('events.booking.none')}</div>
+                <Text>{t('events.booking.none')}</Text>
               )}
-            </div>
+            </Flex>
           </div>
         ))}
-    </div>
+    </Container>
   );
 }
