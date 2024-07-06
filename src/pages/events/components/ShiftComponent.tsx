@@ -237,7 +237,7 @@ export function ShiftComponent() {
                                     (booking) =>
                                       booking.status === 1 ||
                                       booking.bookedUser.id ==
-                                        decodedToken.userData.id,
+                                        decodedToken?.userData.id,
                                   )
                                   .map((booking) => (
                                     <div
