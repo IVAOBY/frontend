@@ -1,15 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import {
-  Container,
-  createStyles,
-  Flex,
-  Image,
-  Paper,
-  rem,
-  Text,
-  Title,
-} from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { IconCircleX } from '@tabler/icons-react';
 import { format } from 'date-fns';
@@ -21,50 +11,6 @@ import { useApi } from '../../context/ApiContext';
 import { EventEntity } from '../../types/Events';
 import { ShiftComponent } from './components/ShiftComponent';
 
-const useStyles = createStyles((theme) => ({
-  title: {
-    fontSize: rem(34),
-    fontWeight: 800,
-    color: theme.colors.blue[9],
-  },
-  subtitle: {
-    fontSize: rem(18),
-    fontWeight: 800,
-    color: theme.colors.blue[9],
-    '&::after': {
-      content: '""',
-      display: 'block',
-      backgroundColor: theme.fn.primaryColor(),
-      width: rem(45),
-      height: rem(2),
-      marginTop: theme.spacing.sm,
-      marginLeft: 'auto',
-      marginRight: 'auto',
-    },
-  },
-
-  image: {
-    maxWidth: '100%',
-    minWidth: '80%',
-    height: 'auto',
-    [theme.fn.largerThan('md')]: {
-      maxWidth: '50%',
-    },
-  },
-
-  cardContent: {
-    wordBreak: 'break-word',
-  },
-
-  cardAuthorDate: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: rem(20),
-    marginLeft: rem(20),
-    color: theme.colors.gray,
-  },
-}));
 
 export function EventPage() {
   const { classes, theme } = useStyles();
@@ -122,57 +68,69 @@ export function EventPage() {
   }, [api, id, t]);
 
   return (
-    <Container size="lg" py="xl">
+    <GeneralLayout>
+      <div className="mb-4 flex flex-row text-gray-300">
+        <IconChevronLeft />
+        <span className="font-['Montserrat']">На главную</span>
+      </div>
       {eventItem && (
         <>
-          <Title order={2} className={classes.title} ta="center" mt="sm">
+          <div className="mb-4 text-3xl font-bold text-black md:text-5xl">
             {eventItem.name[i18n.language]}
-          </Title>
-          <Text className={classes.subtitle} ta={'center'}>
-            {`${format(new Date(eventItem.startDate), 'dd.MM.yy')} ${new Date(
-              eventItem.startDate,
-            ).toLocaleTimeString('eu', {
-              timeZone: 'UTC',
-              hour12: false,
-              hour: '2-digit',
-              minute: '2-digit',
-            })}`}
-            {` - ${format(new Date(eventItem.startDate), 'dd.MM.yy')} ${new Date(
-              eventItem.endDate,
-            ).toLocaleTimeString('eu', {
-              timeZone: 'UTC',
-              hour12: false,
-              hour: '2-digit',
-              minute: '2-digit',
-            })}`}
-          </Text>
-          <Paper p={'lg'} bg={'#fff'} shadow={'lg'} radius={'lg'} mt={rem(13)}>
-            <Flex
-              gap={'md'}
-              className={classes.cardContent}
-              justify="center"
-              align="center"
-              direction="column"
-              wrap="wrap"
-              py="xl"
-            >
-              <Image
+          </div>
+          <div className="mt-2 flex w-full flex-wrap gap-2">
+            <div className="justify-center rounded-xl bg-zinc-900 px-3 py-2 text-center text-sm font-semibold leading-4 text-white">
+              {`${format(new Date(eventItem.startDate), 'dd.MM')} ${new Date(
+                eventItem.startDate,
+              ).toLocaleTimeString('eu', {
+                timeZone: 'UTC',
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+              })}`}
+              {` – ${new Date(eventItem.endDate).toLocaleTimeString('eu', {
+                timeZone: 'UTC',
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+              })}`}
+            </div>
+            {registrationStatus === 'open' ? (
+              <div className="flex gap-1.5 rounded-xl bg-green-500 px-1.5 text-lg font-semibold leading-4 text-white backdrop-blur-[5px]">
+                <IconClockCheck className="mt-1" />
+                <div className="my-auto flex-auto">Запись открыта</div>
+              </div>
+            ) : (
+              <div className="flex gap-1.5 rounded-xl bg-semantic-red-500 px-1.5 text-lg font-semibold leading-4 text-white backdrop-blur-[5px]">
+                <IconClockCancel className="mt-1" />
+                <div className="my-auto flex-auto">Запись закрыта</div>
+              </div>
+            )}
+          </div>
+          <div className="mt-8 flex flex-col gap-12 lg:flex-row">
+            <div className="w-full rounded-2xl xl:w-1/2">
+              <img
                 src={eventItem.imageUrl}
                 alt={eventItem.name.en}
-                className={classes.image}
-                radius="lg"
+                className="size-full rounded-3xl object-cover shadow-lg shadow-gray-400"
               />
-              <Text color={theme.colors.gray[8]} fz={rem(16)} mt={rem(10)}>
-                {eventItem.description[i18n.language]}
-              </Text>
-            </Flex>
-          </Paper>
-          <Paper p={'lg'} bg={'#fff'} shadow={'lg'} radius={'lg'} mt={rem(23)}>
-            <Title order={2} className={classes.title} ta="center" mt="sm">
-              ATC Shift
-            </Title>
-            <ShiftComponent />
-          </Paper>
+            </div>
+            <div className="w-full rounded-2xl bg-white font-['Montserrat'] shadow-lg shadow-gray-400 xl:w-1/2">
+              <div className="mx-8 my-10">
+                <p className="text-3xl font-semibold leading-5 text-black">
+                  Основная информация
+                </p>
+                <div
+                  className="mt-8 max-w-[647px] break-words text-xl font-medium leading-6 tracking-tighter text-black"
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      eventItem.description[i18n.language] || 'Failed to load',
+                  }}
+                ></div>
+              </div>
+            </div>
+          </div>
+          <ShiftComponent />
         </>
       )}
     </Container>
