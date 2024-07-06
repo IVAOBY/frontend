@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 
 import { notifications } from '@mantine/notifications';
 import {
-  IconChevronLeft,
   IconCircleX,
   IconClockCancel,
   IconClockCheck,

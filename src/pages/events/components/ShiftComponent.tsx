@@ -305,7 +305,7 @@ export function ShiftComponent() {
                               </div>
                             ) : signed ? (
                               <div
-                                onClick={handleBookClick(
+                                onClick={() => handleBookClick(
                                   part.id,
                                   position.atcPositionId,
                                 )}
