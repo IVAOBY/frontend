@@ -1,32 +1,78 @@
 import { useEffect, useState } from 'react';
 
-import { notifications } from '@mantine/notifications';
 import {
-  IconChevronLeft,
-  IconCircleX,
-  IconClockCancel,
-  IconClockCheck,
-} from '@tabler/icons-react';
+  Container,
+  createStyles,
+  Flex,
+  Image,
+  Paper,
+  rem,
+  Text,
+  Title,
+} from '@mantine/core';
+import { notifications } from '@mantine/notifications';
+import { IconCircleX } from '@tabler/icons-react';
 import { format } from 'date-fns';
 import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
-import { GeneralLayout } from '../../components/Layout';
 import { useApi } from '../../context/ApiContext';
 import { EventEntity } from '../../types/Events';
 import { ShiftComponent } from './components/ShiftComponent';
 
+const useStyles = createStyles((theme) => ({
+  title: {
+    fontSize: rem(34),
+    fontWeight: 800,
+    color: theme.colors.blue[9],
+  },
+  subtitle: {
+    fontSize: rem(18),
+    fontWeight: 800,
+    color: theme.colors.blue[9],
+    '&::after': {
+      content: '""',
+      display: 'block',
+      backgroundColor: theme.fn.primaryColor(),
+      width: rem(45),
+      height: rem(2),
+      marginTop: theme.spacing.sm,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
+  },
+
+  image: {
+    maxWidth: '100%',
+    minWidth: '80%',
+    height: 'auto',
+    [theme.fn.largerThan('md')]: {
+      maxWidth: '50%',
+    },
+  },
+
+  cardContent: {
+    wordBreak: 'break-word',
+  },
+
+  cardAuthorDate: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: rem(20),
+    marginLeft: rem(20),
+    color: theme.colors.gray,
+  },
+}));
+
 export function EventPage() {
+  const { classes, theme } = useStyles();
   const { t } = useTranslation();
   const { id } = useParams();
   const api = useApi();
 
   const [eventItem, setEventItem] = useState<EventEntity | null>(null);
-  const [registrationStatus, setRegistrationStatus] = useState<
-    'open' | 'closed'
-  >('closed');
-
   useEffect(() => {
     notifications.show({
       id: 'load-data',
@@ -46,19 +92,6 @@ export function EventPage() {
         ) {
           setEventItem(response);
           notifications.hide('load-data');
-
-          // Check registration status
-          const eventStartDate = new Date(response.startDate);
-          const currentTime = new Date();
-          const sixHoursBeforeEvent = new Date(
-            eventStartDate.getTime() - 6 * 60 * 60 * 1000,
-          );
-
-          if (currentTime < sixHoursBeforeEvent) {
-            setRegistrationStatus('open');
-          } else {
-            setRegistrationStatus('closed');
-          }
         } else {
           console.error('Invalid response from API:', response);
           notifications.update({
@@ -89,71 +122,59 @@ export function EventPage() {
   }, [api, id, t]);
 
   return (
-    <GeneralLayout>
-      <div className="flex text-gray-300 flex-row mb-4">
-        <IconChevronLeft />
-        <span className="font-['Montserrat']">На главную</span>
-      </div>
+    <Container size="lg" py="xl">
       {eventItem && (
         <>
-          <div className="text-3xl font-bold text-black md:text-5xl mb-4">
+          <Title order={2} className={classes.title} ta="center" mt="sm">
             {eventItem.name[i18n.language]}
-          </div>
-          <div className="w-full flex flex-wrap mt-2 gap-2">
-            <div className="justify-center px-3 py-2 text-sm font-semibold leading-4 text-center text-white rounded-xl bg-zinc-900">
-              {`${format(new Date(eventItem.startDate), 'dd.MM')} ${new Date(
-                eventItem.startDate,
-              ).toLocaleTimeString('eu', {
-                timeZone: 'UTC',
-                hour12: false,
-                hour: '2-digit',
-                minute: '2-digit',
-              })}`}
-              {` – ${new Date(eventItem.endDate).toLocaleTimeString('eu', {
-                timeZone: 'UTC',
-                hour12: false,
-                hour: '2-digit',
-                minute: '2-digit',
-              })}`}
-            </div>
-            {registrationStatus === 'open' ? (
-              <div className="flex gap-1.5 px-1.5 text-lg font-semibold leading-4 text-white bg-green-500 rounded-xl backdrop-blur-[5px]">
-                <IconClockCheck className="mt-1" />
-                <div className="flex-auto my-auto">Запись открыта</div>
-              </div>
-            ) : (
-              <div className="flex gap-1.5 px-1.5 text-lg font-semibold leading-4 text-white bg-semantic-red-500 rounded-xl backdrop-blur-[5px]">
-                <IconClockCancel className="mt-1" />
-                <div className="flex-auto my-auto">Запись закрыта</div>
-              </div>
-            )}
-          </div>
-          <div className="mt-8 flex flex-col lg:flex-row gap-12">
-            <div className="w-full xl:w-1/2 rounded-2xl">
-              <img
+          </Title>
+          <Text className={classes.subtitle} ta={'center'}>
+            {`${format(new Date(eventItem.startDate), 'dd.MM.yy')} ${new Date(
+              eventItem.startDate,
+            ).toLocaleTimeString('eu', {
+              timeZone: 'UTC',
+              hour12: false,
+              hour: '2-digit',
+              minute: '2-digit',
+            })}`}
+            {` - ${format(new Date(eventItem.startDate), 'dd.MM.yy')} ${new Date(
+              eventItem.endDate,
+            ).toLocaleTimeString('eu', {
+              timeZone: 'UTC',
+              hour12: false,
+              hour: '2-digit',
+              minute: '2-digit',
+            })}`}
+          </Text>
+          <Paper p={'lg'} bg={'#fff'} shadow={'lg'} radius={'lg'} mt={rem(13)}>
+            <Flex
+              gap={'md'}
+              className={classes.cardContent}
+              justify="center"
+              align="center"
+              direction="column"
+              wrap="wrap"
+              py="xl"
+            >
+              <Image
                 src={eventItem.imageUrl}
                 alt={eventItem.name.en}
-                className="rounded-3xl shadow-gray-400 shadow-lg w-full h-full object-cover"
+                className={classes.image}
+                radius="lg"
               />
-            </div>
-            <div className="bg-white w-full xl:w-1/2 rounded-2xl font-['Montserrat'] shadow-gray-400 shadow-lg">
-              <div className="mx-8 my-10">
-                <p className="text-3xl font-semibold leading-5 text-black">
-                  Основная информация
-                </p>
-                <div
-                  className="text-xl mt-8 font-medium tracking-tighter leading-6 text-black max-w-[647px] break-words"
-                  dangerouslySetInnerHTML={{
-                    __html:
-                      eventItem.description[i18n.language] || 'Failed to load',
-                  }}
-                ></div>
-              </div>
-            </div>
-          </div>
-          <ShiftComponent />
+              <Text color={theme.colors.gray[8]} fz={rem(16)} mt={rem(10)}>
+                {eventItem.description[i18n.language]}
+              </Text>
+            </Flex>
+          </Paper>
+          <Paper p={'lg'} bg={'#fff'} shadow={'lg'} radius={'lg'} mt={rem(23)}>
+            <Title order={2} className={classes.title} ta="center" mt="sm">
+              ATC Shift
+            </Title>
+            <ShiftComponent />
+          </Paper>
         </>
       )}
-    </GeneralLayout>
+    </Container>
   );
 }

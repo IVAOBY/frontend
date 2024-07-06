@@ -41,7 +41,7 @@ export const ApiProvider = ({ children }: ApiProviderProps) => {
       url: 'https://api.by.ivao.aero' + path || 'http://localhost:3000',
       method,
       headers,
-      data: body || undefined,
+      data: body || '', // Set data to empty string if body is null
     };
 
     try {
