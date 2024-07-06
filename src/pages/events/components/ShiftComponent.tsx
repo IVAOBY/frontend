@@ -98,11 +98,10 @@ export function ShiftComponent() {
             },
           );
 
-          await api(`/events-parts/event/${id}`).then((response: any) => {
-            if (response && Array.isArray(response)) {
-              setPartItem(response);
-            }
-          });
+          const response = await api(`/events-parts/event/${id}`);
+          if (response && Array.isArray(response)) {
+            setPartItem(response);
+          }
         } catch (error) {
           console.log('Error handling booking:', error);
         }
@@ -133,17 +132,24 @@ export function ShiftComponent() {
     if (signed) {
       api(`/events-booking/unbook/${bookingId}`, 'DELETE')
         .then(async () => {
-          await api(`/events-parts/event/${id}`).then((response: any) => {
-            if (response && Array.isArray(response)) {
-              setPartItem(response);
-            }
-          });
+          const response = await api(`/events-parts/event/${id}`);
+          if (response && Array.isArray(response)) {
+            setPartItem(response);
+          }
         })
         .catch((error: any) => {
           console.log('Error handling unbooking:', error);
         });
     } else {
       console.log('Token is not defined or null');
+    }
+  };
+
+  const handleBookClick = async (partId: number, atcPositionId: number) => {
+    try {
+      await handleBook(partId, atcPositionId);
+    } catch (error) {
+      console.error('Error while booking:', error);
     }
   };
 
@@ -299,19 +305,10 @@ export function ShiftComponent() {
                               </div>
                             ) : signed ? (
                               <div
-                                onClick={async () => {
-                                  try {
-                                    await handleBook(
-                                      part.id,
-                                      position.atcPositionId,
-                                    );
-                                  } catch (error) {
-                                    console.error(
-                                      'Error while booking:',
-                                      error,
-                                    );
-                                  }
-                                }}
+                                onClick={handleBookClick(
+                                  part.id,
+                                  position.atcPositionId,
+                                )}
                                 className="leading-16 hover:bg-opacity-80/80 flex gap-1.5 rounded-xl bg-atmos-700 px-1.5 text-lg font-semibold text-white backdrop-blur-[5px] transition duration-500 hover:cursor-pointer"
                               >
                                 <IconSquareRoundedPlus className="mt-0.5" />
