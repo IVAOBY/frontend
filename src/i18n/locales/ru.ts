@@ -165,8 +165,15 @@ const ruTranslations: { translations: Translations } = {
     },
     events: {
       content: {
-        title: 'Ивенты',
+        title: 'Основная информация',
       },
+      tags: {
+        shift: {
+          open: 'Запись открыта',
+          close: 'Запись закрыта',
+        },
+      },
+      shift: 'Диспетчерская смена',
       booking: {
         book: 'Забронировать',
         unbook: 'Отменить',

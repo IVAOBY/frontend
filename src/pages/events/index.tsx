@@ -95,7 +95,7 @@ export function EventPage() {
                 {eventItem.name[i18n.language]}
               </div>
               <div className="mt-2 flex w-full flex-wrap gap-2">
-                <div className="justify-center rounded-xl bg-zinc-900 px-3 py-2 text-center text-sm font-semibold leading-4 text-white">
+                <div className="justify-center rounded-xl bg-zinc-900 px-3 py-2 text-center text-[18px] font-semibold leading-4 text-white">
                   {`${format(new Date(eventItem.startDate), 'dd.MM')} ${new Date(
                       eventItem.startDate,
                   ).toLocaleTimeString('eu', {
@@ -112,14 +112,14 @@ export function EventPage() {
                   })}`}
                 </div>
                 {registrationStatus === 'open' ? (
-                    <div className="flex gap-1.5 rounded-xl bg-green-500 px-1.5 text-lg font-semibold leading-4 text-white backdrop-blur-[5px]">
-                      <IconClockCheck className="mt-1" />
-                      <div className="my-auto flex-auto">Запись открыта</div>
+                    <div className="flex gap-1.5 rounded-xl items-center bg-green-500 px-1.5 text-[18px] font-semibold leading-4 text-white backdrop-blur-[5px]">
+                      <IconClockCheck size={24} />
+                      <div className="my-auto flex-auto">{t('events.tags.shift.open')}</div>
                     </div>
                 ) : (
-                    <div className="flex gap-1.5 rounded-xl bg-semantic-red-500 px-1.5 text-lg font-semibold leading-4 text-white backdrop-blur-[5px]">
-                      <IconClockCancel className="mt-1" />
-                      <div className="my-auto flex-auto">Запись закрыта</div>
+                    <div className="flex gap-1.5 rounded-xl items-center bg-semantic-red-500 px-1.5 text-[18px] font-semibold leading-4 text-white backdrop-blur-[5px]">
+                      <IconClockCancel size={24} />
+                      <div className="my-auto flex-auto">{t('events.tags.shift.close')}</div>
                     </div>
                 )}
               </div>
@@ -133,8 +133,8 @@ export function EventPage() {
                 </div>
                 <div className="w-full rounded-2xl bg-white font-['Montserrat'] shadow-lg shadow-gray-400 xl:w-1/2">
                   <div className="mx-8 my-10">
-                    <p className="text-3xl font-semibold leading-5 text-black">
-                      Основная информация
+                    <p className="text-3xl font-semibold leading-7 text-black">
+                      {t('events.content.title')}
                     </p>
                     <div
                         className="mt-8 max-w-[647px] break-words text-xl font-medium leading-6 tracking-tighter text-black"

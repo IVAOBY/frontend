@@ -161,6 +161,13 @@ export interface Translations {
     content: {
       title: string;
     };
+    tags: {
+      shift: {
+        open: string;
+        close: string;
+      };
+    };
+    shift: string;
     booking: {
       book: string;
       unbook: string;

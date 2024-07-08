@@ -165,8 +165,15 @@ const beTranslations: { translations: Translations } = {
     },
     events: {
       content: {
-        title: 'Івэнты',
+        title: 'Асноўная інфармацыя',
       },
+      tags: {
+        shift: {
+          open: 'Запіс адкрыты',
+          close: 'Запіс зачынены',
+        },
+      },
+      shift: 'Дыспетчарская змена',
       booking: {
         book: 'Забраніраваць',
         unbook: 'Адмяніць',

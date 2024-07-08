@@ -165,8 +165,15 @@ const enTranslations: { translations: Translations } = {
     },
     events: {
       content: {
-        title: 'Events',
+        title: 'General information',
       },
+      tags: {
+        shift: {
+          open: 'Booking is open',
+          close: 'Booking is closed',
+        },
+      },
+      shift: 'ATC Shift',
       booking: {
         book: 'Book',
         unbook: 'Cancel',

@@ -160,7 +160,7 @@ export function ShiftComponent() {
           <div key={part.id} className="mb-8">
             <div className="mb-10 flex flex-col gap-4 first:mt-[50px] md:flex-row md:items-center md:gap-[35px]">
               <h2 className="text-[45px] font-semibold leading-10 text-atmos-700">
-                Диспетчерская смена {part.id}
+                {t('events.shift')} {part.id}
               </h2>
               <div className="flex h-[30px] items-center justify-center gap-1.5 rounded-xl bg-atmos-700 px-3.5 py-1.5 text-[18px] font-semibold leading-4 text-white backdrop-blur-[5px]">
                 {`${format(new Date(part.startDate), 'HH:mm')} – ${format(
