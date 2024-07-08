@@ -53,6 +53,11 @@ const enTranslations: { translations: Translations } = {
         "It seems like you tried to open a page that doesn't exist. Good thing we have a cool button for you:",
       homebutton: 'Home!',
     },
+    aboutus: {
+      title: 'What is IVAO?',
+      text: ', abbreviated as IVAO, was founded in 1998 with the goal of creating an online platform for flight simulator enthusiasts to enjoy their hobby in a simulated real-life environment, in the company of other people flying or providing air traffic control services.',
+      text2: 'IVAO is a legally registered non-profit organization (NPO) under Belgian law. It has a multi-level governance structure to ensure its strategic management in a fair, legal and transparent manner. All IVAO services and software are always provided free of charge, as the organization\'s costs are covered by private donations and corporate sponsorships. For more information on how NPOs are governed, visit the Association\'s page.',
+    },
     mainpage: {
       heropage: {
         title: 'Meet',

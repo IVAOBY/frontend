@@ -49,6 +49,11 @@ export interface Translations {
     notfoundsubtext: string;
     homebutton: string;
   };
+  aboutus: {
+    title: string;
+    text: string;
+    text2: string;
+  };
   mainpage: {
     heropage: {
       title: string;

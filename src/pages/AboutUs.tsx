@@ -1,9 +1,9 @@
 import joinbanner from '../assets/image/joinbaner.png';
 import {BreadcrumbLayout} from '../components/Layout';
+import {useTranslation} from "react-i18next";
 
 export function AboutUs() {
-  // const { classes, theme } = useStyles();
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
 
   return (
     <BreadcrumbLayout>
@@ -15,29 +15,16 @@ export function AboutUs() {
         />
         <div className="mt-10 rounded-2xl bg-white px-[31px] py-[42px] shadow-md md:pt-[60px] 2xl:w-[1536px]">
           <h2 className="mb-4 text-2xl font-bold text-black md:text-[55px]">
-            Что такое IVAO?
-
+            {t('aboutus.title')}
           </h2>
           <p className="text-lg font-medium leading-6 text-black md:mt-[40px] md:text-[25px] md:leading-[29px]">
             <a href="https://www.ivao.aero/" className="text-atmos-700">
               International Virtual Aviation Organisation
             </a>
-            , сокращенно IVAO, была основана в 1998 году с целью создания
-            онлайн-платформы для любителей авиасимуляторов, позволяющей им
-            наслаждаться своим хобби в моделируемой реальной среде, в компании
-            других людей, летающих или предоставляющих услуги по управлению
-            воздушным движением.
+            {t('aboutus.text')}
           </p>
           <p className="mt-4 text-lg font-medium leading-6 text-black md:text-[25px] md:leading-[29px]">
-            IVAO является юридически зарегистрированной некоммерческой
-            организацией (НКО) в соответствии с бельгийским законодательством.
-            Она имеет многоуровневую структуру управления, обеспечивающую ее
-            стратегическое управление на справедливой, законной и прозрачной
-            основе. Все услуги и программное обеспечение IVAO всегда
-            предоставляются бесплатно, поскольку расходы организации покрываются
-            за счет частных пожертвований и корпоративной спонсорской помощи.
-            Для получения более подробной информации о том, как осуществляется
-            управление НКО, посетите страницу Ассоциации.
+            {t('aboutus.text2')}
           </p>
         </div>
         {/*<ol className="relative mt-10 border-s border-gray-200 dark:border-gray-700">*/}
