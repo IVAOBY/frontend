@@ -17,7 +17,7 @@ import { useApi } from '../../context/ApiContext';
 import i18n from '../../i18n/i18n';
 import { Airport } from '../../types/Airport';
 import { CustomButton } from '../Button';
-import {BreadcrumbLayout} from '../Layout';
+import { BreadcrumbLayout } from '../Layout';
 
 const positionIcons = {
   ground: <IconCar size={41} />,

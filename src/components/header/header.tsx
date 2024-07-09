@@ -1,8 +1,12 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 
-
-
-import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react';
+import {
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+  Transition,
+} from '@headlessui/react';
 import {
   IconAirTrafficControl,
   IconArticle,
@@ -23,12 +27,10 @@ import {
   IconPlaneTilt,
   IconUsers,
   IconUsersGroup,
-  IconWorld
+  IconWorld,
 } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-
-
 
 import by from '../../assets/image/by.svg';
 import discord from '../../assets/image/discord.svg';
@@ -40,44 +42,114 @@ import ru from '../../assets/image/ru.svg';
 import steps from '../../assets/image/steps.svg';
 import { AuthContext } from '../../context/UserContext';
 
-
 const categories = [
   {
     label: 'navbar.division.index',
     icon: <IconInfoSquareRounded size={20} />,
     links: [
-      { href: '/about-us', label: 'navbar.division.about', icon: <IconUsers size={20} /> },
-      { href: 'https://wiki.ivao.aero/en/home/ivao/information', label: 'navbar.division.rules', icon: <IconBook size={20} />, external: true },
-      { href: '/staff', label: 'navbar.division.staff', icon: <IconIdBadge2 size={20} /> },
+      {
+        href: '/about-us',
+        label: 'navbar.division.about',
+        icon: <IconUsers size={20} />,
+      },
+      {
+        href: 'https://wiki.ivao.aero/en/home/ivao/information',
+        label: 'navbar.division.rules',
+        icon: <IconBook size={20} />,
+        external: true,
+      },
+      {
+        href: '/staff',
+        label: 'navbar.division.staff',
+        icon: <IconIdBadge2 size={20} />,
+      },
       //{ href: '/contact-us', label: 'navbar.division.contact', icon: <IconMailForward size={20} /> },
-      { href: 'https://discord.by.ivao.aero', label: 'navbar.division.discord', icon: <img src={discord} width={19} alt="Discord Icon" />, external: true },
-      { href: '/airports', label: 'navbar.division.airports', icon: <IconPlaneDeparture size={20} /> },
-      { href: '/faq', label: 'navbar.division.faq', icon: <IconMessages size={20} /> },
-    ]
+      {
+        href: 'https://discord.by.ivao.aero',
+        label: 'navbar.division.discord',
+        icon: <img src={discord} width={19} alt="Discord Icon" />,
+        external: true,
+      },
+      {
+        href: '/airports',
+        label: 'navbar.division.airports',
+        icon: <IconPlaneDeparture size={20} />,
+      },
+      {
+        href: '/faq',
+        label: 'navbar.division.faq',
+        icon: <IconMessages size={20} />,
+      },
+    ],
   },
   {
     label: 'navbar.atc.index',
     icon: <IconAirTrafficControl size={20} />,
     links: [
-      { href: '/atc/first-step', label: 'navbar.atc.start', icon: <img src={steps} width={20} alt="ATC First Step" /> },
+      {
+        href: '/atc/first-step',
+        label: 'navbar.atc.start',
+        icon: <img src={steps} width={20} alt="ATC First Step" />,
+      },
       //{ href: '/sector', label: 'navbar.atc.sector', icon: <IconMapCog size={20} /> },
-      { href: 'https://www.ban.by/en/aeronautical-information-aip/amdt', label: 'navbar.atc.charts', icon: <IconFileInfo size={20} />, external: true },
-      { href: 'https://atc.ivao.aero/fras?division=BY', label: 'navbar.atc.fra', icon: <IconLock size={20} />, external: true },
+      {
+        href: 'https://www.ban.by/en/aeronautical-information-aip/amdt',
+        label: 'navbar.atc.charts',
+        icon: <IconFileInfo size={20} />,
+        external: true,
+      },
+      {
+        href: 'https://atc.ivao.aero/fras?division=BY',
+        label: 'navbar.atc.fra',
+        icon: <IconLock size={20} />,
+        external: true,
+      },
       //{ href: '/vehicles', label: 'navbar.atc.vehicles', icon: <IconCar size={20} /> },
-      { href: '/documents/category/1', label: 'navbar.atc.docs', icon: <IconArticle size={20} /> },
-      { href: '/documents/5', label: 'navbar.atc.gca', icon: <IconWorld size={20} /> },
-    ]
+      {
+        href: '/documents/category/1',
+        label: 'navbar.atc.docs',
+        icon: <IconArticle size={20} />,
+      },
+      {
+        href: '/documents/5',
+        label: 'navbar.atc.gca',
+        icon: <IconWorld size={20} />,
+      },
+    ],
   },
   {
     label: 'navbar.pilots.index',
     icon: <IconPlaneTilt size={20} />,
     links: [
-      { href: 'https://wiki.ivao.aero/en/home/devops/manuals/altitude-first-step', label: 'navbar.pilots.start', icon: <img src={steps} width={20} alt="PilotFS Icon" />, external: true },
-      { href: '/airports', label: 'navbar.pilots.scenarios', icon: <IconPlaneDeparture size={20} /> },
-      { href: 'https://www.ban.by/en/aeronautical-information-aip/amdt', label: 'navbar.pilots.charts', icon: <IconFileInfo size={20} />, external: true },
-      { href: '/documents/category/2', label: 'navbar.atc.docs', icon: <IconArticle size={20} /> },
-      { href: 'https://tours.th.ivao.aero', label: 'navbar.pilots.tours', icon: <IconMap2 size={20} />, external: true },
-    ]
+      {
+        href: 'https://wiki.ivao.aero/en/home/devops/manuals/altitude-first-step',
+        label: 'navbar.pilots.start',
+        icon: <img src={steps} width={20} alt="PilotFS Icon" />,
+        external: true,
+      },
+      {
+        href: '/airports',
+        label: 'navbar.pilots.scenarios',
+        icon: <IconPlaneDeparture size={20} />,
+      },
+      {
+        href: 'https://www.ban.by/en/aeronautical-information-aip/amdt',
+        label: 'navbar.pilots.charts',
+        icon: <IconFileInfo size={20} />,
+        external: true,
+      },
+      {
+        href: '/documents/category/2',
+        label: 'navbar.atc.docs',
+        icon: <IconArticle size={20} />,
+      },
+      {
+        href: 'https://tours.th.ivao.aero',
+        label: 'navbar.pilots.tours',
+        icon: <IconMap2 size={20} />,
+        external: true,
+      },
+    ],
   },
   {
     label: 'navbar.community.index',
@@ -85,12 +157,36 @@ const categories = [
     links: [
       //{ href: 'https://google.com', label: 'navbar.community.events', icon: <IconCalendarEvent size={20} />, external: true },
       //{ href: 'https://google.com', label: 'navbar.community.training', icon: <IconSchool size={20} />, external: true },
-      { href: '/documents', label: 'navbar.atc.docs', icon: <IconArticle size={20} /> },
-      { href: 'https://forum.ivao.aero', label: 'navbar.community.forum', icon: <IconMessageCircle2 size={20} />, external: true },
-      { href: 'https://ivao.aero', label: 'navbar.community.ivao', icon: <img src={ivaoLogo} width={20} alt="IVAO Icon" />, external: true },
-      { href: 'https://webeye.ivao.aero', label: 'navbar.community.webeye', icon: <IconEye size={20} />, external: true },
-      { href: 'https://tracker.ivao.aero', label: 'navbar.community.tracker', icon: <IconFocus2 size={20} />, external: true },
-    ]
+      {
+        href: '/documents',
+        label: 'navbar.atc.docs',
+        icon: <IconArticle size={20} />,
+      },
+      {
+        href: 'https://forum.ivao.aero',
+        label: 'navbar.community.forum',
+        icon: <IconMessageCircle2 size={20} />,
+        external: true,
+      },
+      {
+        href: 'https://ivao.aero',
+        label: 'navbar.community.ivao',
+        icon: <img src={ivaoLogo} width={20} alt="IVAO Icon" />,
+        external: true,
+      },
+      {
+        href: 'https://webeye.ivao.aero',
+        label: 'navbar.community.webeye',
+        icon: <IconEye size={20} />,
+        external: true,
+      },
+      {
+        href: 'https://tracker.ivao.aero',
+        label: 'navbar.community.tracker',
+        icon: <IconFocus2 size={20} />,
+        external: true,
+      },
+    ],
   },
 ];
 
@@ -143,7 +239,7 @@ export function HeaderResponsive() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-500 ${
+      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${
         opened && isSmallScreen
           ? 'bg-atmos-700 transition-none'
           : scrollPosition > 0
@@ -153,7 +249,7 @@ export function HeaderResponsive() {
               : 'bg-atmos-700'
       }`}
     >
-      <div className="container mx-auto flex justify-between items-center h-28 px-4">
+      <div className="container mx-auto flex h-28 items-center justify-between px-4">
         <img
           className="h-16 w-48 cursor-pointer"
           src={
@@ -171,7 +267,7 @@ export function HeaderResponsive() {
           alt="Logo"
         />
 
-        <div className="hidden md:flex space-x-4">
+        <div className="hidden space-x-4 md:flex">
           {categories.map((category) => (
             <CommonDropdownContent
               key={category.label}
@@ -192,18 +288,18 @@ export function HeaderResponsive() {
         </div>
         <button
           className={`md:hidden ${
-              opened && isSmallScreen
-                  ? 'text-white'
-                  : scrollPosition > 0
-                      ? 'text-atmos-700'
-                      : currentPath === '/'
-                          ? 'bg-transparent'
-                          : 'bg-atmos-700'
+            opened && isSmallScreen
+              ? 'text-white'
+              : scrollPosition > 0
+                ? 'text-atmos-700'
+                : currentPath === '/'
+                  ? 'bg-transparent'
+                  : 'bg-atmos-700'
           }`}
           onClick={() => setOpened(!opened)}
         >
           <svg
-            className="w-6 h-6"
+            className="size-6"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -219,7 +315,7 @@ export function HeaderResponsive() {
         </button>
 
         {opened && (
-          <div className="md:hidden absolute top-24 left-0 right-0 bg-atmos-700 transition-all duration-500 shadow-lg rounded-b-md">
+          <div className="absolute inset-x-0 top-24 rounded-b-md bg-atmos-700 shadow-lg transition-all duration-500 md:hidden">
             {categories.map((category) => (
               <CommonDropdownContent
                 key={category.label}
@@ -257,7 +353,7 @@ function CommonDropdownContent({ scrollPosition, category }) {
   return (
     <Menu>
       <MenuButton
-        className={`flex items-center space-x-2 px-1 py-2 font-bold ${scrollPosition > 0 && !isSmallScreen ? 'hover:text-ocean-600  text-blue-900' : 'hover:text-gray-200 text-white'}`}
+        className={`flex items-center space-x-2 px-1 py-2 font-bold ${scrollPosition > 0 && !isSmallScreen ? 'text-blue-900  hover:text-ocean-600' : 'text-white hover:text-gray-200'}`}
       >
         {category.icon}
         <span>{t(category.label)}</span>
@@ -273,13 +369,13 @@ function CommonDropdownContent({ scrollPosition, category }) {
       >
         <MenuItems
           anchor="bottom"
-          className="absolute z-[70] mt-2 w-56 bg-white shadow-lg rounded-xl py-2"
+          className="absolute z-[70] mt-2 w-56 rounded-xl bg-white py-2 shadow-lg"
         >
           {category.links.map(({ href, label, icon, external }) => (
             <MenuItem key={label}>
               {({ active }) => (
                 <button
-                  className={`w-full text-black font-light flex items-center text-left px-4 py-2 ${active && 'bg-gray-100'}`}
+                  className={`flex w-full items-center px-4 py-2 text-left font-light text-black ${active && 'bg-gray-100'}`}
                   onClick={() => (external ? menuLink(href) : navigate(href))}
                 >
                   {icon}
@@ -294,23 +390,36 @@ function CommonDropdownContent({ scrollPosition, category }) {
   );
 }
 
-function AuthButton({ scrollPosition, signed, decodedToken, handleAuthAction }) {
+function AuthButton({
+  scrollPosition,
+  signed,
+  decodedToken,
+  handleAuthAction,
+}) {
   const { t } = useTranslation();
 
   return (
-      <>
-        {signed ? (
-            <button className={`flex items-center space-x-2 px-1 py-2 font-bold ${scrollPosition > 0 && !isSmallScreen ? 'hover:text-ocean-600  text-blue-900' : 'hover:text-gray-200 text-white'}`} onClick={handleAuthAction}>
-              <IconLogout size={20} />
-              <span>{decodedToken?.userData.name.first} {decodedToken?.userData.id}</span>
-            </button>
-        ) : (
-            <button className={`flex items-center space-x-2 px-1 py-2 font-bold ${scrollPosition > 0 && !isSmallScreen ? 'hover:text-ocean-600  text-blue-900' : 'hover:text-gray-200 text-white'}`} onClick={handleAuthAction}>
-              <IconLogin2 size={20} />
-              <span>{t('navbar.user.login')}</span>
-            </button>
-        )}
-      </>
+    <>
+      {signed ? (
+        <button
+          className={`flex items-center space-x-2 px-1 py-2 font-bold ${scrollPosition > 0 && !isSmallScreen ? 'text-blue-900  hover:text-ocean-600' : 'text-white hover:text-gray-200'}`}
+          onClick={handleAuthAction}
+        >
+          <IconLogout size={20} />
+          <span>
+            {decodedToken?.userData.name.first} {decodedToken?.userData.id}
+          </span>
+        </button>
+      ) : (
+        <button
+          className={`flex items-center space-x-2 px-1 py-2 font-bold ${scrollPosition > 0 && !isSmallScreen ? 'text-blue-900  hover:text-ocean-600' : 'text-white hover:text-gray-200'}`}
+          onClick={handleAuthAction}
+        >
+          <IconLogin2 size={20} />
+          <span>{t('navbar.user.login')}</span>
+        </button>
+      )}
+    </>
   );
 }
 
@@ -318,36 +427,51 @@ function LanguageButton({ scrollPosition, changeLanguage }) {
   const { t } = useTranslation();
 
   return (
-      <Menu>
-        <MenuButton className={`flex items-center space-x-2 font-bold px-1 py-2 hover:text-gray-300 ${scrollPosition > 0 && !isSmallScreen ? 'text-blue-900' : 'text-white'}`}>
-          <IconLanguage size={25} />
-        </MenuButton>
-        <Transition
-            as={React.Fragment}
-            enter="transition ease-out duration-100"
-            enterFrom="transform opacity-0 scale-95"
-            enterTo="transform opacity-100 scale-100"
-            leave="transition ease-in duration-75"
-            leaveFrom="transform opacity-100 scale-100"
-            leaveTo="transform opacity-0 scale-95"
+    <Menu>
+      <MenuButton
+        className={`flex items-center space-x-2 px-1 py-2 font-bold hover:text-gray-300 ${scrollPosition > 0 && !isSmallScreen ? 'text-blue-900' : 'text-white'}`}
+      >
+        <IconLanguage size={25} />
+      </MenuButton>
+      <Transition
+        as={React.Fragment}
+        enter="transition ease-out duration-100"
+        enterFrom="transform opacity-0 scale-95"
+        enterTo="transform opacity-100 scale-100"
+        leave="transition ease-in duration-75"
+        leaveFrom="transform opacity-100 scale-100"
+        leaveTo="transform opacity-0 scale-95"
+      >
+        <MenuItems
+          anchor="bottom"
+          className="absolute z-[70] mt-2 w-48 rounded-xl bg-white py-2 font-light text-black shadow-lg"
         >
-          <MenuItems anchor="bottom" className="absolute mt-2 w-48 bg-white z-[70] shadow-lg rounded-xl text-black font-light py-2">
-            {['be', 'ru', 'en'].map((lang) => (
-                <MenuItem key={lang}>
-                  {({ active }) => (
-                      <button
-                          className={`w-full text-left px-4 py-2 items-center ${active && 'bg-gray-100'}`}
-                          onClick={() => changeLanguage(lang)}
-                      >
-                        <img src={lang === 'be' ? by : lang === 'ru' ? ru : en} className="w-5 h-5 inline mr-2" alt={`${lang.toUpperCase()} Flag`} />
-                        {t(lang === 'be' ? 'Беларуская' : lang === 'ru' ? 'Русский' : 'English')}
-                      </button>
+          {['be', 'ru', 'en'].map((lang) => (
+            <MenuItem key={lang}>
+              {({ active }) => (
+                <button
+                  className={`w-full items-center px-4 py-2 text-left ${active && 'bg-gray-100'}`}
+                  onClick={() => changeLanguage(lang)}
+                >
+                  <img
+                    src={lang === 'be' ? by : lang === 'ru' ? ru : en}
+                    className="mr-2 inline size-5"
+                    alt={`${lang.toUpperCase()} Flag`}
+                  />
+                  {t(
+                    lang === 'be'
+                      ? 'Беларуская'
+                      : lang === 'ru'
+                        ? 'Русский'
+                        : 'English',
                   )}
-                </MenuItem>
-            ))}
-          </MenuItems>
-        </Transition>
-      </Menu>
+                </button>
+              )}
+            </MenuItem>
+          ))}
+        </MenuItems>
+      </Transition>
+    </Menu>
   );
 }
 

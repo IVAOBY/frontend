@@ -1,19 +1,20 @@
+import { IconChevronLeft } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
-import {IconChevronLeft} from "@tabler/icons-react";
-import {useNavigate} from "react-router-dom";
-
-
-
-
+import { useNavigate } from 'react-router-dom';
 
 export const Breadcrumb = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
-      <div className="flex flex-row text-gray-400 hover:text-gray-300 transition duration-300 mb-3 max-w-36 hover:cursor-pointer" onClick={()=> navigate('/')}>
-          <IconChevronLeft/>
-          <span className="font-bold font-['Montserrat']">{t('breadcrumb.title')}</span>
-      </div>
+    <div
+      className="mb-3 flex max-w-36 flex-row text-gray-400 transition duration-300 hover:cursor-pointer hover:text-gray-300"
+      onClick={() => navigate('/')}
+    >
+      <IconChevronLeft />
+      <span className="font-['Montserrat'] font-bold">
+        {t('breadcrumb.title')}
+      </span>
+    </div>
   );
 };

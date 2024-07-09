@@ -305,10 +305,14 @@ export function ShiftComponent() {
                               </div>
                             ) : signed ? (
                               <div
-                                onClick={() => handleBookClick(
-                                  part.id,
-                                  position.atcPositionId,
-                                )}
+                                onClick={() => {
+                                  handleBookClick(
+                                    part.id,
+                                    position.atcPositionId,
+                                  ).catch((error) => {
+                                    console.error('Error booking:', error);
+                                  });
+                                }}
                                 className="leading-16 hover:bg-opacity-80/80 flex gap-1.5 rounded-xl bg-atmos-700 px-1.5 text-lg font-semibold text-white backdrop-blur-[5px] transition duration-500 hover:cursor-pointer"
                               >
                                 <IconSquareRoundedPlus className="mt-0.5" />

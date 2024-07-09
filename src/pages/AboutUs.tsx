@@ -1,6 +1,7 @@
+import { useTranslation } from 'react-i18next';
+
 import joinbanner from '../assets/image/joinbaner.png';
-import {BreadcrumbLayout} from '../components/Layout';
-import {useTranslation} from "react-i18next";
+import { BreadcrumbLayout } from '../components/Layout';
 
 export function AboutUs() {
   const { t } = useTranslation();

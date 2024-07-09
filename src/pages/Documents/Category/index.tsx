@@ -5,13 +5,12 @@ import { IconCircleX } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import {BreadcrumbLayout} from '../../../components/Layout';
+import { BreadcrumbLayout } from '../../../components/Layout';
 import { useApi } from '../../../context/ApiContext';
 import { DocumentsCategoryType, DocumentsType } from '../../../hooks/types';
 
 export function DocumentsCategory() {
-  const [, setDocumentsCategory] =
-    useState<DocumentsCategoryType | null>(null);
+  const [, setDocumentsCategory] = useState<DocumentsCategoryType | null>(null);
   const [documents, setDocuments] = useState<DocumentsType[]>([]);
   const { t, i18n } = useTranslation();
   const api = useApi();

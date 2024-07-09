@@ -109,7 +109,7 @@ export interface Translations {
   };
   breadcrumb: {
     title: string;
-  },
+  };
   sector: {
     title: string;
     text: string;

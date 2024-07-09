@@ -1,8 +1,8 @@
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import discord from '../../../assets/icons/footer/discord.svg';
 import belavia from '../../../assets/image/belaviakrylo.svg';
-import {useTranslation} from "react-i18next";
 
 export function Widgets() {
   const navigate = useNavigate();
@@ -38,18 +38,20 @@ export function Widgets() {
         <div className="flex w-full flex-col gap-6">
           <div className="flex flex-col gap-6 xl:flex-row">
             <div
-                onClick={() => handleInternalLink('/about-us')}
+              onClick={() => handleInternalLink('/about-us')}
               className="relative hidden h-[270px] w-full cursor-pointer rounded-3xl border border-stone-300 bg-white xl:flex xl:w-[747px] xl:flex-row"
             >
               <img
                 src="https://cdn.by.ivao.aero/images/widget_about.png"
                 alt="Belarus in IVAO"
-                className="h-full w-full rounded-l-3xl object-cover"
+                className="size-full rounded-l-3xl object-cover"
               />
               <div className="flex flex-col justify-center break-words pl-4 font-bold">
-                <p className="text-[60px] leading-none text-black uppercase">{t('mainpage.heropage.title2')}</p>
+                <p className="text-[60px] uppercase leading-none text-black">
+                  {t('mainpage.heropage.title2')}
+                </p>
                 <div className="flex items-center gap-4">
-                  <span className="text-[100px] leading-none text-black uppercase">
+                  <span className="text-[100px] uppercase leading-none text-black">
                     {t('mainpage.widgets.about')}
                   </span>
                   <span className="text-[100px] leading-none text-atmos-700">
@@ -73,7 +75,7 @@ export function Widgets() {
               <img
                 src="https://cdn.by.ivao.aero/images/widget_charts.png"
                 alt="Charts image"
-                className="rounded-l-b-2xl absolute left-0 top-[52px] z-10 mb-0 hidden h-[65%] w-full pb-0 xl:top-[-0px] xl:block xl:h-full xl:w-full"
+                className="rounded-l-b-2xl absolute left-0 top-[52px] z-10 mb-0 hidden h-[65%] w-full pb-0 xl:-top-0 xl:block xl:size-full"
               />
             </div>
           </div>
@@ -120,9 +122,9 @@ export function Widgets() {
               <img
                 src="https://cdn.by.ivao.aero/images/widget_airports.png"
                 alt="UMMS Aurora"
-                className="rounded-l-b-2xl absolute -left-[1px] top-[-0px] z-10 mb-0 h-full w-full rounded-l-3xl pb-0 object-cover"
+                className="rounded-l-b-2xl absolute -left-px -top-0 z-10 mb-0 size-full rounded-l-3xl object-cover pb-0"
               />
-              <p className="z-20 text-right font-['Montserrat'] text-[70px] font-bold uppercase leading-[66.5px] tracking-tighter text-white max-w-[511px]">
+              <p className="z-20 max-w-[511px] text-right font-['Montserrat'] text-[70px] font-bold uppercase leading-[66.5px] tracking-tighter text-white">
                 {t('mainpage.widgets.airports')}
               </p>
             </div>
