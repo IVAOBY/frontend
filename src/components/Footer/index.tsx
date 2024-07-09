@@ -112,13 +112,13 @@ export const Footer = () => {
               titleKey="footer.community.title"
               classname="hidden lg:block"
               links={[
-                { to: 'https://youtube.com/', text: 'footer.community.ivao' },
+                { to: 'https://ivao.aero/', text: 'footer.community.ivao' },
                 {
-                  to: 'https://facebook.com/',
+                  to: 'https://family.ivao.aero/',
                   text: 'footer.community.ivaofamily',
                 },
                 {
-                  to: 'https://www.instagram.com/ivao_by/',
+                  to: 'https://forum.ivao.aero/',
                   text: 'footer.community.forum',
                 },
               ]}
@@ -154,7 +154,7 @@ export const Footer = () => {
                 alt="YouTube"
               />
               <SocialIcon
-                href="https://www.youtube.com/watch?v=NVDB-OUDWYI"
+                href="https://t.me/ivaoby"
                 src={telegramIcon}
                 alt="Telegram"
               />

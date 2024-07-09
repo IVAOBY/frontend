@@ -4,7 +4,7 @@ import { notifications } from '@mantine/notifications';
 import { IconCircleX, IconIdBadge2, IconMailOpened } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 
-import {BreadcrumbLayout} from '../../components/Layout';
+import { BreadcrumbLayout } from '../../components/Layout';
 import { useApi } from '../../context/ApiContext';
 
 interface Department {

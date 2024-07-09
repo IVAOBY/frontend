@@ -49,12 +49,28 @@ export interface Translations {
     notfoundsubtext: string;
     homebutton: string;
   };
-  heropage: {
+  aboutus: {
     title: string;
-    subtitle: string;
-    subtitle2: string;
-    joinbutton: string;
-    transfer: string;
+    text: string;
+    text2: string;
+  };
+  mainpage: {
+    heropage: {
+      title: string;
+      title2: string;
+      joinbutton: string;
+      transfer: string;
+    };
+    widgets: {
+      first: string;
+      discord: {
+        message: string;
+        message2: string;
+      };
+      airports: string;
+      charts: string;
+      about: string;
+    };
   };
   onlinecomponent: {
     title: string;
@@ -93,7 +109,7 @@ export interface Translations {
   };
   breadcrumb: {
     title: string;
-  },
+  };
   sector: {
     title: string;
     text: string;
@@ -145,6 +161,13 @@ export interface Translations {
     content: {
       title: string;
     };
+    tags: {
+      shift: {
+        open: string;
+        close: string;
+      };
+    };
+    shift: string;
     booking: {
       book: string;
       unbook: string;

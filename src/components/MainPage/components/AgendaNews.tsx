@@ -7,7 +7,6 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { useApi } from '../../../context/ApiContext';
-import { GeneralLayout } from '../../Layout';
 import Pagination from '../../Pagination';
 import { Title } from '../../Typography/Title';
 
@@ -96,10 +95,10 @@ export function AgendaNews() {
   const endIndex = startIndex + itemsPerPage;
 
   return (
-    <GeneralLayout>
+    <div className={'pt-8'}>
       <Title withUndreline>{t('news.title')}</Title>
 
-      <div className=" mt-10 flex flex-wrap justify-center gap-6">
+      <div className=" mt-10 flex flex-wrap justify-center gap-8">
         {news === null
           ? Array.from({ length: itemsPerPage }).map((_, index) => (
               <div
@@ -111,7 +110,7 @@ export function AgendaNews() {
           : news.slice(startIndex, endIndex).map((newsItem) => (
               <div
                 key={newsItem.id}
-                className="md:w-280px relative h-[170px] w-11/12 overflow-hidden rounded-xl duration-300 hover:scale-95 hover:transition-all md:h-[270px] md:w-[480px]"
+                className="md:w-280px relative h-[170px] w-11/12 overflow-hidden rounded-2xl shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl md:h-[270px] md:w-[480px]"
                 onClick={() => newsRedirect(newsItem)}
                 style={{ cursor: 'pointer' }}
               >
@@ -123,17 +122,32 @@ export function AgendaNews() {
                     backgroundPosition: 'center',
                   }}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
-                  <div className="absolute inset-0 flex flex-col items-start justify-end p-6 text-white">
-                    <div className="flex items-center justify-center gap-2.5 rounded-[999px] border border-white bg-white/0 px-2 py-1 backdrop-blur-[10px]">
-                      <div className="text-xs font-medium text-white">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/20"></div>
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-4 text-white">
+                    <div className="mb-2 flex items-center justify-between">
+                      <div className="text-sm font-medium">
                         {format(new Date(newsItem.publishedAt), 'dd.MM.yyyy')}
                       </div>
+                      <div className="rounded bg-black/50 px-2 py-1 text-xs">
+                        {newsItem.user &&
+                        newsItem.user.staffPositions &&
+                        newsItem.user.staffPositions.length > 0
+                          ? newsItem.user.staffPositions
+                              .map((position) => `BY-${position.id}`)
+                              .filter(
+                                (value, index, self) =>
+                                  self.indexOf(value) === index,
+                              )
+                              .join('/')
+                          : newsItem.user
+                            ? `${newsItem.user.name.first} ${newsItem.user.id}`
+                            : 'IVAO BY HQ'}
+                      </div>
                     </div>
-                    <div className="text-sm font-bold md:text-3xl">
+                    <div className="truncate text-lg font-bold">
                       {newsItem.name[i18n.language]}
                     </div>
-                    <div className="text-xs  font-normal leading-normal md:text-base">
+                    <div className="mt-2 text-sm leading-snug">
                       {newsItem.description[i18n.language].length > 96
                         ? `${newsItem.description[i18n.language].slice(0, 96)}...`
                         : newsItem.description[i18n.language]}
@@ -147,8 +161,8 @@ export function AgendaNews() {
         currentPage={currentPage}
         totalPages={Math.ceil(news ? news.length / itemsPerPage : 1)}
         onPageChange={setCurrentPage}
-        className="mt-5"
+        className="mt-8"
       />
-    </GeneralLayout>
+    </div>
   );
 }

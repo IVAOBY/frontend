@@ -5,7 +5,7 @@ import { IconCircleX } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
-import {BreadcrumbLayout, Centered} from '../../components/Layout';
+import { BreadcrumbLayout, Centered } from '../../components/Layout';
 import { Loader } from '../../components/Loader';
 import { H3 } from '../../components/Typography/H3';
 import { useApi } from '../../context/ApiContext';

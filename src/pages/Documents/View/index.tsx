@@ -6,7 +6,7 @@ import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
-import {BreadcrumbLayout} from '../../../components/Layout';
+import { BreadcrumbLayout } from '../../../components/Layout';
 import { useApi } from '../../../context/ApiContext';
 import { DocumentsType } from '../../../hooks/types';
 

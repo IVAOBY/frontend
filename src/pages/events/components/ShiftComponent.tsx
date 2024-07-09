@@ -1,108 +1,38 @@
 import { useContext, useEffect, useState } from 'react';
 
-import {
-  Badge,
-  Box,
-  Card,
-  Center,
-  Container,
-  createStyles,
-  Flex,
-  Image,
-  rem,
-  Text,
-  Tooltip,
-} from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import {
   IconAirTrafficControl,
-  IconBrandFlightradar24,
+  IconCar,
   IconCircleX,
+  IconPlane,
   IconRadar,
+  IconSquareRoundedPlus,
 } from '@tabler/icons-react';
 import { format } from 'date-fns';
+import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
-import { CustomButton } from '../../../components/Button';
 import { useApi } from '../../../context/ApiContext';
 import { AuthContext } from '../../../context/UserContext';
 import { PartsEntity } from '../../../types/Events';
 
-const useStyles = createStyles((theme) => ({
-  title: {
-    fontSize: rem(34),
-    fontWeight: 800,
-    color: theme.colors.blue[9],
-  },
-  subtitle: {
-    fontSize: rem(18),
-    fontWeight: 800,
-    color: theme.colors.blue[9],
-    '&::after': {
-      content: '""',
-      display: 'block',
-      backgroundColor: theme.fn.primaryColor(),
-      width: rem(45),
-      height: rem(2),
-      marginTop: theme.spacing.sm,
-      marginLeft: 'auto',
-      marginRight: 'auto',
-    },
-  },
+const positionIcons = {
+  ground: <IconCar size={41} />,
+  tower: <IconAirTrafficControl size={41} />,
+  radar: <IconRadar size={41} />,
+  approach: <IconPlane size={41} />,
+};
 
-  image: {
-    maxWidth: '30%',
-  },
-
-  icon: {
-    backgroundColor: theme.colors.blue[9],
-    borderRadius: theme.radius.lg,
-    padding: theme.spacing.md,
-  },
-
-  cardContent: {
-    wordBreak: 'break-word',
-  },
-
-  cardAuthorDate: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: rem(20),
-    marginLeft: rem(20),
-    color: theme.colors.gray,
-  },
-
-  card: {
-    border: `${rem(2)} solid ${theme.colors.lightBlue[6]}`,
-  },
-
-  cardTitle: {
-    color: theme.colors.blue[9],
-    '&::after': {
-      content: '""',
-      display: 'block',
-      backgroundColor: theme.fn.primaryColor(),
-      width: rem(45),
-      height: rem(2),
-      marginTop: theme.spacing.sm,
-      marginLeft: 'auto',
-      marginRight: 'auto',
-    },
-  },
-
-  badge: {
-    margin: rem(5),
-    '&:hover': {
-      cursor: 'pointer',
-      transform: 'scale(1.02)',
-    },
-  },
-}));
+const positionColors = {
+  ground: 'bg-yellow-500',
+  tower: 'bg-semantic-red-500',
+  radar: 'bg-ocean-600',
+  approach: 'bg-atmos-700',
+};
 
 export function ShiftComponent() {
-  const { classes } = useStyles();
   const { t } = useTranslation();
   const { id } = useParams();
   const api = useApi();
@@ -168,11 +98,10 @@ export function ShiftComponent() {
             },
           );
 
-          await api(`/events-parts/event/${id}`).then((response: any) => {
-            if (response && Array.isArray(response)) {
-              setPartItem(response);
-            }
-          });
+          const response = await api(`/events-parts/event/${id}`);
+          if (response && Array.isArray(response)) {
+            setPartItem(response);
+          }
         } catch (error) {
           console.log('Error handling booking:', error);
         }
@@ -201,13 +130,12 @@ export function ShiftComponent() {
 
   const handleUnbook = (bookingId: number) => {
     if (signed) {
-      api(`/events-booking/unbook/${bookingId}`, 'v3', 'DELETE')
+      api(`/events-booking/unbook/${bookingId}`, 'DELETE')
         .then(async () => {
-          await api(`/events-parts/event/${id}`).then((response: any) => {
-            if (response && Array.isArray(response)) {
-              setPartItem(response);
-            }
-          });
+          const response = await api(`/events-parts/event/${id}`);
+          if (response && Array.isArray(response)) {
+            setPartItem(response);
+          }
         })
         .catch((error: any) => {
           console.log('Error handling unbooking:', error);
@@ -217,167 +145,193 @@ export function ShiftComponent() {
     }
   };
 
+  const handleBookClick = async (partId: number, atcPositionId: number) => {
+    try {
+      await handleBook(partId, atcPositionId);
+    } catch (error) {
+      console.error('Error while booking:', error);
+    }
+  };
+
   return (
-    <Container size="lg" py="xl">
+    <div>
       {partItem &&
         partItem.map((part) => (
-          <div key={part.id}>
-            <Text className={classes.subtitle} ta="center">
-              {`${format(new Date(part.startDate), 'dd.MM.yy')} ${new Date(
-                part.startDate,
-              ).toLocaleTimeString('eu', {
-                timeZone: 'UTC',
-                hour12: false,
-                hour: '2-digit',
-                minute: '2-digit',
-              })}`}
-              {` - ${format(new Date(part.startDate), 'dd.MM.yy')} ${new Date(
-                part.endDate,
-              ).toLocaleTimeString('eu', {
-                timeZone: 'UTC',
-                hour12: false,
-                hour: '2-digit',
-                minute: '2-digit',
-              })}`}
-            </Text>
-            <Flex
-              mt={rem(13)}
-              gap="md"
-              justify="center"
-              direction="row"
-              wrap="wrap"
-            >
+          <div key={part.id} className="mb-8">
+            <div className="mb-10 flex flex-col gap-4 first:mt-[50px] md:flex-row md:items-center md:gap-[35px]">
+              <h2 className="text-[45px] font-semibold leading-10 text-atmos-700">
+                {t('events.shift')} {part.id}
+              </h2>
+              <div className="flex h-[30px] items-center justify-center gap-1.5 rounded-xl bg-atmos-700 px-3.5 py-1.5 text-[18px] font-semibold leading-4 text-white backdrop-blur-[5px]">
+                {`${format(new Date(part.startDate), 'HH:mm')} – ${format(
+                  new Date(part.endDate),
+                  'HH:mm',
+                )}`}
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-4">
               {part.positions && part.positions.length > 0 ? (
-                part.positions.map((position) => (
-                  <Card
-                    mb={30}
-                    mt={15}
-                    key={position.atcPositionId}
-                    shadow="md"
-                    radius="md"
-                    className={classes.card}
-                    padding="xl"
-                    miw={300}
-                  >
-                    <Center>
-                      <Box className={classes.icon}>
-                        {position.position.callsign.endsWith('APP') ? (
-                          <IconRadar size={rem(40)} stroke={2} color="#fff" />
-                        ) : position.position.callsign.endsWith('CTR') ? (
-                          <IconBrandFlightradar24
-                            size={rem(40)}
-                            stroke={2}
-                            color="#fff"
-                          />
-                        ) : (
-                          <IconAirTrafficControl
-                            size={rem(40)}
-                            stroke={2}
-                            color="#fff"
-                          />
-                        )}
-                      </Box>
-                    </Center>
-                    <Text
-                      fz="lg"
-                      fw={700}
-                      className={classes.cardTitle}
-                      mt="md"
-                      ta={'center'}
-                    >
-                      {position.position.callsign}
-                    </Text>
-                    <Center mt={10} mb={10}>
-                      <Image
-                        className={classes.image}
-                        aria-label="IVAO"
-                        src={`https://www.ivao.aero/data/images/ratings/atc/${position.position.fra}.gif`}
-                      />
-                    </Center>
-                    {part.booking
-                      .filter(
-                        (bookingItem) =>
-                          bookingItem.atcPosition?.id ===
-                          position.atcPositionId,
-                      )
-                      .map((filteredBookingItem) => (
-                        <Center
-                          key={filteredBookingItem.id}
-                          style={{ margin: '0px' }}
-                        >
-                          <Tooltip
-                            label="IVAO Profile"
-                            color="blue"
-                            position="bottom"
-                            withArrow
-                          >
-                            <Badge
-                              className={classes.badge}
-                              component="a"
-                              href={`https://www.ivao.aero/Member.aspx?Id=${filteredBookingItem.bookedUser?.id}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              color={
-                                filteredBookingItem.status === 0
-                                  ? 'blue'
-                                  : filteredBookingItem.status === 1
-                                    ? 'green'
-                                    : 'red'
-                              }
-                              style={{ margin: '5px' }}
-                            >
-                              {signed
-                                ? `${filteredBookingItem.bookedUser?.name.first} ${filteredBookingItem.bookedUser?.name.last}`
-                                : `${filteredBookingItem.bookedUser?.name.first} ${filteredBookingItem.bookedUser?.id}`}
-                            </Badge>
-                          </Tooltip>
-                        </Center>
-                      ))}
+                part.positions
+                  .map((position) => {
+                    const callsign = position.position.callsign.toLowerCase();
+                    let positionType = '';
+                    if (callsign.includes('gnd')) {
+                      positionType = 'ground';
+                    } else if (callsign.includes('twr')) {
+                      positionType = 'tower';
+                    } else if (callsign.includes('r_app')) {
+                      positionType = 'radar';
+                    } else {
+                      positionType = 'approach';
+                    }
+                    return { position, type: positionType };
+                  })
+                  .sort((a, b) => {
+                    const typeOrder = {
+                      ground: 0,
+                      tower: 1,
+                      radar: 2,
+                      approach: 3,
+                    };
+                    return typeOrder[a.type] - typeOrder[b.type];
+                  })
+                  .map(({ position, type }) => {
+                    const bookingsForPosition = part.booking.filter(
+                      (bookingItem) =>
+                        bookingItem.atcPosition?.id === position.atcPositionId,
+                    );
+                    const hasStatusOne = bookingsForPosition.some(
+                      (booking) => booking.status === 1,
+                    );
 
-                    {signed &&
-                    isBookedForPosition(
-                      part.booking,
-                      position.atcPositionId,
-                    ) ? (
-                      <Center>
-                        <CustomButton
-                          title={t('events.booking.unbook')}
-                          variant="destructive"
-                          size={'lg'}
-                          onClick={() => {
-                            const bookingId: number = getBookingIdForPosition(
+                    return (
+                      <div
+                        key={position.id}
+                        className="flex w-[300px] flex-col rounded-2xl bg-white p-[19px] shadow-lg"
+                      >
+                        <div
+                          className={
+                            'flex w-[338px] flex-row items-center gap-3'
+                          }
+                        >
+                          <div
+                            className={`flex size-14 items-center justify-center rounded-2xl ${positionColors[type]}`}
+                          >
+                            {positionIcons[type]}
+                          </div>
+                          <div>
+                            <div className="text-2xl font-semibold text-black">
+                              {position.position.name[i18n.language]}
+                            </div>
+                            <div className="text-[15px] font-semibold text-[#ABA7A7]">
+                              {position.position.callsign},{' '}
+                              {position.position.frequency}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="mt-[15px] flex flex-col gap-2">
+                          {bookingsForPosition.length > 0 &&
+                            (hasStatusOne
+                              ? bookingsForPosition
+                                  .filter(
+                                    (booking) =>
+                                      booking.status === 1 ||
+                                      booking.bookedUser.id ==
+                                        decodedToken?.userData.id,
+                                  )
+                                  .map((booking) => (
+                                    <div
+                                      key={booking.id}
+                                      className="flex items-center justify-between"
+                                    >
+                                      <span
+                                        className={`rounded-xl px-2 py-1 font-semibold ${
+                                          booking.status === 0
+                                            ? 'bg-[#E7EAF5] text-atmos-700'
+                                            : booking.status === 1
+                                              ? 'bg-[#EAF9EF] text-[#2EC662]'
+                                              : 'bg-[#FDEBEB] text-[#E93434]'
+                                        }`}
+                                      >
+                                        {booking.bookedUser?.name.first}{' '}
+                                        {booking.bookedUser?.id}
+                                      </span>
+                                    </div>
+                                  ))
+                              : bookingsForPosition.map((booking) => (
+                                  <div
+                                    key={booking.id}
+                                    className="flex items-center justify-between"
+                                  >
+                                    <span
+                                      className={`rounded-xl px-2 py-1 font-semibold ${
+                                        booking.status === 0
+                                          ? 'bg-[#E7EAF5] text-atmos-700'
+                                          : booking.status === 1
+                                            ? 'bg-[#EAF9EF] text-[#2EC662]'
+                                            : 'bg-[#FDEBEB] text-[#E93434]'
+                                      }`}
+                                    >
+                                      {booking.bookedUser?.name.first}{' '}
+                                      {booking.bookedUser?.id}
+                                    </span>
+                                  </div>
+                                )))}
+                          <div className="mt-[20px] flex">
+                            {signed &&
+                            isBookedForPosition(
                               part.booking,
                               position.atcPositionId,
-                            );
-                            if (typeof bookingId !== 'undefined') {
-                              handleUnbook(bookingId);
-                            } else {
-                              console.log('Booking ID is undefined');
-                            }
-                          }}
-                        />
-                      </Center>
-                    ) : signed ? (
-                      <Center>
-                        <CustomButton
-                          title={t('events.booking.book')}
-                          variant={'primary'}
-                          size={'lg'}
-                          /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
-                          onClick={() =>
-                            handleBook(part.id, position.atcPositionId)
-                          }
-                        />
-                      </Center>
-                    ) : null}
-                  </Card>
-                ))
+                            ) ? (
+                              <div
+                                onClick={() => {
+                                  const bookingId: number =
+                                    getBookingIdForPosition(
+                                      part.booking,
+                                      position.atcPositionId,
+                                    );
+                                  if (typeof bookingId !== 'undefined') {
+                                    handleUnbook(bookingId);
+                                  } else {
+                                    console.log('Booking ID is undefined');
+                                  }
+                                }}
+                                className="leading-16 hover:bg-opacity-80/80 flex gap-1.5 rounded-xl bg-[#E93434] px-1.5 text-lg font-semibold text-white backdrop-blur-[5px] transition duration-500 hover:cursor-pointer"
+                              >
+                                <IconSquareRoundedPlus className="mt-0.5" />
+                                <div className="my-auto flex-auto">
+                                  {t('events.booking.unbook')}
+                                </div>
+                              </div>
+                            ) : signed ? (
+                              <div
+                                onClick={() => {
+                                  handleBookClick(
+                                    part.id,
+                                    position.atcPositionId,
+                                  ).catch((error) => {
+                                    console.error('Error booking:', error);
+                                  });
+                                }}
+                                className="leading-16 hover:bg-opacity-80/80 flex gap-1.5 rounded-xl bg-atmos-700 px-1.5 text-lg font-semibold text-white backdrop-blur-[5px] transition duration-500 hover:cursor-pointer"
+                              >
+                                <IconSquareRoundedPlus className="mt-0.5" />
+                                <div className="my-auto flex-auto">
+                                  {t('events.booking.book')}
+                                </div>
+                              </div>
+                            ) : null}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })
               ) : (
-                <Text>{t('events.booking.none')}</Text>
+                <div>{t('events.booking.none')}</div>
               )}
-            </Flex>
+            </div>
           </div>
         ))}
-    </Container>
+    </div>
   );
 }

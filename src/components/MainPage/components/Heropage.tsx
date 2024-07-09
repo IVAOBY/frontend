@@ -33,11 +33,11 @@ export function HeroText() {
   };
 
   /*  const scrollToNextSection = () => {
-          window.scrollTo({
-            top: window.innerHeight,
-            behavior: 'smooth'
-          });
-        };*/
+            window.scrollTo({
+              top: window.innerHeight,
+              behavior: 'smooth'
+            });
+          };*/
 
   const byTransferMail = useCallback(() => {
     if (!signed) {
@@ -76,31 +76,33 @@ ${decodedToken?.userData.name.first} ${decodedToken?.userData.name.last}`;
     >
       <div className="container z-10 mx-auto flex max-w-screen-2xl flex-col gap-4 px-4 py-8">
         <div className="leading-none">
-          <p className="font-['Futura PT'] text-[32px] font-bold text-white drop-shadow-lg sm:text-[40px] md:text-[70px] lg:text-[100px]">
-            ЗНАКОМЬТЕСЬ,
+          <p className="font-['Futura PT'] text-[32px] font-bold uppercase text-white drop-shadow-lg sm:text-[40px] md:text-[70px] lg:text-[100px]">
+            {t('mainpage.heropage.title')},
           </p>
-          <p className="font-['Futura PT'] my-[-10px] ml-[-4px] text-[60px] font-bold text-white drop-shadow-lg sm:text-[80px] md:ml-[-8px] md:mt-[-20px] md:text-[125px] xl:ml-[-20px] xl:text-[250px]">
-            БЕЛАРУСЬ
+          <p className="font-['Futura PT'] my-[-10px] ml-[-4px] text-[60px] font-bold uppercase text-white drop-shadow-lg sm:text-[80px] md:ml-[-8px] md:mt-[-20px] md:text-[125px] xl:ml-[-20px] xl:text-[250px]">
+            {t('mainpage.heropage.title2')}
           </p>
         </div>
         <div className="mt-8 flex flex-row gap-4">
           <CustomButton
-            size={'xl'}
-            className={'rounded-xl'}
-            onClick={() =>
-              openLink('https://ivao.aero/members/person/register.htm')
-            }
+              size={'xl'}
+              className={'rounded-xl'}
+              onClick={() =>
+                  openLink('https://ivao.aero/members/person/register.htm')
+              }
           >
-            Регистрация
+            {t('mainpage.heropage.joinbutton')}
           </CustomButton>
-          <CustomButton
-            size={'xl'}
-            className={'rounded-xl'}
-            variant={'white'}
-            onClick={byTransferMail}
-          >
-            {t('heropage.transfer')}
-          </CustomButton>
+          {signed ? (
+              <CustomButton
+                size={'xl'}
+                className={'rounded-xl'}
+                variant={'white'}
+                onClick={byTransferMail}
+              >
+                {t('mainpage.heropage.transfer')}
+              </CustomButton>
+          ) : null}
         </div>
       </div>
       <div className="absolute bottom-0 left-0 h-[200px] w-full bg-gradient-to-t from-background-body to-transparent md:h-[390px]"></div>

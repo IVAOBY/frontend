@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useApi } from '../../context/ApiContext';
 import i18n from '../../i18n/i18n';
 import { Airport } from '../../types/Airport';
-import {BreadcrumbLayout} from '../Layout';
+import { BreadcrumbLayout } from '../Layout';
 
 export function AirportsPage() {
   const [airports, setAirports] = useState<Airport[]>([]);
