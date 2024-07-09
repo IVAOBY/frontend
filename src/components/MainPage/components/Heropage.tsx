@@ -33,11 +33,11 @@ export function HeroText() {
   };
 
   /*  const scrollToNextSection = () => {
-          window.scrollTo({
-            top: window.innerHeight,
-            behavior: 'smooth'
-          });
-        };*/
+            window.scrollTo({
+              top: window.innerHeight,
+              behavior: 'smooth'
+            });
+          };*/
 
   const byTransferMail = useCallback(() => {
     if (!signed) {
@@ -84,23 +84,37 @@ ${decodedToken?.userData.name.first} ${decodedToken?.userData.name.last}`;
           </p>
         </div>
         <div className="mt-8 flex flex-row gap-4">
-          <CustomButton
-            size={'xl'}
-            className={'rounded-xl'}
-            onClick={() =>
-              openLink('https://ivao.aero/members/person/register.htm')
-            }
-          >
-            {t('mainpage.heropage.joinbutton')}
-          </CustomButton>
-          <CustomButton
-            size={'xl'}
-            className={'rounded-xl'}
-            variant={'white'}
-            onClick={byTransferMail}
-          >
-            {t('mainpage.heropage.transfer')}
-          </CustomButton>
+          {signed ? (
+            <>
+              <CustomButton
+                size={'xl'}
+                className={'rounded-xl'}
+                onClick={() =>
+                  openLink('https://ivao.aero/members/person/register.htm')
+                }
+              >
+                {t('mainpage.heropage.joinbutton')}
+              </CustomButton>
+              <CustomButton
+                size={'xl'}
+                className={'rounded-xl'}
+                variant={'white'}
+                onClick={byTransferMail}
+              >
+                {t('mainpage.heropage.transfer')}
+              </CustomButton>
+            </>
+          ) : (
+            <CustomButton
+              size={'xl'}
+              className={'rounded-xl'}
+              onClick={() =>
+                openLink('https://ivao.aero/members/person/register.htm')
+              }
+            >
+              {t('mainpage.heropage.joinbutton')}
+            </CustomButton>
+          )}
         </div>
       </div>
       <div className="absolute bottom-0 left-0 h-[200px] w-full bg-gradient-to-t from-background-body to-transparent md:h-[390px]"></div>
