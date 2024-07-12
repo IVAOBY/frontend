@@ -39,37 +39,29 @@ export function ShiftComponent() {
   const { decodedToken, signed } = useContext(AuthContext);
 
   const [partItem, setPartItem] = useState<PartsEntity[] | null>(null);
+
   useEffect(() => {
-    notifications.show({
-      id: 'load-data',
-      loading: true,
-      title: t('notif.loading.name'),
-      message: t('notif.loading.descritpion'),
-      radius: 'lg',
-      autoClose: false,
-      withCloseButton: false,
-    });
-    api(`/events-parts/event/${id}`)
-      .then((response: any) => {
-        if (response && Array.isArray(response)) {
-          setPartItem(response);
-          notifications.hide('load-data');
-        } else {
-          console.error('Invalid response from API:', response);
-          notifications.update({
-            id: 'load-data',
-            color: 'red',
-            title: t('notif.server.name'),
-            message: t('notif.server.descritpion'),
-            radius: 'lg',
-            icon: <IconCircleX />,
-            withCloseButton: false,
-            autoClose: false,
-          });
-        }
-      })
-      .catch((error: any) => {
-        console.error('Error fetching news:', error);
+    loadEventData();
+  }, [api, id, t]);
+
+  const loadEventData = async () => {
+    try {
+      notifications.show({
+        id: 'load-data',
+        loading: true,
+        title: t('notif.loading.name'),
+        message: t('notif.loading.descritpion'),
+        radius: 'lg',
+        autoClose: false,
+        withCloseButton: false,
+      });
+
+      const response = await api(`/events-parts/event/${id}`);
+      if (response && Array.isArray(response)) {
+        setPartItem(response);
+        notifications.hide('load-data');
+      } else {
+        console.error('Invalid response from API:', response);
         notifications.update({
           id: 'load-data',
           color: 'red',
@@ -80,66 +72,87 @@ export function ShiftComponent() {
           withCloseButton: false,
           autoClose: false,
         });
+      }
+    } catch (error) {
+      console.error('Error fetching event parts:', error);
+      notifications.update({
+        id: 'load-data',
+        color: 'red',
+        title: t('notif.server.name'),
+        message: t('notif.server.descritpion'),
+        radius: 'lg',
+        icon: <IconCircleX />,
+        withCloseButton: false,
+        autoClose: false,
       });
-  }, [api, id, t]);
+    }
+  };
 
   const handleBook = async (partId: number, atcPositionId: number) => {
     if (signed && partItem) {
       const part = partItem.find((part) => part.id === partId);
       if (part) {
         try {
-          await api(
-            `/events-booking/book?atcPositionId=${atcPositionId}`,
-            'POST',
-            {
-              atcPositionId: atcPositionId,
-              eventPartId: part.id,
-              eventId: part.eventId,
-            },
-          );
+          await api('/events-booking/book', 'POST', {
+            atcPositionId: atcPositionId,
+            eventPartId: part.id,
+            eventId: part.eventId,
+          });
 
-          const response = await api(`/events-parts/event/${id}`);
-          if (response && Array.isArray(response)) {
-            setPartItem(response);
-          }
+          await loadEventData(); // Reload event data after booking
         } catch (error) {
-          console.log('Error handling booking:', error);
+          console.error('Error handling booking:', error);
+          notifications.show({
+            id: 'booking-error',
+            color: 'red',
+            title: t('notif.booking.error'),
+            message: t('notif.booking.error-description'),
+            radius: 'lg',
+            icon: <IconCircleX />,
+            withCloseButton: false,
+            autoClose: false,
+          });
         }
       }
     }
   };
 
-  function isBookedForPosition(bookings: any[], atcPositionId: number) {
+  const isBookedForPosition = (bookings: any[], atcPositionId: number) => {
     return bookings.some(
       (booking) =>
         booking.atcPosition?.id === atcPositionId &&
         booking.bookedUser?.id === decodedToken?.userData.id,
     );
-  }
+  };
 
-  function getBookingIdForPosition(bookings: any[], atcPositionId: number) {
-    const booking = bookings.find((booking) => {
-      return (
-        booking.atcPosition.id === atcPositionId &&
-        booking.bookedUser?.id === decodedToken?.userData.id
-      );
-    });
+  const getBookingIdForPosition = (bookings: any[], atcPositionId: number) => {
+    const booking = bookings.find(
+      (booking) =>
+        booking.atcPosition?.id === atcPositionId &&
+        booking.bookedUser?.id === decodedToken?.userData.id,
+    );
 
     return booking ? booking.id : undefined;
-  }
+  };
 
-  const handleUnbook = (bookingId: number) => {
+  const handleUnbook = async (bookingId: number) => {
     if (signed) {
-      api(`/events-booking/unbook/${bookingId}`, 'DELETE')
-        .then(async () => {
-          const response = await api(`/events-parts/event/${id}`);
-          if (response && Array.isArray(response)) {
-            setPartItem(response);
-          }
-        })
-        .catch((error: any) => {
-          console.log('Error handling unbooking:', error);
+      try {
+        await api(`/events-booking/unbook/${bookingId}`, 'DELETE');
+        await loadEventData(); // Reload event data after unbooking
+      } catch (error) {
+        console.error('Error handling unbooking:', error);
+        notifications.show({
+          id: 'unbooking-error',
+          color: 'red',
+          title: t('notif.unbooking.error'),
+          message: t('notif.unbooking.error-description'),
+          radius: 'lg',
+          icon: <IconCircleX />,
+          withCloseButton: false,
+          autoClose: false,
         });
+      }
     } else {
       console.log('Token is not defined or null');
     }
@@ -150,6 +163,16 @@ export function ShiftComponent() {
       await handleBook(partId, atcPositionId);
     } catch (error) {
       console.error('Error while booking:', error);
+      notifications.show({
+        id: 'booking-error',
+        color: 'red',
+        title: t('notif.booking.error'),
+        message: t('notif.booking.error-description'),
+        radius: 'lg',
+        icon: <IconCircleX />,
+        withCloseButton: false,
+        autoClose: false,
+      });
     }
   };
 
@@ -198,7 +221,7 @@ export function ShiftComponent() {
                   .map(({ position, type }) => {
                     const bookingsForPosition = part.booking.filter(
                       (bookingItem) =>
-                        bookingItem.atcPosition?.id === position.atcPositionId,
+                        bookingItem.atcPosition?.id === position.id,
                     );
                     const hasStatusOne = bookingsForPosition.some(
                       (booking) => booking.status === 1,
@@ -281,14 +304,14 @@ export function ShiftComponent() {
                             {signed &&
                             isBookedForPosition(
                               part.booking,
-                              position.atcPositionId,
+                              position.id,
                             ) ? (
                               <div
                                 onClick={() => {
                                   const bookingId: number =
                                     getBookingIdForPosition(
                                       part.booking,
-                                      position.atcPositionId,
+                                      position.id,
                                     );
                                   if (typeof bookingId !== 'undefined') {
                                     handleUnbook(bookingId);
@@ -305,14 +328,12 @@ export function ShiftComponent() {
                               </div>
                             ) : signed ? (
                               <div
-                                onClick={() => {
+                                onClick={() =>
                                   handleBookClick(
                                     part.id,
-                                    position.atcPositionId,
-                                  ).catch((error) => {
-                                    console.error('Error booking:', error);
-                                  });
-                                }}
+                                    position.id,
+                                  )
+                                }
                                 className="leading-16 hover:bg-opacity-80/80 flex gap-1.5 rounded-xl bg-atmos-700 px-1.5 text-lg font-semibold text-white backdrop-blur-[5px] transition duration-500 hover:cursor-pointer"
                               >
                                 <IconSquareRoundedPlus className="mt-0.5" />
