@@ -94,7 +94,7 @@ export function AirportPage() {
           <div className="flex w-full flex-col md:flex-row md:gap-12">
             <div className="flex w-full flex-col gap-3 md:flex-row md:gap-[40px]">
               <p className="text-3xl font-bold text-black md:text-5xl">
-                {airport.name[i18n.language]}
+                {airport.name}
               </p>
               <div className="flex flex-row gap-3">
                 <div className="mt-2 size-min justify-center rounded-xl bg-black px-4 py-2 text-center text-xl font-bold leading-4 text-white">
@@ -116,7 +116,7 @@ export function AirportPage() {
             <div className="mt-20 flex flex-col gap-10 lg:flex-row">
               <img
                 className="w-[750px]"
-                alt={airport.name.en}
+                alt={airport.name}
                 src={`https://cdn.by.ivao.aero/images/airports/v/${airport.icao}.png`}
               />
               <div className="relative flex w-full items-center justify-center">
@@ -125,9 +125,7 @@ export function AirportPage() {
                     {airport.iata}
                   </p>
                   <p className="relative text-center text-lg leading-[39px] tracking-tighter text-neutral-400 lg:text-2xl 2xl:text-4xl">
-                    {airport.description[i18n.language] ||
-                      airport.description.en ||
-                      'No Description'}
+                    {airport.description}
                   </p>
                 </div>
               </div>
@@ -154,7 +152,7 @@ export function AirportPage() {
               <div className="bg-white">
                 <div className="flex items-center overflow-hidden rounded-lg bg-atmos-700 shadow-md">
                   <div className="h-full px-1 py-4">
-                    <img alt={airport.name.en} src={metaricon} />
+                    <img alt={airport.name} src={metaricon} />
                   </div>
                   <div className="min-h-[80px] w-full content-center bg-white px-4 py-2 font-semibold text-black">
                     {airport.metar.metar ? (

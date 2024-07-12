@@ -85,23 +85,23 @@ ${decodedToken?.userData.name.first} ${decodedToken?.userData.name.last}`;
         </div>
         <div className="mt-8 flex flex-row gap-4">
           <CustomButton
-              size={'xl'}
-              className={'rounded-xl'}
-              onClick={() =>
-                  openLink('https://ivao.aero/members/person/register.htm')
-              }
+            size={'xl'}
+            className={'rounded-xl'}
+            onClick={() =>
+              openLink('https://ivao.aero/members/person/register.htm')
+            }
           >
             {t('mainpage.heropage.joinbutton')}
           </CustomButton>
           {signed ? (
-              <CustomButton
-                size={'xl'}
-                className={'rounded-xl'}
-                variant={'white'}
-                onClick={byTransferMail}
-              >
-                {t('mainpage.heropage.transfer')}
-              </CustomButton>
+            <CustomButton
+              size={'xl'}
+              className={'rounded-xl'}
+              variant={'white'}
+              onClick={byTransferMail}
+            >
+              {t('mainpage.heropage.transfer')}
+            </CustomButton>
           ) : null}
         </div>
       </div>

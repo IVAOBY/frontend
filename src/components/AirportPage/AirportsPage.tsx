@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { useApi } from '../../context/ApiContext';
-import i18n from '../../i18n/i18n';
 import { Airport } from '../../types/Airport';
 import { BreadcrumbLayout } from '../Layout';
 
@@ -76,11 +75,11 @@ export function AirportsPage() {
                 key={airport.icao}
                 className="flex flex-col rounded-xl font-semibold"
               >
-                {airport.image_url && (
+                {airport.airportTypeId == 1 && (
                   <img
                     className="rounded-t-xl"
-                    alt={airport.name.en}
-                    src={airport.image_url}
+                    alt={airport.name}
+                    src={`https://cdn.by.ivao.aero/images/airports/${airport.icao}.png`}
                   />
                 )}
                 <div className="flex w-full flex-col rounded-b-xl bg-white py-6 pl-6 pr-16 max-md:max-w-full max-md:px-5">
@@ -89,13 +88,11 @@ export function AirportsPage() {
                       {airport.icao}
                     </div>
                     <div className="my-auto flex-auto text-3xl leading-7 text-black">
-                      {airport.name[i18n.language] || airport.name.en}
+                      {airport.name}
                     </div>
                   </div>
                   <div className="mt-4 text-lg leading-4 tracking-tighter text-neutral-400">
-                    {airport.description[i18n.language] ||
-                      airport.description.en ||
-                      'No Description'}
+                    {airport.description}
                   </div>
                   <div
                     className="mt-5 flex gap-1.5 self-start whitespace-nowrap rounded-xl bg-blue-900 px-1.5 py-1 text-xl leading-4 text-white hover:cursor-pointer"
@@ -127,13 +124,11 @@ export function AirportsPage() {
                       {airport.icao}
                     </div>
                     <div className="my-auto flex-auto text-xl leading-7 text-black">
-                      {airport.name[i18n.language] || airport.name.en}
+                      {airport.name}
                     </div>
                   </div>
                   <div className="mt-2 text-base leading-4 tracking-tighter text-neutral-400">
-                    {airport.description[i18n.language] ||
-                      airport.description.en ||
-                      'No Description'}
+                    {airport.description}
                   </div>
                   <div
                     onClick={() => aboutAirport(airport.icao)}
@@ -165,13 +160,11 @@ export function AirportsPage() {
                       {airport.icao}
                     </div>
                     <div className="my-auto flex-auto text-xl leading-7 text-white">
-                      {airport.name[i18n.language] || airport.name.en}
+                      {airport.name}
                     </div>
                   </div>
                   <div className="mt-2 text-base leading-4 tracking-tighter text-white">
-                    {airport.description[i18n.language] ||
-                      airport.description.en ||
-                      'No Description'}
+                    {airport.description}
                   </div>
                   <div
                     onClick={() => aboutAirport(airport.icao)}
