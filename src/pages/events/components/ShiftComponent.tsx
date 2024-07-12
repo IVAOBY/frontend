@@ -319,9 +319,9 @@ export function ShiftComponent() {
                                     console.log('Booking ID is undefined');
                                   }
                                 }}
-                                className="leading-16 hover:bg-opacity-80/80 flex gap-1.5 rounded-xl bg-[#E93434] px-1.5 text-lg font-semibold text-white backdrop-blur-[5px] transition duration-500 hover:cursor-pointer"
+                                className="leading-16 flex gap-3 rounded-xl bg-[#E93434] px-1.5 pr-3 text-lg font-semibold text-white backdrop-blur-[5px] transition duration-500 hover:opacity-80 hover:cursor-pointer"
                               >
-                                <IconSquareRoundedPlus className="mt-0.5" />
+                                <IconSquareRoundedPlus className="ml-1.5 mt-0.5" />
                                 <div className="my-auto flex-auto">
                                   {t('events.booking.unbook')}
                                 </div>
@@ -334,9 +334,9 @@ export function ShiftComponent() {
                                     position.id,
                                   )
                                 }
-                                className="leading-16 hover:bg-opacity-80/80 flex gap-1.5 rounded-xl bg-atmos-700 px-1.5 text-lg font-semibold text-white backdrop-blur-[5px] transition duration-500 hover:cursor-pointer"
+                                className="leading-16 flex gap-1.5 rounded-xl bg-atmos-700 px-1.5 pr-3 text-lg font-semibold text-white backdrop-blur-[5px] transition duration-500 hover:opacity-80 hover:cursor-pointer"
                               >
-                                <IconSquareRoundedPlus className="mt-0.5" />
+                                <IconSquareRoundedPlus className="ml-1.5 mt-0.5" />
                                 <div className="my-auto flex-auto">
                                   {t('events.booking.book')}
                                 </div>
