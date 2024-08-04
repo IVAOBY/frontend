@@ -181,6 +181,15 @@ const beTranslations: { translations: Translations } = {
         none: 'Даступных пазіцый няма!',
       },
     },
+    airports: {
+      main: {
+        name: 'Аэрадромы',
+        int: 'Міжнародныя',
+        heli: 'Пасадачныя пляцоўкі',
+        mil: 'Ваенныя',
+        button: 'Подробнее'
+      },
+    },
     Scenery: {
       title: 'Сцэнарыі',
       search: 'Увядзіце ICAO',

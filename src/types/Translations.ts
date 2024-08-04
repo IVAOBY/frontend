@@ -174,6 +174,15 @@ export interface Translations {
       none: string;
     };
   };
+  airports: {
+    main: {
+      name: string;
+      int: string;
+      heli: string;
+      mil: string;
+      button: string;
+    };
+  };
   Scenery: {
     title: string;
     search: string;
