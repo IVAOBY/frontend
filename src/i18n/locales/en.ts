@@ -181,6 +181,15 @@ const enTranslations: { translations: Translations } = {
         none: 'There are no available positions!',
       },
     },
+    airports: {
+      main: {
+        name: 'Aerodromes',
+        int: 'International',
+        heli: 'Landing pads',
+        mil: 'Military',
+        button: 'Больш падрабязна'
+      },
+    },
     Scenery: {
       title: 'Sceneries',
       search: 'Enter ICAO',

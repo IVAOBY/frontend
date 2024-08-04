@@ -62,10 +62,10 @@ export function AirportsPage() {
 
   return (
     <BreadcrumbLayout>
-      <div className="text-3xl font-bold text-black md:text-5xl">Аэропорты</div>
+      <div className="text-3xl font-bold text-black md:text-5xl">{t('airports.main.name')}</div>
       <div className="mt-8">
         <p className="mb-6 text-4xl font-semibold leading-5 text-atmos-700">
-          Международные
+          {t('airports.main.int')}
         </p>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {airports
@@ -99,7 +99,7 @@ export function AirportsPage() {
                     onClick={() => aboutAirport(airport.icao)}
                   >
                     <IconInfoSquareRounded />
-                    <div className="mt-1 flex-auto">Подробнее</div>
+                    <div className="mt-1 flex-auto">{t('airports.main.button')}</div>
                   </div>
                 </div>
               </div>
@@ -108,7 +108,7 @@ export function AirportsPage() {
       </div>
       <div className="mt-16">
         <p className="mb-6 text-4xl font-semibold leading-5 text-atmos-700">
-          Посадочные площадки
+          {t('airports.main.heli')}
         </p>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
           {airports
@@ -135,7 +135,7 @@ export function AirportsPage() {
                     className="mt-3 flex gap-1.5 self-start whitespace-nowrap rounded-xl bg-blue-900 px-1.5 py-1 text-lg leading-4 text-white hover:cursor-pointer"
                   >
                     <IconInfoSquareRounded />
-                    <div className="mt-1 flex-auto">Подробнее</div>
+                    <div className="mt-1 flex-auto">{t('airports.main.button')}</div>
                   </div>
                 </div>
               </div>
@@ -144,7 +144,7 @@ export function AirportsPage() {
       </div>
       <div className="mt-16">
         <p className="mb-6 text-4xl font-semibold leading-5 text-atmos-700">
-          Военные
+          {t('airports.main.mil')}
         </p>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
           {airports
@@ -171,7 +171,7 @@ export function AirportsPage() {
                     className="mt-3 flex gap-1.5 self-start whitespace-nowrap rounded-xl border-2 px-1.5 py-1 text-lg leading-4 text-white hover:cursor-pointer"
                   >
                     <IconInfoSquareRounded />
-                    <div className="mt-1 flex-auto">Подробнее</div>
+                    <div className="mt-1 flex-auto">{t('airports.main.button')}</div>
                   </div>
                 </div>
               </div>

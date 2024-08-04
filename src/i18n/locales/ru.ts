@@ -181,6 +181,15 @@ const ruTranslations: { translations: Translations } = {
         none: 'Доступных позиций нет!',
       },
     },
+    airports: {
+      main: {
+        name: 'Аэродромы',
+        int: 'Международные',
+        heli: 'Посадочные площадки',
+        mil: 'Военные',
+        button: 'Подробнее'
+      },
+    },
     Scenery: {
       title: 'Сценарии',
       search: 'Введите ICAO',
