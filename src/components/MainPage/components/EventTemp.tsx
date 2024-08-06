@@ -21,7 +21,7 @@ export function EventTemp() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    api(`/events/1`)
+    api(`/events/2`)
       .then((response: EventEntity) => {
         if (
           response &&
