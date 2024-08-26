@@ -63,7 +63,7 @@ ${decodedToken?.userData.name.first} ${decodedToken?.userData.name.last}`;
         console.error('Error decoding token:', error);
       }
     }
-  }, [decodedToken, signed]);
+  }, [signed, decodedToken?.userData.divisionId, decodedToken?.userData.name.first, decodedToken?.userData.name.last, decodedToken?.userData.id]);
 
   const openLink = useCallback(function (link: string | undefined) {
     window.open(link, '_blank');
