@@ -192,7 +192,7 @@ const beTranslations: { translations: Translations } = {
         int: 'Міжнародныя',
         heli: 'Пасадачныя пляцоўкі',
         mil: 'Ваенныя',
-        button: 'Больш падрабязна'
+        button: 'Больш падрабязна',
       },
     },
     Scenery: {

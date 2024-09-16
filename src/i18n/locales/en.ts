@@ -192,7 +192,7 @@ const enTranslations: { translations: Translations } = {
         int: 'International',
         heli: 'Landing pads',
         mil: 'Military',
-        button: 'More details'
+        button: 'More details',
       },
     },
     Scenery: {
