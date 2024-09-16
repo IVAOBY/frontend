@@ -60,6 +60,11 @@ const enTranslations: { translations: Translations } = {
         "IVAO is a legally registered non-profit organization (NPO) under Belgian law. It has a multi-level governance structure to ensure its strategic management in a fair, legal and transparent manner. All IVAO services and software are always provided free of charge, as the organization's costs are covered by private donations and corporate sponsorships. For more information on how NPOs are governed, visit the Association's page.",
     },
     mainpage: {
+      envAlert: {
+        text: 'Caution! You are using',
+        text2: 'app version.',
+        consoleText: 'Environment in use:',
+      },
       heropage: {
         title: 'Meet',
         title2: 'Belarus',

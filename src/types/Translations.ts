@@ -55,6 +55,11 @@ export interface Translations {
     text2: string;
   };
   mainpage: {
+    envAlert: {
+      text: string;
+      text2: string;
+      consoleText: string;
+    };
     heropage: {
       title: string;
       title2: string;
