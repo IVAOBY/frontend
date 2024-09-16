@@ -187,7 +187,7 @@ const ruTranslations: { translations: Translations } = {
         int: 'Международные',
         heli: 'Посадочные площадки',
         mil: 'Военные',
-        button: 'Подробнее'
+        button: 'Подробнее',
       },
     },
     Scenery: {
