@@ -1,6 +1,5 @@
 on:
   push:
-  pull_request:
 
 name: 🚀 Lint and Format
 jobs:
@@ -21,7 +20,7 @@ jobs:
 
       - name: 🔐 Auth with token
         run: |
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.AUTH_TOKEN }}
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}
           @ivaoby:registry=https://npm.pkg.github.com/
           @ivaoaero:registry=https://npm.pkg.github.com/" > ~/.npmrc
 
