@@ -187,7 +187,7 @@ const enTranslations: { translations: Translations } = {
         int: 'International',
         heli: 'Landing pads',
         mil: 'Military',
-        button: 'Больш падрабязна'
+        button: 'More details'
       },
     },
     Scenery: {
