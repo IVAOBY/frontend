@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 
 import { notifications } from '@mantine/notifications';
 import {
@@ -40,11 +40,7 @@ export function ShiftComponent() {
 
   const [partItem, setPartItem] = useState<PartsEntity[] | null>(null);
 
-  useEffect(() => {
-    loadEventData();
-  }, [api, id, t]);
-
-  const loadEventData = async () => {
+  const loadEventData = useCallback(async () => {
     try {
       notifications.show({
         id: 'load-data',
@@ -86,7 +82,13 @@ export function ShiftComponent() {
         autoClose: false,
       });
     }
-  };
+  }, [api, id, t]);
+
+  useEffect(() => {
+    void (async () => {
+      await loadEventData();
+    })();
+  }, [api, id, loadEventData, t]);
 
   const handleBook = async (partId: number, atcPositionId: number) => {
     if (signed && partItem) {
@@ -197,7 +199,7 @@ export function ShiftComponent() {
                 part.positions
                   .map((position) => {
                     const callsign = position.position.callsign.toLowerCase();
-                    let positionType = '';
+                    let positionType: string;
                     if (callsign.includes('gnd')) {
                       positionType = 'ground';
                     } else if (callsign.includes('twr')) {
@@ -302,24 +304,23 @@ export function ShiftComponent() {
                                 )))}
                           <div className="mt-[20px] flex">
                             {signed &&
-                            isBookedForPosition(
-                              part.booking,
-                              position.id,
-                            ) ? (
+                            isBookedForPosition(part.booking, position.id) ? (
                               <div
                                 onClick={() => {
-                                  const bookingId: number =
-                                    getBookingIdForPosition(
-                                      part.booking,
-                                      position.id,
-                                    );
-                                  if (typeof bookingId !== 'undefined') {
-                                    handleUnbook(bookingId);
-                                  } else {
-                                    console.log('Booking ID is undefined');
-                                  }
+                                  void (async () => {
+                                    const bookingId: number =
+                                      getBookingIdForPosition(
+                                        part.booking,
+                                        position.id,
+                                      );
+                                    if (typeof bookingId !== 'undefined') {
+                                      await handleUnbook(bookingId);
+                                    } else {
+                                      console.log('Booking ID is undefined');
+                                    }
+                                  })();
                                 }}
-                                className="leading-16 flex gap-3 rounded-xl bg-[#E93434] px-1.5 pr-3 text-lg font-semibold text-white backdrop-blur-[5px] transition duration-500 hover:opacity-80 hover:cursor-pointer"
+                                className="leading-16 flex gap-3 rounded-xl bg-[#E93434] px-1.5 pr-3 text-lg font-semibold text-white backdrop-blur-[5px] transition duration-500 hover:cursor-pointer hover:opacity-80"
                               >
                                 <IconSquareRoundedPlus className="ml-1.5 mt-0.5" />
                                 <div className="my-auto flex-auto">
@@ -328,13 +329,12 @@ export function ShiftComponent() {
                               </div>
                             ) : signed ? (
                               <div
-                                onClick={() =>
-                                  handleBookClick(
-                                    part.id,
-                                    position.id,
-                                  )
-                                }
-                                className="leading-16 flex gap-1.5 rounded-xl bg-atmos-700 px-1.5 pr-3 text-lg font-semibold text-white backdrop-blur-[5px] transition duration-500 hover:opacity-80 hover:cursor-pointer"
+                                onClick={() => {
+                                  void (async () => {
+                                    await handleBookClick(part.id, position.id);
+                                  })();
+                                }}
+                                className="leading-16 flex gap-1.5 rounded-xl bg-atmos-700 px-1.5 pr-3 text-lg font-semibold text-white backdrop-blur-[5px] transition duration-500 hover:cursor-pointer hover:opacity-80"
                               >
                                 <IconSquareRoundedPlus className="ml-1.5 mt-0.5" />
                                 <div className="my-auto flex-auto">
