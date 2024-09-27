@@ -14,7 +14,6 @@ import {useNavigate} from 'react-router-dom';
 
 import {useApi} from '../../../context/ApiContext';
 import Pagination from '../../Pagination';
-import {Title} from '../../Typography/Title';
 import {be, ru, enUS} from "date-fns/locale";
 
 interface News {
@@ -152,104 +151,108 @@ export function AgendaNews() {
     const currentLocale = localeMap[currentLanguage] || enUS;
 
     return (
-        <div className={'pt-8'}>
-            <Title withUndreline>{t('news.title')}</Title>
-            {agenda && agenda.map((item) => (
-                <div key={item.id} className="flex mt-3 drop-shadow-md flex-col gap-2">
-                    <div onClick={() => window.open(item.link, "_blank")}  className="flex cursor-pointer flex-col text-3xl font-bold leading-none text-black rounded-none w-5/12">
-                        <div className="flex flex-row gap-5 p-5 bg-white rounded-3xl shadow-sm">
-                            <div
-                                className={`p-4 rounded-xl text-white ${item.type === 0 ? 'bg-green-500' : ''} ${item.type === 1 ? 'bg-yellow-500' : ''} ${item.type === 2 ? 'bg-red-500' : ''} ${item.type === 3 ? 'bg-gray-500' : ''}`}>
-                                {item.type == 0 && <IconCalendarEvent size={35}/>}
-                                {item.type == 1 && <IconBooks size={35}/>}
-                                {item.type == 2 && <IconCertificate size={35}/>}
-                                {item.type == 3 && <IconSettings size={35}/>}
-                            </div>
-                            <div className="flex flex-col my-auto text-center">
-                                <div className="text-4xl">{format(new Date(item.startDate), 'dd')}</div>
-                                <div
-                                    className="text-lg -mt-2 text-neutral-600">{format(new Date(item.startDate), 'MMM', {locale: currentLocale}).toUpperCase().slice(0, 3)}</div>
-                            </div>
-                            <div className="flex flex-col mt-1">
-                                <div className="text-3xl">{item.title}</div>
-                                <div className="-mt-2.5">
+        <div>
+            <div className={'pt-8'}>
+                {agenda && agenda.map((item) => (
+                    <div key={item.id} className="flex mt-3 drop-shadow-md flex-col gap-2">
+                        <div onClick={() => window.open(item.link, "_blank")}
+                             className="flex cursor-pointer flex-col text-[25px] lg:text-3xl font-bold leading-none text-black rounded-none w-full lg:w-5/12">
+                            <div className="flex flex-row gap-5 p-5 bg-white rounded-3xl shadow-sm">
+                                <div className="flex flex-row items-center">
+                                    <div
+                                        className={`p-2 lg:p-4 h-[50px] w-[50px] lg:w-[70px] lg:h-[70px] rounded-xl text-white ${item.type === 0 ? 'bg-green-500' : ''} ${item.type === 1 ? 'bg-yellow-500' : ''} ${item.type === 2 ? 'bg-red-500' : ''} ${item.type === 3 ? 'bg-gray-500' : ''}`}>
+                                        {item.type == 0 && <IconCalendarEvent size={35}/>}
+                                        {item.type == 1 && <IconBooks size={35}/>}
+                                        {item.type == 2 && <IconCertificate size={35}/>}
+                                        {item.type == 3 && <IconSettings size={35}/>}
+                                    </div>
+                                </div>
+                                <div className="flex flex-col my-auto text-center">
+                                    <div className="text-[27px] lg:text-4xl">{format(new Date(item.startDate), 'dd')}</div>
+                                    <div
+                                        className="text-[14px] lg:text-lg lg:-mt-2 text-neutral-600">{format(new Date(item.startDate), 'MMM', {locale: currentLocale}).toUpperCase().slice(0, 3)}</div>
+                                </div>
+                                <div className="flex flex-col mt-1">
+                                    <div className="text-3xl">{item.title}</div>
+                                    <div className="-mt-2.5 font-medium text-[15px] text-xl leading-7 lg:leading-8">
                                     <span
-                                        className="text-xl -mt-1 font-medium leading-6 text-neutral-600">{format(new Date(item.startDate), 'HH:mm')}</span>
-                                    <span
-                                        className="ml-2 text-xl -mt-1 font-medium leading-6 text-neutral-400">{item.annotation.length > 30 ? item.annotation.slice(0, 30) + '...' : item.annotation}</span>
+                                        className="-mt-1 text-neutral-600">{format(new Date(item.startDate), 'HH:mm')}</span>
+                                        <span
+                                            className="ml-2 -mt-1 text-neutral-400">{item.annotation.length > 30 ? item.annotation.slice(0, 30) + '...' : item.annotation}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            ))}
-            <div className=" mt-10 flex flex-wrap justify-center gap-8">
-                {news === null
-                    ? Array.from({length: itemsPerPage}).map((_, index) => (
-                        <div
-                            key={index}
-                            className="relative h-[270px] w-[480px] items-center overflow-hidden rounded-xl bg-gray-400 blur-lg"
-                            style={{cursor: 'wait'}}
-                        ></div>
-                    ))
-                    : news.slice(startIndex, endIndex).map((newsItem) => (
-                        <div
-                            key={newsItem.id}
-                            className="md:w-280px relative h-[170px] w-11/12 overflow-hidden rounded-2xl shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl md:h-[270px] md:w-[480px]"
-                            onClick={() => newsRedirect(newsItem)}
-                            style={{cursor: 'pointer'}}
-                        >
+                ))}
+                <div className=" mt-10 flex flex-wrap justify-center gap-8">
+                    {news === null
+                        ? Array.from({length: itemsPerPage}).map((_, index) => (
                             <div
-                                className="absolute inset-0"
-                                style={{
-                                    backgroundImage: `url(${newsItem.image_url})`,
-                                    backgroundSize: 'cover',
-                                    backgroundPosition: 'center',
-                                }}
+                                key={index}
+                                className="relative h-[270px] w-[480px] items-center overflow-hidden rounded-xl bg-gray-400 blur-lg"
+                                style={{cursor: 'wait'}}
+                            ></div>
+                        ))
+                        : news.slice(startIndex, endIndex).map((newsItem) => (
+                            <div
+                                key={newsItem.id}
+                                className="md:w-280px relative h-[170px] w-11/12 overflow-hidden rounded-2xl shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl md:h-[270px] md:w-[480px]"
+                                onClick={() => newsRedirect(newsItem)}
+                                style={{cursor: 'pointer'}}
                             >
                                 <div
-                                    className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/20"></div>
-                                <div
-                                    className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-4 text-white">
-                                    <div className="mb-2 flex items-center justify-between">
-                                        <div className="text-sm font-medium">
-                                            {format(new Date(newsItem.publishedAt), 'dd.MM.yyyy')}
+                                    className="absolute inset-0"
+                                    style={{
+                                        backgroundImage: `url(${newsItem.image_url})`,
+                                        backgroundSize: 'cover',
+                                        backgroundPosition: 'center',
+                                    }}
+                                >
+                                    <div
+                                        className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/20"></div>
+                                    <div
+                                        className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-4 text-white">
+                                        <div className="mb-2 flex items-center justify-between">
+                                            <div className="text-sm font-medium">
+                                                {format(new Date(newsItem.publishedAt), 'dd.MM.yyyy')}
+                                            </div>
+                                            <div className="rounded bg-black/50 px-2 py-1 text-xs">
+                                                {newsItem.user &&
+                                                newsItem.user.staffPositions &&
+                                                newsItem.user.staffPositions.length > 0
+                                                    ? newsItem.user.staffPositions
+                                                        .map((position) => `BY-${position.id}`)
+                                                        .filter(
+                                                            (value, index, self) =>
+                                                                self.indexOf(value) === index,
+                                                        )
+                                                        .join('/')
+                                                    : newsItem.user
+                                                        ? `${newsItem.user.name.first} ${newsItem.user.id}`
+                                                        : 'IVAO BY HQ'}
+                                            </div>
                                         </div>
-                                        <div className="rounded bg-black/50 px-2 py-1 text-xs">
-                                            {newsItem.user &&
-                                            newsItem.user.staffPositions &&
-                                            newsItem.user.staffPositions.length > 0
-                                                ? newsItem.user.staffPositions
-                                                    .map((position) => `BY-${position.id}`)
-                                                    .filter(
-                                                        (value, index, self) =>
-                                                            self.indexOf(value) === index,
-                                                    )
-                                                    .join('/')
-                                                : newsItem.user
-                                                    ? `${newsItem.user.name.first} ${newsItem.user.id}`
-                                                    : 'IVAO BY HQ'}
+                                        <div className="truncate text-lg font-bold">
+                                            {newsItem.name[i18n.language]}
                                         </div>
-                                    </div>
-                                    <div className="truncate text-lg font-bold">
-                                        {newsItem.name[i18n.language]}
-                                    </div>
-                                    <div className="mt-2 text-sm leading-snug">
-                                        {newsItem.description[i18n.language].length > 96
-                                            ? `${newsItem.description[i18n.language].slice(0, 96)}...`
-                                            : newsItem.description[i18n.language]}
+                                        <div className="mt-2 text-sm leading-snug">
+                                            {newsItem.description[i18n.language].length > 96
+                                                ? `${newsItem.description[i18n.language].slice(0, 96)}...`
+                                                : newsItem.description[i18n.language]}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                </div>
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={Math.ceil(news ? news.length / itemsPerPage : 1)}
+                    onPageChange={setCurrentPage}
+                    className="mt-8"
+                />
             </div>
-            <Pagination
-                currentPage={currentPage}
-                totalPages={Math.ceil(news ? news.length / itemsPerPage : 1)}
-                onPageChange={setCurrentPage}
-                className="mt-8"
-            />
         </div>
     );
 }
