@@ -174,7 +174,7 @@ export function AgendaNews() {
                                 </div>
                                 <div className="flex flex-col mt-1">
                                     <div className="text-3xl">{item.title}</div>
-                                    <div className="-mt-2.5 font-medium text-[15px] text-xl leading-7 lg:leading-8">
+                                    <div className="-mt-2.5 font-medium text-[15px] lg:text-xl leading-7 lg:leading-8">
                                     <span
                                         className="-mt-1 text-neutral-600">{format(new Date(item.startDate), 'HH:mm')}</span>
                                         <span
