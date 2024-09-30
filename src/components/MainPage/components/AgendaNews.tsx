@@ -49,6 +49,16 @@ interface Agenda {
     link: string
 }
 
+interface Agenda {
+  id: number;
+  type: number; // 0 - Event, 1 - Training, 2 - Exam, 3 - Technical
+  startDate: Date;
+  endDate: Date;
+  title: string;
+  annotation: string;
+  link: string;
+}
+
 export function AgendaNews() {
     const {t, i18n} = useTranslation();
     const [news, setNews] = useState<News[] | null>(null);
@@ -71,6 +81,7 @@ export function AgendaNews() {
             autoClose: false,
             withCloseButton: false,
         });
+
         api('/news')
             .then((response: any) => {
                 if (response && Array.isArray(response)) {
