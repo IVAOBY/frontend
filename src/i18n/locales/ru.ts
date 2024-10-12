@@ -155,6 +155,10 @@ const ruTranslations: { translations: Translations } = {
         name: 'Загружаем данные...',
         descritpion: 'Пожалуйста, подождите пока мы обращаемся к серверу.',
       },
+      booking: {
+        fraError: 'Ошибка FRA!',
+        fraErrorDescription: 'Кажется, вы не обладаете необходимым рейтингом.',
+      },
       loaded: {
         name: 'Данные загружены!',
         descritpion: 'Ура! Мы получили и обработали данные.',

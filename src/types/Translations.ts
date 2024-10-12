@@ -147,6 +147,10 @@ export interface Translations {
       name: string;
       descritpion: string;
     };
+    booking: {
+      fraError: string;
+      fraErrorDescription: string;
+    };
     loaded: {
       name: string;
       descritpion: string;

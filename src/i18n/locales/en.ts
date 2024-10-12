@@ -154,6 +154,11 @@ const enTranslations: { translations: Translations } = {
         name: 'Loading data...',
         descritpion: 'Please wait while we contact the server.',
       },
+      booking: {
+        fraError: 'FRA Error!',
+        fraErrorDescription:
+          "You don't have the required FRA rating to book this position.",
+      },
       loaded: {
         name: 'Data loaded!',
         descritpion: 'Hooray! We received and processed the data.',
