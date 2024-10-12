@@ -154,6 +154,10 @@ const beTranslations: { translations: Translations } = {
         name: 'Загружаем дадзеныя...',
         descritpion: 'Калі ласка, пачакайце, пакуль мы звяртаемся да сервера.',
       },
+      booking: {
+        fraError: 'Памылка FRA!',
+        fraErrorDescription: 'Здаецца, вы не валодаеце неабходным рэйтынгам.',
+      },
       loaded: {
         name: 'Дадзеныя загружаны!',
         descritpion: 'Ура! Мы атрымалі і апрацавалі дадзеныя.',

@@ -7,16 +7,17 @@ import {
   IconCircleX,
   IconPlane,
   IconRadar,
+  IconSquareRoundedMinus,
   IconSquareRoundedPlus,
+  IconSquareRoundedX,
 } from '@tabler/icons-react';
-import { format } from 'date-fns';
 import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 import { useApi } from '../../../context/ApiContext';
 import { AuthContext } from '../../../context/UserContext';
-import { PartsEntity } from '../../../types/Events';
+import { BookingEntity, PartsEntity } from '../../../types/Events';
 
 const positionIcons = {
   ground: <IconCar size={41} />,
@@ -119,15 +120,24 @@ export function ShiftComponent() {
     }
   };
 
-  const isBookedForPosition = (bookings: any[], atcPositionId: number) => {
+  const hasSufficientRating = (userRating: number, positionFRA: number) => {
+    return userRating >= positionFRA;
+  };
+
+  const isBookedForPosition = (
+    bookings: BookingEntity[],
+    atcPositionId: number,
+  ) => {
     return bookings.some(
       (booking) =>
         booking.atcPosition?.id === atcPositionId &&
         booking.bookedUser?.id === decodedToken?.userData.id,
     );
   };
-
-  const getBookingIdForPosition = (bookings: any[], atcPositionId: number) => {
+  const getBookingIdForPosition = (
+    bookings: BookingEntity[],
+    atcPositionId: number,
+  ) => {
     const booking = bookings.find(
       (booking) =>
         booking.atcPosition?.id === atcPositionId &&
@@ -161,6 +171,14 @@ export function ShiftComponent() {
   };
 
   const handleBookClick = async (partId: number, atcPositionId: number) => {
+    const position = partItem
+      ?.find((part) => part.id === partId)
+      ?.positions.find((pos) => pos.id === atcPositionId);
+
+    if (!position || !position.position) {
+      console.error('Position not found');
+      return;
+    }
     try {
       await handleBook(partId, atcPositionId);
     } catch (error) {
@@ -181,17 +199,25 @@ export function ShiftComponent() {
   return (
     <div>
       {partItem &&
-        partItem.map((part) => (
+        partItem.map((part: PartsEntity) => (
           <div key={part.id} className="mb-8">
             <div className="mb-10 flex flex-col gap-4 first:mt-[50px] md:flex-row md:items-center md:gap-[35px]">
               <h2 className="text-[45px] font-semibold leading-10 text-atmos-700">
-                {t('events.shift')} {part.id}
+                {t('events.shift')}
               </h2>
               <div className="flex h-[30px] items-center justify-center gap-1.5 rounded-xl bg-atmos-700 px-3.5 py-1.5 text-[18px] font-semibold leading-4 text-white backdrop-blur-[5px]">
-                {`${format(new Date(part.startDate), 'HH:mm')} – ${format(
-                  new Date(part.endDate),
-                  'HH:mm',
-                )}`}
+                {`${new Date(part.startDate).toLocaleTimeString('eu', {
+                  timeZone: 'UTC',
+                  hour12: false,
+                  hour: '2-digit',
+                  minute: '2-digit',
+                })}`}
+                {` – ${new Date(part.endDate).toLocaleTimeString('eu', {
+                  timeZone: 'UTC',
+                  hour12: false,
+                  hour: '2-digit',
+                  minute: '2-digit',
+                })}`}
               </div>
             </div>
             <div className="flex flex-wrap gap-4">
@@ -227,6 +253,13 @@ export function ShiftComponent() {
                     );
                     const hasStatusOne = bookingsForPosition.some(
                       (booking) => booking.status === 1,
+                    );
+                    const userRating = Number(
+                      decodedToken.userData.ratings.atc,
+                    );
+                    const canBook = hasSufficientRating(
+                      userRating,
+                      position.position.fra,
                     );
 
                     return (
@@ -307,22 +340,33 @@ export function ShiftComponent() {
                             isBookedForPosition(part.booking, position.id) ? (
                               <div
                                 onClick={() => {
-                                  void (async () => {
-                                    const bookingId: number =
-                                      getBookingIdForPosition(
-                                        part.booking,
-                                        position.id,
-                                      );
-                                    if (typeof bookingId !== 'undefined') {
-                                      await handleUnbook(bookingId);
-                                    } else {
-                                      console.log('Booking ID is undefined');
-                                    }
-                                  })();
+                                  if (
+                                    !hasStatusOne &&
+                                    new Date() < new Date(part.endDate)
+                                  ) {
+                                    void (async () => {
+                                      const bookingId: number =
+                                        getBookingIdForPosition(
+                                          part.booking,
+                                          position.id,
+                                        );
+                                      if (typeof bookingId !== 'undefined') {
+                                        await handleUnbook(bookingId);
+                                      } else {
+                                        console.log('Booking ID is undefined');
+                                      }
+                                    })();
+                                  }
                                 }}
-                                className="leading-16 flex gap-3 rounded-xl bg-[#E93434] px-1.5 pr-3 text-lg font-semibold text-white backdrop-blur-[5px] transition duration-500 hover:cursor-pointer hover:opacity-80"
+                                className={`leading-16 flex gap-3 rounded-xl px-1.5 pr-3 text-lg font-semibold text-white backdrop-blur-[5px] transition duration-500 ${
+                                  !canBook ||
+                                  hasStatusOne ||
+                                  new Date() > new Date(part.endDate)
+                                    ? 'cursor-not-allowed bg-gray-500'
+                                    : 'bg-[#E93434] hover:cursor-pointer hover:opacity-80'
+                                }`}
                               >
-                                <IconSquareRoundedPlus className="ml-1.5 mt-0.5" />
+                                <IconSquareRoundedMinus className="ml-1.5 mt-0.5" />
                                 <div className="my-auto flex-auto">
                                   {t('events.booking.unbook')}
                                 </div>
@@ -330,13 +374,34 @@ export function ShiftComponent() {
                             ) : signed ? (
                               <div
                                 onClick={() => {
-                                  void (async () => {
-                                    await handleBookClick(part.id, position.id);
-                                  })();
+                                  if (
+                                    canBook &&
+                                    !hasStatusOne &&
+                                    new Date() < new Date(part.endDate)
+                                  ) {
+                                    void (async () => {
+                                      await handleBookClick(
+                                        part.id,
+                                        position.id,
+                                      );
+                                    })();
+                                  }
                                 }}
-                                className="leading-16 flex gap-1.5 rounded-xl bg-atmos-700 px-1.5 pr-3 text-lg font-semibold text-white backdrop-blur-[5px] transition duration-500 hover:cursor-pointer hover:opacity-80"
+                                className={`leading-16 flex gap-1.5 rounded-xl px-1.5 pr-3 text-lg font-semibold text-white backdrop-blur-[5px] transition duration-500 ${
+                                  !canBook ||
+                                  hasStatusOne ||
+                                  new Date() > new Date(part.endDate)
+                                    ? 'cursor-not-allowed bg-gray-500'
+                                    : 'bg-atmos-700 hover:cursor-pointer hover:opacity-80'
+                                }`}
                               >
-                                <IconSquareRoundedPlus className="ml-1.5 mt-0.5" />
+                                {!canBook ||
+                                hasStatusOne ||
+                                new Date() > new Date(part.endDate) ? (
+                                  <IconSquareRoundedX className="ml-1.5 mt-0.5" />
+                                ) : (
+                                  <IconSquareRoundedPlus className="ml-1.5 mt-0.5" />
+                                )}
                                 <div className="my-auto flex-auto">
                                   {t('events.booking.book')}
                                 </div>
