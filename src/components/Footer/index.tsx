@@ -31,18 +31,18 @@ const FooterLinkSection = ({
   titleKey,
   links,
   classname,
-  titleclassname,
+  titleClassname,
 }: {
   titleKey: string;
   links: FooterProps[];
   classname?: string;
-  titleclassname?: string;
+  titleClassname?: string;
 }) => {
   const { t } = useTranslation();
   return (
     <div className={`${classname}`}>
       <h2
-        className={`mb-4 text-center text-sm font-semibold uppercase text-atmos-700 dark:text-white ${titleclassname}`}
+        className={`mb-4 text-center text-sm font-semibold uppercase text-atmos-700 dark:text-white ${titleClassname}`}
       >
         {t(titleKey)}
       </h2>
@@ -106,7 +106,7 @@ export const Footer = () => {
             <FooterLinkSection
               titleKey="footer.legal.title"
               links={legalLinks}
-              titleclassname={'hidden lg:block'}
+              titleClassname={'hidden lg:block'}
             />
             <FooterLinkSection
               titleKey="footer.community.title"
@@ -132,12 +132,12 @@ export const Footer = () => {
                 alt="Facebook"
               />
               <SocialIcon
-                href="https://www.youtube.com/watch?v=IiHFnmI8pxg"
+                href="https://www.instagram.com/ivao_by/"
                 src={instagramIcon}
                 alt="Instagram"
               />
               <SocialIcon
-                href="https://www.youtube.com/watch?v=b3rNUhDqciM"
+                href="https://x.com/ivao_by"
                 src={twitterIcon}
                 alt="Twitter"
               />
