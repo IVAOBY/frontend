@@ -1,8 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 
-import { useTranslation } from 'react-i18next';
-
-//import { IconArrowDown } from '@tabler/icons-react';
+import { useTranslation } from 'react-i18next'; //import { IconArrowDown } from '@tabler/icons-react';
 
 import { AuthContext } from '../../../context/UserContext';
 import { CustomButton } from '../../Button';
@@ -26,18 +24,11 @@ export function HeroText() {
   }, []);
 
   const backgroundImage = {
-    morning: "url('https://cdn.by.ivao.aero/images/main_page_morning.png')",
-    day: "url('https://cdn.by.ivao.aero/images/main_page_day.png')",
-    evening: "url('https://cdn.by.ivao.aero/images/main_page_evening.png')",
-    night: "url('https://cdn.by.ivao.aero/images/main_page_night.png')",
+    morning: "url('https://cdn.by.ivao.aero/images/main_page_morning.webp')",
+    day: "url('https://cdn.by.ivao.aero/images/main_page_day.webp')",
+    evening: "url('https://cdn.by.ivao.aero/images/main_page_evening.webp')",
+    night: "url('https://cdn.by.ivao.aero/images/main_page_night.webp')",
   };
-
-  /*  const scrollToNextSection = () => {
-            window.scrollTo({
-              top: window.innerHeight,
-              behavior: 'smooth'
-            });
-          };*/
 
   const byTransferMail = useCallback(() => {
     if (!signed) {
@@ -112,11 +103,6 @@ ${decodedToken?.userData.name.first} ${decodedToken?.userData.name.last}`;
         </div>
       </div>
       <div className="absolute bottom-0 left-0 h-[200px] w-full bg-gradient-to-t from-background-body to-transparent md:h-[390px]"></div>
-      {/*        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 cursor-pointer"
-             onClick={scrollToNextSection}>
-          <IconArrowDown stroke={2} size={90}
-                         className="text-atmos-700 absolute bottom-4 left-1/2 transform -translate-x-1/2 cursor-pointer"/>
-        </div>*/}
     </div>
   );
 }
