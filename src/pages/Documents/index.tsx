@@ -84,8 +84,10 @@ export function DocumentsMain() {
     <BreadcrumbLayout>
       {documentsCategory.map((category, index) => (
         <div key={index} className="mb-10">
-          <H3 className="text-atmos-700">{category.name[i18n.language]}</H3>
-          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <H3 className="text-atmos-700 font-bold text-3xl">
+            {category.name[i18n.language]}
+          </H3>
+          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3 lg:grid-cols-5">
             {documents
               .filter(
                 (document) =>
@@ -94,25 +96,33 @@ export function DocumentsMain() {
               .map((document) => (
                 <div
                   key={document.id}
-                  className="hover:-scale-10 cursor-pointer rounded-xl bg-white p-4 shadow-lg duration-300 hover:-translate-y-1 hover:bg-gray-50 "
+                  className="hover:-scale-10 cursor-pointer rounded-xl bg-white p-4 shadow-lg duration-300 hover:-translate-y-1 hover:bg-gray-50 flex flex-col max-w-[287px]"
                   onClick={() => documentsRedirect(document)}
                 >
-                  <p className="font-semibold text-atmos-700">
+                  <p className="font-bold text-2xl text-black">
                     {document.name[i18n.language]}
                   </p>
+                  <div className="h-2 bg-gray-200 rounded-full mb-2.5 mt-2.5"></div>
+                  <div className="h-2 bg-gray-200 rounded-full mb-2.5"></div>
+                  <div className="h-2 bg-gray-200 rounded-full mb-2.5"></div>
+                  <div className="h-2 bg-gray-200 rounded-full mb-2.5"></div>
+                  <div className="h-2 bg-gray-200 rounded-full mb-2.5"></div>
+                  <div className="h-2 bg-gray-200 rounded-full w-1/2"></div>
+                  <div className="relative flex flex-row gap-9 mt-5 inset-x-0 bottom-0">
+                    <div className="h-2 bg-gray-200 rounded-full w-[52px]"></div>
+                    <div className="h-2 bg-gray-200 rounded-full w-[94px]"></div>
+                  </div>
                 </div>
               ))}
-            {documents.filter(
-              (document) =>
-                document.category === category.id && document.published,
-            ).length === 0 && (
-              <div className="rounded-xl bg-white p-4 shadow-lg">
-                <p className="font-semibold text-atmos-700">
-                  {t('documents.error.nodoc')}
-                </p>
-              </div>
-            )}
           </div>
+          {documents.filter(
+            (document) =>
+              document.category === category.id && document.published,
+          ).length === 0 && (
+            <div className="mt-0 text-base leading-5 text-neutral-400 md:text-xl">
+              {t('documents.error.nodoc')}
+            </div>
+          )}
         </div>
       ))}
       {loading && (

@@ -5,7 +5,7 @@ import {
   IconAirTrafficControl,
   IconCar,
   IconCircleX,
-  IconPlane,
+  IconPlaneArrival, IconPlaneTilt,
   IconRadar,
   IconSquareRoundedMinus,
   IconSquareRoundedPlus,
@@ -23,7 +23,8 @@ const positionIcons = {
   ground: <IconCar size={41} />,
   tower: <IconAirTrafficControl size={41} />,
   radar: <IconRadar size={41} />,
-  approach: <IconPlane size={41} />,
+  approach: <IconPlaneArrival size={41} />,
+  control: <IconPlaneTilt size={41} />,
 };
 
 const positionColors = {
@@ -31,6 +32,7 @@ const positionColors = {
   tower: 'bg-semantic-red-500',
   radar: 'bg-ocean-600',
   approach: 'bg-atmos-700',
+  control: 'bg-semantic-blue-500',
 };
 
 export function ShiftComponent() {
@@ -232,8 +234,10 @@ export function ShiftComponent() {
                       positionType = 'tower';
                     } else if (callsign.includes('r_app')) {
                       positionType = 'radar';
-                    } else {
-                      positionType = 'approach';
+                    } else if (callsign.includes('app')) {
+                      positionType = 'approach'
+                    } else if (callsign.includes('ctr')) {
+                      positionType = 'control';
                     }
                     return { position, type: positionType };
                   })
@@ -255,7 +259,7 @@ export function ShiftComponent() {
                       (booking) => booking.status === 1,
                     );
                     const userRating = Number(
-                      decodedToken.userData.ratings.atc,
+                      decodedToken?.userData.ratings.atc,
                     );
                     const canBook = hasSufficientRating(
                       userRating,
