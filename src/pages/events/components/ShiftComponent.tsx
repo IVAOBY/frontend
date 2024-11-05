@@ -5,7 +5,8 @@ import {
   IconAirTrafficControl,
   IconCar,
   IconCircleX,
-  IconPlaneArrival, IconPlaneTilt,
+  IconPlaneArrival,
+  IconPlaneTilt,
   IconRadar,
   IconSquareRoundedMinus,
   IconSquareRoundedPlus,
@@ -201,11 +202,11 @@ export function ShiftComponent() {
   return (
     <div>
       {partItem &&
-        partItem.map((part: PartsEntity) => (
+        partItem.map((part: PartsEntity, index: number) => (
           <div key={part.id} className="mb-8">
             <div className="mb-10 flex flex-col gap-4 first:mt-[50px] md:flex-row md:items-center md:gap-[35px]">
               <h2 className="text-[45px] font-semibold leading-10 text-atmos-700">
-                {t('events.shift')}
+                {t('events.shift')} {index + 1}
               </h2>
               <div className="flex h-[30px] items-center justify-center gap-1.5 rounded-xl bg-atmos-700 px-3.5 py-1.5 text-[18px] font-semibold leading-4 text-white backdrop-blur-[5px]">
                 {`${new Date(part.startDate).toLocaleTimeString('eu', {
@@ -214,12 +215,14 @@ export function ShiftComponent() {
                   hour: '2-digit',
                   minute: '2-digit',
                 })}`}
+                z
                 {` – ${new Date(part.endDate).toLocaleTimeString('eu', {
                   timeZone: 'UTC',
                   hour12: false,
                   hour: '2-digit',
                   minute: '2-digit',
                 })}`}
+                z
               </div>
             </div>
             <div className="flex flex-wrap gap-4">
@@ -235,8 +238,11 @@ export function ShiftComponent() {
                     } else if (callsign.includes('r_app')) {
                       positionType = 'radar';
                     } else if (callsign.includes('app')) {
-                      positionType = 'approach'
-                    } else if (callsign.includes('ctr')) {
+                      positionType = 'approach';
+                    } else if (
+                      callsign.includes('ctr') ||
+                      callsign.includes('fss')
+                    ) {
                       positionType = 'control';
                     }
                     return { position, type: positionType };
@@ -247,6 +253,7 @@ export function ShiftComponent() {
                       tower: 1,
                       radar: 2,
                       approach: 3,
+                      control: 4,
                     };
                     return typeOrder[a.type] - typeOrder[b.type];
                   })
