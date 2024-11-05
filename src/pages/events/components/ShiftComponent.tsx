@@ -239,7 +239,10 @@ export function ShiftComponent() {
                       positionType = 'radar';
                     } else if (callsign.includes('app')) {
                       positionType = 'approach';
-                    } else if (callsign.includes('ctr')) {
+                    } else if (
+                      callsign.includes('ctr') ||
+                      callsign.includes('fss')
+                    ) {
                       positionType = 'control';
                     }
                     return { position, type: positionType };
@@ -250,6 +253,7 @@ export function ShiftComponent() {
                       tower: 1,
                       radar: 2,
                       approach: 3,
+                      control: 4,
                     };
                     return typeOrder[a.type] - typeOrder[b.type];
                   })
