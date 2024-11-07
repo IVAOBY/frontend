@@ -177,6 +177,7 @@ const ruTranslations: { translations: Translations } = {
     events: {
       content: {
         title: 'Основная информация',
+        link: 'Подробнее на форуме',
       },
       tags: {
         shift: {

@@ -169,6 +169,7 @@ export interface Translations {
   events: {
     content: {
       title: string;
+      link: string;
     };
     tags: {
       shift: {

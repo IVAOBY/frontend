@@ -4,7 +4,7 @@ import { notifications } from '@mantine/notifications';
 import {
   IconCircleX,
   IconClockCancel,
-  IconClockCheck,
+  IconClockCheck, IconInfoSquareRounded,
 } from '@tabler/icons-react';
 import { format } from 'date-fns';
 import i18n from 'i18next';
@@ -128,29 +128,42 @@ export function EventPage() {
             )}
           </div>
           <div className="mt-8 flex flex-col gap-12 lg:flex-row">
-            <div className="w-full rounded-2xl xl:w-1/2">
-              <img
-                src={eventItem.imageUrl}
-                alt={eventItem.name.en}
-                className="size-full rounded-3xl object-cover shadow-lg shadow-gray-400"
-              />
-            </div>
-            <div className="w-full rounded-2xl bg-white font-['Montserrat'] shadow-lg shadow-gray-400 xl:w-1/2">
-              <div className="mx-8 my-10">
-                <p className="text-3xl font-semibold leading-7 text-black">
-                  {t('events.content.title')}
-                </p>
+            <div className="mt-8 flex flex-col gap-12 lg:flex-row">
+              <div className="w-full rounded-2xl xl:w-1/2">
+                <img
+                    src={eventItem.imageUrl}
+                    alt={eventItem.name.en}
+                    className="size-full rounded-3xl object-cover shadow-lg shadow-gray-400"
+                />
+              </div>
+              <div
+                  className="w-full rounded-2xl bg-white font-['Montserrat'] shadow-lg shadow-gray-400 xl:w-1/2 flex flex-col">
+                <div className="mx-8 my-10 flex-grow">
+                  <p className="text-3xl font-semibold leading-7 text-black">
+                    {t('events.content.title')}
+                  </p>
+                  <div
+                      className="mt-8 max-w-[647px] break-words text-xl font-medium leading-6 tracking-tighter text-black"
+                      dangerouslySetInnerHTML={{
+                        __html: eventItem.description[i18n.language] || 'Failed to load',
+                      }}
+                  ></div>
+                </div>
                 <div
-                  className="mt-8 max-w-[647px] break-words text-xl font-medium leading-6 tracking-tighter text-black"
-                  dangerouslySetInnerHTML={{
-                    __html:
-                      eventItem.description[i18n.language] || 'Failed to load',
-                  }}
-                ></div>
+                    onClick={() => {
+                      window.open(eventItem.infoUrl, '_blank');
+                    }}
+                    className={`leading-16 flex gap-3 rounded-xl px-1.5 pr-3 max-w-[300px] text-lg font-semibold text-white backdrop-blur-[5px] transition duration-500 bg-[#0D2C99] hover:cursor-pointer hover:opacity-80 mb-4 mx-8`}
+                >
+                  <IconInfoSquareRounded className="ml-1.5 mt-0.5"/>
+                  <div className="my-auto flex-auto">
+                    {t('events.content.link')}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <ShiftComponent />
+          <ShiftComponent/>
         </>
       )}
     </BreadcrumbLayout>

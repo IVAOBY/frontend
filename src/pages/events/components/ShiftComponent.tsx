@@ -36,6 +36,20 @@ const positionColors = {
   control: 'bg-semantic-blue-500',
 };
 
+const atcRatingNames = [
+  "NONE",  // 0
+  "OBS",   // 1
+  "AS1",   // 2
+  "AS2",   // 3
+  "AS3",   // 4
+  "ADC",   // 5
+  "APC",   // 6
+  "ACC",   // 7
+  "SEC",   // 8
+  "SAI",   // 9
+  "CAI"    // 10
+];
+
 export function ShiftComponent() {
   const { t } = useTranslation();
   const { id } = useParams();
@@ -293,8 +307,7 @@ export function ShiftComponent() {
                               {position.position.name[i18n.language]}
                             </div>
                             <div className="text-[15px] font-semibold text-[#ABA7A7]">
-                              {position.position.callsign},{' '}
-                              {position.position.frequency}
+                              {position.position.callsign}, {atcRatingNames[position.position.fra]}+
                             </div>
                           </div>
                         </div>
