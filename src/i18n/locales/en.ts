@@ -177,6 +177,7 @@ const enTranslations: { translations: Translations } = {
     events: {
       content: {
         title: 'General information',
+        link: 'More details',
       },
       tags: {
         shift: {

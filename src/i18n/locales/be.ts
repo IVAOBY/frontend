@@ -176,6 +176,7 @@ const beTranslations: { translations: Translations } = {
     events: {
       content: {
         title: 'Асноўная інфармацыя',
+        link: 'Падрабязней на форуме',
       },
       tags: {
         shift: {
