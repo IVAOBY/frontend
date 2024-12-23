@@ -236,6 +236,80 @@ export function AirportPage() {
                   ))}
               </div>
             )}
+            {airport.runways.length > 0 && (
+              <div className="rounded-xl bg-white p-4 shadow-md sm:w-[573px]">
+                <h2 className="mb-4 text-3xl font-semibold uppercase text-black">
+                  <span className="font-bold">ВПП</span> Аэродрома
+                </h2>
+                <ul>
+                  {airport.runways.map((runway) => (
+                    <li
+                      key={runway.id}
+                      className="mb-4 flex flex-row flex-wrap gap-1"
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="flex h-10 w-16 items-center justify-center border-2 border-black rounded-xl bg-red-500 text-xl font-bold text-white">
+                          {runway.designation}
+                        </span>
+                        <span className="text-lg font-semibold text-black">
+                          {runway.heading}&deg; / {runway.tora}м
+                        </span>
+                      </div>
+                      <div className="flex flex-wrap gap-1 pl-1 items-center text-lg font-semibold">
+                        {runway.ndb && (
+                          <span>
+                            <span className="text-black">/</span>{' '}
+                            <span className="text-atmos-700">NDB</span>{' '}
+                            <span className="text-black">{runway.ndb}</span>
+                          </span>
+                        )}
+                        {runway.vor && (
+                          <span>
+                            <span className="text-black">/</span>{' '}
+                            <span className="text-atmos-700">VOR</span>{' '}
+                            <span className="text-black">{runway.vor}</span>
+                          </span>
+                        )}
+                        {runway.vorDme && (
+                          <span>
+                            <span className="text-black">/</span>{' '}
+                            <span className="text-atmos-700">VDME</span>{' '}
+                            <span className="text-black">{runway.vorDme}</span>
+                          </span>
+                        )}
+                        {runway.rnp && (
+                          <span>
+                            <span className="text-black">/</span>{' '}
+                            <span className="text-atmos-700">RNP</span>
+                          </span>
+                        )}
+                        {runway.gls && (
+                          <span>
+                            <span className="text-black">/</span>{' '}
+                            <span className="text-atmos-700">GLS</span>{' '}
+                            <span className="text-black">{runway.gls}</span>
+                          </span>
+                        )}
+                        {runway.ils && (
+                          <span>
+                            <span className="text-black">/</span>{' '}
+                            <span className="text-atmos-700">ILS</span>{' '}
+                            <span className="text-[#777777]">
+                              {runway.ilsCat && runway.ilsCat === '3'
+                                ? 'IIIA'
+                                : runway.ilsCat === '2'
+                                  ? 'II'
+                                  : ''}{' '}
+                            </span>
+                            <span className="text-black">{runway.ils}</span>
+                          </span>
+                        )}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
             {airport.sceneries.length > 0 && (
               <div className="rounded-xl bg-white p-4 shadow-md sm:w-[565px]">
                 <h2 className="mb-4 text-3xl font-semibold uppercase text-black">
