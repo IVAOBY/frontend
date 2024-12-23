@@ -34,6 +34,21 @@ export interface Airport {
     simulator: 'fs9' | 'fsx' | 'p3d' | 'xp11' | 'xp12' | 'msfs';
     icao: string;
   }[];
+  runways: {
+    id: number;
+    airportIcao: string;
+    designation: string;
+    heading: number;
+    tora: number;
+    ils: string;
+    ilsCat: '2' | '3';
+    gls: string;
+    ndb: string;
+    vorDme: string;
+    loc: string;
+    vor: string;
+    rnp: string;
+  }[];
   metar?: IvaoMetar;
   taf?: IvaoTAF;
 }

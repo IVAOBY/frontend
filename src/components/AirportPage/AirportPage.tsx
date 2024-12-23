@@ -1,16 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import {
-  IconAirTrafficControl,
-  IconCar,
-  IconDownload,
-  IconPlane,
-  IconRadar,
-  IconRadar2,
-  IconShoppingBag,
-} from '@tabler/icons-react';
+
+
+import { IconAirTrafficControl, IconCar, IconDownload, IconPlane, IconRadar, IconRadar2, IconShoppingBag } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
+
+
 
 import metaricon from '../../assets/icons/metar.svg';
 import { useApi } from '../../context/ApiContext';
@@ -18,6 +14,8 @@ import i18n from '../../i18n/i18n';
 import { Airport } from '../../types/Airport';
 import { CustomButton } from '../Button';
 import { BreadcrumbLayout } from '../Layout';
+import { Tooltip } from '../Tooltip';
+
 
 const positionIcons = {
   ground: <IconCar size={41} />,
@@ -134,7 +132,8 @@ export function AirportPage() {
           <div className="mt-16 flex flex-col gap-5 lg:flex-row">
             <div className="flex max-w-[855px] flex-col gap-3">
               <div className="flex flex-col gap-3 md:flex-row">
-                <div className="flex w-full items-center overflow-hidden rounded-lg bg-atmos-700 shadow-md md:max-w-[250px]">
+                <div
+                    className="flex w-full items-center overflow-hidden rounded-lg bg-atmos-700 shadow-md md:max-w-[250px]">
                   <div className="px-4 py-2 font-semibold text-white">TA</div>
                   <div className="size-full content-center bg-white px-4 py-2 text-center font-semibold text-black">
                     6000ft
@@ -152,48 +151,52 @@ export function AirportPage() {
               <div className="bg-white">
                 <div className="flex items-center overflow-hidden rounded-lg bg-atmos-700 shadow-md">
                   <div className="h-full px-1 py-4">
-                    <img alt={airport.name} src={metaricon} />
+                    <img alt={airport.name} src={metaricon}/>
                   </div>
                   <div className="min-h-[80px] w-full content-center bg-white px-4 py-2 font-semibold text-black">
                     {airport.metar.metar ? (
-                      <>
-                        <span className="text-atmos-700">METAR</span>{' '}
-                        {airport.metar.metar}{' '}
-                      </>
+                        <>
+                          <span className="text-atmos-700">METAR</span>{' '}
+                          {airport.metar.metar}{' '}
+                        </>
                     ) : (
-                      <p className="text-red-500">{airport.metar.message}</p>
+                        <p className="text-red-500">{airport.metar.message}</p>
                     )}
                   </div>
                 </div>
               </div>
               <div className="flex  items-center overflow-hidden rounded-lg bg-atmos-700 shadow-md">
                 <div className="px-1 py-9">
-                  <IconRadar2 size={50} />
+                  <IconRadar2 size={50}/>
                 </div>
                 <div className="min-h-[122px] w-[855px] content-center bg-white px-4 py-2 font-semibold text-black">
                   {airport.taf.taf ? (
-                    <>
-                      <span className="text-atmos-700">TAF</span>{' '}
-                      {airport.taf.taf}{' '}
-                    </>
+                      <>
+                        <span className="text-atmos-700">TAF</span>{' '}
+                        {airport.taf.taf}{' '}
+                      </>
                   ) : (
-                    <p className="text-red-500">{airport.taf.message}</p>
+                      <p className="text-red-500">{airport.taf.message}</p>
                   )}
                 </div>
               </div>
             </div>
             <div
-              ref={widgetContainerRef}
-              className="max-h-[370px] w-[650px] rounded-lg bg-atmos-700 max-md:hidden"
-            ></div>
+                className="max-h-[370px] w-[650px] rounded-lg bg-atmos-700 max-md:hidden flex items-center justify-center">
+              <div
+                  className="bg-amber-300 w-1/4 h-1/4 flex flex-col items-center justify-center text-3xl shadow-lg text-black border-4 border-black font-bold rounded-xl text-center">
+                <div>INOP</div>
+                <div className="text-sm -mt-2">SEE T/LOG</div>
+              </div>
+            </div>
           </div>
           <div className="mt-[30px] flex flex-col gap-5 sm:flex-row">
             {airport.atcPositions?.length > 0 && (
-              <div className="flex flex-col gap-3 rounded-2xl bg-white p-[19px] shadow-md">
-                {airport.atcPositions
-                  ?.map((position) => {
-                    const callsign = position.callsign.toLowerCase();
-                    let positionType = '';
+                <div className="flex flex-col gap-3 rounded-2xl bg-white p-[19px] shadow-md">
+                  {airport.atcPositions
+                      ?.map((position) => {
+                        const callsign = position.callsign.toLowerCase();
+                        let positionType = '';
                     if (callsign.includes('gnd')) {
                       positionType = 'ground';
                     } else if (callsign.includes('twr')) {
@@ -236,6 +239,80 @@ export function AirportPage() {
                   ))}
               </div>
             )}
+            {airport.runways.length > 0 && (
+              <div className="rounded-xl bg-white p-4 shadow-md sm:w-[573px]">
+                <h2 className="mb-4 text-3xl font-semibold uppercase text-black">
+                  <span className="font-bold">ВПП</span> Аэродрома
+                </h2>
+                <ul>
+                  {airport.runways.map((runway) => (
+                    <li
+                      key={runway.id}
+                      className="mb-4 flex flex-row flex-wrap gap-1"
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="flex h-10 w-16 items-center justify-center border-2 border-black rounded-xl bg-red-500 text-xl font-bold text-white">
+                          {runway.designation}
+                        </span>
+                        <span className="text-lg font-semibold text-black">
+                          {runway.heading}&deg; / {runway.tora}m
+                        </span>
+                      </div>
+                      <div className="flex flex-wrap gap-1 pl-1 items-center text-lg font-semibold">
+                        {runway.ndb && (
+                          <span>
+                            <span className="text-black">/</span>{' '}
+                            <span className="text-atmos-700">NDB</span>{' '}
+                            <span className="text-black">{runway.ndb}</span>
+                          </span>
+                        )}
+                        {runway.vor && (
+                          <span>
+                            <span className="text-black">/</span>{' '}
+                            <span className="text-atmos-700">VOR</span>{' '}
+                            <span className="text-black">{runway.vor}</span>
+                          </span>
+                        )}
+                        {runway.vorDme && (
+                          <span>
+                            <span className="text-black">/</span>{' '}
+                            <span className="text-atmos-700">VDME</span>{' '}
+                            <span className="text-black">{runway.vorDme}</span>
+                          </span>
+                        )}
+                        {runway.rnp && (
+                          <span>
+                            <span className="text-black">/</span>{' '}
+                            <span className="text-atmos-700">RNP</span>
+                          </span>
+                        )}
+                        {runway.gls && (
+                          <span>
+                            <span className="text-black">/</span>{' '}
+                            <span className="text-atmos-700">GLS</span>{' '}
+                            <span className="text-black">{runway.gls}</span>
+                          </span>
+                        )}
+                        {runway.ils && (
+                          <span>
+                            <span className="text-black">/</span>{' '}
+                            <span className="text-atmos-700">ILS</span>{' '}
+                            <span className="text-[#777777]">
+                              {runway.ilsCat && runway.ilsCat === '3'
+                                ? 'IIIA'
+                                : runway.ilsCat === '2'
+                                  ? 'II'
+                                  : ''}{' '}
+                            </span>
+                            <span className="text-black">{runway.ils}</span>
+                          </span>
+                        )}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
             {airport.sceneries.length > 0 && (
               <div className="rounded-xl bg-white p-4 shadow-md sm:w-[565px]">
                 <h2 className="mb-4 text-3xl font-semibold uppercase text-black">
@@ -253,21 +330,23 @@ export function AirportPage() {
                       <div className="grow-1 mx-2 w-full">
                         <div className="border-t-2"></div>
                       </div>
-                      {scenery.license === 'payware' ? (
-                        <CustomButton
-                          className="flex flex-row gap-1 text-lg"
-                          onClick={() => openLink(scenery.link)}
-                        >
-                          <IconShoppingBag stroke={2} /> {t('Buy')}
-                        </CustomButton>
-                      ) : (
-                        <CustomButton
-                          className="flex flex-row gap-1 text-lg"
-                          onClick={() => openLink(scenery.link)}
-                        >
-                          <IconDownload stroke={2} /> {t('Download')}
-                        </CustomButton>
-                      )}
+                      <Tooltip content={scenery.title} position={"left"}>
+                        {scenery.license === 'payware' ? (
+                          <CustomButton
+                            className="flex flex-row gap-1 text-lg"
+                            onClick={() => openLink(scenery.link)}
+                          >
+                            <IconShoppingBag stroke={2} /> {t('Buy')}
+                          </CustomButton>
+                        ) : (
+                          <CustomButton
+                            className="flex flex-row gap-1 text-lg"
+                            onClick={() => openLink(scenery.link)}
+                          >
+                            <IconDownload stroke={2} /> {t('Download')}
+                          </CustomButton>
+                        )}
+                      </Tooltip>
                     </li>
                   ))}
                 </ul>
