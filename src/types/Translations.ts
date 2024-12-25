@@ -157,7 +157,7 @@ export interface Translations {
     };
     server: {
       name: string;
-      descritpion: string;
+      description: string;
     };
     auth: {
       negative: {

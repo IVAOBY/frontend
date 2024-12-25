@@ -165,7 +165,7 @@ const enTranslations: { translations: Translations } = {
       },
       server: {
         name: 'Error!',
-        descritpion: 'The server did not want to share data with us :(',
+        description: 'The server did not want to share data with us :(',
       },
       auth: {
         negative: {

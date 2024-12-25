@@ -1,11 +1,9 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
-import { notifications } from '@mantine/notifications';
 import {
   IconBooks,
   IconCalendarEvent,
   IconCertificate,
-  IconCircleX,
   IconSettings,
 } from '@tabler/icons-react';
 import { format } from 'date-fns';
@@ -13,141 +11,53 @@ import { be, enUS, ru } from 'date-fns/locale';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
-import { useApi } from '../../../context/ApiContext';
+import useNews from '../../../hooks/query/MainPage/useNews';
+import useAgenda from '../../../hooks/query/useAgenda';
 import Pagination from '../../Pagination';
-
-interface News {
-  id: number;
-  user: {
-    id: number;
-    name: {
-      first: string;
-      last: string;
-    };
-    staffPositions: {
-      prefix: string;
-      id: string;
-    }[];
-  };
-  image_url: string;
-  name: {
-    [key: string]: string;
-  };
-  description: {
-    [key: string]: string;
-  };
-  publishedAt: Date;
-}
-
-interface Agenda {
-  id: number;
-  type: number; // 0 - Event, 1 - Training, 2 - Exam, 3 - Technical
-  startDate: Date;
-  endDate: Date;
-  title: string;
-  annotation: string;
-  airport: string;
-  link: string;
-}
-
-interface Agenda {
-  id: number;
-  type: number; // 0 - Event, 1 - Training, 2 - Exam, 3 - Technical
-  startDate: Date;
-  endDate: Date;
-  title: string;
-  annotation: string;
-  airport: string;
-  link: string;
-}
+import {NewsEntity} from "../../../types/News";
+import {ErrorNotification} from "../../Notification/ErrorNotification";
 
 export function AgendaNews() {
-  const { t, i18n } = useTranslation();
-  const [news, setNews] = useState<News[] | null>(null);
-  const [agenda, setAgenda] = useState<Agenda[] | null>(null);
-  const api = useApi();
+  const { i18n } = useTranslation();
 
   const navigate = useNavigate();
-  const newsRedirect = (newsItem: News) => {
+  const newsRedirect = (newsItem: NewsEntity) => {
     navigate(`/news/${newsItem.id}`);
     window.scrollTo(0, 0);
   };
 
-  useEffect(() => {
-    notifications.show({
-      id: 'load-data',
-      loading: true,
-      title: t('notif.loading.name'),
-      message: t('notif.loading.descritpion'),
-      radius: 'lg',
-      autoClose: false,
-      withCloseButton: false,
-    });
+  const SkeletonItem = () => (
+    <div className="flex mt-3 flex-col gap-2 drop-shadow-md animate-pulse max-w-[553px]">
+      <div className="flex flex-row gap-5 p-5 bg-gray-200 rounded-3xl">
+        <div className="h-[50px] w-[50px] lg:w-[70px] lg:h-[70px] bg-gray-300 rounded-xl"></div>
+        <div className="flex flex-col items-center my-auto">
+          <div className="h-6 w-10 bg-gray-300 rounded-md"></div>
+          <div className="mt-2 h-4 w-8 bg-gray-300 rounded-md"></div>
+        </div>
+        <div className="flex flex-col mt-1">
+          <div className="h-6 w-40 bg-gray-300 rounded-md"></div>
+          <div className="mt-2 h-4 w-28 bg-gray-300 rounded-md"></div>
+        </div>
+      </div>
+    </div>
+  );
 
-    api('/news')
-      .then((response: any) => {
-        if (response && Array.isArray(response)) {
-          response.sort((a, b) => b.id - a.id);
-          setNews(response);
-          notifications.hide('load-data');
-        } else {
-          notifications.update({
-            id: 'load-data',
-            color: 'red',
-            title: t('notif.server.name'),
-            message: t('notif.server.descritpion'),
-            radius: 'lg',
-            icon: <IconCircleX />,
-            withCloseButton: false,
-            autoClose: false,
-          });
-        }
-      })
-      .catch((error: any) => {
-        console.error('Error fetching news:', error);
-        notifications.update({
-          id: 'load-data',
-          color: 'red',
-          title: t('notif.server.name'),
-          message: t('notif.server.descritpion'),
-          radius: 'lg',
-          icon: <IconCircleX />,
-          withCloseButton: false,
-          autoClose: false,
-        });
-      });
-    api('/agenda?limit=4')
-      .then((response: any) => {
-        if (response && Array.isArray(response)) {
-          setAgenda(response);
-          notifications.hide('load-data');
-        } else {
-          notifications.update({
-            id: 'load-data',
-            color: 'red',
-            title: t('notif.server.name'),
-            message: t('notif.server.descritpion'),
-            radius: 'lg',
-            icon: <IconCircleX />,
-            withCloseButton: false,
-            autoClose: false,
-          });
-        }
-      })
-      .catch((error: any) => {
-        console.error('Error fetching news:', error);
-        notifications.update({
-          id: 'load-data',
-          color: 'red',
-          title: t('notif.server.name'),
-          message: t('notif.server.descritpion'),
-          radius: 'lg',
-          icon: <IconCircleX />,
-          withCloseButton: false,
-          autoClose: false,
-        });
-      });
-  }, [api, t]);
+  const NewsSkeleton = () => (
+    <div className="relative h-[270px] w-[480px] items-center overflow-hidden rounded-xl bg-gray-400 animate-pulse"></div>
+  );
+
+  const {
+    data: newsData,
+    isLoading: isNewsLoading,
+    isError: isNewsError,
+    error: newsError,
+  } = useNews();
+  const {
+    data: agenda,
+    isLoading: isAgendaLoading,
+    isError: isAgendaError,
+    error: agendaError,
+  } = useAgenda();
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
@@ -166,23 +76,30 @@ export function AgendaNews() {
   const EventNavigate = useCallback(
     (event: number) => {
       navigate(`/event/${event}`);
-        window.scrollTo(0, 0);
+      window.scrollTo(0, 0);
     },
     [navigate],
   );
 
   return (
     <div>
-      <div className={'pt-8'}>
-        {agenda &&
+      <div className="pt-8">
+        {isAgendaError && agendaError && (
+            <ErrorNotification error={agendaError} notificationId="agenda-error-main" />
+        )}
+        {isAgendaLoading || isAgendaError ? (
+          Array.from({ length: 4 }).map((_, index) => (
+            <SkeletonItem key={index} />
+          ))
+        ) : (
+          agenda &&
           agenda.map((item) => (
             <div
               key={item.id}
-              className="flex mt-3 drop-shadow-md flex-col gap-2"
+              className="flex mt-3 flex-col gap-2 drop-shadow-md"
             >
               <div
-                className="flex cursor-pointer flex-col text-[25px] lg:text-3xl font-bold leading-none
-                            text-black rounded-none w-full lg:w-5/12"
+                className="flex cursor-pointer flex-col text-[25px] font-bold leading-none text-black w-full lg:w-5/12 lg:text-3xl"
                 onClick={() => {
                   if (item.type === 0) {
                     EventNavigate(item.id);
@@ -192,21 +109,29 @@ export function AgendaNews() {
                 }}
               >
                 <div className="flex flex-row gap-5 p-5 bg-white rounded-3xl shadow-sm">
-                  <div className="flex flex-row items-center">
+                  <div className="flex items-center">
                     <div
-                      className={`p-2 lg:p-4 h-[50px] w-[50px] lg:w-[70px] lg:h-[70px] rounded-xl text-white ${item.type === 0 ? 'bg-green-500' : ''} ${item.type === 1 ? 'bg-yellow-500' : ''} ${item.type === 2 ? 'bg-red-500' : ''} ${item.type === 3 ? 'bg-gray-500' : ''}`}
+                      className={`p-2 lg:p-4 h-[50px] w-[50px] lg:w-[70px] lg:h-[70px] rounded-xl text-white ${
+                        item.type === 0
+                          ? 'bg-green-500'
+                          : item.type === 1
+                            ? 'bg-yellow-500'
+                            : item.type === 2
+                              ? 'bg-red-500'
+                              : 'bg-gray-500'
+                      }`}
                     >
-                      {item.type == 0 && <IconCalendarEvent size={35} />}
-                      {item.type == 1 && <IconBooks size={35} />}
-                      {item.type == 2 && <IconCertificate size={35} />}
-                      {item.type == 3 && <IconSettings size={35} />}
+                      {item.type === 0 && <IconCalendarEvent size={35} />}
+                      {item.type === 1 && <IconBooks size={35} />}
+                      {item.type === 2 && <IconCertificate size={35} />}
+                      {item.type === 3 && <IconSettings size={35} />}
                     </div>
                   </div>
-                  <div className="flex flex-col my-auto text-center">
+                  <div className="flex flex-col items-center my-auto">
                     <div className="text-[27px] lg:text-4xl">
                       {format(new Date(item.startDate), 'dd')}
                     </div>
-                    <div className="text-[14px] lg:text-lg lg:-mt-2 text-neutral-600">
+                    <div className="text-[14px] text-neutral-600 lg:text-lg lg:-mt-2">
                       {format(new Date(item.startDate), 'MMM', {
                         locale: currentLocale,
                       })
@@ -216,18 +141,16 @@ export function AgendaNews() {
                   </div>
                   <div className="flex flex-col mt-1">
                     <div className="text-3xl">{item.title}</div>
-                    <div className="-mt-2.5 font-medium text-[15px] lg:text-xl leading-7 lg:leading-8">
-                      <span className="-mt-1 text-neutral-600">
-                        {format(new Date(item.startDate), 'HH:mm')}
-                      </span>
-                      {item.type == 0 ? (
-                        <span className="ml-2 -mt-1 text-neutral-400">
+                    <div className="-mt-2.5 text-[15px] font-medium leading-7 text-neutral-600 lg:text-xl lg:leading-8">
+                      <span>{format(new Date(item.startDate), 'HH:mm')}</span>
+                      {item.type === 0 ? (
+                        <span className="ml-2 text-neutral-400">
                           {item.airport}
                         </span>
                       ) : (
-                        <span className="ml-2 -mt-1 text-neutral-400">
+                        <span className="ml-2 text-neutral-400">
                           {item.annotation.length > 30
-                            ? item.annotation.slice(0, 30) + '...'
+                            ? `${item.annotation.slice(0, 30)}...`
                             : item.annotation}
                         </span>
                       )}
@@ -236,72 +159,78 @@ export function AgendaNews() {
                 </div>
               </div>
             </div>
-          ))}
-        <div className=" mt-10 flex flex-wrap justify-center gap-8">
-          {news === null
-            ? Array.from({ length: itemsPerPage }).map((_, index) => (
+          ))
+        )}
+        <div className="mt-10 flex flex-wrap justify-center gap-8">
+          {isNewsError && newsError && (
+              <ErrorNotification error={newsError} notificationId="news-error-main" />
+          )}
+          {isNewsLoading || isNewsError ? (
+            Array.from({ length: itemsPerPage }).map((_, index) => (
+              <NewsSkeleton key={index} />
+            ))
+          ) : (
+            newsData &&
+            newsData.slice(startIndex, endIndex).map((newsItem) => (
+              <div
+                key={newsItem.id}
+                className="md:w-280px relative h-[170px] w-11/12 overflow-hidden rounded-2xl shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl md:h-[270px] md:w-[480px]"
+                onClick={() => newsRedirect(newsItem)}
+                style={{ cursor: 'pointer' }}
+              >
                 <div
-                  key={index}
-                  className="relative h-[270px] w-[480px] items-center overflow-hidden rounded-xl bg-gray-400 blur-lg"
-                  style={{ cursor: 'wait' }}
-                ></div>
-              ))
-            : news.slice(startIndex, endIndex).map((newsItem) => (
-                <div
-                  key={newsItem.id}
-                  className="md:w-280px relative h-[170px] w-11/12 overflow-hidden rounded-2xl shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl md:h-[270px] md:w-[480px]"
-                  onClick={() => newsRedirect(newsItem)}
-                  style={{ cursor: 'pointer' }}
+                  className="absolute inset-0"
+                  style={{
+                    backgroundImage: `url(${newsItem.image_url})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                  }}
                 >
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      backgroundImage: `url(${newsItem.image_url})`,
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
-                    }}
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/20"></div>
-                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-4 text-white">
-                      <div className="mb-2 flex items-center justify-between">
-                        <div className="text-sm font-medium">
-                          {format(new Date(newsItem.publishedAt), 'dd.MM.yyyy')}
-                        </div>
-                        <div className="rounded bg-black/50 px-2 py-1 text-xs">
-                          {newsItem.user &&
-                          newsItem.user.staffPositions &&
-                          newsItem.user.staffPositions.length > 0
-                            ? newsItem.user.staffPositions
-                                .map((position) => `BY-${position.id}`)
-                                .filter(
-                                  (value, index, self) =>
-                                    self.indexOf(value) === index,
-                                )
-                                .join('/')
-                            : newsItem.user
-                              ? `${newsItem.user.name.first} ${newsItem.user.id}`
-                              : 'IVAO BY HQ'}
-                        </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/20"></div>
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-4 text-white">
+                    <div className="mb-2 flex items-center justify-between">
+                      <div className="text-sm font-medium">
+                        {format(new Date(newsItem.publishedAt), 'dd.MM.yyyy')}
                       </div>
-                      <div className="truncate text-lg font-bold">
-                        {newsItem.name[i18n.language]}
+                      <div className="rounded bg-black/50 px-2 py-1 text-xs">
+                        {newsItem.user &&
+                        newsItem.user.staffPositions?.length > 0
+                          ? newsItem.user.staffPositions
+                              .map((position) => `BY-${position.id}`)
+                              .filter(
+                                (value, index, self) =>
+                                  self.indexOf(value) === index,
+                              )
+                              .join('/')
+                          : newsItem.user
+                            ? `${newsItem.user.name.first} ${newsItem.user.id}`
+                            : 'IVAO BY HQ'}
                       </div>
-                      <div className="mt-2 text-sm leading-snug">
-                        {newsItem.description[i18n.language].length > 96
-                          ? `${newsItem.description[i18n.language].slice(0, 96)}...`
-                          : newsItem.description[i18n.language]}
-                      </div>
+                    </div>
+                    <div className="truncate text-lg font-bold">
+                      {newsItem.name[i18n.language]}
+                    </div>
+                    <div className="mt-2 text-sm leading-snug">
+                      {newsItem.description[i18n.language]?.length > 96
+                        ? `${newsItem.description[i18n.language].slice(0, 96)}...`
+                        : newsItem.description[i18n.language]}
                     </div>
                   </div>
                 </div>
-              ))}
+              </div>
+            ))
+          )}
         </div>
-        <Pagination
-          currentPage={currentPage}
-          totalPages={Math.ceil(news ? news.length / itemsPerPage : 1)}
-          onPageChange={setCurrentPage}
-          className="mt-8"
-        />
+        {!isNewsError && (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={Math.ceil(
+              newsData ? newsData.length / itemsPerPage : 1,
+            )}
+            onPageChange={setCurrentPage}
+            className="mt-8"
+          />
+        )}
       </div>
     </div>
   );

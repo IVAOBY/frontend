@@ -165,7 +165,7 @@ const ruTranslations: { translations: Translations } = {
       },
       server: {
         name: 'Ошибка!',
-        descritpion: 'Сервер не захотел делится с нами данными :(',
+        description: 'Сервер не захотел делится с нами данными :(',
       },
       auth: {
         negative: {

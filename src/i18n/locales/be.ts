@@ -164,7 +164,7 @@ const beTranslations: { translations: Translations } = {
       },
       server: {
         name: 'Памылка!',
-        descritpion: 'Сервер не захацеў дзяліцца з намі дадзенымі :(',
+        description: 'Сервер не захацеў дзяліцца з намі дадзенымі :(',
       },
       auth: {
         negative: {

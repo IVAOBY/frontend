@@ -1,9 +1,10 @@
-import React, { useContext } from 'react';
+import React, {useContext, useEffect} from 'react';
 
 import { AppShell, MantineProvider } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 import { I18nextProvider } from 'react-i18next';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 import { AirportsPage } from './components/AirportPage/AirportsPage';
 import { Footer } from './components/Footer';
@@ -30,10 +31,13 @@ import { Vehicles } from './pages/vehicles/Vehicles';
 
 import './App.css';
 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
 import { AirportPage } from './components/AirportPage/AirportPage';
 import { Centered } from './components/Layout';
 import { Loader } from './components/Loader';
 import { Training } from './pages/training';
+import {setAuthToken} from "./utils/Http";
 
 export default function App() {
   const PrivateRoute: React.FC<{ path: string; element: React.ReactNode }> = ({
@@ -53,62 +57,81 @@ export default function App() {
     return <>{element}</>;
   };
 
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 1000 * 60 * 5,
+      },
+    },
+  });
+
+  const { token } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (token) {
+      setAuthToken(token);
+    }
+  }, [token]);
+
   return (
     <MantineProvider theme={ivaoTheme}>
       <I18nextProvider i18n={i18n}>
         <BrowserRouter>
-          <AuthProvider>
-            <ApiProvider>
-              <AppShell
-                padding={0}
-                navbar={<HeaderResponsive />}
-                footer={<Footer />}
-              >
-                <Notifications />
-                <Routes>
-                  <Route path="/" element={<MainPage />} />
-                  <Route path="/airports" element={<AirportsPage />} />
-                  <Route path="/airport/:icao" element={<AirportPage />} />
-                  <Route path="/about-us" element={<AboutUs />} />
-                  <Route path="/faq" element={<FAQ />} />
-                  <Route path="/scenery" element={<ScenaryPage />} />
-                  <Route path="/scenery/:id" element={<ScenaryPage />} />
-                  <Route path="/pilots/first-step" element={<FirstStepP />} />
-                  <Route path="/news/:id" element={<NewsPage />} />
-                  {/*<Route path="/map" element={<MapPage />} />*/}
-                  <Route path="/staff" element={<StaffPage />} />
-                  <Route path="/vehicles" element={<Vehicles />} />
-                  <Route path="/training" element={<Training />} />
+          <QueryClientProvider client={queryClient}>
+            <AuthProvider>
+              <ApiProvider>
+                <AppShell
+                  padding={0}
+                  navbar={<HeaderResponsive />}
+                  footer={<Footer />}
+                >
+                  <Notifications />
+                  <Routes>
+                    <Route path="/" element={<MainPage />} />
+                    <Route path="/airports" element={<AirportsPage />} />
+                    <Route path="/airport/:icao" element={<AirportPage />} />
+                    <Route path="/about-us" element={<AboutUs />} />
+                    <Route path="/faq" element={<FAQ />} />
+                    <Route path="/scenery" element={<ScenaryPage />} />
+                    <Route path="/scenery/:id" element={<ScenaryPage />} />
+                    <Route path="/pilots/first-step" element={<FirstStepP />} />
+                    <Route path="/news/:id" element={<NewsPage />} />
+                    {/*<Route path="/map" element={<MapPage />} />*/}
+                    <Route path="/staff" element={<StaffPage />} />
+                    <Route path="/vehicles" element={<Vehicles />} />
+                    <Route path="/training" element={<Training />} />
 
-                  {/* Документы */}
-                  <Route path="/documents" element={<DocumentsMain />} />
-                  <Route path="/documents/:id" element={<DocumentView />} />
-                  <Route
-                    path="/documents/category/:id"
-                    element={<DocumentsCategory />}
-                  />
+                    {/* Документы */}
+                    <Route path="/documents" element={<DocumentsMain />} />
+                    <Route path="/documents/:id" element={<DocumentView />} />
+                    <Route
+                      path="/documents/category/:id"
+                      element={<DocumentsCategory />}
+                    />
 
-                  {/* ИВЕНТЫ */}
-                  <Route path="/event/:id" element={<EventPage />} />
+                    {/* ИВЕНТЫ */}
+                    <Route path="/event/:id" element={<EventPage />} />
 
-                  {/* NotFound */}
-                  <Route path="404" element={<NotFound />} />
-                  <Route path="*" element={<Navigate to="/404" />} />
+                    {/* NotFound */}
+                    <Route path="404" element={<NotFound />} />
+                    <Route path="*" element={<Navigate to="/404" />} />
 
-                  {/* Private route*/}
-                  <Route
-                    path="/contact-us/*"
-                    element={
-                      <PrivateRoute
-                        path="/contact-us"
-                        element={<GetInTouchSimple />}
-                      />
-                    }
-                  />
-                </Routes>
-              </AppShell>
-            </ApiProvider>
-          </AuthProvider>
+                    {/* Private route*/}
+                    <Route
+                      path="/contact-us/*"
+                      element={
+                        <PrivateRoute
+                          path="/contact-us"
+                          element={<GetInTouchSimple />}
+                        />
+                      }
+                    />
+                  </Routes>
+                </AppShell>
+              </ApiProvider>
+            </AuthProvider>
+            {import.meta.env.VITE_ENV_TYPE === "DEVELOPMENT" && <ReactQueryDevtools />}
+          </QueryClientProvider>
         </BrowserRouter>
       </I18nextProvider>
     </MantineProvider>

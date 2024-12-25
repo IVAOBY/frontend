@@ -4,7 +4,7 @@ import { notifications } from '@mantine/notifications';
 import { IconCircleX } from '@tabler/icons-react';
 import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 
 import { BreadcrumbLayout } from '../../../components/Layout';
 import { useApi } from '../../../context/ApiContext';
@@ -14,55 +14,44 @@ export function DocumentView() {
   const { t } = useTranslation();
   const { id } = useParams();
   const api = useApi();
+  const navigate = useNavigate();
 
   const [documentItem, setDocumentItem] = useState<DocumentsType | null>(null);
   useEffect(() => {
-    notifications.show({
-      id: 'load-data',
-      loading: true,
-      title: t('notif.loading.name'),
-      message: t('notif.loading.descritpion'),
-      radius: 'lg',
-      autoClose: false,
-      withCloseButton: false,
-    });
     api(`/documents/${id}`)
-      .then((response: DocumentsType) => {
-        if (
-          response &&
-          typeof response === 'object' &&
-          !Array.isArray(response)
-        ) {
-          setDocumentItem(response);
-          notifications.hide('load-data');
-        } else {
-          console.error('Invalid response from API:', response);
+        .then((response) => {
+          if (response === false) {
+            navigate('/404');
+          } else if (response && typeof response === 'object' && !Array.isArray(response)) {
+            setDocumentItem(response);
+          } else {
+            console.error('Invalid response from API:', response);
+            notifications.update({
+              id: 'load-data',
+              color: 'red',
+              title: t('notif.server.name'),
+              message: t('notif.server.description'),
+              radius: 'lg',
+              icon: <IconCircleX />,
+              withCloseButton: false,
+              autoClose: false,
+            });
+          }
+        })
+        .catch((error) => {
+          console.error('Error fetching documents:', error);
           notifications.update({
             id: 'load-data',
             color: 'red',
             title: t('notif.server.name'),
-            message: t('notif.server.descritpion'),
+            message: t('notif.server.description'),
             radius: 'lg',
             icon: <IconCircleX />,
             withCloseButton: false,
             autoClose: false,
           });
-        }
-      })
-      .catch((error: any) => {
-        console.error('Error fetching news:', error);
-        notifications.update({
-          id: 'load-data',
-          color: 'red',
-          title: t('notif.server.name'),
-          message: t('notif.server.descritpion'),
-          radius: 'lg',
-          icon: <IconCircleX />,
-          withCloseButton: false,
-          autoClose: false,
         });
-      });
-  }, [api, id, t]);
+  }, [api, id, t, navigate]);
 
   return (
     <BreadcrumbLayout>
