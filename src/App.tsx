@@ -1,10 +1,10 @@
-import React, {useContext, useEffect} from 'react';
+import React, { useContext } from 'react';
 
 import { AppShell, MantineProvider } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { I18nextProvider } from 'react-i18next';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 import { AirportsPage } from './components/AirportPage/AirportsPage';
 import { Footer } from './components/Footer';
@@ -37,7 +37,6 @@ import { AirportPage } from './components/AirportPage/AirportPage';
 import { Centered } from './components/Layout';
 import { Loader } from './components/Loader';
 import { Training } from './pages/training';
-import {setAuthToken} from "./utils/Http";
 
 export default function App() {
   const PrivateRoute: React.FC<{ path: string; element: React.ReactNode }> = ({
@@ -45,7 +44,7 @@ export default function App() {
   }) => {
     const { signed } = useContext(AuthContext);
     if (!signed) {
-      window.location.href = `https://api.by.ivao.aero/auth/login?goto=${encodeURIComponent(window.location.href)}`;
+      window.location.href = `${import.meta.env.VITE_API_URL_BASE}/auth/login?goto=${encodeURIComponent(window.location.href)}`;
 
       return (
         <Centered>
@@ -65,20 +64,12 @@ export default function App() {
     },
   });
 
-  const { token } = useContext(AuthContext);
-
-  useEffect(() => {
-    if (token) {
-      setAuthToken(token);
-    }
-  }, [token]);
-
   return (
     <MantineProvider theme={ivaoTheme}>
       <I18nextProvider i18n={i18n}>
         <BrowserRouter>
-          <QueryClientProvider client={queryClient}>
-            <AuthProvider>
+          <AuthProvider>
+            <QueryClientProvider client={queryClient}>
               <ApiProvider>
                 <AppShell
                   padding={0}
@@ -129,9 +120,11 @@ export default function App() {
                   </Routes>
                 </AppShell>
               </ApiProvider>
-            </AuthProvider>
-            {import.meta.env.VITE_ENV_TYPE === "DEVELOPMENT" && <ReactQueryDevtools />}
-          </QueryClientProvider>
+              {import.meta.env.VITE_ENV_TYPE === 'DEVELOPMENT' && (
+                <ReactQueryDevtools />
+              )}
+            </QueryClientProvider>
+          </AuthProvider>
         </BrowserRouter>
       </I18nextProvider>
     </MantineProvider>

@@ -198,7 +198,7 @@ export function HeaderResponsive() {
   const [urlParams] = useSearchParams();
   const ivaoToken = urlParams.get('token');
   const { signed, decodedToken } = useContext(AuthContext);
-  const serverUrl = `https://api.by.ivao.aero/auth/login?goto=${encodeURIComponent(window.location.href)}`;
+  const serverUrl = `${import.meta.env.VITE_API_URL_BASE}/auth/login?goto=${encodeURIComponent(window.location.href)}`;
   const location = useLocation();
 
   useEffect(() => {

@@ -17,18 +17,17 @@ Http.interceptors.response.use(
     },
 );
 
-let authToken = '';
 
-export const setAuthToken = (token: string) => {
-    authToken = token;
-};
 
 Http.interceptors.request.use((request) => {
     request.headers = request.headers ?? {};
     request.headers['Content-Type'] = 'application/json';
-    if (authToken) {
-        request.headers['Authorization'] = `Bearer ${authToken}`;
+
+    const token = localStorage.getItem('token')
+    if (token) {
+        request.headers['Authorization'] = 'Bearer ' + token;
     }
+    console.log('Request Headers:', request.headers);
     return request;
 });
 
