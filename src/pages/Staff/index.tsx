@@ -174,7 +174,7 @@ export function StaffPage() {
                       </div>
                     ))
                 )}
-                {staffData &&
+                {!isStaffError || isStaffLoading ? staffData &&
                   staffData.filter(
                     (position) =>
                       position.departmentId === department.id &&
@@ -183,7 +183,7 @@ export function StaffPage() {
                     <div className="text-base leading-5 text-neutral-400 md:text-xl">
                       {t('staff.nopositions')}
                     </div>
-                  )}
+                  ) : null}
               </div>
             </div>
           </div>
