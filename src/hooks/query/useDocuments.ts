@@ -30,6 +30,8 @@ export const useCategory = () => {
         queryFn: async () => {
             return await fetchDocumentsCategory();
         },
+        staleTime: 5 * 60 * 1000,
+        gcTime: 30 * 60 * 1000,
     });
 };
 
@@ -41,6 +43,8 @@ export const useDocument = (id: string | undefined = undefined) => {
             return await fetchDocumentById(id);
         },
         enabled: !!id,
+        staleTime: 60 * 1000,
+        gcTime: 120 * 60 * 1000,
     });
 };
 
@@ -52,5 +56,7 @@ export const useCategoryId = (id: string | undefined = undefined) => {
             return await fetchCategoryById(id);
         },
         enabled: !!id,
+        staleTime: 5 * 60 * 1000,
+        gcTime: 30 * 60 * 1000,
     });
 };

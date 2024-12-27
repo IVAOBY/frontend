@@ -27,6 +27,8 @@ export const useStaff = () => {
     retry: (failureCount) => {
       return failureCount <= 5;
     },
+    staleTime: 30 * 60 * 1000,
+    gcTime: 120 * 60 * 1000,
   });
 };
 
@@ -39,5 +41,7 @@ export const useStaffDepartment = () => {
     retry: (failureCount) => {
       return failureCount <= 5;
     },
+    staleTime: 30 * 60 * 1000,
+    gcTime: 120 * 60 * 1000,
   });
 };

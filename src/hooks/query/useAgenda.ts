@@ -27,6 +27,8 @@ const useNews = () => {
         retry: (failureCount) => {
             return failureCount <= 5;
         },
+        staleTime: 60 * 1000,
+        gcTime: 5 * 60 * 1000,
     });
 };
 

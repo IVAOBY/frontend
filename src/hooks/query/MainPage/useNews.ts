@@ -26,6 +26,8 @@ const useNews = () => {
         retry: (failureCount) => {
             return failureCount <= 5;
         },
+        staleTime: 60 * 1000,
+        gcTime: 5 * 60 * 1000,
     });
 };
 
@@ -37,7 +39,8 @@ export const useNewsById = (id: string | undefined = undefined) => {
             return await fetchNewsById(id);
         },
         enabled: !!id,
-        retry: false,
+        staleTime: 120 * 1000,
+        gcTime: 5 * 60 * 1000,
     });
 };
 

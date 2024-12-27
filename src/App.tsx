@@ -31,12 +31,14 @@ import { Vehicles } from './pages/vehicles/Vehicles';
 
 import './App.css';
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClient } from '@tanstack/react-query';
 
 import { AirportPage } from './components/AirportPage/AirportPage';
 import { Centered } from './components/Layout';
 import { Loader } from './components/Loader';
 import { Training } from './pages/training';
+import {createSyncStoragePersister} from "@tanstack/query-sync-storage-persister";
+import {PersistQueryClientProvider} from "@tanstack/react-query-persist-client";
 
 export default function App() {
   const PrivateRoute: React.FC<{ path: string; element: React.ReactNode }> = ({
@@ -59,17 +61,20 @@ export default function App() {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-        staleTime: 1000 * 60 * 5,
       },
     },
   });
+
+  const persister = createSyncStoragePersister({
+    storage: window.sessionStorage,
+  })
 
   return (
     <MantineProvider theme={ivaoTheme}>
       <I18nextProvider i18n={i18n}>
         <BrowserRouter>
           <AuthProvider>
-            <QueryClientProvider client={queryClient}>
+            <PersistQueryClientProvider client={queryClient} persistOptions={{ persister }}>
               <ApiProvider>
                 <AppShell
                   padding={0}
@@ -123,7 +128,7 @@ export default function App() {
               {import.meta.env.VITE_ENV_TYPE === 'DEVELOPMENT' && (
                 <ReactQueryDevtools />
               )}
-            </QueryClientProvider>
+            </PersistQueryClientProvider>
           </AuthProvider>
         </BrowserRouter>
       </I18nextProvider>
