@@ -63,7 +63,7 @@ export default function App() {
   });
 
   const persister = createSyncStoragePersister({
-    storage: window.sessionStorage,
+    storage: window.localStorage,
   });
 
   return (
