@@ -85,7 +85,7 @@ export function ShiftComponent() {
     return booking?.id;
   };
 
-  const handleBook = async (partId: number, atcPositionId: number) => {
+  const handleBook = (partId: number, atcPositionId: number) => {
     if (signed && data) {
       const part = data.find((part) => part.id === partId);
       if (part) {
@@ -102,7 +102,7 @@ export function ShiftComponent() {
     }
   };
 
-  const handleUnbook = async (bookingId: number) => {
+  const handleUnbook = (bookingId: number) => {
     if (signed) {
       try {
         unbookEvent(bookingId);
@@ -112,7 +112,7 @@ export function ShiftComponent() {
     }
   };
 
-  const handleBookClick = async (partId: number, atcPositionId: number) => {
+  const handleBookClick = (partId: number, atcPositionId: number) => {
     const position = data
       ?.find((part) => part.id === partId)
       ?.positions.find((pos) => pos.id === atcPositionId);
@@ -122,7 +122,7 @@ export function ShiftComponent() {
       return;
     }
     try {
-      await handleBook(partId, atcPositionId);
+      handleBook(partId, atcPositionId); // Убираем await
     } catch (error) {
       console.error('Error while booking:', error);
     }
@@ -306,18 +306,16 @@ export function ShiftComponent() {
                                     !hasStatusOne &&
                                     new Date() < new Date(part.endDate)
                                   ) {
-                                    void (async () => {
-                                      const bookingId: number =
-                                        getBookingIdForPosition(
-                                          part.booking,
-                                          position.id,
-                                        );
-                                      if (typeof bookingId !== 'undefined') {
-                                        await handleUnbook(bookingId);
-                                      } else {
-                                        console.log('Booking ID is undefined');
-                                      }
-                                    })();
+                                    const bookingId: number =
+                                      getBookingIdForPosition(
+                                        part.booking,
+                                        position.id,
+                                      );
+                                    if (typeof bookingId !== 'undefined') {
+                                      handleUnbook(bookingId);
+                                    } else {
+                                      console.log('Booking ID is undefined');
+                                    }
                                   }
                                 }}
                                 className={`leading-16 flex gap-3 rounded-xl px-1.5 pr-3 text-lg font-semibold text-white backdrop-blur-[5px] transition duration-500 ${
@@ -341,12 +339,7 @@ export function ShiftComponent() {
                                     !hasStatusOne &&
                                     new Date() < new Date(part.endDate)
                                   ) {
-                                    void (async () => {
-                                      await handleBookClick(
-                                        part.id,
-                                        position.id,
-                                      );
-                                    })();
+                                    handleBookClick(part.id, position.id);
                                   }
                                 }}
                                 className={`leading-16 flex gap-1.5 rounded-xl px-1.5 pr-3 text-lg font-semibold text-white backdrop-blur-[5px] transition duration-500 ${
