@@ -92,7 +92,7 @@ export function ShiftComponent() {
         try {
           bookEvent({
             atcPositionId,
-            eventPartId: part.id,
+            eventPartId: part,
             eventId: part.eventId,
           });
         } catch (error) {

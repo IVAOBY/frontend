@@ -1,4 +1,4 @@
-import Axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import Axios, {AxiosError, AxiosRequestConfig, AxiosRequestHeaders, AxiosResponse} from 'axios';
 
 const Http = Axios.create({
   baseURL: import.meta.env.VITE_API_URL_BASE as string,
@@ -18,14 +18,14 @@ Http.interceptors.response.use(
 );
 
 Http.interceptors.request.use((request) => {
-  request.headers = request.headers ?? {};
-  request.headers['Content-Type'] = 'application/json';
+    request.headers = request.headers ?? {} as AxiosRequestHeaders;
+    request.headers['Content-Type'] = 'application/json';
 
   const token = localStorage.getItem('token');
   if (token) {
     request.headers['Authorization'] = 'Bearer ' + token;
   }
-  console.log('Request Headers:', request.headers);
+
   return request;
 });
 

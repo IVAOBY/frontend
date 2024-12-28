@@ -3,15 +3,15 @@ import { IconCheck, IconX } from '@tabler/icons-react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { t } from 'i18next';
 
-import { BookingEntity } from '../../types/Events';
+import {BookingCreateData, BookingEntity} from '../../types/Events';
 import Http from '../../utils/Http';
 
 export const useBookEvent = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: BookingEntity) =>
-      Http<BookingEntity>({
+    mutationFn: (data: BookingCreateData) =>
+      Http<BookingCreateData>({
         method: 'post',
         url: '/events-booking/book',
         data,
@@ -20,7 +20,7 @@ export const useBookEvent = () => {
       await queryClient.invalidateQueries({ queryKey: ['event-parts'] });
 
       notifications.show({
-        id: `complete-booking-${data.id}`,
+        id: `complete-booking-${data.atcPositionId}`,
         title: t('notif.booking.book.name'),
         message: t('notif.booking.book.description'),
         color: 'green',
