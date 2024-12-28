@@ -158,6 +158,14 @@ const enTranslations: { translations: Translations } = {
         fraError: 'FRA Error!',
         fraErrorDescription:
           "You don't have the required FRA rating to book this position.",
+        book: {
+          name: 'Booking',
+          description: 'You have applied to book a position!',
+        },
+        unbook: {
+          name: 'Booking',
+          description: "You've canceled your booking for the position!",
+        },
       },
       loaded: {
         name: 'Data loaded!',

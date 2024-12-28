@@ -28,7 +28,7 @@ export function EnvAlert() {
         );
       }
     }
-  }, []);
+  }, [t]);
 
   const handleClose = () => {
     localStorage.setItem('warningClosed', 'true');

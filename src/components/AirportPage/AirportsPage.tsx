@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useAirports } from '../../hooks/query/useAirports';
 import { BreadcrumbLayout } from '../Layout';
-import { ErrorNotification } from '../Notification/ErrorNotification';
+import { Notification } from '../Notification/Notification';
 
 export function AirportsPage() {
   const { t } = useTranslation();
@@ -32,13 +32,14 @@ export function AirportsPage() {
         </p>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {isError && error && (
-            <ErrorNotification
-              error={error}
+            <Notification
+              type="error"
+              message={error.message}
               notificationId="airports-error-allairports"
             />
           )}
           {isLoading || isError ? (
-            <div className="flex flex-col rounded-xl font-semibold animate-pulse">
+            <div className="flex animate-pulse flex-col rounded-xl font-semibold">
               <div className="h-40 rounded-t-xl bg-gray-300"></div>
               <div className="flex w-full flex-col rounded-b-xl bg-white py-6 pl-6 pr-16 max-md:max-w-full max-md:px-5">
                 <div className="flex gap-4 font-bold">
@@ -48,13 +49,14 @@ export function AirportsPage() {
                 <div className="mt-4 h-4 w-full rounded bg-gray-300"></div>
                 <div className="mt-2 h-4 w-3/4 rounded bg-gray-300"></div>
                 <div className="mt-5 flex gap-1.5 self-start whitespace-nowrap rounded-xl bg-gray-300 px-1.5 py-1 text-xl leading-4">
-                  <div className="h-6 w-6 rounded bg-gray-400"></div>
+                  <div className="size-6 rounded bg-gray-400"></div>
                   <div className="h-6 w-20 rounded bg-gray-400"></div>
                 </div>
               </div>
             </div>
           ) : (
-            data?.filter(
+            data
+              ?.filter(
                 (airport) => airport.airportTypeId === 1 && airport.status,
               )
               .map((airport) => (
@@ -102,7 +104,7 @@ export function AirportsPage() {
         </p>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
           {isLoading || isError ? (
-            <div className="flex flex-col rounded-xl font-semibold animate-pulse">
+            <div className="flex animate-pulse flex-col rounded-xl font-semibold">
               <div className="flex w-full flex-col rounded-xl bg-white p-4 max-md:max-w-full max-md:px-4">
                 <div className="flex gap-4 font-bold">
                   <div className="h-8 w-16 rounded-xl bg-gray-300"></div>
@@ -111,13 +113,14 @@ export function AirportsPage() {
                 <div className="mt-2 h-4 w-full rounded bg-gray-300"></div>
                 <div className="mt-1 h-4 w-3/4 rounded bg-gray-300"></div>
                 <div className="mt-3 flex gap-1.5 self-start whitespace-nowrap rounded-xl bg-gray-300 px-1.5 py-1">
-                  <div className="h-5 w-5 rounded bg-gray-400"></div>
+                  <div className="size-5 rounded bg-gray-400"></div>
                   <div className="h-5 w-16 rounded bg-gray-400"></div>
                 </div>
               </div>
             </div>
           ) : (
-            data?.filter(
+            data
+              ?.filter(
                 (airport) => airport.airportTypeId === 2 && airport.status,
               )
               .map((airport) => (
@@ -158,7 +161,7 @@ export function AirportsPage() {
         </p>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
           {isLoading || isError ? (
-            <div className="flex flex-col rounded-xl font-semibold animate-pulse">
+            <div className="flex animate-pulse flex-col rounded-xl font-semibold">
               <div className="flex w-full flex-col rounded-xl bg-white p-4 max-md:max-w-full max-md:px-4">
                 <div className="flex gap-4 font-bold">
                   <div className="h-8 w-16 rounded-xl bg-gray-300"></div>
@@ -167,13 +170,14 @@ export function AirportsPage() {
                 <div className="mt-2 h-4 w-full rounded bg-gray-300"></div>
                 <div className="mt-1 h-4 w-3/4 rounded bg-gray-300"></div>
                 <div className="mt-3 flex gap-1.5 self-start whitespace-nowrap rounded-xl bg-gray-300 px-1.5 py-1">
-                  <div className="h-5 w-5 rounded bg-gray-400"></div>
+                  <div className="size-5 rounded bg-gray-400"></div>
                   <div className="h-5 w-16 rounded bg-gray-400"></div>
                 </div>
               </div>
             </div>
           ) : (
-            data?.filter(
+            data
+              ?.filter(
                 (airport) => airport.airportTypeId === 3 && airport.status,
               )
               .map((airport) => (

@@ -1,10 +1,8 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 
-import { notifications } from '@mantine/notifications';
 import {
   IconAirTrafficControl,
   IconCar,
-  IconCircleX,
   IconPlaneArrival,
   IconPlaneTilt,
   IconRadar,
@@ -16,8 +14,13 @@ import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
-import { useApi } from '../../../context/ApiContext';
+import { Notification } from '../../../components/Notification/Notification';
 import { AuthContext } from '../../../context/UserContext';
+import {
+  useBookEvent,
+  useUnbookEvent,
+} from '../../../hooks/query/useBookingMutations';
+import { useEventParts } from '../../../hooks/query/useEvents';
 import { BookingEntity, PartsEntity } from '../../../types/Events';
 
 const positionIcons = {
@@ -37,158 +40,80 @@ const positionColors = {
 };
 
 const atcRatingNames = [
-  "NONE",  // 0
-  "OBS",   // 1
-  "AS1",   // 2
-  "AS2",   // 3
-  "AS3",   // 4
-  "ADC",   // 5
-  "APC",   // 6
-  "ACC",   // 7
-  "SEC",   // 8
-  "SAI",   // 9
-  "CAI"    // 10
+  'NONE',
+  'OBS',
+  'AS1',
+  'AS2',
+  'AS3',
+  'ADC',
+  'APC',
+  'ACC',
+  'SEC',
+  'SAI',
+  'CAI',
 ];
 
 export function ShiftComponent() {
   const { t } = useTranslation();
   const { id } = useParams();
-  const api = useApi();
   const { decodedToken, signed } = useContext(AuthContext);
+  const { data, error, isError, isLoading } = useEventParts(id);
 
-  const [partItem, setPartItem] = useState<PartsEntity[] | null>(null);
+  const { mutate: bookEvent } = useBookEvent();
+  const { mutate: unbookEvent } = useUnbookEvent();
 
-  const loadEventData = useCallback(async () => {
-    try {
-      notifications.show({
-        id: 'load-data',
-        loading: true,
-        title: t('notif.loading.name'),
-        message: t('notif.loading.descritpion'),
-        radius: 'lg',
-        autoClose: false,
-        withCloseButton: false,
-      });
-
-      const response = await api(`/events-parts/event/${id}`);
-      if (response && Array.isArray(response)) {
-        setPartItem(response);
-        notifications.hide('load-data');
-      } else {
-        console.error('Invalid response from API:', response);
-        notifications.update({
-          id: 'load-data',
-          color: 'red',
-          title: t('notif.server.name'),
-          message: t('notif.server.descritpion'),
-          radius: 'lg',
-          icon: <IconCircleX />,
-          withCloseButton: false,
-          autoClose: false,
-        });
-      }
-    } catch (error) {
-      console.error('Error fetching event parts:', error);
-      notifications.update({
-        id: 'load-data',
-        color: 'red',
-        title: t('notif.server.name'),
-        message: t('notif.server.descritpion'),
-        radius: 'lg',
-        icon: <IconCircleX />,
-        withCloseButton: false,
-        autoClose: false,
-      });
-    }
-  }, [api, id, t]);
-
-  useEffect(() => {
-    void (async () => {
-      await loadEventData();
-    })();
-  }, [api, id, loadEventData, t]);
-
-  const handleBook = async (partId: number, atcPositionId: number) => {
-    if (signed && partItem) {
-      const part = partItem.find((part) => part.id === partId);
-      if (part) {
-        try {
-          await api('/events-booking/book', 'POST', {
-            atcPositionId: atcPositionId,
-            eventPartId: part.id,
-            eventId: part.eventId,
-          });
-
-          await loadEventData(); // Reload event data after booking
-        } catch (error) {
-          console.error('Error handling booking:', error);
-          notifications.show({
-            id: 'booking-error',
-            color: 'red',
-            title: t('notif.booking.error'),
-            message: t('notif.booking.error-description'),
-            radius: 'lg',
-            icon: <IconCircleX />,
-            withCloseButton: false,
-            autoClose: false,
-          });
-        }
-      }
-    }
+  const isBookedForPosition = (
+    bookingList: BookingEntity[],
+    positionId: number,
+  ) => {
+    return bookingList.some(
+      (booking) => booking.atcPosition?.id === positionId,
+    );
   };
 
   const hasSufficientRating = (userRating: number, positionFRA: number) => {
     return userRating >= positionFRA;
   };
 
-  const isBookedForPosition = (
-    bookings: BookingEntity[],
-    atcPositionId: number,
-  ) => {
-    return bookings.some(
-      (booking) =>
-        booking.atcPosition?.id === atcPositionId &&
-        booking.bookedUser?.id === decodedToken?.userData.id,
-    );
-  };
   const getBookingIdForPosition = (
-    bookings: BookingEntity[],
-    atcPositionId: number,
+    bookingList: BookingEntity[],
+    positionId: number,
   ) => {
-    const booking = bookings.find(
-      (booking) =>
-        booking.atcPosition?.id === atcPositionId &&
-        booking.bookedUser?.id === decodedToken?.userData.id,
+    const booking = bookingList.find(
+      (booking) => booking.atcPosition?.id === positionId,
     );
+    return booking?.id;
+  };
 
-    return booking ? booking.id : undefined;
+  const handleBook = async (partId: number, atcPositionId: number) => {
+    if (signed && data) {
+      const part = data.find((part) => part.id === partId);
+      if (part) {
+        try {
+          bookEvent({
+            atcPositionId,
+            eventPartId: part.id,
+            eventId: part.eventId,
+          });
+        } catch (error) {
+          console.error('Error handling booking:', error);
+        }
+      }
+    }
   };
 
   const handleUnbook = async (bookingId: number) => {
     if (signed) {
       try {
-        await api(`/events-booking/unbook/${bookingId}`, 'DELETE');
-        await loadEventData(); // Reload event data after unbooking
+        unbookEvent(bookingId);
       } catch (error) {
         console.error('Error handling unbooking:', error);
-        notifications.show({
-          id: 'unbooking-error',
-          color: 'red',
-          title: t('notif.unbooking.error'),
-          message: t('notif.unbooking.error-description'),
-          radius: 'lg',
-          icon: <IconCircleX />,
-          withCloseButton: false,
-          autoClose: false,
-        });
       }
-    } else {
-      console.log('Token is not defined or null');
     }
   };
 
   const handleBookClick = async (partId: number, atcPositionId: number) => {
-    const position = partItem
+    const position = data
       ?.find((part) => part.id === partId)
       ?.positions.find((pos) => pos.id === atcPositionId);
 
@@ -200,23 +125,35 @@ export function ShiftComponent() {
       await handleBook(partId, atcPositionId);
     } catch (error) {
       console.error('Error while booking:', error);
-      notifications.show({
-        id: 'booking-error',
-        color: 'red',
-        title: t('notif.booking.error'),
-        message: t('notif.booking.error-description'),
-        radius: 'lg',
-        icon: <IconCircleX />,
-        withCloseButton: false,
-        autoClose: false,
-      });
     }
   };
 
   return (
     <div>
-      {partItem &&
-        partItem.map((part: PartsEntity, index: number) => (
+      {isError && error && (
+        <Notification
+          type="error"
+          message={error.message}
+          notificationId="documents-error-maindocuments"
+        />
+      )}
+      {isLoading || isError ? (
+        <div className="mt-8">
+          <div className="h-6 w-[700px] animate-pulse rounded bg-gray-200"></div>
+
+          <div className="mt-3 flex max-w-[300px] animate-pulse flex-col gap-2 drop-shadow-md">
+            <div className="flex size-[300px] flex-row gap-5 rounded-3xl bg-gray-200 p-5">
+              <div className="size-[56px] rounded-xl bg-gray-300"></div>
+              <div className="mt-1 flex flex-col">
+                <div className="h-6 w-40 rounded-md bg-gray-300"></div>
+                <div className="mt-2 h-4 w-28 rounded-md bg-gray-300"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        data &&
+        data.map((part: PartsEntity, index: number) => (
           <div key={part.id} className="mb-8">
             <div className="mb-10 flex flex-col gap-4 first:mt-[50px] md:flex-row md:items-center md:gap-[35px]">
               <h2 className="text-[45px] font-semibold leading-10 text-atmos-700">
@@ -307,7 +244,8 @@ export function ShiftComponent() {
                               {position.position.name[i18n.language]}
                             </div>
                             <div className="text-[15px] font-semibold text-[#ABA7A7]">
-                              {position.position.callsign}, {atcRatingNames[position.position.fra]}+
+                              {position.position.callsign},{' '}
+                              {atcRatingNames[position.position.fra]}+
                             </div>
                           </div>
                         </div>
@@ -441,7 +379,8 @@ export function ShiftComponent() {
               )}
             </div>
           </div>
-        ))}
+        ))
+      )}
     </div>
   );
 }

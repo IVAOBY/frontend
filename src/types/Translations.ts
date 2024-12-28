@@ -150,6 +150,14 @@ export interface Translations {
     booking: {
       fraError: string;
       fraErrorDescription: string;
+      book: {
+        name: string;
+        description: string;
+      };
+      unbook: {
+        name: string;
+        description: string;
+      };
     };
     loaded: {
       name: string;

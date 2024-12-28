@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 
 import { BreadcrumbLayout, Centered } from '../../components/Layout';
 import { Loader } from '../../components/Loader';
-import { ErrorNotification } from '../../components/Notification/ErrorNotification';
+import { Notification } from '../../components/Notification/Notification';
 import { Title } from '../../components/Typography/Title';
 import { useNewsById } from '../../hooks/query/MainPage/useNews';
 
@@ -14,12 +14,16 @@ export function NewsPage() {
   useTranslation();
 
   const { id } = useParams<{ id: string }>();
-  const { data, error, isError, isLoading } = useNewsById(id as string);
+  const { data, error, isError, isLoading } = useNewsById(id);
 
   return (
     <BreadcrumbLayout>
       {isError && error && (
-        <ErrorNotification error={error} notificationId={`news-${id}`} />
+        <Notification
+          type="error"
+          message={error.message}
+          notificationId={`news-${id}`}
+        />
       )}
       {isLoading || isError ? (
         <Centered>

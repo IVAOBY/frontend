@@ -10,7 +10,6 @@ import { AirportsPage } from './components/AirportPage/AirportsPage';
 import { Footer } from './components/Footer';
 import { HeaderResponsive } from './components/header/header';
 import { MainPage } from './components/MainPage/MainPage';
-import { ApiProvider } from './context/ApiContext';
 import { AuthContext, AuthProvider } from './context/UserContext';
 import i18n from './i18n/i18n';
 import { ivaoTheme } from './ivaoTheme';
@@ -27,18 +26,17 @@ import { FirstStepP } from './pages/FirstStepPilot';
 import { NewsPage } from './pages/News';
 import { ScenaryPage } from './pages/Scenary';
 import { StaffPage } from './pages/Staff';
-import { Vehicles } from './pages/vehicles/Vehicles';
 
 import './App.css';
 
+import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister';
 import { QueryClient } from '@tanstack/react-query';
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 
 import { AirportPage } from './components/AirportPage/AirportPage';
 import { Centered } from './components/Layout';
 import { Loader } from './components/Loader';
 import { Training } from './pages/training';
-import {createSyncStoragePersister} from "@tanstack/query-sync-storage-persister";
-import {PersistQueryClientProvider} from "@tanstack/react-query-persist-client";
 
 export default function App() {
   const PrivateRoute: React.FC<{ path: string; element: React.ReactNode }> = ({
@@ -60,71 +58,71 @@ export default function App() {
 
   const queryClient = new QueryClient({
     defaultOptions: {
-      queries: {
-      },
+      queries: {},
     },
   });
 
   const persister = createSyncStoragePersister({
     storage: window.sessionStorage,
-  })
+  });
 
   return (
     <MantineProvider theme={ivaoTheme}>
       <I18nextProvider i18n={i18n}>
         <BrowserRouter>
           <AuthProvider>
-            <PersistQueryClientProvider client={queryClient} persistOptions={{ persister }}>
-              <ApiProvider>
-                <AppShell
-                  padding={0}
-                  navbar={<HeaderResponsive />}
-                  footer={<Footer />}
-                >
-                  <Notifications />
-                  <Routes>
-                    <Route path="/" element={<MainPage />} />
-                    <Route path="/airports" element={<AirportsPage />} />
-                    <Route path="/airport/:icao" element={<AirportPage />} />
-                    <Route path="/about-us" element={<AboutUs />} />
-                    <Route path="/faq" element={<FAQ />} />
-                    <Route path="/scenery" element={<ScenaryPage />} />
-                    <Route path="/scenery/:id" element={<ScenaryPage />} />
-                    <Route path="/pilots/first-step" element={<FirstStepP />} />
-                    <Route path="/news/:id" element={<NewsPage />} />
-                    {/*<Route path="/map" element={<MapPage />} />*/}
-                    <Route path="/staff" element={<StaffPage />} />
-                    <Route path="/vehicles" element={<Vehicles />} />
-                    <Route path="/training" element={<Training />} />
+            <PersistQueryClientProvider
+              client={queryClient}
+              persistOptions={{ persister }}
+            >
+              <AppShell
+                padding={0}
+                navbar={<HeaderResponsive />}
+                footer={<Footer />}
+              >
+                <Notifications />
+                <Routes>
+                  <Route path="/" element={<MainPage />} />
+                  <Route path="/airports" element={<AirportsPage />} />
+                  <Route path="/airport/:icao" element={<AirportPage />} />
+                  <Route path="/about-us" element={<AboutUs />} />
+                  <Route path="/faq" element={<FAQ />} />
+                  <Route path="/scenery" element={<ScenaryPage />} />
+                  <Route path="/scenery/:id" element={<ScenaryPage />} />
+                  <Route path="/pilots/first-step" element={<FirstStepP />} />
+                  <Route path="/news/:id" element={<NewsPage />} />
+                  {/*<Route path="/map" element={<MapPage />} />*/}
+                  <Route path="/staff" element={<StaffPage />} />
+                  {/*<Route path="/vehicles" element={<Vehicles />} />*/}
+                  <Route path="/training" element={<Training />} />
 
-                    {/* Документы */}
-                    <Route path="/documents" element={<DocumentsMain />} />
-                    <Route path="/documents/:id" element={<DocumentView />} />
-                    <Route
-                      path="/documents/category/:id"
-                      element={<DocumentsCategory />}
-                    />
+                  {/* Документы */}
+                  <Route path="/documents" element={<DocumentsMain />} />
+                  <Route path="/documents/:id" element={<DocumentView />} />
+                  <Route
+                    path="/documents/category/:id"
+                    element={<DocumentsCategory />}
+                  />
 
-                    {/* ИВЕНТЫ */}
-                    <Route path="/event/:id" element={<EventPage />} />
+                  {/* ИВЕНТЫ */}
+                  <Route path="/event/:id" element={<EventPage />} />
 
-                    {/* NotFound */}
-                    <Route path="404" element={<NotFound />} />
-                    <Route path="*" element={<Navigate to="/404" />} />
+                  {/* NotFound */}
+                  <Route path="404" element={<NotFound />} />
+                  <Route path="*" element={<Navigate to="/404" />} />
 
-                    {/* Private route*/}
-                    <Route
-                      path="/contact-us/*"
-                      element={
-                        <PrivateRoute
-                          path="/contact-us"
-                          element={<GetInTouchSimple />}
-                        />
-                      }
-                    />
-                  </Routes>
-                </AppShell>
-              </ApiProvider>
+                  {/* Private route*/}
+                  <Route
+                    path="/contact-us/*"
+                    element={
+                      <PrivateRoute
+                        path="/contact-us"
+                        element={<GetInTouchSimple />}
+                      />
+                    }
+                  />
+                </Routes>
+              </AppShell>
               {import.meta.env.VITE_ENV_TYPE === 'DEVELOPMENT' && (
                 <ReactQueryDevtools />
               )}

@@ -18,7 +18,7 @@ import i18n from '../../i18n/i18n';
 import { CustomButton } from '../Button';
 import { BreadcrumbLayout, Centered } from '../Layout';
 import { Loader } from '../Loader';
-import { ErrorNotification } from '../Notification/ErrorNotification';
+import { Notification } from '../Notification/Notification';
 import { Tooltip } from '../Tooltip';
 
 const positionIcons = {
@@ -78,8 +78,9 @@ export function AirportPage() {
   return (
     <BreadcrumbLayout>
       {isError && error && (
-        <ErrorNotification
-          error={error}
+        <Notification
+          type="error"
+          message={error.message}
           notificationId="airports-error-allairports"
         />
       )}
@@ -182,10 +183,10 @@ export function AirportPage() {
                   </div>
                 </div>
               </div>
-              <div className="max-h-[370px] w-[650px] rounded-lg bg-atmos-700 max-md:hidden flex items-center justify-center">
-                <div className="bg-amber-300 w-1/4 h-1/4 flex flex-col items-center justify-center text-3xl shadow-lg text-black border-4 border-black font-bold rounded-xl text-center">
+              <div className="flex max-h-[370px] w-[650px] items-center justify-center rounded-lg bg-atmos-700 max-md:hidden">
+                <div className="flex size-1/4 flex-col items-center justify-center rounded-xl border-4 border-black bg-amber-300 text-center text-3xl font-bold text-black shadow-lg">
                   <div>INOP</div>
-                  <div className="text-sm -mt-2">SEE T/LOG</div>
+                  <div className="-mt-2 text-sm">SEE T/LOG</div>
                 </div>
               </div>
             </div>
@@ -195,7 +196,7 @@ export function AirportPage() {
                   {airport.atcPositions
                     ?.map((position) => {
                       const callsign = position.callsign.toLowerCase();
-                      let positionType = '';
+                      let positionType: string;
                       if (callsign.includes('gnd')) {
                         positionType = 'ground';
                       } else if (callsign.includes('twr')) {
@@ -250,14 +251,14 @@ export function AirportPage() {
                         className="mb-4 flex flex-row flex-wrap gap-1"
                       >
                         <div className="flex items-center gap-3">
-                          <span className="flex h-10 w-16 items-center justify-center border-2 border-black rounded-xl bg-red-500 text-xl font-bold text-white">
+                          <span className="flex h-10 w-16 items-center justify-center rounded-xl border-2 border-black bg-red-500 text-xl font-bold text-white">
                             {runway.designation}
                           </span>
                           <span className="text-lg font-semibold text-black">
                             {runway.heading}&deg; / {runway.tora}m
                           </span>
                         </div>
-                        <div className="flex flex-wrap gap-1 pl-1 items-center text-lg font-semibold">
+                        <div className="flex flex-wrap items-center gap-1 pl-1 text-lg font-semibold">
                           {runway.ndb && (
                             <span>
                               <span className="text-black">/</span>{' '}

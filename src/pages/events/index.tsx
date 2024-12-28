@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import {
   IconClockCancel,
   IconClockCheck,
@@ -12,25 +10,27 @@ import { useParams } from 'react-router-dom';
 
 import { BreadcrumbLayout, Centered } from '../../components/Layout';
 import { Loader } from '../../components/Loader';
-import { ErrorNotification } from '../../components/Notification/ErrorNotification';
-import useEvents from '../../hooks/query/useEvents';
+import { Notification } from '../../components/Notification/Notification';
+import { useEventDetails } from '../../hooks/query/useEvents';
 import { ShiftComponent } from './components/ShiftComponent';
 
 export function EventPage() {
   const { t } = useTranslation();
 
-  const [registrationStatus] = useState<'open' | 'closed'>('closed');
-
   const { id } = useParams();
 
-  const { data, error, isError, isLoading } = useEvents(id);
+  const { data, registrationStatus, isLoading, error } = useEventDetails(id);
 
   return (
     <BreadcrumbLayout>
-      {isError && error && (
-        <ErrorNotification error={error} notificationId={`event-${id}`} />
+      {error && (
+        <Notification
+          type="error"
+          message={error.message}
+          notificationId={`event-${id}`}
+        />
       )}
-      {isLoading || isError ? (
+      {isLoading || error ? (
         <Centered>
           <Loader />
         </Centered>
@@ -81,8 +81,8 @@ export function EventPage() {
                   className="size-full rounded-3xl object-cover shadow-lg shadow-gray-400"
                 />
               </div>
-              <div className="w-full rounded-2xl bg-white font-['Montserrat'] shadow-lg shadow-gray-400 xl:w-1/2 flex flex-col">
-                <div className="mx-8 my-10 flex-grow">
+              <div className="flex w-full flex-col rounded-2xl bg-white font-['Montserrat'] shadow-lg shadow-gray-400 xl:w-1/2">
+                <div className="mx-8 my-10 grow">
                   <p className="text-3xl font-semibold leading-7 text-black">
                     {t('events.content.title')}
                   </p>
@@ -98,7 +98,7 @@ export function EventPage() {
                   onClick={() => {
                     window.open(data.infoUrl, '_blank');
                   }}
-                  className={`leading-16 flex gap-3 rounded-xl px-1.5 pr-3 max-w-[300px] text-lg font-semibold text-white backdrop-blur-[5px] transition duration-500 bg-[#0D2C99] hover:cursor-pointer hover:opacity-80 mb-4 mx-8`}
+                  className={`leading-16 mx-8 mb-4 flex max-w-[300px] gap-3 rounded-xl bg-[#0D2C99] px-1.5 pr-3 text-lg font-semibold text-white backdrop-blur-[5px] transition duration-500 hover:cursor-pointer hover:opacity-80`}
                 >
                   <IconInfoSquareRounded className="ml-1.5 mt-0.5" />
                   <div className="my-auto flex-auto">

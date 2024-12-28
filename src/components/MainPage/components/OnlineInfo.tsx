@@ -1,3 +1,4 @@
+/*
 import { useEffect, useState } from 'react';
 
 import { AtcResponse } from '@ivaoby/common/types/tracker/internal/atc-response';
@@ -144,3 +145,4 @@ export function OnlineInfoComponent() {
     </GeneralLayout>
   );
 }
+*/

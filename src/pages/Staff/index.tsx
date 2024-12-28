@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { BreadcrumbLayout, Centered } from '../../components/Layout';
 import { Loader } from '../../components/Loader';
-import { ErrorNotification } from '../../components/Notification/ErrorNotification';
+import { Notification } from '../../components/Notification/Notification';
 import { useStaff, useStaffDepartment } from '../../hooks/query/useStaff';
 
 export function StaffPage() {
@@ -33,14 +33,16 @@ export function StaffPage() {
         {t('staff.name')}
       </div>
       {isDepartmentsError && departmentsError && (
-        <ErrorNotification
-          error={departmentsError}
+        <Notification
+          type="error"
+          message={departmentsError.message}
           notificationId="departments-error-staff"
         />
       )}
       {isStaffError && staffError && (
-        <ErrorNotification
-          error={staffError}
+        <Notification
+          type="error"
+          message={staffError.message}
           notificationId="staff-error-staff"
         />
       )}
@@ -67,15 +69,15 @@ export function StaffPage() {
                 className="mt-4 flex w-full flex-wrap gap-2 md:mt-5"
               >
                 {isStaffLoading || isStaffError ? (
-                  <div className="flex w-full flex-col md:w-80 bg-gray-300 rounded-2xl">
+                  <div className="flex w-full flex-col rounded-2xl bg-gray-300 md:w-80">
                     <img
                       src="https://cdn.by.ivao.aero/images/staff/loading.jpg"
                       alt="Staff Photo"
-                      className="aspect-square w-full rounded-t-2xl animate-pulse"
+                      className="aspect-square w-full animate-pulse rounded-t-2xl"
                     />
-                    <div className="flex w-full flex-row gap-2 items-start rounded-b-2xl bg-white p-5 py-2 pl-2 md:py-5 md:pl-8">
-                      <div className="h-6 w-24 bg-gray-300 rounded-md animate-pulse"></div>
-                      <div className="h-6 w-40 bg-gray-300 rounded-md animate-pulse"></div>
+                    <div className="flex w-full flex-row items-start gap-2 rounded-b-2xl bg-white p-5 py-2 pl-2 md:py-5 md:pl-8">
+                      <div className="h-6 w-24 animate-pulse rounded-md bg-gray-300"></div>
+                      <div className="h-6 w-40 animate-pulse rounded-md bg-gray-300"></div>
                     </div>
                   </div>
                 ) : (
@@ -174,16 +176,18 @@ export function StaffPage() {
                       </div>
                     ))
                 )}
-                {!isStaffError || isStaffLoading ? staffData &&
-                  staffData.filter(
-                    (position) =>
-                      position.departmentId === department.id &&
-                      (position.is_vacant === 1 || position.user !== null),
-                  ).length === 0 && (
-                    <div className="text-base leading-5 text-neutral-400 md:text-xl">
-                      {t('staff.nopositions')}
-                    </div>
-                  ) : null}
+                {!isStaffError || isStaffLoading
+                  ? staffData &&
+                    staffData.filter(
+                      (position) =>
+                        position.departmentId === department.id &&
+                        (position.is_vacant === 1 || position.user !== null),
+                    ).length === 0 && (
+                      <div className="text-base leading-5 text-neutral-400 md:text-xl">
+                        {t('staff.nopositions')}
+                      </div>
+                    )
+                  : null}
               </div>
             </div>
           </div>

@@ -8,7 +8,7 @@ export const Breadcrumb = () => {
 
   return (
     <div
-      className="mb-3 flex max-w-36 flex-row text-gray-400 transition duration-300 hover:cursor-pointer hover:text-gray-300 -ml-2"
+      className="-ml-2 mb-3 flex max-w-36 flex-row text-gray-400 transition duration-300 hover:cursor-pointer hover:text-gray-300"
       onClick={() => navigate('/')}
     >
       <IconChevronLeft />

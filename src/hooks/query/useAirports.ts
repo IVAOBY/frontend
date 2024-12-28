@@ -29,7 +29,9 @@ export const useAirports = () => {
 };
 
 export const useAirportById = (icao: string | undefined = undefined) => {
-  {/*TODO: Use airport from useAirports, if this exist*/}
+  {
+    /*TODO: Use airport from useAirports, if this exist*/
+  }
   return useQuery({
     queryKey: ['airports', icao],
     queryFn: async () => {

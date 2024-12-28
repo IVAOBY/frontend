@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { BreadcrumbLayout, Centered } from '../../components/Layout';
 import { Loader } from '../../components/Loader';
-import { ErrorNotification } from '../../components/Notification/ErrorNotification';
+import { Notification } from '../../components/Notification/Notification';
 import { H3 } from '../../components/Typography/H3';
 import { useCategory } from '../../hooks/query/useDocuments';
 import { DocumentsType } from '../../types/Documents';
@@ -21,8 +21,9 @@ export function DocumentsMain() {
   return (
     <BreadcrumbLayout>
       {isError && error && (
-        <ErrorNotification
-          error={error}
+        <Notification
+          type="error"
+          message={error.message}
           notificationId="documents-error-maindocuments"
         />
       )}
@@ -34,7 +35,7 @@ export function DocumentsMain() {
         data &&
         data.map((category, index) => (
           <div key={index} className="mb-10">
-            <H3 className="text-atmos-700 font-bold text-3xl">
+            <H3 className="text-3xl font-bold text-atmos-700">
               {category.name[i18n.language]}
             </H3>
             {category.documents.filter((document) => document.published)
@@ -45,21 +46,21 @@ export function DocumentsMain() {
                   .map((document) => (
                     <div
                       key={document.id}
-                      className="hover:-scale-10 cursor-pointer rounded-xl bg-white p-4 shadow-lg duration-300 hover:-translate-y-1 hover:bg-gray-50 flex flex-col max-w-[287px]"
+                      className="hover:-scale-10 flex max-w-[287px] cursor-pointer flex-col rounded-xl bg-white p-4 shadow-lg duration-300 hover:-translate-y-1 hover:bg-gray-50"
                       onClick={() => documentsRedirect(document)}
                     >
-                      <p className="font-bold text-2xl text-black">
+                      <p className="text-2xl font-bold text-black">
                         {document.name[i18n.language]}
                       </p>
-                      <div className="h-2 bg-gray-200 rounded-full mb-2.5 mt-2.5"></div>
-                      <div className="h-2 bg-gray-200 rounded-full mb-2.5"></div>
-                      <div className="h-2 bg-gray-200 rounded-full mb-2.5"></div>
-                      <div className="h-2 bg-gray-200 rounded-full mb-2.5"></div>
-                      <div className="h-2 bg-gray-200 rounded-full mb-2.5"></div>
-                      <div className="h-2 bg-gray-200 rounded-full w-1/2"></div>
-                      <div className="relative flex flex-row gap-9 mt-5 inset-x-0 bottom-0">
-                        <div className="h-2 bg-gray-200 rounded-full w-[52px]"></div>
-                        <div className="h-2 bg-gray-200 rounded-full w-[94px]"></div>
+                      <div className="my-2.5 h-2 rounded-full bg-gray-200"></div>
+                      <div className="mb-2.5 h-2 rounded-full bg-gray-200"></div>
+                      <div className="mb-2.5 h-2 rounded-full bg-gray-200"></div>
+                      <div className="mb-2.5 h-2 rounded-full bg-gray-200"></div>
+                      <div className="mb-2.5 h-2 rounded-full bg-gray-200"></div>
+                      <div className="h-2 w-1/2 rounded-full bg-gray-200"></div>
+                      <div className="relative inset-x-0 bottom-0 mt-5 flex flex-row gap-9">
+                        <div className="h-2 w-[52px] rounded-full bg-gray-200"></div>
+                        <div className="h-2 w-[94px] rounded-full bg-gray-200"></div>
                       </div>
                     </div>
                   ))}

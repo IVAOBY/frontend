@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 
 import { BreadcrumbLayout, Centered } from '../../../components/Layout';
 import { Loader } from '../../../components/Loader';
-import { ErrorNotification } from '../../../components/Notification/ErrorNotification';
+import { Notification } from '../../../components/Notification/Notification';
 import { useDocument } from '../../../hooks/query/useDocuments';
 
 export function DocumentView() {
@@ -17,8 +17,9 @@ export function DocumentView() {
     <BreadcrumbLayout>
       <div className="mt-[30px] flex flex-col gap-[50px]">
         {isError && error && (
-          <ErrorNotification
-            error={error}
+          <Notification
+            type="error"
+            message={error.message}
             notificationId="documents-error-maindocuments"
           />
         )}

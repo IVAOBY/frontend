@@ -1,6 +1,5 @@
 import { Translations } from '../../types/Translations';
 
-
 const ruTranslations: { translations: Translations } = {
   translations: {
     navbar: {
@@ -158,6 +157,14 @@ const ruTranslations: { translations: Translations } = {
       booking: {
         fraError: 'Ошибка FRA!',
         fraErrorDescription: 'Кажется, вы не обладаете необходимым рейтингом.',
+        book: {
+          name: 'Бронирование',
+          description: 'Вы подали заявление на бронирование позиции!',
+        },
+        unbook: {
+          name: 'Бронирование',
+          description: 'Вы отменили заявление на бронирование позиции!',
+        },
       },
       loaded: {
         name: 'Данные загружены!',
