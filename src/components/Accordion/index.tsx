@@ -25,7 +25,7 @@ const AccordionItem: React.FC<AccordionItemProps> = ({ title, content }) => {
         >
           {title}
           <svg
-            className={`h-6 w-6 transform transition-transform duration-300 ease-in-out ${isOpen ? 'rotate-180' : 'rotate-0'}`}
+            className={`size-6 transition-transform duration-300 ease-in-out${isOpen ? 'rotate-180' : 'rotate-0'}`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -41,7 +41,7 @@ const AccordionItem: React.FC<AccordionItemProps> = ({ title, content }) => {
         </button>
       </h2>
       <div
-        className={`overflow-hidden transition-max-height duration-500 ease-in-out ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}
+        className={`transition-max-height overflow-hidden duration-500 ease-in-out ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}
       >
         <div className="rounded-b-xl bg-white pb-[14px] pl-[28px] pr-[25px] pt-[5px]">
           <div

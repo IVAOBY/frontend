@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 
 import { AppShell, MantineProvider } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { I18nextProvider } from 'react-i18next';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
@@ -9,7 +10,6 @@ import { AirportsPage } from './components/AirportPage/AirportsPage';
 import { Footer } from './components/Footer';
 import { HeaderResponsive } from './components/header/header';
 import { MainPage } from './components/MainPage/MainPage';
-import { ApiProvider } from './context/ApiContext';
 import { AuthContext, AuthProvider } from './context/UserContext';
 import i18n from './i18n/i18n';
 import { ivaoTheme } from './ivaoTheme';
@@ -26,9 +26,12 @@ import { FirstStepP } from './pages/FirstStepPilot';
 import { NewsPage } from './pages/News';
 import { ScenaryPage } from './pages/Scenary';
 import { StaffPage } from './pages/Staff';
-import { Vehicles } from './pages/vehicles/Vehicles';
 
 import './App.css';
+
+import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister';
+import { QueryClient } from '@tanstack/react-query';
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 
 import { AirportPage } from './components/AirportPage/AirportPage';
 import { Centered } from './components/Layout';
@@ -41,7 +44,7 @@ export default function App() {
   }) => {
     const { signed } = useContext(AuthContext);
     if (!signed) {
-      window.location.href = `https://api.by.ivao.aero/auth/login?goto=${encodeURIComponent(window.location.href)}`;
+      window.location.href = `${import.meta.env.VITE_API_URL_BASE}/auth/login?goto=${encodeURIComponent(window.location.href)}`;
 
       return (
         <Centered>
@@ -53,12 +56,25 @@ export default function App() {
     return <>{element}</>;
   };
 
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {},
+    },
+  });
+
+  const persister = createSyncStoragePersister({
+    storage: window.localStorage,
+  });
+
   return (
     <MantineProvider theme={ivaoTheme}>
       <I18nextProvider i18n={i18n}>
         <BrowserRouter>
           <AuthProvider>
-            <ApiProvider>
+            <PersistQueryClientProvider
+              client={queryClient}
+              persistOptions={{ persister }}
+            >
               <AppShell
                 padding={0}
                 navbar={<HeaderResponsive />}
@@ -77,7 +93,7 @@ export default function App() {
                   <Route path="/news/:id" element={<NewsPage />} />
                   {/*<Route path="/map" element={<MapPage />} />*/}
                   <Route path="/staff" element={<StaffPage />} />
-                  <Route path="/vehicles" element={<Vehicles />} />
+                  {/*<Route path="/vehicles" element={<Vehicles />} />*/}
                   <Route path="/training" element={<Training />} />
 
                   {/* Документы */}
@@ -107,7 +123,10 @@ export default function App() {
                   />
                 </Routes>
               </AppShell>
-            </ApiProvider>
+              {import.meta.env.VITE_ENV_TYPE === 'DEVELOPMENT' && (
+                <ReactQueryDevtools />
+              )}
+            </PersistQueryClientProvider>
           </AuthProvider>
         </BrowserRouter>
       </I18nextProvider>

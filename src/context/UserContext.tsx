@@ -61,7 +61,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, []);
 
   const refreshToken = useCallback(() => {
-    window.location.href = `https://api.by.ivao.aero/auth/login?goto=${encodeURIComponent(window.location.href)}`;
+    window.location.href = `${import.meta.env.VITE_API_URL_BASE}/auth/login?goto=${encodeURIComponent(window.location.href)}`;
   }, []);
 
   useEffect(() => {

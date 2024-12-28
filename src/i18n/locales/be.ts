@@ -157,6 +157,14 @@ const beTranslations: { translations: Translations } = {
       booking: {
         fraError: 'Памылка FRA!',
         fraErrorDescription: 'Здаецца, вы не валодаеце неабходным рэйтынгам.',
+        book: {
+          name: 'Браніраванне',
+          description: 'Вы падалі заяву на браніраванне пазіцыі!',
+        },
+        unbook: {
+          name: 'Браніраванне',
+          description: 'Вы адмянілі заяву на браніраванне пазіцыі!',
+        },
       },
       loaded: {
         name: 'Дадзеныя загружаны!',
@@ -164,7 +172,7 @@ const beTranslations: { translations: Translations } = {
       },
       server: {
         name: 'Памылка!',
-        descritpion: 'Сервер не захацеў дзяліцца з намі дадзенымі :(',
+        description: 'Сервер не захацеў дзяліцца з намі дадзенымі :(',
       },
       auth: {
         negative: {
