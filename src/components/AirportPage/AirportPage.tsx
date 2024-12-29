@@ -1,16 +1,12 @@
 import { useCallback, useEffect, useRef } from 'react';
 
-import {
-  IconAirTrafficControl,
-  IconCar,
-  IconDownload,
-  IconPlane,
-  IconRadar,
-  IconRadar2,
-  IconShoppingBag,
-} from '@tabler/icons-react';
+
+
+import { IconAirTrafficControl, IconCar, IconDownload, IconPlaneArrival, IconPlaneTilt, IconRadar, IconRadar2, IconShoppingBag } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
+
+
 
 import metaricon from '../../assets/icons/metar.svg';
 import { useAirportById } from '../../hooks/query/useAirports';
@@ -21,11 +17,13 @@ import { Loader } from '../Loader';
 import { Notification } from '../Notification/Notification';
 import { Tooltip } from '../Tooltip';
 
+
 const positionIcons = {
   ground: <IconCar size={41} />,
   tower: <IconAirTrafficControl size={41} />,
   radar: <IconRadar size={41} />,
-  approach: <IconPlane size={41} />,
+  approach: <IconPlaneArrival size={41} />,
+  control: <IconPlaneTilt size={41} />,
 };
 
 const positionColors = {
@@ -33,6 +31,7 @@ const positionColors = {
   tower: 'bg-semantic-red-500',
   radar: 'bg-ocean-600',
   approach: 'bg-atmos-700',
+  control: 'bg-semantic-blue-500',
 };
 
 export function AirportPage() {
@@ -40,8 +39,8 @@ export function AirportPage() {
   const { icao } = useParams();
   const widgetContainerRef = useRef(null);
 
-  function decimalToDMS(decimalLat, decimalLon) {
-    function convert(decimal) {
+  function decimalToDMS(decimalLat: number, decimalLon: number) {
+    function convert(decimal: number) {
       const degrees = Math.floor(decimal);
       const minutes = (Math.abs(decimal - degrees) * 60).toFixed(2);
       return `${Math.abs(degrees)}° ${minutes}`;
@@ -194,6 +193,10 @@ export function AirportPage() {
               {airport.atcPositions?.length > 0 && (
                 <div className="flex flex-col gap-3 rounded-2xl bg-white p-[19px] shadow-md">
                   {airport.atcPositions
+                    ?.filter(
+                      (position) =>
+                        !position.callsign.toLowerCase().includes('fm'),
+                    )
                     ?.map((position) => {
                       const callsign = position.callsign.toLowerCase();
                       let positionType: string;
@@ -203,8 +206,13 @@ export function AirportPage() {
                         positionType = 'tower';
                       } else if (callsign.includes('r_app')) {
                         positionType = 'radar';
-                      } else {
+                      } else if (callsign.includes('app')) {
                         positionType = 'approach';
+                      } else if (
+                        callsign.includes('ctr') ||
+                        callsign.includes('fss')
+                      ) {
+                        positionType = 'control';
                       }
                       return { position, type: positionType };
                     })
