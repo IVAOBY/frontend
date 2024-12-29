@@ -1,3 +1,4 @@
+/*
 import { useEffect, useState } from 'react';
 
 import {
@@ -164,3 +165,4 @@ export function Vehicles() {
     </Container>
   );
 }
+*/

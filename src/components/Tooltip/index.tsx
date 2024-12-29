@@ -13,11 +13,10 @@ interface TooltipProps {
 const baseStyle = 'relative inline-block cursor-pointer transition-all';
 
 const tooltipStyles: { [key in TooltipPositions]: string } = {
-  top: 'tooltip-top absolute -left-1/2 transform -translate-x-1/2 -bottom-full',
-  bottom:
-    'tooltip-bottom absolute left-1/2 transform -translate-x-1/2 top-full',
-  left: 'tooltip-left absolute -top-1/2 transform -translate-y-1/2 -right-full',
-  right: 'tooltip-right absolute -top-1/2 transform -translate-y-1/2 left-full',
+  top: 'absolute left-1/2 transform -translate-x-1/2 -translate-y-[75px]',
+  bottom: 'absolute left-1/2 transform -translate-x-1/2 translate-y-[5px]',
+  left: 'absolute top-1/2 transform -translate-y-1/2 -translate-x-[205px]',
+  right: 'absolute top-1/2 transform -translate-y-1/2 translate-x-[160px]',
 };
 
 export function Tooltip({ children, content, position = 'top' }: TooltipProps) {
@@ -26,7 +25,7 @@ export function Tooltip({ children, content, position = 'top' }: TooltipProps) {
   return (
     <div className={classNames(baseStyle)}>
       <div
-        className={classNames('relative')}
+        className="relative"
         onMouseEnter={() => setTooltipVisible(true)}
         onMouseLeave={() => setTooltipVisible(false)}
       >
@@ -35,14 +34,11 @@ export function Tooltip({ children, content, position = 'top' }: TooltipProps) {
       {isTooltipVisible && (
         <div
           className={classNames(
-            'tooltip',
             tooltipStyles[position],
-            'transition-opacity',
+            'z-10 min-w-[200px] rounded-lg bg-black px-3 py-2 text-white font-semibold text-sm shadow-xl transition-opacity opacity-100',
           )}
         >
-          <div className="tooltip-content min-w-[200px] rounded-2xl bg-black px-2 py-1 text-sm text-white opacity-100">
-            {content}
-          </div>
+          {content}
         </div>
       )}
     </div>

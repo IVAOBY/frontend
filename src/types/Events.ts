@@ -67,6 +67,12 @@ export interface BookingEntity {
   statusUser: User | null;
 }
 
+export interface BookingCreateData {
+  eventId: number;
+  eventPartId: PartsEntity;
+  atcPositionId: number;
+}
+
 export interface EventAtcPositions {
   id: number;
   eventId: number;

@@ -38,23 +38,3 @@ export interface MessagesType {
   link: string;
   linkTitle: string;
 }
-
-export interface DocumentsCategoryType {
-  id: string;
-  order: number;
-  name: {
-    [key: string]: string;
-  };
-}
-
-export interface DocumentsType {
-  id: string;
-  category: string;
-  name: {
-    [key: string]: string;
-  };
-  content: {
-    [key: string]: string;
-  };
-  published: boolean;
-}

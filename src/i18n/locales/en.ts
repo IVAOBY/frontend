@@ -158,6 +158,14 @@ const enTranslations: { translations: Translations } = {
         fraError: 'FRA Error!',
         fraErrorDescription:
           "You don't have the required FRA rating to book this position.",
+        book: {
+          name: 'Booking',
+          description: 'You have applied to book a position!',
+        },
+        unbook: {
+          name: 'Booking',
+          description: "You've canceled your booking for the position!",
+        },
       },
       loaded: {
         name: 'Data loaded!',
@@ -165,7 +173,7 @@ const enTranslations: { translations: Translations } = {
       },
       server: {
         name: 'Error!',
-        descritpion: 'The server did not want to share data with us :(',
+        description: 'The server did not want to share data with us :(',
       },
       auth: {
         negative: {
@@ -199,6 +207,17 @@ const enTranslations: { translations: Translations } = {
         heli: 'Landing pads',
         mil: 'Military',
         button: 'More details',
+      },
+      current: {
+        tl: {
+          or: 'or',
+          qnh: 'if the QNH is less than 977hPa',
+        },
+        runways: {
+          rwy: 'Aerodrome',
+          airport: 'RUNWAY`S',
+        },
+        sceneries: 'Sceneries',
       },
     },
     Scenery: {

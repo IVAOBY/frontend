@@ -150,6 +150,14 @@ export interface Translations {
     booking: {
       fraError: string;
       fraErrorDescription: string;
+      book: {
+        name: string;
+        description: string;
+      };
+      unbook: {
+        name: string;
+        description: string;
+      };
     };
     loaded: {
       name: string;
@@ -157,7 +165,7 @@ export interface Translations {
     };
     server: {
       name: string;
-      descritpion: string;
+      description: string;
     };
     auth: {
       negative: {
@@ -191,6 +199,17 @@ export interface Translations {
       heli: string;
       mil: string;
       button: string;
+    };
+    current: {
+      tl: {
+        or: string;
+        qnh: string;
+      };
+      runways: {
+        rwy: string;
+        airport: string;
+      };
+      sceneries: string;
     };
   };
   Scenery: {

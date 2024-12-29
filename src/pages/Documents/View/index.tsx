@@ -1,86 +1,48 @@
-import { useEffect, useState } from 'react';
-
-import { notifications } from '@mantine/notifications';
-import { IconCircleX } from '@tabler/icons-react';
 import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
-import { BreadcrumbLayout } from '../../../components/Layout';
-import { useApi } from '../../../context/ApiContext';
-import { DocumentsType } from '../../../hooks/types';
+import { BreadcrumbLayout, Centered } from '../../../components/Layout';
+import { Loader } from '../../../components/Loader';
+import { Notification } from '../../../components/Notification/Notification';
+import { useDocument } from '../../../hooks/query/useDocuments';
 
 export function DocumentView() {
-  const { t } = useTranslation();
+  useTranslation();
   const { id } = useParams();
-  const api = useApi();
 
-  const [documentItem, setDocumentItem] = useState<DocumentsType | null>(null);
-  useEffect(() => {
-    notifications.show({
-      id: 'load-data',
-      loading: true,
-      title: t('notif.loading.name'),
-      message: t('notif.loading.descritpion'),
-      radius: 'lg',
-      autoClose: false,
-      withCloseButton: false,
-    });
-    api(`/documents/${id}`)
-      .then((response: DocumentsType) => {
-        if (
-          response &&
-          typeof response === 'object' &&
-          !Array.isArray(response)
-        ) {
-          setDocumentItem(response);
-          notifications.hide('load-data');
-        } else {
-          console.error('Invalid response from API:', response);
-          notifications.update({
-            id: 'load-data',
-            color: 'red',
-            title: t('notif.server.name'),
-            message: t('notif.server.descritpion'),
-            radius: 'lg',
-            icon: <IconCircleX />,
-            withCloseButton: false,
-            autoClose: false,
-          });
-        }
-      })
-      .catch((error: any) => {
-        console.error('Error fetching news:', error);
-        notifications.update({
-          id: 'load-data',
-          color: 'red',
-          title: t('notif.server.name'),
-          message: t('notif.server.descritpion'),
-          radius: 'lg',
-          icon: <IconCircleX />,
-          withCloseButton: false,
-          autoClose: false,
-        });
-      });
-  }, [api, id, t]);
+  const { data, error, isError, isLoading } = useDocument(id);
 
   return (
     <BreadcrumbLayout>
       <div className="mt-[30px] flex flex-col gap-[50px]">
-        {documentItem && (
-          <>
-            <h4 className="text-3xl font-bold leading-8 text-black md:text-[55px]">
-              {documentItem.name[i18n.language]}
-            </h4>
-            <div className="rounded-[25px] bg-white px-[32px] py-[41px] shadow-md">
-              <p
-                dangerouslySetInnerHTML={{
-                  __html: documentItem.content[i18n.language] || '',
-                }}
-                className="font-medium text-[#494949]"
-              ></p>
-            </div>
-          </>
+        {isError && error && (
+          <Notification
+            type="error"
+            message={error.message}
+            notificationId="documents-error-maindocuments"
+          />
+        )}
+        {isLoading || isError ? (
+          <Centered>
+            <Loader />
+          </Centered>
+        ) : (
+          data && (
+            <>
+              <h4 className="text-3xl font-bold leading-8 text-black md:text-[55px]">
+                {data.name[i18n.language]}
+              </h4>
+              <div className="rounded-[25px] bg-white px-[32px] py-[41px] shadow-md">
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: data.content[i18n.language] || '',
+                  }}
+                  className="text-[#494949]"
+                ></div>
+              </div>
+            </>
+          )
         )}
       </div>
     </BreadcrumbLayout>
