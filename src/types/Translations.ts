@@ -200,6 +200,17 @@ export interface Translations {
       mil: string;
       button: string;
     };
+    current: {
+      tl: {
+        or: string;
+        qnh: string;
+      };
+      runways: {
+        rwy: string;
+        airport: string;
+      };
+      sceneries: string;
+    };
   };
   Scenery: {
     title: string;

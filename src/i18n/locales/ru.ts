@@ -207,6 +207,17 @@ const ruTranslations: { translations: Translations } = {
         mil: 'Военные',
         button: 'Подробнее',
       },
+      current: {
+        tl: {
+          or: 'или',
+          qnh: 'если QNH меньше 977hPa',
+        },
+        runways: {
+          rwy: 'ВПП',
+          airport: 'Аэродрома',
+        },
+        sceneries: 'Сценарии',
+      },
     },
     Scenery: {
       title: 'Сценарии',
