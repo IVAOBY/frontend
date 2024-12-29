@@ -207,6 +207,17 @@ const beTranslations: { translations: Translations } = {
         mil: 'Ваенныя',
         button: 'Больш падрабязна',
       },
+      current: {
+        tl: {
+          or: 'або',
+          qnh: 'калі QNH менш 977hPa',
+        },
+        runways: {
+          rwy: 'ВПП',
+          airport: 'аэрадрома',
+        },
+        sceneries: 'Сцэнарыі',
+      },
     },
     Scenery: {
       title: 'Сцэнарыі',

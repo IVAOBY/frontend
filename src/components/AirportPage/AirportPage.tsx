@@ -143,9 +143,8 @@ export function AirportPage() {
                   <div className="flex w-full items-center overflow-hidden rounded-lg bg-atmos-700 shadow-md">
                     <div className="px-4 py-2 font-semibold text-white">TL</div>
                     <p className="w-full bg-white px-4 py-2 text-center font-semibold text-neutral-400">
-                      <span className="text-black">FL80</span> или{' '}
-                      <span className="text-black">FL90</span> (если QNH меньше
-                      977hPa)
+                      <span className="text-black">FL80</span> {t('airports.current.tl.or')}{' '}
+                      <span className="text-black">FL90</span> ({t('airports.current.tl.qnh')})
                     </p>
                   </div>
                 </div>
@@ -250,7 +249,7 @@ export function AirportPage() {
               {airport.runways.length > 0 && (
                 <div className="rounded-xl bg-white p-4 shadow-md sm:w-[573px]">
                   <h2 className="mb-4 text-3xl font-semibold uppercase text-black">
-                    <span className="font-bold">ВПП</span> Аэродрома
+                    <span className="font-bold">{t('airports.current.runways.rwy')}</span> {t('airports.current.runways.airport')}
                   </h2>
                   <ul>
                     {airport.runways.map((runway) => (
@@ -326,7 +325,7 @@ export function AirportPage() {
               {airport.sceneries.length > 0 && (
                 <div className="rounded-xl bg-white p-4 shadow-md sm:w-[565px]">
                   <h2 className="mb-4 text-3xl font-semibold uppercase text-black">
-                    Сценарии
+                    {t('airports.current.sceneries')}
                   </h2>
                   <ul>
                     {airport.sceneries.map((scenery) => (

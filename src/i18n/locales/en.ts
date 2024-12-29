@@ -208,6 +208,17 @@ const enTranslations: { translations: Translations } = {
         mil: 'Military',
         button: 'More details',
       },
+      current: {
+        tl: {
+          or: 'or',
+          qnh: 'if the QNH is less than 977hPa',
+        },
+        runways: {
+          rwy: 'Aerodrome',
+          airport: 'RUNWAY`S',
+        },
+        sceneries: 'Sceneries',
+      },
     },
     Scenery: {
       title: 'Sceneries',
