@@ -63,11 +63,13 @@ export function ShiftComponent() {
   const { mutate: unbookEvent } = useUnbookEvent();
 
   const isBookedForPosition = (
-    bookingList: BookingEntity[],
-    positionId: number,
+      bookings: BookingEntity[],
+      atcPositionId: number,
   ) => {
-    return bookingList.some(
-      (booking) => booking.atcPosition?.id === positionId,
+    return bookings.some(
+        (booking) =>
+            booking.atcPosition?.id === atcPositionId &&
+            booking.bookedUser?.id === decodedToken?.userData.id,
     );
   };
 
@@ -76,13 +78,16 @@ export function ShiftComponent() {
   };
 
   const getBookingIdForPosition = (
-    bookingList: BookingEntity[],
-    positionId: number,
+      bookings: BookingEntity[],
+      atcPositionId: number,
   ) => {
-    const booking = bookingList.find(
-      (booking) => booking.atcPosition?.id === positionId,
+    const booking = bookings.find(
+        (booking) =>
+            booking.atcPosition?.id === atcPositionId &&
+            booking.bookedUser?.id === decodedToken?.userData.id,
     );
-    return booking?.id;
+
+    return booking ? booking.id : undefined;
   };
 
   const handleBook = (partId: number, atcPositionId: number) => {
