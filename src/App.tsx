@@ -14,6 +14,7 @@ import { AuthContext, AuthProvider } from './context/UserContext';
 import i18n from './i18n/i18n';
 import { ivaoTheme } from './ivaoTheme';
 import { AboutUs } from './pages/AboutUs';
+import { ActivityStatisicsPage } from './pages/ActivityStatistics/ActivityStatisicsPage';
 import { GetInTouchSimple } from './pages/contact-us/ContactUs';
 import { DocumentsMain } from './pages/Documents';
 import { DocumentsCategory } from './pages/Documents/Category';
@@ -110,6 +111,12 @@ export default function App() {
                   {/* NotFound */}
                   <Route path="404" element={<NotFound />} />
                   <Route path="*" element={<Navigate to="/404" />} />
+
+                  {/* SPA */}
+                  <Route
+                    path="user/statistics"
+                    element={<ActivityStatisicsPage />}
+                  />
 
                   {/* Private route*/}
                   <Route
