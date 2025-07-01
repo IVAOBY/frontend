@@ -92,13 +92,11 @@ export function ShiftComponent() {
 
   const handleBook = (partId: number, atcPositionId: number) => {
     if (signed && data) {
-      const part = data.find((part) => part.id === partId);
-      if (part) {
+      if (partId) {
         try {
           bookEvent({
             atcPositionId,
-            eventPartId: part,
-            eventId: part.eventId,
+            eventPartId: partId,
           });
         } catch (error) {
           console.error('Error handling booking:', error);
