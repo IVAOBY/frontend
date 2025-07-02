@@ -69,7 +69,7 @@ export interface BookingEntity {
 
 export interface BookingCreateData {
   eventId: number;
-  eventPartId: PartsEntity;
+  eventPartId: number;
   atcPositionId: number;
 }
 
