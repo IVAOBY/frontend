@@ -88,6 +88,7 @@ export interface BookingEntity {
 }
 
 export interface BookingCreateData {
+  eventId: number;
   eventPartId: number;
   atcPositionId: number;
 }

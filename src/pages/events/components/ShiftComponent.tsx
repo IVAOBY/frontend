@@ -63,13 +63,13 @@ export function ShiftComponent() {
   const { mutate: unbookEvent } = useUnbookEvent();
 
   const isBookedForPosition = (
-      bookings: BookingEntity[],
-      atcPositionId: number,
+    bookings: BookingEntity[],
+    atcPositionId: number,
   ) => {
     return bookings.some(
-        (booking) =>
-            booking.atcPosition?.id === atcPositionId &&
-            booking.bookedUser?.id === decodedToken?.userData.id,
+      (booking) =>
+        booking.atcPosition?.id === atcPositionId &&
+        booking.bookedUser?.id === decodedToken?.userData.id,
     );
   };
 
@@ -78,13 +78,13 @@ export function ShiftComponent() {
   };
 
   const getBookingIdForPosition = (
-      bookings: BookingEntity[],
-      atcPositionId: number,
+    bookings: BookingEntity[],
+    atcPositionId: number,
   ) => {
     const booking = bookings.find(
-        (booking) =>
-            booking.atcPosition?.id === atcPositionId &&
-            booking.bookedUser?.id === decodedToken?.userData.id,
+      (booking) =>
+        booking.atcPosition?.id === atcPositionId &&
+        booking.bookedUser?.id === decodedToken?.userData.id,
     );
 
     return booking ? booking.id : undefined;
@@ -92,11 +92,13 @@ export function ShiftComponent() {
 
   const handleBook = (partId: number, atcPositionId: number) => {
     if (signed && data) {
-      if (partId) {
+      const part = data.find((p) => p.id === partId);
+      if (part) {
         try {
           bookEvent({
             atcPositionId,
-            eventPartId: partId,
+            eventId: part.eventId,
+            eventPartId: part.id,
           });
         } catch (error) {
           console.error('Error handling booking:', error);
