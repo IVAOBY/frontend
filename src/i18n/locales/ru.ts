@@ -191,6 +191,8 @@ const ruTranslations: { translations: Translations } = {
           open: 'Запись открыта',
           close: 'Запись закрыта',
         },
+        int: 'Международный',
+        div: 'Дивизионный',
       },
       shift: 'Диспетчерская смена',
       booking: {

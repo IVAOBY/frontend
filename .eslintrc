@@ -1,8 +1,8 @@
 {
   "extends": [
-    "@ivaoaero/eslint-config",
-    "@ivaoaero/eslint-config/tailwind",
-    "@ivaoaero/eslint-config/react"
+    "@ivao/eslint-config",
+    "@ivao/eslint-config/tailwind",
+    "@ivao/eslint-config/react"
   ],
   "parserOptions": {
     "tsconfigRootDir": "./",

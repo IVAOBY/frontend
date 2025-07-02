@@ -58,10 +58,10 @@
   },
   "eslintConfig": {
     "extends": [
-      "@ivaoaero/eslint-config",
-      "@ivaoaero/eslint-config/tailwind",
-      "@ivaoaero/eslint-config/react",
-      "@ivaoaero/eslint-config/storybook"
+      "@ivao/eslint-config",
+      "@ivao/eslint-config/tailwind",
+      "@ivao/eslint-config/react",
+      "@ivao/eslint-config/storybook"
     ],
     "parserOptions": {
       "tsconfigRootDir": "./",
@@ -113,8 +113,8 @@
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.1.1",
-    "@ivaoaero/eslint-config": "^1.1.0",
-    "@ivaoaero/prettier-config": "^2.1.0",
+    "@ivao/eslint-config": "^1.1.0",
+    "@ivao/prettier-config": "^1.1.0",
     "@ivaoby/common": "0.0.4a",
     "@types/jsonwebtoken": "^9.0.5",
     "@typescript-eslint/eslint-plugin": "^6.19.1",

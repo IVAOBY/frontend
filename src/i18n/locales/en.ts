@@ -192,6 +192,8 @@ const enTranslations: { translations: Translations } = {
           open: 'Booking is open',
           close: 'Booking is closed',
         },
+        int: 'International',
+        div: 'Division',
       },
       shift: 'ATC Shift',
       booking: {

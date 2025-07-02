@@ -191,6 +191,8 @@ const beTranslations: { translations: Translations } = {
           open: 'Запіс адкрыты',
           close: 'Запіс зачынены',
         },
+        int: 'Міжнародны',
+        div: 'Дывізіённы',
       },
       shift: 'Дыспетчарская змена',
       booking: {

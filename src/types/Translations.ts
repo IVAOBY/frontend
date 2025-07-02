@@ -184,6 +184,8 @@ export interface Translations {
         open: string;
         close: string;
       };
+      int: string;
+      div: string;
     };
     shift: string;
     booking: {
