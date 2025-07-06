@@ -23,7 +23,6 @@ export function AgendaNews() {
   const navigate = useNavigate();
   const newsRedirect = (newsItem: NewsEntity) => {
     navigate(`/news/${newsItem.id}`);
-    window.scrollTo(0, 0);
   };
 
   const SkeletonItem = () => (
