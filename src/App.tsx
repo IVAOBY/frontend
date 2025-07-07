@@ -37,6 +37,7 @@ import { AirportPage } from './components/AirportPage/AirportPage';
 import { Centered } from './components/Layout';
 import { Loader } from './components/Loader';
 import { Training } from './pages/training';
+import ScrollToTop from "./utils/ScrollToTop";
 
 export default function App() {
   const PrivateRoute: React.FC<{ path: string; element: React.ReactNode }> = ({
@@ -81,6 +82,7 @@ export default function App() {
                 footer={<Footer />}
               >
                 <Notifications />
+                <ScrollToTop/>
                 <Routes>
                   <Route path="/" element={<MainPage />} />
                   <Route path="/airports" element={<AirportsPage />} />
