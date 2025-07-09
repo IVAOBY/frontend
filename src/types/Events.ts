@@ -38,6 +38,25 @@ export interface PartsEntity {
   booking: BookingEntity[];
 }
 
+export interface EventTag {
+  id: number;
+  category: 'user' | 'int' | 'div';
+  type:
+      | 'Airbridge'
+      | 'FlyOut'
+      | 'FlyIn'
+      | 'Online'
+      | 'MSE'
+      | 'RFO'
+      | 'RFE'
+      | 'Pass'
+      | 'PDE'
+      | 'VFR'
+      | 'IRL'
+      | 'SO';
+  hq: boolean;
+}
+
 export interface EventEntity {
   id: number;
   startDate: Date;
@@ -51,6 +70,7 @@ export interface EventEntity {
   imageUrl: string;
   infoUrl: string;
   airport: string;
+  tags?: EventTag | null;
 }
 
 export interface BookingEntity {
@@ -69,7 +89,7 @@ export interface BookingEntity {
 
 export interface BookingCreateData {
   eventId: number;
-  eventPartId: PartsEntity;
+  eventPartId: number;
   atcPositionId: number;
 }
 
