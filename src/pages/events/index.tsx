@@ -37,7 +37,7 @@ interface TagProps {
 
 const Tag = ({icon, label, className = '', children}: TagProps) => (
     <div
-        className={`flex items-center gap-1.5 rounded-xl bg-atmos-700 px-3 py-[5px] text-[15px] font-semibold leading-4 text-white ${className}`}
+        className={`flex items-center gap-1.5 rounded-xl bg-atmos-700 px-3 py-[7px] text-[18px] font-semibold leading-4 text-white ${className}`}
     >
         {icon}
         {children}
@@ -77,7 +77,7 @@ export const EventHeader = ({data, registrationStatus, t}) => {
         <div className="mt-2 flex w-full flex-wrap items-center gap-2">
             {data.startDate && data.endDate && (
                 <div
-                    className="justify-center rounded-xl bg-zinc-900 px-3 py-[7px] text-center text-[15px] font-semibold leading-4 text-white">
+                    className="justify-center rounded-xl bg-zinc-900 px-4 py-[7px] text-center text-[18px] font-semibold leading-4 text-white">
                     {`${format(new Date(data.startDate), 'dd.MM')} ${new Date(
                         data.startDate,
                     ).toLocaleTimeString('eu', {
@@ -91,13 +91,13 @@ export const EventHeader = ({data, registrationStatus, t}) => {
                         hour12: false,
                         hour: '2-digit',
                         minute: '2-digit',
-                    })}`}
+                    })}`} <span className="text-[14px]">UTC</span>
                 </div>
             )}
 
             {data.airport && (
                 <div
-                    className="justify-center rounded-xl bg-zinc-900 px-3 py-[7px] text-center text-[15px] font-semibold leading-4 text-white uppercase">
+                    className="justify-center rounded-xl bg-zinc-900 px-4 py-[8px] text-center text-[18px] font-semibold leading-4 text-white uppercase">
                     {data.airport}
                 </div>
             )}
@@ -172,7 +172,7 @@ export function EventPage() {
                         t={t}
                     />
                     <div className="mt-8 flex flex-col gap-12 lg:flex-row">
-                        <div className="w-full rounded-2xl xl:w-1/2">
+                        <div className="w-full rounded-3xl xl:w-1/2">
                             <img
                                 src={data.imageUrl}
                                 alt={data.name.en}
@@ -180,7 +180,7 @@ export function EventPage() {
                             />
                         </div>
                         <div
-                            className="flex w-full flex-col rounded-2xl bg-white font-['Montserrat'] shadow-lg shadow-gray-400 xl:w-1/2">
+                            className="flex w-full flex-col rounded-3xl bg-white font-['Montserrat'] shadow-lg shadow-gray-400 xl:w-1/2">
                             <div className="mx-8 my-10 grow">
                                 <p className="text-3xl font-semibold leading-7 text-black">
                                     {t('events.content.title')}
