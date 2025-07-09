@@ -75,7 +75,7 @@ const beTranslations: { translations: Translations } = {
         first: 'Першыя крокі',
         discord: {
           message: 'А дзе ўвесь двіж? 🛩️',
-          message2: 'Воу-воу, хутчэй заходзь:',
+          message2: 'Воў-воў, хутчэй заходзь:',
         },
         airports: 'Аэрадромы Дывізіёна',
         charts: 'Схема',
