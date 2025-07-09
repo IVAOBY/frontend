@@ -124,13 +124,13 @@ export const EventHeader = ({data, registrationStatus, t}) => {
 
             {registrationStatus === 'open' ? (
                 <div
-                    className="flex items-center gap-1.5 rounded-xl bg-green-500 px-3 py-[5px] text-[15px] font-semibold leading-4 text-white backdrop-blur-[5px]">
+                    className="flex items-center gap-1.5 rounded-xl bg-green-500 px-4 py-[7px] text-[18px] font-semibold leading-4 text-white backdrop-blur-[5px]">
                     <IconClockCheck size={20}/>
                     <div className="my-auto flex-auto">{t('events.tags.shift.open')}</div>
                 </div>
             ) : registrationStatus === 'closed' ? (
                 <div
-                    className="flex items-center gap-1.5 rounded-xl bg-semantic-red-500 px-3 py-[5px] text-[15px] font-semibold leading-4 text-white backdrop-blur-[5px]">
+                    className="flex items-center gap-1.5 rounded-xl bg-semantic-red-500 px-4 py-[7px] text-[18px] font-semibold leading-4 text-white backdrop-blur-[5px]">
                     <IconClockCancel size={20}/>
                     <div className="my-auto flex-auto">
                         {t('events.tags.shift.close')}
