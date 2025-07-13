@@ -20,8 +20,7 @@ jobs:
       - name: 🔐 Auth with token
         run: |
           echo "//npm.pkg.github.com/:_authToken=${{ secrets.AUTH_TOKEN }}
-          @ivaoby:registry=https://npm.pkg.github.com/
-          @ivao:registry=https://npm.pkg.github.com/" > ~/.npmrc
+          @ivaoby:registry=https://npm.pkg.github.com/" > ~/.npmrc
 
       - name: Install dependencies
         run: yarn
