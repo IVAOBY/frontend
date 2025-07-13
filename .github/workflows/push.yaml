@@ -20,6 +20,12 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
+      - name: 🔐 Auth with token
+        run: |
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.AUTH_TOKEN }}
+          @ivaoby:registry=https://npm.pkg.github.com/
+          @ivao:registry=https://npm.pkg.github.com/" > ~/.npmrc
+
       - name: Build application
         run: yarn build
 
