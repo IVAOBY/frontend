@@ -51,7 +51,7 @@ jobs:
 
       # Устанавливаем недостающие зависимости, чтобы исправить ошибки
       - name: ➕ Fix Peer Dependencies
-        run: yarn add prettier-plugin-tailwindcss eslint@^9.0.0 --dev
+        run: yarn add prettier-plugin-tailwindcss eslint@^8.56.0 --dev
 
       - name: ✨ Format and Lint code
         run: |
