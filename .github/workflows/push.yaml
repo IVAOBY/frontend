@@ -38,6 +38,13 @@ jobs:
           node-version: '20'
           cache: 'yarn'
 
+      # Новый шаг для аутентификации в GitHub Packages
+      - name: 🔐 Setup .npmrc for GitHub Packages
+        run: |
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GH_PACKAGES_TOKEN }}" > .npmrc
+          echo "@ivaoby:registry=https://npm.pkg.github.com/" >> .npmrc
+          echo "@ivaoaero:registry=https://npm.pkg.github.com/" >> .npmrc
+
       - name: 📥 Install dependencies
         run: yarn
 
@@ -61,6 +68,13 @@ jobs:
         with:
           node-version: '20'
           cache: 'yarn'
+
+      # Новый шаг для аутентификации в GitHub Packages
+      - name: 🔐 Setup .npmrc for GitHub Packages
+        run: |
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GH_PACKAGES_TOKEN }}" > .npmrc
+          echo "@ivaoby:registry=https://npm.pkg.github.com/" >> .npmrc
+          echo "@ivaoaero:registry=https://npm.pkg.github.com/" >> .npmrc
 
       - name: 📥 Install dependencies
         run: yarn install --frozen-lockfile
