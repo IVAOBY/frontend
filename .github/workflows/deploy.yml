@@ -7,11 +7,10 @@ on:
   push:
     branches:
       - main      # Для production
-      - dev
+      - develop   # Для staging
 
   # 2. Ручной запуск из интерфейса GitHub Actions
   workflow_dispatch:
-    # Добавляем поле для выбора, куда разворачивать
     inputs:
       environment:
         description: 'Выберите среду для развертывания'
@@ -32,14 +31,23 @@ jobs:
       - name: 🚚 Checkout code
         uses: actions/checkout@v4
 
-      - name: 🟢 Setup Node.js
+      # Настройка Node.js с автоматической аутентификацией
+      - name: 🟢 Setup Node.js with NPM Auth
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'yarn'
+          # Указываем, что нужно аутентифицироваться в реестре GitHub
+          registry-url: 'https://npm.pkg.github.com'
+          # Указываем область видимости для пакетов
+          scope: '@ivaoby'
 
       - name: 📥 Install dependencies
+        # NODE_AUTH_TOKEN будет автоматически использован yarn/npm
         run: yarn
+        env:
+          # Используем персональный токен для доступа к пакетам в других репозиториях
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: ✨ Format and Lint code
         run: |
@@ -56,19 +64,27 @@ jobs:
       - name: 🚚 Checkout code
         uses: actions/checkout@v4
 
-      - name: 🟢 Setup Node.js
+      # Настройка Node.js с автоматической аутентификацией
+      - name: 🟢 Setup Node.js with NPM Auth
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'yarn'
+          # Указываем, что нужно аутентифицироваться в реестре GitHub
+          registry-url: 'https://npm.pkg.github.com'
+          # Указываем область видимости для пакетов
+          scope: '@ivaoby'
 
       - name: 📥 Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn
+        env:
+          # Используем персональный токен для доступа к пакетам в других репозиториях
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 🛠️ Build project
         run: yarn build
 
-      # Новый шаг для определения пути развертывания
+      # Определение пути развертывания
       - name: 🗺️ Determine deployment path
         id: set_path
         run: |
