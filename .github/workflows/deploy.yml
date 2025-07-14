@@ -49,6 +49,10 @@ jobs:
           # Используем персональный токен для доступа к пакетам в других репозиториях
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      # Устанавливаем недостающую зависимость для Prettier
+      - name: ➕ Install missing peer dependency
+        run: yarn add prettier-plugin-tailwindcss
+
       - name: ✨ Format and Lint code
         run: |
           yarn format
@@ -80,6 +84,10 @@ jobs:
         env:
           # Используем персональный токен для доступа к пакетам в других репозиториях
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Устанавливаем недостающую зависимость для Prettier
+      - name: ➕ Install missing peer dependency
+        run: yarn add prettier-plugin-tailwindcss
 
       - name: 🛠️ Build project
         run: yarn build
