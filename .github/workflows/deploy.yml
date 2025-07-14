@@ -7,7 +7,7 @@ on:
   push:
     branches:
       - main      # Для production
-      - dev
+      - develop   # Для staging
 
   # 2. Ручной запуск из интерфейса GitHub Actions
   workflow_dispatch:
@@ -49,9 +49,9 @@ jobs:
           # Используем персональный токен для доступа к пакетам в других репозиториях
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Устанавливаем недостающую зависимость для Prettier
-      - name: ➕ Install missing peer dependency
-        run: yarn add prettier-plugin-tailwindcss
+      # Устанавливаем недостающие зависимости, чтобы исправить ошибки
+      - name: ➕ Fix Peer Dependencies
+        run: yarn add prettier-plugin-tailwindcss eslint@^9.0.0 --dev
 
       - name: ✨ Format and Lint code
         run: |
@@ -85,9 +85,9 @@ jobs:
           # Используем персональный токен для доступа к пакетам в других репозиториях
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Устанавливаем недостающую зависимость для Prettier
+      # Устанавливаем недостающую зависимость, которая может быть нужна для сборки
       - name: ➕ Install missing peer dependency
-        run: yarn add prettier-plugin-tailwindcss
+        run: yarn add prettier-plugin-tailwindcss --dev
 
       - name: 🛠️ Build project
         run: yarn build
