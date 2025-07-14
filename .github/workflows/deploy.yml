@@ -7,7 +7,7 @@ on:
   push:
     branches:
       - main      # Для production
-      - develop   # Для staging
+      - dev
 
   # 2. Ручной запуск из интерфейса GitHub Actions
   workflow_dispatch:
