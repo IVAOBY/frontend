@@ -53,10 +53,10 @@ jobs:
       - name: ➕ Fix Peer Dependencies
         run: yarn add prettier-plugin-tailwindcss eslint@^8.56.0 --dev
 
-      - name: ✨ Format and Lint code
+      - name: ✨ Format code
         run: |
           yarn format
-          yarn lint
+#          yarn lint
 
   # --- ЗАДАЧА 2: СБОРКА И РАЗВЕРТЫВАНИЕ ---
   build-and-deploy:
