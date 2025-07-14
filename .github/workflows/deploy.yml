@@ -104,14 +104,18 @@ jobs:
             echo "path=${{ secrets.STAGE_PATH }}" >> $GITHUB_OUTPUT
           fi
 
-      - name: 🚀 Deploy to server
-        uses: easingthemes/ssh-deploy@v5.0.0
+      - name: 🚀 Deploy to server via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          ARGS: "-rlgoDzvc -i"
-          SOURCE: "dist/"
-          REMOTE_USER: ${{ secrets.USERNAME }}
-          REMOTE_HOST: ${{ secrets.HOST }}
-          # Используем путь, определенный на предыдущем шаге
-          TARGET: ${{ steps.set_path.outputs.path }}
-          RYSNC_OPTIONS: --delete
+          # FTP сервер
+          server: ${{ secrets.HOST }}
+          # FTP логин
+          username: ${{ secrets.FTP_USERNAME }}
+          # FTP пароль
+          password: ${{ secrets.FTP_PASSWORD }}
+          # Папка с собранным проектом
+          local-dir: ./dist/
+          # Папка на сервере, куда загружать файлы
+          server-dir: ${{ steps.set_path.outputs.path }}
+          # Удалять файлы на сервере, которых нет в сборке
+#          delete: true
