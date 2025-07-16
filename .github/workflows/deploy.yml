@@ -113,9 +113,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           # FTP пароль
           password: ${{ secrets.FTP_PASSWORD }}
-          # Папка с собранным проектом
           local-dir: ./dist/
-          # Папка на сервере, куда загружать файлы
           server-dir: ${{ steps.set_path.outputs.path }}
           # Удалять файлы на сервере, которых нет в сборке
 #          delete: true
