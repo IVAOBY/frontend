@@ -56,7 +56,7 @@ jobs:
       - name: ✨ Format code
         run: |
           yarn format
-#          yarn lint
+  #          yarn lint
 
   # --- ЗАДАЧА 2: СБОРКА И РАЗВЕРТЫВАНИЕ ---
   build-and-deploy:
@@ -105,15 +105,17 @@ jobs:
           fi
 
       - name: 🚀 Deploy to server via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        uses: SebastianPZ/ftp-action@v3.0.0
         with:
-          # FTP сервер
-          server: ${{ secrets.HOST }}
-          # FTP логин
+          # FTP-сервер
+          server: ${{ secrets.FTP_SERVER }}
+          # FTP-логин
           username: ${{ secrets.FTP_USERNAME }}
-          # FTP пароль
+          # FTP-пароль
           password: ${{ secrets.FTP_PASSWORD }}
+          # Папка с собранным проектом
           local-dir: ./dist/
-          server-dir: ${{ steps.set_path.outputs.path }}
-          # Удалять файлы на сервере, которых нет в сборке
-#          delete: true
+          # Папка на сервере, куда загружать файлы
+          remote-dir: ${{ steps.set_path.outputs.path }}
+          # Опции для lftp: --delete удаляет лишние файлы, --verbose дает подробный лог
+          options: --delete --verbose
