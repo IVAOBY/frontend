@@ -105,17 +105,11 @@ jobs:
           fi
 
       - name: 🚀 Deploy to server via FTP
-        uses: SebastianPZ/ftp-action@v4
+        uses: appleboy/ftp-deploy@v2.2.0
         with:
-          # FTP-сервер
-          server: ${{ secrets.FTP_SERVER }}
-          # FTP-логин
+          host: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
-          # FTP-пароль
           password: ${{ secrets.FTP_PASSWORD }}
-          # Папка с собранным проектом
-          local-dir: ./dist/
-          # Папка на сервере, куда загружать файлы
-          remote-dir: ${{ steps.set_path.outputs.path }}
-          # Опции для lftp: --delete удаляет лишние файлы, --verbose дает подробный лог
-          options: --delete --verbose
+          local_root: ./dist/
+          remote_root: ${{ steps.set_path.outputs.path }}
+          delete: true
