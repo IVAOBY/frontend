@@ -105,11 +105,11 @@ jobs:
           fi
 
       - name: 🚀 Deploy to server via FTP
-        uses: appleboy/ftp-deploy@v2.2.0
+        uses: airvzxf/ftp-deployment-action@latest
         with:
-          host: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
+          server: ${{ secrets.FTP_SERVER }}
+          user: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local_root: ./dist/
-          remote_root: ${{ steps.set_path.outputs.path }}
+          local_dir: ./dist/
+          remote_dir: ${{ steps.set_path.outputs.path }}
           delete: true
