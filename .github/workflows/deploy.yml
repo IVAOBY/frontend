@@ -104,12 +104,16 @@ jobs:
             echo "path=${{ secrets.STAGE_PATH }}" >> $GITHUB_OUTPUT
           fi
 
-      - name: 🚀 Deploy to server via FTP
-        uses: airvzxf/ftp-deployment-action@latest
+      - name: Deploy to Plesk
+        uses: celleb/plesk-deployer@v1.1
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          user: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local_dir: ./dist/
-          remote_dir: ${{ steps.set_path.outputs.path }}
-          delete: true
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ftp-username: ${{ vars.FTP_USERNAME }}
+          ftp-server: ${{ vars.HOST }}
+          files-to-copy: "./dist ./package.json ./package-lock.json"
+          remote-dir: "./stage.by.ivao.aero/dist/"
+          node-version: 22
+          package-manager: yarn
+          npm-install: true
+          restart: true
+          clean-remote-dir: false
