@@ -164,7 +164,7 @@ export function ShiftComponent() {
               <h2 className="text-[45px] font-semibold leading-10 text-atmos-700">
                 {t('events.shift')} {index + 1}
               </h2>
-              <div className="flex h-[30px] items-center justify-center gap-1.5 rounded-xl bg-atmos-700 px-3.5 py-1.5 text-[18px] font-semibold leading-4 text-white backdrop-blur-[5px]">
+              <div className="flex h-[30px] items-center justify-center gap-1.5 rounded-xl bg-atmos-700 px-3 py-[7px] text-[18px] font-semibold leading-4 text-white backdrop-blur-[5px]">
                 {`${new Date(part.startDate).toLocaleTimeString('eu', {
                   timeZone: 'UTC',
                   hour12: false,
@@ -178,7 +178,7 @@ export function ShiftComponent() {
                   hour: '2-digit',
                   minute: '2-digit',
                 })}`}
-                z
+                <span className="text-[14px]">UTC</span>
               </div>
             </div>
             <div className="flex flex-wrap gap-4">
