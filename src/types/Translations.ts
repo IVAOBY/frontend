@@ -193,6 +193,10 @@ export interface Translations {
       unbook: string;
       none: string;
     };
+    hidden: {
+      tag: string;
+      description: string;
+    }
   };
   airports: {
     main: {
