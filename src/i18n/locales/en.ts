@@ -201,6 +201,10 @@ const enTranslations: { translations: Translations } = {
         unbook: 'Cancel',
         none: 'There are no available positions!',
       },
+      hidden: {
+        tag: 'Hidden',
+        description: 'This event is hidden from all users except staff.',
+      },
     },
     airports: {
       main: {
