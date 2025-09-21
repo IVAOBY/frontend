@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+a {
+    color: #0d2c99!important;
+    text-decoration: underline;
+}
+a:hover {
+    color: #3c55ac!important;
+    transition-duration: 0.4s!important;
+}

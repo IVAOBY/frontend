@@ -15,16 +15,16 @@ import {
   IconUser,
   IconUsers,
 } from '@tabler/icons-react';
-import {format} from 'date-fns';
+import { format } from 'date-fns';
 import i18n from 'i18next';
-import {useTranslation} from 'react-i18next';
-import {useParams} from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 
-import {BreadcrumbLayout, Centered} from '../../components/Layout';
-import {Loader} from '../../components/Loader';
-import {Notification} from '../../components/Notification/Notification';
-import {useEventDetails} from '../../hooks/query/useEvents';
-import {ShiftComponent} from './components/ShiftComponent';
+import { BreadcrumbLayout, Centered } from '../../components/Layout';
+import { Loader } from '../../components/Loader';
+import { Notification } from '../../components/Notification/Notification';
+import { useEventDetails } from '../../hooks/query/useEvents';
+import { ShiftComponent } from './components/ShiftComponent';
 import React from 'react';
 
 interface TagProps {
@@ -36,7 +36,7 @@ interface TagProps {
 
 const Tag = ({ icon, label, className = '', children }: TagProps) => (
   <div
-    className={`flex items-center gap-1.5 rounded-xl bg-atmos-700 px-3 py-[5px] text-[15px] font-semibold leading-4 text-white ${className}`}
+    className={`flex items-center gap-1.5 rounded-xl bg-atmos-700 px-3 py-[7px] text-[15px] font-semibold leading-4 text-white ${className}`}
   >
     {icon}
     {children}
@@ -46,7 +46,6 @@ const Tag = ({ icon, label, className = '', children }: TagProps) => (
 
 export const EventHeader = ({ data, registrationStatus, t }) => {
   const { tags, hidden } = data;
-
 
   const categoryMap = {
     user: { icon: <IconUser size={20} />, label: 'User' },
@@ -90,7 +89,7 @@ export const EventHeader = ({ data, registrationStatus, t }) => {
             hour12: false,
             hour: '2-digit',
             minute: '2-digit',
-          })}`}
+          })}`} <span className="text-[12px]">UTC</span>
         </div>
       )}
 
@@ -101,12 +100,8 @@ export const EventHeader = ({ data, registrationStatus, t }) => {
         </div>
       )}
 
-
       {tags && categoryInfo && (
-        <Tag
-          icon={categoryInfo.icon}
-          label={categoryInfo.label}
-        >
+        <Tag icon={categoryInfo.icon} label={categoryInfo.label}>
           {categoryInfo.imageUrl && (
             <img src={categoryInfo.imageUrl} alt={categoryInfo.label} className="h-5 w-5 object-contain" />
           )}
@@ -115,31 +110,26 @@ export const EventHeader = ({ data, registrationStatus, t }) => {
       {tags && typeInfo && <Tag icon={typeInfo.icon} label={typeInfo.label} />}
 
       {tags && tags.hq && (
-        <Tag
-          icon={<IconHome size={20} />}
-          label="HQ"
-          className="bg-yellow-400 text-white"
-        />
+        <Tag icon={<IconHome size={20} />} label="HQ" className="bg-yellow-400 text-white" />
       )}
 
       {registrationStatus === 'open' ? (
         <div
-          className="flex items-center gap-1.5 rounded-xl bg-green-500 px-3 py-[5px] text-[15px] font-semibold leading-4 text-white backdrop-blur-[5px]">
+          className="flex items-center gap-1.5 rounded-xl bg-green-500 px-3 py-[7px] text-[15px] font-semibold leading-4 text-white backdrop-blur-[5px]">
           <IconClockCheck size={20} />
           <div className="my-auto flex-auto">{t('events.tags.shift.open')}</div>
         </div>
       ) : registrationStatus === 'closed' ? (
         <div
-          className="flex items-center gap-1.5 rounded-xl bg-semantic-red-500 px-3 py-[5px] text-[15px] font-semibold leading-4 text-white backdrop-blur-[5px]">
+          className="flex items-center gap-1.5 rounded-xl bg-semantic-red-500 px-3 py-[7px] text-[15px] font-semibold leading-4 text-white backdrop-blur-[5px]">
           <IconClockCancel size={20} />
-          <div className="my-auto flex-auto">
-            {t('events.tags.shift.close')}
-          </div>
+          <div className="my-auto flex-auto">{t('events.tags.shift.close')}</div>
         </div>
       ) : null}
+
       {hidden && (
         <div
-          className="flex items-center gap-1.5 rounded-xl bg-red-600 px-3 py-[5px] text-[15px] font-semibold text-white cursor-help border-b-2 border-dashed border-red-600"
+          className="flex items-center gap-1.5 rounded-xl bg-red-600 px-3 py-[7px] text-[15px] font-semibold text-white cursor-help border-b-2 border-dashed border-red-600"
           title={t('events.hidden.description')}
         >
           {t('events.hidden.tag')}
@@ -151,9 +141,7 @@ export const EventHeader = ({ data, registrationStatus, t }) => {
 
 export function EventPage() {
   const { t } = useTranslation();
-
   const { id } = useParams();
-
   const { data, registrationStatus, isLoading, error } = useEventDetails(id);
 
   return (
@@ -174,13 +162,9 @@ export function EventPage() {
           <div className="mb-4 text-3xl font-bold text-black md:text-5xl">
             {data.name[i18n.language]}
           </div>
-          <EventHeader
-            data={data}
-            registrationStatus={registrationStatus}
-            t={t}
-          />
+          <EventHeader data={data} registrationStatus={registrationStatus} t={t} />
           <div className="mt-8 flex flex-col gap-12 lg:flex-row">
-            <div className="w-full rounded-2xl xl:w-1/2">
+            <div className="w-full rounded-3xl xl:w-1/2">
               <img
                 src={data.imageUrl}
                 alt={data.name.en}
@@ -188,7 +172,7 @@ export function EventPage() {
               />
             </div>
             <div
-              className="flex w-full flex-col rounded-2xl bg-white font-['Montserrat'] shadow-lg shadow-gray-400 xl:w-1/2">
+              className="flex w-full flex-col rounded-3xl bg-white font-['Montserrat'] shadow-lg shadow-gray-400 xl:w-1/2">
               <div className="mx-8 my-10 grow">
                 <p className="text-3xl font-semibold leading-7 text-black">
                   {t('events.content.title')}
@@ -200,17 +184,17 @@ export function EventPage() {
                   }}
                 ></div>
               </div>
-              <div
-                onClick={() => {
-                  window.open(data.infoUrl, '_blank');
-                }}
-                className={`leading-16 mx-8 mb-4 flex max-w-[300px] gap-3 rounded-xl bg-[#0D2C99] px-1.5 pr-3 text-lg font-semibold text-white backdrop-blur-[5px] transition duration-500 hover:cursor-pointer hover:opacity-80`}
-              >
-                <IconInfoSquareRounded className="ml-1.5 mt-0.5" />
-                <div className="my-auto flex-auto">
-                  {t('events.content.link')}
+              {data.infoUrl && (
+                <div
+                  onClick={() => {
+                    window.open(data.infoUrl, '_blank');
+                  }}
+                  className="leading-16 mx-8 mb-4 flex max-w-[300px] gap-3 rounded-xl bg-[#0D2C99] px-1.5 pr-3 text-lg font-semibold text-white backdrop-blur-[5px] transition duration-500 hover:cursor-pointer hover:opacity-80"
+                >
+                  <IconInfoSquareRounded className="ml-1.5 mt-0.5" />
+                  <div className="my-auto flex-auto">{t('events.content.link')}</div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
           <ShiftComponent />
