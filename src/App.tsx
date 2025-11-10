@@ -23,7 +23,6 @@ import { NotFound } from './pages/Error/404';
 import { EventPage } from './pages/events';
 import { FAQ } from './pages/Faq';
 import { FirstStepP } from './pages/FirstStepPilot';
-// import { MapPage } from './pages/MapPage';
 import { NewsPage } from './pages/News';
 import { ScenaryPage } from './pages/Scenary';
 import { StaffPage } from './pages/Staff';
@@ -37,7 +36,10 @@ import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client
 import { AirportPage } from './components/AirportPage/AirportPage';
 import { Centered } from './components/Layout';
 import { Loader } from './components/Loader';
+import { ApiProvider } from './context/ApiContext';
+import { MapPage } from './pages/MapPage';
 import { Training } from './pages/training';
+import { Vehicles } from './pages/vehicles/Vehicles';
 
 export default function App() {
   const PrivateRoute: React.FC<{ path: string; element: React.ReactNode }> = ({
@@ -72,15 +74,16 @@ export default function App() {
       <I18nextProvider i18n={i18n}>
         <BrowserRouter>
           <AuthProvider>
-            <PersistQueryClientProvider
-              client={queryClient}
-              persistOptions={{ persister }}
-            >
-              <AppShell
-                padding={0}
-                navbar={<HeaderResponsive />}
-                footer={<Footer />}
+            <ApiProvider>
+              <PersistQueryClientProvider
+                client={queryClient}
+                persistOptions={{ persister }}
               >
+                <AppShell
+                  padding={0}
+                  navbar={<HeaderResponsive />}
+                  footer={<Footer />}
+                >
                 <Notifications />
                 <Routes>
                   <Route path="/" element={<MainPage />} />
@@ -92,9 +95,9 @@ export default function App() {
                   <Route path="/scenery/:id" element={<ScenaryPage />} />
                   <Route path="/pilots/first-step" element={<FirstStepP />} />
                   <Route path="/news/:id" element={<NewsPage />} />
-                  {/*<Route path="/map" element={<MapPage />} />*/}
+                  <Route path="/map" element={<MapPage />} />
                   <Route path="/staff" element={<StaffPage />} />
-                  {/*<Route path="/vehicles" element={<Vehicles />} />*/}
+                  <Route path="/vehicles" element={<Vehicles />} />
                   <Route path="/training" element={<Training />} />
 
                   {/* Документы */}
@@ -134,6 +137,7 @@ export default function App() {
                 <ReactQueryDevtools />
               )}
             </PersistQueryClientProvider>
+            </ApiProvider>
           </AuthProvider>
         </BrowserRouter>
       </I18nextProvider>
