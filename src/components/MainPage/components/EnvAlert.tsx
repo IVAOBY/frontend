@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
+import { STORAGE_KEYS } from '../../../constants/app';
 import { Title } from '../../Typography/Title';
 
 export function EnvAlert() {
@@ -10,7 +11,7 @@ export function EnvAlert() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    const warningClosed = localStorage.getItem('warningClosed');
+    const warningClosed = localStorage.getItem(STORAGE_KEYS.WARNING_CLOSED);
 
     if (warningClosed !== 'true') {
       const env = import.meta.env.VITE_ENV_TYPE;
@@ -31,7 +32,7 @@ export function EnvAlert() {
   }, [t]);
 
   const handleClose = () => {
-    localStorage.setItem('warningClosed', 'true');
+    localStorage.setItem(STORAGE_KEYS.WARNING_CLOSED, 'true');
     setIsShown(false);
   };
 

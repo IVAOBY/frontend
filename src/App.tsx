@@ -10,6 +10,7 @@ import { AirportsPage } from './components/AirportPage/AirportsPage';
 import { Footer } from './components/Footer';
 import { HeaderResponsive } from './components/header/header';
 import { MainPage } from './components/MainPage/MainPage';
+import { getAuthLoginUrl } from './constants/app';
 import { AuthContext, AuthProvider } from './context/UserContext';
 import i18n from './i18n/i18n';
 import { ivaoTheme } from './ivaoTheme';
@@ -45,7 +46,7 @@ export default function App() {
   }) => {
     const { signed } = useContext(AuthContext);
     if (!signed) {
-      window.location.href = `${import.meta.env.VITE_API_URL_BASE}/auth/login?goto=${encodeURIComponent(window.location.href)}`;
+      window.location.href = getAuthLoginUrl();
 
       return (
         <Centered>

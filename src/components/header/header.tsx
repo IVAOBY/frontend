@@ -40,6 +40,7 @@ import ivaoLogo from '../../assets/image/logo_s_black.svg';
 import bylogoblue from '../../assets/image/logobyblue.svg';
 import ru from '../../assets/image/ru.svg';
 import steps from '../../assets/image/steps.svg';
+import { getAuthLoginUrl, STORAGE_KEYS } from '../../constants/app';
 import { AuthContext } from '../../context/UserContext';
 
 const categories = [
@@ -198,7 +199,7 @@ export function HeaderResponsive() {
   const [urlParams] = useSearchParams();
   const ivaoToken = urlParams.get('token');
   const { signed, decodedToken } = useContext(AuthContext);
-  const serverUrl = `${import.meta.env.VITE_API_URL_BASE}/auth/login?goto=${encodeURIComponent(window.location.href)}`;
+  const serverUrl = getAuthLoginUrl();
   const location = useLocation();
 
   useEffect(() => {
@@ -231,7 +232,7 @@ export function HeaderResponsive() {
 
   const changeLanguage = (newLanguage: string) => {
     void i18n.changeLanguage(newLanguage);
-    localStorage.setItem('language', newLanguage);
+    localStorage.setItem(STORAGE_KEYS.LANGUAGE, newLanguage);
   };
 
   const isSmallScreen = window.innerWidth <= 768;
