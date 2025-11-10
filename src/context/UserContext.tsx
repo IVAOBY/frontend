@@ -51,7 +51,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
       removeTokenFromUrl();
       setToken(ivaoToken);
     } catch (error) {
-      console.error('Ошибка при аутентификации:', error);
+      // Silent fail - localStorage might not be available
+      signOut();
     }
   }, []);
 
@@ -86,7 +87,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setDecodedToken(mappedToken);
       }
     } catch (error) {
-      console.error('Ошибка при декодировании токена:', error);
+      // Invalid token - trigger refresh
       refreshToken();
     }
   }, [refreshToken, token]);

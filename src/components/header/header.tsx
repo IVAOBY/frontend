@@ -202,7 +202,6 @@ export function HeaderResponsive() {
   const location = useLocation();
 
   useEffect(() => {
-    console.log(window.location.pathname);
     setCurrentPath(location.pathname);
   }, [location.pathname]);
 

@@ -31,7 +31,6 @@ export const useBookEvent = () => {
       });
     },
     onError: (error) => {
-      console.error('Error booking event:', error);
       notifications.show({
         id: 'complete-unbooking',
         title: t('notif.server.name'),
@@ -68,7 +67,6 @@ export const useUnbookEvent = () => {
       });
     },
     onError: (error) => {
-      console.error('Error booking event:', error);
       notifications.show({
         id: 'complete-unbooking',
         title: t('notif.server.name'),
