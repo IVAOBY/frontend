@@ -51,7 +51,7 @@ ${decodedToken?.userData.name.first} ${decodedToken?.userData.name.last}`;
           '_blank',
         );
       } catch (error) {
-        console.error('Error decoding token:', error);
+        // Failed to decode token - ignore and continue
       }
     }
   }, [
