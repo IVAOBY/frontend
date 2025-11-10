@@ -2,6 +2,7 @@ import React, { createContext, useCallback, useEffect, useState } from 'react';
 
 import jwtDecode from 'jwt-decode';
 
+import { getAuthLoginUrl, STORAGE_KEYS } from '../constants/app';
 import { DecodedTokenInt } from '../hooks/types';
 
 interface AuthProviderProps {
@@ -39,7 +40,7 @@ function removeTokenFromUrl() {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [token, setToken] = useState<string>(
-    localStorage.getItem('token') || '',
+    localStorage.getItem(STORAGE_KEYS.TOKEN) || '',
   );
   const [decodedToken, setDecodedToken] = useState<DecodedTokenInt | null>(
     null,
@@ -47,7 +48,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const signIn = useCallback((ivaoToken: string) => {
     try {
-      localStorage.setItem('token', ivaoToken);
+      localStorage.setItem(STORAGE_KEYS.TOKEN, ivaoToken);
       removeTokenFromUrl();
       setToken(ivaoToken);
     } catch (error) {
@@ -57,12 +58,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, []);
 
   const signOut = useCallback(() => {
-    localStorage.removeItem('token');
+    localStorage.removeItem(STORAGE_KEYS.TOKEN);
     setToken('');
   }, []);
 
   const refreshToken = useCallback(() => {
-    window.location.href = `${import.meta.env.VITE_API_URL_BASE}/auth/login?goto=${encodeURIComponent(window.location.href)}`;
+    window.location.href = getAuthLoginUrl();
   }, []);
 
   useEffect(() => {
