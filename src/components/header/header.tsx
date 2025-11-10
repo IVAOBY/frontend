@@ -11,6 +11,7 @@ import {
   IconAirTrafficControl,
   IconArticle,
   IconBook,
+  IconCar,
   IconEye,
   IconFileInfo,
   IconFocus2,
@@ -104,7 +105,7 @@ const categories = [
         icon: <IconLock size={20} />,
         external: true,
       },
-      //{ href: '/vehicles', label: 'navbar.atc.vehicles', icon: <IconCar size={20} /> },
+      { href: '/vehicles', label: 'navbar.atc.vehicles', icon: <IconCar size={20} /> },
       {
         href: '/documents/category/1',
         label: 'navbar.atc.docs',
