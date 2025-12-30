@@ -38,12 +38,13 @@ import { AirportPage } from './components/AirportPage/AirportPage';
 import { Centered } from './components/Layout';
 import { Loader } from './components/Loader';
 import { Training } from './pages/training';
-import ScrollToTop from "./utils/ScrollToTop";
+import ScrollToTop from './utils/ScrollToTop';
 
 export default function App() {
+  const CONTACT_US_ENABLED = 0;
   const PrivateRoute: React.FC<{ path: string; element: React.ReactNode }> = ({
-    element,
-  }) => {
+                                                                                element,
+                                                                              }) => {
     const { signed } = useContext(AuthContext);
     if (!signed) {
       window.location.href = getAuthLoginUrl();
@@ -83,7 +84,7 @@ export default function App() {
                 footer={<Footer />}
               >
                 <Notifications />
-                <ScrollToTop/>
+                <ScrollToTop />
                 <Routes>
                   <Route path="/" element={<MainPage />} />
                   <Route path="/airports" element={<AirportsPage />} />
@@ -115,15 +116,18 @@ export default function App() {
                   <Route path="*" element={<Navigate to="/404" />} />
 
                   {/* Private route*/}
-                  <Route
-                    path="/contact-us/*"
-                    element={
-                      <PrivateRoute
-                        path="/contact-us"
-                        element={<GetInTouchSimple />}
-                      />
-                    }
-                  />
+                  {CONTACT_US_ENABLED && (
+                    <Route
+                      path="/contact-us/*"
+                      element={
+                        <PrivateRoute
+                          path="/contact-us"
+                          element={<GetInTouchSimple />}
+                        />
+                      }
+                    />
+                  )}
+                  )
                 </Routes>
               </AppShell>
               {import.meta.env.VITE_ENV_TYPE === 'DEVELOPMENT' && (
