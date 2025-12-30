@@ -39,7 +39,7 @@ export const useEventDetails = (id: string) => {
 
   useEffect(() => {
     if (data) {
-      if (data && typeof data === 'object' && !Array.isArray(data)) {
+      if (typeof data === 'object' && !Array.isArray(data)) {
         notifications.hide('load-data');
 
         const eventStartDate = new Date(data.startDate);
