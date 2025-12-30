@@ -12,13 +12,14 @@ import reportWebVitals from './reportWebVitals';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const isSnowfallSeason = () => {
-  const currentDate = new Date();
-  const currentYear = currentDate.getFullYear();
+  const now = new Date();
+  const m = now.getMonth();
+  const d = now.getDate();
 
-  const start = new Date(currentYear, 11, 25);
-  const end = new Date(currentYear + 1, 0, 5);
-
-  return currentDate >= start && currentDate <= end;
+  return (
+    (m === 11 && d >= 25) || // 25–31 декабря
+    (m === 0 && d <= 5)      // 1–5 января
+  );
 };
 
 root.render(
