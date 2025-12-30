@@ -35,21 +35,20 @@ export function HeroText() {
       return;
     }
 
-    if (signed) {
-      try {
-        const emailBody = `Dear HQs and Membership Department!
+    try {
+      const emailBody = `Dear HQs and Membership Department!
 
 I request to transfer me from the ${decodedToken?.userData.divisionId} division to the BY division.
                 
 Best wishes,
 ${decodedToken?.userData.name.first} ${decodedToken?.userData.name.last}`;
 
-        window.open(
-          `mailto:BY-hq@ivao.aero,${decodedToken?.userData.divisionId}-hq@ivao.aero?cc=members@ivao.aero&subject=Division%20transfer%20${decodedToken?.userData.id}&body=${encodeURIComponent(
-            emailBody,
-          )}`,
-          '_blank',
-        );
+      window.open(
+        `mailto:BY-hq@ivao.aero,${decodedToken?.userData.divisionId}-hq@ivao.aero?cc=members@ivao.aero&subject=Division%20transfer%20${decodedToken?.userData.id}&body=${encodeURIComponent(
+          emailBody,
+        )}`,
+        '_blank',
+      );
       } catch (error) {
         console.error('Error decoding token:', error);
       }
