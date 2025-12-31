@@ -24,6 +24,7 @@ import { EventPage } from './pages/events';
 import { FAQ } from './pages/Faq';
 import { FirstStepP } from './pages/FirstStepPilot';
 // import { MapPage } from './pages/MapPage';
+import { VehiclesPage } from './pages/vehicles/Vehicles';
 import { NewsPage } from './pages/News';
 import { ScenaryPage } from './pages/Scenary';
 import { StaffPage } from './pages/Staff';
@@ -97,7 +98,7 @@ export default function App() {
                   <Route path="/news/:id" element={<NewsPage />} />
                   {/*<Route path="/map" element={<MapPage />} />*/}
                   <Route path="/staff" element={<StaffPage />} />
-                  {/*<Route path="/vehicles" element={<Vehicles />} />*/}
+                  <Route path="/vehicles" element={<VehiclesPage />} />
                   <Route path="/training" element={<Training />} />
 
                   {/* Документы */}
