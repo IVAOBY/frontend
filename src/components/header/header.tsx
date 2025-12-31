@@ -1,16 +1,10 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 
-import {
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuItems,
-  Transition,
-} from '@headlessui/react';
+import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react';
 import {
   IconAirTrafficControl,
   IconArticle,
-  IconBook,
+  IconBook, IconCar,
   IconEye,
   IconFileInfo,
   IconFocus2,
@@ -105,7 +99,10 @@ const categories = [
         icon: <IconLock size={20} />,
         external: true,
       },
-      //{ href: '/vehicles', label: 'navbar.atc.vehicles', icon: <IconCar size={20} /> },
+      { href: '/vehicles',
+        label: 'navbar.atc.vehicles',
+        icon: <IconCar size={20} />
+      },
       {
         href: '/documents/category/1',
         label: 'navbar.atc.docs',
@@ -315,7 +312,8 @@ export function HeaderResponsive() {
         </button>
 
         {opened && (
-          <div className="absolute inset-x-0 top-24 rounded-b-md bg-atmos-700 shadow-lg transition-all duration-500 md:hidden">
+          <div
+            className="absolute inset-x-0 top-24 rounded-b-md bg-atmos-700 shadow-lg transition-all duration-500 md:hidden">
             {categories.map((category) => (
               <CommonDropdownContent
                 key={category.label}
@@ -391,11 +389,11 @@ function CommonDropdownContent({ scrollPosition, category }) {
 }
 
 function AuthButton({
-  scrollPosition,
-  signed,
-  decodedToken,
-  handleAuthAction,
-}) {
+                      scrollPosition,
+                      signed,
+                      decodedToken,
+                      handleAuthAction,
+                    }) {
   const { t } = useTranslation();
 
   return (
