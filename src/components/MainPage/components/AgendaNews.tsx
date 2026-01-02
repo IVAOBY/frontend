@@ -7,7 +7,6 @@ import {
   IconSettings,
 } from '@tabler/icons-react';
 import { format } from 'date-fns';
-import { be, enUS, ru } from 'date-fns/locale';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
@@ -70,15 +69,7 @@ export function AgendaNews() {
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-
-  const localeMap = {
-    en: enUS,
-    ru: ru,
-    be: be,
-  };
   const currentLanguage = i18n.language;
-  const currentLocale = localeMap[currentLanguage] || enUS;
-
   const EventNavigate = useCallback(
       (event: number) => {
         navigate(`/event/${event}`);

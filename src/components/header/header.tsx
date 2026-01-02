@@ -4,7 +4,8 @@ import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/r
 import {
   IconAirTrafficControl,
   IconArticle,
-  IconBook, IconCar,
+  IconBook,
+  IconCar,
   IconEye,
   IconFileInfo,
   IconFocus2,
@@ -24,7 +25,7 @@ import {
   IconWorld,
 } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import by from '../../assets/image/by.svg';
 import discord from '../../assets/image/discord.svg';
@@ -99,9 +100,10 @@ const categories = [
         icon: <IconLock size={20} />,
         external: true,
       },
-      { href: '/vehicles',
+      {
+        href: '/vehicles',
         label: 'navbar.atc.vehicles',
-        icon: <IconCar size={20} />
+        icon: <IconCar size={20} />,
       },
       {
         href: '/documents/category/1',
@@ -193,10 +195,8 @@ export function HeaderResponsive() {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [currentPath, setCurrentPath] = useState('/');
   const authContext = useContext(AuthContext);
-  const [urlParams] = useSearchParams();
-  const ivaoToken = urlParams.get('token');
-  const { signed, decodedToken } = useContext(AuthContext);
-  const serverUrl = getAuthLoginUrl();
+  const { signed, user } = authContext;
+  getAuthLoginUrl();
   const location = useLocation();
 
   useEffect(() => {
@@ -210,14 +210,10 @@ export function HeaderResponsive() {
 
     window.addEventListener('scroll', handleScroll);
 
-    if (ivaoToken) {
-      void authContext.signIn(ivaoToken);
-    }
-
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [ivaoToken, authContext]);
+  }, [authContext]);
 
   const handleImageClick = () => {
     navigate('/');
@@ -275,8 +271,8 @@ export function HeaderResponsive() {
           <AuthButton
             scrollPosition={scrollPosition}
             signed={signed}
-            decodedToken={decodedToken}
-            handleAuthAction={() => handleAuthAction(authContext, serverUrl)}
+            user={user}
+            handleAuthAction={() => handleAuthAction(authContext)}
           />
           <LanguageButton
             scrollPosition={scrollPosition}
@@ -324,8 +320,8 @@ export function HeaderResponsive() {
             <AuthButton
               scrollPosition={scrollPosition}
               signed={signed}
-              decodedToken={decodedToken}
-              handleAuthAction={() => handleAuthAction(authContext, serverUrl)}
+              user={user}
+              handleAuthAction={() => handleAuthAction(authContext)}
             />
             <LanguageButton
               scrollPosition={scrollPosition}
@@ -391,7 +387,7 @@ function CommonDropdownContent({ scrollPosition, category }) {
 function AuthButton({
                       scrollPosition,
                       signed,
-                      decodedToken,
+                      user,
                       handleAuthAction,
                     }) {
   const { t } = useTranslation();
@@ -400,17 +396,25 @@ function AuthButton({
     <>
       {signed ? (
         <button
-          className={`flex items-center space-x-2 px-1 py-2 font-bold ${scrollPosition > 0 && !isSmallScreen ? 'text-blue-900  hover:text-ocean-600' : 'text-white hover:text-gray-200'}`}
+          className={`flex items-center space-x-2 px-1 py-2 font-bold ${
+            scrollPosition > 0 && !isSmallScreen
+              ? 'text-blue-900 hover:text-ocean-600'
+              : 'text-white hover:text-gray-200'
+          }`}
           onClick={handleAuthAction}
         >
           <IconLogout size={20} />
           <span>
-            {decodedToken?.userData.name.first} {decodedToken?.userData.id}
+            {user?.name?.first} {user?.id}
           </span>
         </button>
       ) : (
         <button
-          className={`flex items-center space-x-2 px-1 py-2 font-bold ${scrollPosition > 0 && !isSmallScreen ? 'text-blue-900  hover:text-ocean-600' : 'text-white hover:text-gray-200'}`}
+          className={`flex items-center space-x-2 px-1 py-2 font-bold ${
+            scrollPosition > 0 && !isSmallScreen
+              ? 'text-blue-900 hover:text-ocean-600'
+              : 'text-white hover:text-gray-200'
+          }`}
           onClick={handleAuthAction}
         >
           <IconLogin2 size={20} />
@@ -473,9 +477,9 @@ function LanguageButton({ scrollPosition, changeLanguage }) {
   );
 }
 
-function handleAuthAction(authContext, serverUrl) {
+function handleAuthAction(authContext) {
   if (!authContext.signed) {
-    window.location.href = serverUrl;
+    authContext.signIn();
   } else {
     authContext.signOut();
   }

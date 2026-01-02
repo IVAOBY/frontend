@@ -34,7 +34,7 @@ export const useBookEvent = () => {
       notifications.show({
         id: 'complete-unbooking',
         title: t('notif.server.name'),
-        message: t('notif.server.description'),
+        message: error.toString(),
         color: 'red',
         radius: 'lg',
         withCloseButton: true,
@@ -70,7 +70,7 @@ export const useUnbookEvent = () => {
       notifications.show({
         id: 'complete-unbooking',
         title: t('notif.server.name'),
-        message: t('notif.server.description'),
+        message: error.toString(),
         color: 'red',
         radius: 'lg',
         withCloseButton: true,

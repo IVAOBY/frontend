@@ -7,7 +7,7 @@ import { CustomButton } from '../../Button';
 
 export function HeroText() {
   const [timeOfDay, setTimeOfDay] = useState('day');
-  const { signed, decodedToken } = useContext(AuthContext);
+  const { signed, user } = useContext(AuthContext);
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -39,13 +39,13 @@ export function HeroText() {
       try {
         const emailBody = `Dear HQs and Membership Department!
 
-I request to transfer me from the ${decodedToken?.userData.divisionId} division to the BY division.
+I request to transfer me from the ${user?.userData.divisionId} division to the BY division.
                 
 Best wishes,
-${decodedToken?.userData.name.first} ${decodedToken?.userData.name.last}`;
+${user?.userData.name.first} ${user?.userData.name.last}`;
 
         window.open(
-          `mailto:BY-hq@ivao.aero,${decodedToken?.userData.divisionId}-hq@ivao.aero?cc=members@ivao.aero&subject=Division%20transfer%20${decodedToken?.userData.id}&body=${encodeURIComponent(
+          `mailto:BY-hq@ivao.aero,${user?.userData.divisionId}-hq@ivao.aero?cc=members@ivao.aero&subject=Division%20transfer%20${user?.userData.id}&body=${encodeURIComponent(
             emailBody,
           )}`,
           '_blank',
@@ -56,10 +56,10 @@ ${decodedToken?.userData.name.first} ${decodedToken?.userData.name.last}`;
     }
   }, [
     signed,
-    decodedToken?.userData.divisionId,
-    decodedToken?.userData.name.first,
-    decodedToken?.userData.name.last,
-    decodedToken?.userData.id,
+    user?.userData.divisionId,
+    user?.userData.name.first,
+    user?.userData.name.last,
+    user?.userData.id,
   ]);
 
   const openLink = useCallback(function (link: string | undefined) {
