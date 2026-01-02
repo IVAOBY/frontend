@@ -8,7 +8,7 @@ import { Notification } from '../../components/Notification/Notification';
 import { AuthContext } from '../../context/UserContext';
 import { useCreateVehiclePermission, useRevokeVehiclePermission, useVehicles } from '../../hooks/query/useVehicles';
 
-const ALLOWED_DEPARTMENTS = ['AO', 'PR', 'MD', 'TA', 'T0', 'ED', 'WD'] as const;
+const ALLOWED_DEPARTMENTS = ['AO', 'TA', 'WD', 'HQ'] as const;
 const HOLD_DURATION = 1200;
 
 /* ---------- utils ---------- */
