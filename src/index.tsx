@@ -1,15 +1,14 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 
 import ReactDOM from 'react-dom/client';
 
 import './index.css';
 
-import Snowfall from 'react-snowfall';
-
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const Snowfall = lazy(() => import('react-snowfall'));
 
 const isSnowfallSeason = () => {
   const currentDate = new Date();
@@ -24,7 +23,11 @@ const isSnowfallSeason = () => {
 root.render(
   <React.StrictMode>
     <App />
-    {isSnowfallSeason() && <Snowfall color={'#D7D7DC'} />}
+    {isSnowfallSeason() && (
+      <Suspense fallback={null}>
+        <Snowfall color="#D7D7DC" />
+      </Suspense>
+    )}
   </React.StrictMode>,
 );
 reportWebVitals();

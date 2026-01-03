@@ -1,19 +1,17 @@
-import React, {
-  createContext,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import { createContext } from 'react';
+import React, { useCallback } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 
-import { API_BASE_URL, getAuthLoginUrl } from '../constants/app';
+import { getAuthLoginUrl } from '../constants/app';
+import { useMe, useLogout } from '../hooks/query/useMe';
+import { Me } from '../types/Me';
 
 interface AuthContextProps {
   signed: boolean;
   loading: boolean;
-  user: any | null;
+  user: Me | null;
   signIn: () => void;
   signOut: () => void;
-  refreshSession: () => void;
 }
 
 export const AuthContext = createContext<AuthContextProps>({
@@ -22,7 +20,6 @@ export const AuthContext = createContext<AuthContextProps>({
   user: null,
   signIn: () => {},
   signOut: () => {},
-  refreshSession: () => {},
 });
 
 interface AuthProviderProps {
@@ -30,64 +27,36 @@ interface AuthProviderProps {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<any | null>(null);
-  const [loading, setLoading] = useState(true);
+  const queryClient = useQueryClient();
 
-  /* ---------- API helpers ---------- */
+  const {
+    data: user,
+    isLoading,
+    isError,
+  } = useMe();
 
-  const fetchSession = useCallback(async () => {
-    try {
-      setLoading(true);
-
-      const res = await fetch(`${API_BASE_URL}/users/me`, {
-        credentials: 'include',
-      });
-
-      if (!res.ok) {
-        setUser(null);
-        return;
-      }
-
-      const data = await res.json();
-      setUser(data);
-    } catch {
-      setUser(null);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  /* ---------- actions ---------- */
+  const { mutate: logout } = useLogout();
 
   const signIn = useCallback(() => {
     window.location.href = getAuthLoginUrl(window.location.href);
   }, []);
 
   const signOut = useCallback(() => {
-    window.location.href = `${API_BASE_URL}/auth/logout`;
-  }, []);
-
-  const refreshSession = useCallback(() => {
-    fetchSession();
-  }, [fetchSession]);
-
-  /* ---------- bootstrap ---------- */
-
-  useEffect(() => {
-    fetchSession();
-  }, [fetchSession]);
-
-  /* ---------- context ---------- */
+    logout(undefined, {
+      onSettled: () => {
+        queryClient.removeQueries({ queryKey: ['me'] });
+      },
+    });
+  }, [logout, queryClient]);
 
   return (
     <AuthContext.Provider
       value={{
-        signed: !!user,
-        loading,
-        user,
+        signed: !!user && !isError,
+        loading: isLoading,
+        user: isError ? null : user ?? null,
         signIn,
         signOut,
-        refreshSession,
       }}
     >
       {children}

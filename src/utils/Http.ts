@@ -4,6 +4,7 @@ import { API_BASE_URL, STORAGE_KEYS } from '../constants/app';
 
 const Http = Axios.create({
   baseURL: API_BASE_URL,
+  withCredentials: true,
 });
 
 Http.interceptors.response.use(

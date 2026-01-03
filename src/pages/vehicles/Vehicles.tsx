@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { BreadcrumbLayout, Centered } from '../../components/Layout';
 import { Loader } from '../../components/Loader';
+import { useMe } from '../../hooks/query/useMe'
 import { Notification } from '../../components/Notification/Notification';
 import { AuthContext } from '../../context/UserContext';
 import { useCreateVehiclePermission, useRevokeVehiclePermission, useVehicles } from '../../hooks/query/useVehicles';
@@ -13,15 +14,16 @@ const HOLD_DURATION = 1200;
 
 /* ---------- utils ---------- */
 
-function canUseVehiclesAdmin(decodedToken: any): boolean {
-  if (!decodedToken?.userData) return false;
+function canUseVehiclesAdmin(me: any): boolean {
+  if (!me?.staffPositions) return false
 
-  const departments: string[] =
-    decodedToken.userData.departments ??
-    decodedToken.userData.staffDepartments ??
-    [];
+  const departments = me.staffPositions.map(
+    (sp: any) => sp.staffDepartment?.id
+  )
 
-  return departments.some((dep) => ALLOWED_DEPARTMENTS.includes(dep as any));
+  return departments.some((dep: string) =>
+    ALLOWED_DEPARTMENTS.includes(dep as any)
+  )
 }
 
 const formatDate = (value: Date | string | null | undefined) => {
@@ -49,9 +51,10 @@ const copyToClipboard = async (text: string) => {
 
 export function VehiclesPage() {
   const { t } = useTranslation();
-  const { decodedToken, signed } = useContext(AuthContext);
+  const { signed } = useContext(AuthContext)
+  const { data: me, isLoading: isLoadingMe } = useMe()
 
-  const canAdmin = signed && canUseVehiclesAdmin(decodedToken);
+  const canAdmin = signed && !!me && canUseVehiclesAdmin(me)
   const [adminMode, setAdminMode] = useState(false);
   const effectiveAdminMode = canAdmin && adminMode;
 
@@ -194,7 +197,7 @@ export function VehiclesPage() {
   };
 
   /* ---------- loading / error ---------- */
-  if (isLoading) {
+  if (isLoading || isLoadingMe) {
     return (
       <Centered>
         <Loader />
