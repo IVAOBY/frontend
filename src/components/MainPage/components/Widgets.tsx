@@ -90,7 +90,7 @@ export function Widgets() {
               <div className="hidden xl:block">
                 <div
                   onClick={() =>
-                    handleExternalLink('https://discord.by.ivao.aero')
+                    handleExternalLink('https://ds.by.ivao.aero')
                   }
                   className="flex h-[270px] w-[355px] flex-col items-center justify-center gap-5 rounded-3xl bg-indigo-500 md:justify-start"
                 >
