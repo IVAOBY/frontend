@@ -8,7 +8,6 @@ import { PilotResponse } from '@ivaoby/common/types/tracker/internal/pilots-resp
 
 import atcicon from '../../../assets/icons/atc-icon.svg';
 import piloticon from '../../../assets/icons/Plane.svg';
-import banner from '../../../assets/image/onlineinfobaner.png';
 // import { useTranslation } from 'react-i18next';
 
 import { useApi } from '../../../context/ApiContext';
