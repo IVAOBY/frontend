@@ -5,29 +5,40 @@ import { AuthContext } from '../../../context/UserContext';
 import { CustomButton } from '../../Button';
 
 export function HeroText() {
-  const [timeOfDay, setTimeOfDay] = useState('day');
+  const [winter, setWinter] = useState<boolean>(false);
+  const [timeOfDay, setTimeOfDay] = useState<'morning' | 'day' | 'evening' | 'night'>('day');
   const { signed, decodedToken } = useContext(AuthContext);
   const { t } = useTranslation();
 
   useEffect(() => {
-    const hours = new Date().getHours();
-    if (hours >= 6 && hours < 12) {
-      setTimeOfDay('morning');
-    } else if (hours >= 12 && hours < 18) {
-      setTimeOfDay('day');
-    } else if (hours >= 18 && hours < 22) {
-      setTimeOfDay('evening');
-    } else {
-      setTimeOfDay('night');
-    }
+    const now = new Date();
+    const m = now.getMonth();
+    const h = now.getHours();
+
+    if (h >= 6 && h < 12) setTimeOfDay('morning');
+    else if (h >= 12 && h < 18) setTimeOfDay('day');
+    else if (h >= 18 && h < 22) setTimeOfDay('evening');
+    else setTimeOfDay('night');
+    setWinter(m === 11 || m === 0 || m === 1);
   }, []);
 
   const backgroundImage = {
-    morning: 'url(\'https://cdn.by.ivao.aero/images/main_page_morning.webp\')',
-    day: 'url(\'https://cdn.by.ivao.aero/images/main_page_day.webp\')',
-    evening: 'url(\'https://cdn.by.ivao.aero/images/main_page_evening.webp\')',
-    night: 'url(\'https://cdn.by.ivao.aero/images/main_page_night.webp\')',
+    morning: 'url(\'https://cdn.by.ivao.aero/images/backgrounds/main_page_morning.webp\')',
+    day: 'url(\'https://cdn.by.ivao.aero/images/backgrounds/main_page_day.webp\')',
+    evening: 'url(\'https://cdn.by.ivao.aero/images/backgrounds/main_page_evening.webp\')',
+    night: 'url(\'https://cdn.by.ivao.aero/images/backgrounds/main_page_night.webp\')',
   };
+
+  const winterBackgroundImage = {
+    morning: 'url(\'https://cdn.by.ivao.aero/images/backgrounds/winter/main_page_morning.webp\')',
+    day: 'url(\'https://cdn.by.ivao.aero/images/backgrounds/winter/main_page_day.webp\')',
+    evening: 'url(\'https://cdn.by.ivao.aero/images/backgrounds/winter/main_page_evening.webp\')',
+    night: 'url(\'https://cdn.by.ivao.aero/images/backgrounds/winter/main_page_night.webp\')',
+  }
+
+  const bg = winter
+    ? winterBackgroundImage[timeOfDay]
+    : backgroundImage[timeOfDay];
 
   const byTransferMail = useCallback(() => {
     if (!signed) return;
@@ -74,7 +85,7 @@ ${first} ${last}`;
   return (
     <div
       className="relative flex h-[487px] w-full items-center justify-center bg-cover bg-center md:h-[900px]"
-      style={{ backgroundImage: backgroundImage[timeOfDay] }}
+      style={{ backgroundImage: bg }}
     >
       <div className="container z-10 mx-auto flex max-w-screen-2xl flex-col gap-4 px-4 py-8">
         <div className="leading-none">
