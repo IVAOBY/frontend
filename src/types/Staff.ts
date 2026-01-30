@@ -1,28 +1,25 @@
-export interface DepartmentStaff {
+export interface DepartmentWithPositions {
   id: string;
+  order: number;
   name: string;
   email: string;
+  positions: StaffPosition[];
 }
 
-export interface PositionStaff {
+export interface StaffPosition {
   departmentId: string;
+  prefix: string;
   id: string;
+  order: number;
+  is_vacant: number;
   name: {
     en: string;
-    ru: string | null;
   };
-  prefix: string;
-  order: number;
   user: {
     id: number;
     name: {
       first: string;
-      last: string;
+      last: string | null;
     };
-  };
-  description: {
-    en: string;
-    ru: string | null;
   } | null;
-  is_vacant: number;
 }
