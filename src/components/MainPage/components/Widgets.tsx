@@ -46,7 +46,7 @@ export function Widgets() {
                 alt="Belarus in IVAO"
                 className="size-full rounded-l-3xl object-cover"
               />
-              <div className="flex flex-col justify-center break-words pl-4 font-bold">
+              <div className="flex flex-col justify-center break-words px-5 font-bold">
                 <p className="text-[60px] uppercase leading-none text-black">
                   {t('mainpage.heropage.title2')}
                 </p>

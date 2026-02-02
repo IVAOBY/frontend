@@ -167,7 +167,7 @@ export function AirportPage() {
                 </div>
                 <div className="flex  items-center overflow-hidden rounded-lg bg-atmos-700 shadow-md">
                   <div className="px-1 py-9">
-                    <IconRadar2 size={50} />
+                    <IconRadar2 size={50} stroke-width={1.5} />
                   </div>
                   <div className="min-h-[122px] w-[855px] content-center bg-white px-4 py-2 font-semibold text-black">
                     {airport.taf.taf ? (

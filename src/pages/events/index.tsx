@@ -75,7 +75,7 @@ export const EventHeader = ({ data, registrationStatus, t }) => {
     <div className="mt-2 flex w-full flex-wrap items-center gap-2">
       {data.startDate && data.endDate && (
         <div
-          className="justify-center rounded-xl bg-zinc-900 px-3 py-[7px] text-center text-[15px] font-semibold leading-4 text-white">
+          className="justify-center rounded-xl bg-zinc-900 px-3 py-[7px] text-center text-[18px] font-semibold leading-4 text-white">
           {`${format(new Date(data.startDate), 'dd.MM')} ${new Date(
             data.startDate,
           ).toLocaleTimeString('eu', {
@@ -89,13 +89,13 @@ export const EventHeader = ({ data, registrationStatus, t }) => {
             hour12: false,
             hour: '2-digit',
             minute: '2-digit',
-          })}`} <span className="text-[12px]">UTC</span>
+          })}`} <span className="text-[14px]">UTC</span>
         </div>
       )}
 
       {data.airport && (
         <div
-          className="justify-center rounded-xl bg-zinc-900 px-3 py-[7px] text-center text-[15px] font-semibold leading-4 text-white uppercase">
+          className="justify-center rounded-xl bg-zinc-900 px-3 py-[7px] text-center text-[18px] font-semibold leading-4 text-white uppercase">
           {data.airport}
         </div>
       )}
@@ -115,26 +115,26 @@ export const EventHeader = ({ data, registrationStatus, t }) => {
 
       {registrationStatus === 'open' ? (
         <div
-          className="flex items-center gap-1.5 rounded-xl bg-green-500 px-3 py-[7px] text-[15px] font-semibold leading-4 text-white backdrop-blur-[5px]">
+          className="flex items-center gap-1.5 rounded-xl bg-green-500 px-3 py-[5px] text-[18px] font-semibold leading-4 text-white backdrop-blur-[5px]">
           <IconClockCheck size={20} />
           <div className="my-auto flex-auto">{t('events.tags.shift.open')}</div>
         </div>
       ) : registrationStatus === 'closed' ? (
         <div
-          className="flex items-center gap-1.5 rounded-xl bg-semantic-red-500 px-3 py-[7px] text-[15px] font-semibold leading-4 text-white backdrop-blur-[5px]">
+          className="flex items-center gap-1.5 rounded-xl bg-semantic-red-500 px-3 py-[5px] text-[18px] font-semibold leading-4 text-white backdrop-blur-[5px]">
           <IconClockCancel size={20} />
           <div className="my-auto flex-auto">{t('events.tags.shift.close')}</div>
         </div>
       ) : null}
 
-      {hidden && (
+      {hidden ? (
         <div
           className="flex items-center gap-1.5 rounded-xl bg-red-600 px-3 py-[7px] text-[15px] font-semibold text-white cursor-help border-b-2 border-dashed border-red-600"
           title={t('events.hidden.description')}
         >
           {t('events.hidden.tag')}
         </div>
-      )}
+      ) : null}
     </div>
   );
 };
@@ -163,16 +163,16 @@ export function EventPage() {
             {data.name[i18n.language]}
           </div>
           <EventHeader data={data} registrationStatus={registrationStatus} t={t} />
-          <div className="mt-8 flex flex-col gap-12 lg:flex-row">
+          <div className="mt-8 flex flex-col gap-5 lg:flex-row">
             <div className="w-full rounded-3xl xl:w-1/2">
               <img
                 src={data.imageUrl}
                 alt={data.name.en}
-                className="size-full rounded-3xl object-cover shadow-lg shadow-gray-400"
+                className="size-full rounded-3xl object-cover shadow-md"
               />
             </div>
             <div
-              className="flex w-full flex-col rounded-3xl bg-white font-['Montserrat'] shadow-lg shadow-gray-400 xl:w-1/2">
+              className="flex w-full flex-col rounded-3xl bg-white font-['Montserrat'] shadow-md xl:w-1/2">
               <div className="mx-8 my-10 grow">
                 <p className="text-3xl font-semibold leading-7 text-black">
                   {t('events.content.title')}
