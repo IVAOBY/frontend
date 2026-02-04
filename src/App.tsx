@@ -23,10 +23,8 @@ import { NotFound } from './pages/Error/404';
 import { EventPage } from './pages/events';
 import { FAQ } from './pages/Faq';
 import { FirstStepP } from './pages/FirstStepPilot';
-// import { MapPage } from './pages/MapPage';
 import { VehiclesPage } from './pages/vehicles/Vehicles';
 import { NewsPage } from './pages/News';
-import { ScenaryPage } from './pages/Scenary';
 import { StaffPage } from './pages/Staff';
 
 import './App.css';
@@ -92,11 +90,8 @@ export default function App() {
                   <Route path="/airport/:icao" element={<AirportPage />} />
                   <Route path="/about-us" element={<AboutUs />} />
                   <Route path="/faq" element={<FAQ />} />
-                  <Route path="/scenery" element={<ScenaryPage />} />
-                  <Route path="/scenery/:id" element={<ScenaryPage />} />
                   <Route path="/pilots/first-step" element={<FirstStepP />} />
                   <Route path="/news/:id" element={<NewsPage />} />
-                  {/*<Route path="/map" element={<MapPage />} />*/}
                   <Route path="/staff" element={<StaffPage />} />
                   <Route path="/vehicles" element={<VehiclesPage />} />
                   <Route path="/training" element={<Training />} />
