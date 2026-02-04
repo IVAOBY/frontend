@@ -301,7 +301,7 @@ export function VehiclesPage() {
 
                         {adminMode && (
                             <button
-                                className="flex items-center gap-2 rounded-xl bg-atmos-700 px-4 py-2 text-sm font-semibold text-white hover:bg-atmos-600"
+                                className="flex items-center gap-2 rounded-xl bg-atmos-700 px-4 py-2 text-sm font-semibold text-white transition duration-500 hover:cursor-pointer hover:opacity-80"
                                 onClick={() => setCreateOpen(true)}
                             >
                                 <IconPlus size={16}/>
@@ -319,9 +319,9 @@ export function VehiclesPage() {
             {!vehicles || vehicles.length === 0 ? (
                 <div className="mt-6 text-neutral-500">{t('vehicles.empty')}</div>
             ) : (
-                <div className="mt-6 overflow-x-auto rounded-2xl bg-white shadow text-neutral-900">
+                <div className="mt-6 overflow-x-auto rounded-2xl bg-white shadow-md text-neutral-900">
                     <table className="w-full border-collapse text-sm">
-                        <thead className="bg-gray-100 text-neutral-800">
+                        <thead className="bg-atmos-700 text-white text-left">
                         <tr>
                             <th className={`px-4 py-3 ${!effectiveAdminMode && 'hidden'}`}>
                                 ID
@@ -375,7 +375,7 @@ export function VehiclesPage() {
                                         href={`https://ivao.aero/Member.aspx?Id=${p.vid}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="text-blue-600 hover:underline"
+                                        className="text-atmos-700 hover:underline"
                                     >
                                         {p.vid}
                                     </a>
@@ -383,7 +383,7 @@ export function VehiclesPage() {
 
                                 <td className="px-4 py-3">{formatDate(p.validFrom)}</td>
 
-                                <td className="px-4 py-3">
+                                <td className="px-4 py-3 ">
                                     {p.validUntil ? formatDate(p.validUntil) : t('vehicles.unlimited')}
                                 </td>
 
@@ -391,19 +391,19 @@ export function VehiclesPage() {
                                     {p.status === 'active' && (
 
                                         <span
-                                            className="rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-800">
+                                            className="rounded-lg bg-[#EAF9EF] px-3 py-1 text-xs font-semibold text-green-500">
                         {t('vehicles.active')}
                       </span>
                                     )}
                                     {p.status === 'inactive' && (
                                         <span
-                                            className="rounded-full bg-gray-200 px-3 py-1 text-xs font-semibold text-gray-700">
+                                            className="rounded-lg bg-gray-200 px-3 py-1 text-xs font-semibold text-gray-500">
                         {t('vehicles.inactive')}
                       </span>
                                     )}
                                     {p.status === 'revoked' && (
                                         <span
-                                            className="rounded-full bg-red-100 px-3 py-1 text-xs font-semibold text-red-700">
+                                            className="rounded-lg bg-red-100 px-3 py-1 text-xs font-semibold text-red-500">
                         {t('vehicles.revoked')}
                       </span>
                                     )}
@@ -642,7 +642,7 @@ export function VehiclesPage() {
 
                         <div className="mt-6 flex justify-end gap-3">
                             <button
-                                className="relative z-10 w-full px-4 py-2 text-sm font-semibold text-white bg-red-600 rounded-xl w-auto disabled:opacity-60"
+                                className="relative z-10 w-full px-4 py-2 text-sm font-semibold text-white bg-red-600 rounded-xl disabled:opacity-60"
                                 disabled={cancelMutation.isPending}
                                 onClick={submitCancel}
                             >
