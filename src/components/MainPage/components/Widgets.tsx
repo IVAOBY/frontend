@@ -42,7 +42,7 @@ export function Widgets() {
               className="relative hidden h-[270px] w-full cursor-pointer rounded-3xl border border-stone-300 bg-white xl:flex xl:w-[747px] xl:flex-row"
             >
               <img
-                src="https://cdn.by.ivao.aero/images/widget_about.png"
+                src="https://cdn.by.ivao.aero/images/widget_about.webp"
                 alt="Belarus in IVAO"
                 className="size-full rounded-l-3xl object-cover"
               />
@@ -73,7 +73,7 @@ export function Widgets() {
                 {t('mainpage.widgets.charts')}
               </p>
               <img
-                src="https://cdn.by.ivao.aero/images/widget_charts.png"
+                src="https://cdn.by.ivao.aero/images/widget_charts.webp"
                 alt="Charts image"
                 className="rounded-l-b-2xl absolute left-0 top-[52px] z-10 mb-0 hidden h-[65%] w-full pb-0 xl:-top-0 xl:block xl:size-full"
               />
@@ -90,7 +90,7 @@ export function Widgets() {
               <div className="hidden xl:block">
                 <div
                   onClick={() =>
-                    handleExternalLink('https://discord.by.ivao.aero')
+                    handleExternalLink('https://ds.by.ivao.aero')
                   }
                   className="flex h-[270px] w-[355px] flex-col items-center justify-center gap-5 rounded-3xl bg-indigo-500 md:justify-start"
                 >
@@ -120,7 +120,7 @@ export function Widgets() {
               className="relative hidden cursor-pointer items-center justify-end rounded-3xl border border-stone-300 bg-gray-900 pr-10 xl:ml-2 xl:flex xl:h-[270px] xl:w-[741px]"
             >
               <img
-                src="https://cdn.by.ivao.aero/images/widget_airports.png"
+                src="https://cdn.by.ivao.aero/images/widget_airports.webp"
                 alt="UMMS Aurora"
                 className="rounded-l-b-2xl absolute -left-px -top-0 z-10 mb-0 size-full rounded-l-3xl object-cover pb-0"
               />

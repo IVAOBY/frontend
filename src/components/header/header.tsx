@@ -60,7 +60,7 @@ const categories = [
       },
       //{ href: '/contact-us', label: 'navbar.division.contact', icon: <IconMailForward size={20} /> },
       {
-        href: 'https://discord.by.ivao.aero',
+        href: 'https://ds.by.ivao.aero',
         label: 'navbar.division.discord',
         icon: <img src={discord} width={19} alt="Discord Icon" />,
         external: true,
