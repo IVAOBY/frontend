@@ -88,14 +88,40 @@ export interface Translations {
   };
   vehicles: {
     title: string;
-    airports: string;
     description: string;
-    airport: string;
-    atcreq: string;
-    driverreq: string;
-    vids: string;
-    training: string;
+    validFrom: string;
+    validUntil: string;
+    status: string;
+    issuedBy: string;
+    issueReason: string;
+    revokedAt: string;
+    revokedBy: string;
+    actions: string;
+    unlimited: string;
+    active: string;
+    inactive: string;
+    revoked: string;
     caption: string;
+    create: string;
+    adminMode: string;
+    empty: string;
+    creator: {
+      title: string;
+      submitButton: string;
+      unlimited: string;
+    }
+    editor: {
+      title: string;
+      submitButton: string;
+      cancelButton: string;
+    }
+    revoker: {
+      title: string;
+      description: string;
+      revokeButton: string;
+      cancelButton: string;
+      holdHint: string;
+    }
   };
   footer: {
     copyrightMessage: string;

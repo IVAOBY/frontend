@@ -4,16 +4,11 @@ import { Agenda } from '../../types/News';
 import Http from '../../utils/Http';
 
 export const fetchAgendaMain = async () => {
-  try {
-    const response = await Http<Agenda[]>({
-      method: 'GET',
-      url: `/agenda?limit=4`,
-    });
-    return response || [];
-  } catch (error) {
-    console.error('Error fetching agenda:', error);
-    throw error;
-  }
+  const response = await Http<Agenda[]>({
+    method: 'GET',
+    url: `/agenda?limit=4`,
+  });
+  return response || [];
 };
 
 const useNews = () => {

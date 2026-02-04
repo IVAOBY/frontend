@@ -94,26 +94,18 @@ export function ShiftComponent() {
     if (signed && data) {
       const part = data.find((p) => p.id === partId);
       if (part) {
-        try {
-          bookEvent({
-            atcPositionId,
-            eventId: part.eventId,
-            eventPartId: part.id,
-          });
-        } catch (error) {
-          console.error('Error handling booking:', error);
-        }
+        bookEvent({
+          atcPositionId,
+          eventId: part.eventId,
+          eventPartId: part.id,
+        });
       }
     }
   };
 
   const handleUnbook = (bookingId: number) => {
     if (signed) {
-      try {
-        unbookEvent(bookingId);
-      } catch (error) {
-        console.error('Error handling unbooking:', error);
-      }
+      unbookEvent(bookingId);
     }
   };
 
@@ -123,14 +115,9 @@ export function ShiftComponent() {
       ?.positions.find((pos) => pos.id === atcPositionId);
 
     if (!position || !position.position) {
-      console.error('Position not found');
       return;
     }
-    try {
-      handleBook(partId, atcPositionId); // Убираем await
-    } catch (error) {
-      console.error('Error while booking:', error);
-    }
+    handleBook(partId, atcPositionId);
   };
 
   return (
@@ -318,8 +305,6 @@ export function ShiftComponent() {
                                       );
                                     if (typeof bookingId !== 'undefined') {
                                       handleUnbook(bookingId);
-                                    } else {
-                                      console.log('Booking ID is undefined');
                                     }
                                   }
                                 }}

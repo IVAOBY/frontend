@@ -77,7 +77,6 @@ ${first} ${last}`;
     decodedToken?.userData?.name?.last,
   ]);
 
-
   const openLink = useCallback(function(link: string | undefined) {
     window.open(link, '_blank');
   }, []);

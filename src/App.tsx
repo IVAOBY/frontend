@@ -10,6 +10,7 @@ import { AirportsPage } from './components/AirportPage/AirportsPage';
 import { Footer } from './components/Footer';
 import { HeaderResponsive } from './components/header/header';
 import { MainPage } from './components/MainPage/MainPage';
+import { getAuthLoginUrl } from './constants/app';
 import { AuthContext, AuthProvider } from './context/UserContext';
 import i18n from './i18n/i18n';
 import { ivaoTheme } from './ivaoTheme';
@@ -22,6 +23,7 @@ import { NotFound } from './pages/Error/404';
 import { EventPage } from './pages/events';
 import { FAQ } from './pages/Faq';
 import { FirstStepP } from './pages/FirstStepPilot';
+import { VehiclesPage } from './pages/vehicles/Vehicles';
 import { NewsPage } from './pages/News';
 import { StaffPage } from './pages/Staff';
 
@@ -35,15 +37,16 @@ import { AirportPage } from './components/AirportPage/AirportPage';
 import { Centered } from './components/Layout';
 import { Loader } from './components/Loader';
 import { Training } from './pages/training';
-import ScrollToTop from "./utils/ScrollToTop";
+import ScrollToTop from './utils/ScrollToTop';
 
 export default function App() {
+  const CONTACT_US_ENABLED = 0;
   const PrivateRoute: React.FC<{ path: string; element: React.ReactNode }> = ({
-    element,
-  }) => {
+                                                                                element,
+                                                                              }) => {
     const { signed } = useContext(AuthContext);
     if (!signed) {
-      window.location.href = `${import.meta.env.VITE_API_URL_BASE}/auth/login?goto=${encodeURIComponent(window.location.href)}`;
+      window.location.href = getAuthLoginUrl();
 
       return (
         <Centered>
@@ -80,7 +83,7 @@ export default function App() {
                 footer={<Footer />}
               >
                 <Notifications />
-                <ScrollToTop/>
+                <ScrollToTop />
                 <Routes>
                   <Route path="/" element={<MainPage />} />
                   <Route path="/airports" element={<AirportsPage />} />
@@ -90,7 +93,7 @@ export default function App() {
                   <Route path="/pilots/first-step" element={<FirstStepP />} />
                   <Route path="/news/:id" element={<NewsPage />} />
                   <Route path="/staff" element={<StaffPage />} />
-                  {/*<Route path="/vehicles" element={<Vehicles />} />*/}
+                  <Route path="/vehicles" element={<VehiclesPage />} />
                   <Route path="/training" element={<Training />} />
 
                   {/* Документы */}
@@ -109,15 +112,18 @@ export default function App() {
                   <Route path="*" element={<Navigate to="/404" />} />
 
                   {/* Private route*/}
-                  <Route
-                    path="/contact-us/*"
-                    element={
-                      <PrivateRoute
-                        path="/contact-us"
-                        element={<GetInTouchSimple />}
-                      />
-                    }
-                  />
+                  {CONTACT_US_ENABLED && (
+                    <Route
+                      path="/contact-us/*"
+                      element={
+                        <PrivateRoute
+                          path="/contact-us"
+                          element={<GetInTouchSimple />}
+                        />
+                      }
+                    />
+                  )}
+                  )
                 </Routes>
               </AppShell>
               {import.meta.env.VITE_ENV_TYPE === 'DEVELOPMENT' && (

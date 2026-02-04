@@ -1,7 +1,9 @@
 import Axios, {AxiosError, AxiosRequestConfig, AxiosRequestHeaders, AxiosResponse} from 'axios';
 
+import { API_BASE_URL, STORAGE_KEYS } from '../constants/app';
+
 const Http = Axios.create({
-  baseURL: import.meta.env.VITE_API_URL_BASE as string,
+  baseURL: API_BASE_URL,
 });
 
 Http.interceptors.response.use(
@@ -21,7 +23,7 @@ Http.interceptors.request.use((request) => {
     request.headers = request.headers ?? {} as AxiosRequestHeaders;
     request.headers['Content-Type'] = 'application/json';
 
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem(STORAGE_KEYS.TOKEN);
   if (token) {
     request.headers['Authorization'] = 'Bearer ' + token;
   }

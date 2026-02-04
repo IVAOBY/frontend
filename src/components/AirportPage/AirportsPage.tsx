@@ -64,7 +64,7 @@ export function AirportsPage() {
                   key={airport.icao}
                   className="flex flex-col rounded-xl font-semibold"
                 >
-                  {airport.airportTypeId == 1 && (
+                  {airport.airportTypeId === 1 && (
                     <img
                       className="rounded-t-xl"
                       alt={airport.name}

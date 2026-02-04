@@ -1,5 +1,7 @@
+import { ReactNode } from 'react';
+
 export interface FeatureData {
   title: string;
   description: string;
-  icon: any;
+  icon: ReactNode;
 }

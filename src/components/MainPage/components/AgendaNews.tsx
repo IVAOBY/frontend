@@ -138,20 +138,33 @@ export function AgendaNews() {
                         </div>
                         <div className="my-auto flex flex-col items-center">
                           <div className="text-[27px] lg:text-4xl">
-                            {format(new Date(item.startDate), 'dd')}
+                            {new Date(item.startDate).toLocaleString(currentLanguage, {
+                              timeZone: 'UTC',
+                              day: '2-digit',
+                            })}
                           </div>
+
                           <div className="text-[14px] text-neutral-600 lg:-mt-2 lg:text-lg">
-                            {format(new Date(item.startDate), 'MMM', {
-                              locale: currentLocale,
-                            })
+                            {new Date(item.startDate)
+                                .toLocaleString(currentLanguage, {
+                                  timeZone: 'UTC',
+                                  month: 'short',
+                                })
                                 .toUpperCase()
-                                .slice(0, 3)}
+                                .slice(0, 3)}{' '}
                           </div>
+
                         </div>
                         <div className="mt-1 flex flex-col">
                           <div className="text-3xl">{item.title}</div>
-                          <div className="-mt-2.5 text-[15px] font-medium leading-7 text-neutral-600 lg:text-xl lg:leading-8">
-                            <span>{format(new Date(item.startDate), 'HH:mm')}</span>
+                          <div
+                              className="-mt-2.5 text-[15px] font-medium leading-7 text-neutral-600 lg:text-xl lg:leading-8">
+                            <span>{`${new Date(item.startDate).toLocaleTimeString('eu', {
+                              timeZone: 'UTC',
+                              hour12: false,
+                              hour: '2-digit',
+                              minute: '2-digit',
+                            })}`} UTC</span>
                             {item.type === 0 ? (
                                 <span className="ml-2 text-neutral-400">
                             {item.airport}
