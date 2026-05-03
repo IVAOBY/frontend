@@ -194,7 +194,7 @@ export function HeaderResponsive() {
   const [currentPath, setCurrentPath] = useState('/');
   const authContext = useContext(AuthContext);
   const [urlParams] = useSearchParams();
-  const ivaoToken = urlParams.get('token');
+  const ivaoToken = urlParams.get('authToken');
   const { signed, decodedToken } = useContext(AuthContext);
   const serverUrl = getAuthLoginUrl();
   const location = useLocation();
