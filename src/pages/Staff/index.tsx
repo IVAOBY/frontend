@@ -35,10 +35,7 @@ export function StaffPage() {
         </Centered>
       ) : isError ? null : (
         departmentsData?.map((department) => {
-          const visiblePositions =
-            department.positions?.filter(
-              (p) => Number(p.is_vacant) === 1 || Boolean(p.user?.id),
-            ) ?? [];
+          const visiblePositions = department.positions ?? [];
 
           return (
             <div key={department.id} className="mt-4 md:mt-10">
@@ -73,7 +70,8 @@ export function StaffPage() {
                       const positionEmail = `${position.prefix.toLowerCase()}-${position.id.toLowerCase()}@ivao.aero`;
 
                       const isVacant = Number(position.is_vacant) === 1;
-                      const hasUserId = Boolean(position.user?.id);
+                      const hasUser = position.user != null;
+                      const hasUserId = position.user?.id != null;
 
                       const imageSrc =
                         !hasUserId || isVacant
@@ -104,19 +102,29 @@ export function StaffPage() {
                             </div>
 
                             <div className="mt-2 text-2xl font-bold leading-6 tracking-tighter text-black md:mt-3 md:text-4xl md:leading-8">
-                              {!hasUserId || isVacant ? (
+                              {isVacant ? (
                                 'Вакантно'
-                              ) : position.user?.name?.last ? (
+                              ) : hasUser && position.user?.name?.last ? (
                                 <>
                                   <span>{position.user.name.first}</span>
                                   <br />
                                   <span>{position.user.name.last}</span>
                                 </>
-                              ) : (
+                              ) : hasUser ? (
                                 <>
                                   <span>{position.user?.name?.first ?? ''}</span>
                                   <br />
-                                  <span>{position.user?.id}</span>
+                                  <span>{position.user?.id ?? ''}</span>
+                                </>
+                              ) : (
+                                <>
+                                  <span>
+                                    {typeof position.name === 'string'
+                                      ? position.name
+                                      : position.name?.en ?? ''}
+                                  </span>
+                                  <br />
+                                  <span>{position.id}</span>
                                 </>
                               )}
                             </div>
