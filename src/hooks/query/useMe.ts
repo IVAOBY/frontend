@@ -23,8 +23,8 @@ export const useMe = () => {
     queryKey: ['me'],
     queryFn: getMe,
     retry: false,
-    staleTime: 60_000,
-    gcTime: 10 * 60_000,
+    staleTime: 0,
+    gcTime: 0,
     throwOnError: false,
   });
 };
@@ -43,7 +43,7 @@ export const useLogout = () => {
   return useMutation({
     mutationFn: logout,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['me'] });
+      queryClient.removeQueries({ queryKey: ['me'] });
     },
   });
 };
