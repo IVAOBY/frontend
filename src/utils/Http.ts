@@ -1,38 +1,32 @@
-import Axios, {AxiosError, AxiosRequestConfig, AxiosRequestHeaders, AxiosResponse} from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
+import { getAuthLoginUrl } from '../constants/app';
 
-import { API_BASE_URL, STORAGE_KEYS } from '../constants/app';
+const API_URL = import.meta.env.VITE_API_URL || 'https://api.by.ivao.aero';
 
-const Http = Axios.create({
-  baseURL: API_BASE_URL,
+const axiosInstance = axios.create({
+  baseURL: API_URL,
+  withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
-Http.interceptors.response.use(
-  (response) => response.data as AxiosResponse,
-  (error: AxiosError<{ message?: string }>) => {
-    if (error.response && error.response.status === 401) {
-      window.location.reload();
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (
+      error.response?.status === 401 &&
+      !error.config?.url?.includes('/users/me')
+    ) {
+      window.location.href = getAuthLoginUrl(window.location.href);
     }
-    if (error.response?.data?.message)
-      return Promise.reject(new Error(error.response.data.message));
-
     return Promise.reject(error);
-  },
+  }
 );
 
-Http.interceptors.request.use((request) => {
-    request.headers = request.headers ?? {} as AxiosRequestHeaders;
-    request.headers['Content-Type'] = 'application/json';
+async function Http<T = any>(config: AxiosRequestConfig): Promise<T> {
+  const response = await axiosInstance(config);
+  return response.data;
+}
 
-  const token = localStorage.getItem(STORAGE_KEYS.TOKEN);
-  if (token) {
-    request.headers['Authorization'] = 'Bearer ' + token;
-  }
-
-  return request;
-});
-
-type HttpInterface = <T>(config: AxiosRequestConfig) => Promise<T>;
-
-export type HttpEntity = { [key: string]: unknown };
-
-export default Http as HttpInterface;
+export default Http;

@@ -1,34 +1,29 @@
 import { useContext, useEffect, useMemo, useState } from 'react';
-
-import { IconCopy, IconPencil, IconPlus, IconX } from '@tabler/icons-react';
+import { IconCopy, IconPlus, IconX } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 
 import { BreadcrumbLayout, Centered } from '../../components/Layout';
 import { Loader } from '../../components/Loader';
+import { useMe } from '../../hooks/query/useMe'
 import { Notification } from '../../components/Notification/Notification';
 import { AuthContext } from '../../context/UserContext';
-import {
-  useCancelVehiclePermission,
-  useCreateVehiclePermission,
-  useEditVehiclePermission,
-  useRevokeVehiclePermission,
-  useVehicles,
-} from '../../hooks/query/useVehicles';
+import { useCreateVehiclePermission, useRevokeVehiclePermission, useVehicles } from '../../hooks/query/useVehicles';
 
 const ALLOWED_DEPARTMENTS = ['AO', 'TA', 'WD', 'HQ'] as const;
 const HOLD_DURATION = 1200;
 
 /* ---------- utils ---------- */
 
-function canUseVehiclesAdmin(decodedToken: any): boolean {
-  if (!decodedToken?.userData) return false;
+function canUseVehiclesAdmin(me: any): boolean {
+  if (!me?.staffPositions) return false
 
-  const departments: string[] =
-    decodedToken.userData.departments ??
-    decodedToken.userData.staffDepartments ??
-    [];
+  const departments = me.staffPositions.map(
+    (sp: any) => sp.staffDepartment?.id
+  )
 
-  return departments.some((dep) => ALLOWED_DEPARTMENTS.includes(dep as any));
+  return departments.some((dep: string) =>
+    ALLOWED_DEPARTMENTS.includes(dep as any)
+  )
 }
 
 const formatDate = (value: Date | string | null | undefined) => {
@@ -56,9 +51,10 @@ const copyToClipboard = async (text: string) => {
 
 export function VehiclesPage() {
   const { t } = useTranslation();
-  const { decodedToken, signed } = useContext(AuthContext);
+  const { signed } = useContext(AuthContext);
+  const { data: me, isLoading: isLoadingMe } = useMe()
 
-  const canAdmin = signed && canUseVehiclesAdmin(decodedToken);
+  const canAdmin = signed && !!me && canUseVehiclesAdmin(me)
   const [adminMode, setAdminMode] = useState(false);
   const effectiveAdminMode = canAdmin && adminMode;
 
@@ -71,14 +67,6 @@ export function VehiclesPage() {
   const [isUnlimited, setIsUnlimited] = useState(false);
   const [vidError, setVidError] = useState<string | null>(null);
 
-  /* ----------  edit  ---------- */
-  const [editOpen, setEditOpen] = useState(false);
-  const [editTargetId, setEditTargetId] = useState<string | null>(null);
-  const [editTargetVid, setEditTargetVid] = useState<number>();
-  const [editValidFrom, setEditValidFrom] = useState('');
-  const [editValidUntil, setEditValidUntil] = useState('');
-  const [editReason, setEditReason] = useState('');
-
   /* ---------- revoke ---------- */
   const [revokeTargetId, setRevokeTargetId] = useState<string | null>(null);
   const [holdProgress, setHoldProgress] = useState(0);
@@ -86,16 +74,10 @@ export function VehiclesPage() {
   const [holdTimer, setHoldTimer] = useState<number | null>(null);
 
   /* ---------- data ---------- */
-  const {
-    data: vehicles,
-    isLoading,
-    isError,
-    error,
-  } = useVehicles(effectiveAdminMode);
+  const { data: vehicles, isLoading, isError, error } =
+    useVehicles(effectiveAdminMode);
 
   const createMutation = useCreateVehiclePermission();
-  const editMutation = useEditVehiclePermission();
-  const cancelMutation = useCancelVehiclePermission();
   const revokeMutation = useRevokeVehiclePermission();
 
   /* ---------- computed ---------- */
@@ -106,11 +88,6 @@ export function VehiclesPage() {
     const untilOk = isUnlimited ? true : true; // validUntil optional anyway
     return !vErr && hasFrom && untilOk && !createMutation.isPending;
   }, [newVid, newValidFrom, isUnlimited, createMutation.isPending]);
-
-  const canSubmitEdit = useMemo(() => {
-    const hasFrom = !!editValidFrom;
-    return hasFrom && !editMutation.isPending;
-  }, [editValidFrom, editMutation.isPending]);
 
   /* ---------- helpers ---------- */
 
@@ -123,19 +100,13 @@ export function VehiclesPage() {
     setVidError(null);
   };
 
-  const resetEditForm = () => {
-    setNewValidFrom('');
-    setNewValidUntil('');
-    setNewReason('');
-    setIsUnlimited(false);
-  };
-
   const closeCreate = () => {
     setCreateOpen(false);
     resetCreateForm();
   };
 
-  const resetHold = () => {
+  const closeRevoke = () => {
+    setRevokeTargetId(null);
     setHoldProgress(0);
     setHoldHint(false);
     if (holdTimer) {
@@ -144,32 +115,20 @@ export function VehiclesPage() {
     }
   };
 
-  const closeRevoke = () => {
-    setRevokeTargetId(null);
-    resetHold();
-  };
-
-  const closeEdit = () => {
-    setEditOpen(false);
-    setEditTargetId(null);
-    resetEditForm();
-  };
-
   /* ---------- ESC ---------- */
   useEffect(() => {
-    if (!createOpen && !revokeTargetId && !editTargetId) return;
+    if (!createOpen && !revokeTargetId) return;
 
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         if (createOpen) closeCreate();
         if (revokeTargetId) closeRevoke();
-        if (editTargetId) closeEdit();
       }
     };
 
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [createOpen, revokeTargetId, editTargetId, holdTimer]);
+  }, [createOpen, revokeTargetId, holdTimer]);
 
   /* ---------- revoke hold ---------- */
 
@@ -229,38 +188,14 @@ export function VehiclesPage() {
         onSuccess: () => {
           closeCreate();
         },
-        onError: () => {},
-      },
-    );
-  };
-
-  const submitEdit = () => {
-    editMutation.mutate(
-      {
-        id: editTargetId!,
-        validFrom: editValidFrom || null,
-        validUntil: editValidUntil || null,
-        issueReason: editReason || null,
-      },
-      {
-        onSuccess: () => {
-          closeEdit();
+        onError: () => {
         },
-        onError: () => {},
       },
     );
-  };
-  const submitCancel = () => {
-    cancelMutation.mutate(editTargetId!, {
-      onSuccess: () => {
-        closeEdit();
-      },
-      onError: () => {},
-    });
   };
 
   /* ---------- loading / error ---------- */
-  if (isLoading) {
+  if (isLoading || isLoadingMe) {
     return (
       <Centered>
         <Loader />
@@ -300,7 +235,7 @@ export function VehiclesPage() {
 
             {adminMode && (
               <button
-                className="flex items-center gap-2 rounded-xl bg-atmos-700 px-4 py-2 text-sm font-semibold text-white transition duration-500 hover:cursor-pointer hover:opacity-80"
+                className="flex items-center gap-2 rounded-xl bg-atmos-700 px-4 py-2 text-sm font-semibold text-white hover:bg-atmos-600"
                 onClick={() => setCreateOpen(true)}
               >
                 <IconPlus size={16} />
@@ -318,189 +253,143 @@ export function VehiclesPage() {
       {!vehicles || vehicles.length === 0 ? (
         <div className="mt-6 text-neutral-500">{t('vehicles.empty')}</div>
       ) : (
-        <div className="mt-6 overflow-x-auto rounded-2xl bg-white text-neutral-900 shadow-md">
+        <div className="mt-6 overflow-x-auto rounded-2xl bg-white shadow text-neutral-900">
           <table className="w-full border-collapse text-sm">
-            <thead className="bg-atmos-700 text-left text-white">
-              <tr>
-                <th className={`px-4 py-3 ${!effectiveAdminMode && 'hidden'}`}>
-                  ID
-                </th>
-                <th className="px-4 py-3">VID</th>
-                <th className="px-4 py-3">{t('vehicles.validFrom')}</th>
-                <th className="px-4 py-3">{t('vehicles.validUntil')}</th>
-                <th className="px-4 py-3">{t('vehicles.status')}</th>
-                <th className={`px-4 py-3 ${!effectiveAdminMode && 'hidden'}`}>
-                  {t('vehicles.issuedBy')}
-                </th>
-                <th className={`px-4 py-3 ${!effectiveAdminMode && 'hidden'}`}>
-                  {t('vehicles.issueReason')}
-                </th>
-                <th className={`px-4 py-3 ${!effectiveAdminMode && 'hidden'}`}>
-                  {t('vehicles.revokedAt')}
-                </th>
-                <th className={`px-4 py-3 ${!effectiveAdminMode && 'hidden'}`}>
-                  {t('vehicles.revokedBy')}
-                </th>
-                <th
-                  className={`px-4 py-3 text-right ${!effectiveAdminMode && 'hidden'}`}
-                >
-                  {t('vehicles.actions')}
-                </th>
-              </tr>
+            <thead className="bg-gray-100 text-neutral-800">
+            <tr>
+              <th className={`px-4 py-3 ${!effectiveAdminMode && 'hidden'}`}>
+                ID
+              </th>
+              <th className="px-4 py-3">VID</th>
+              <th className="px-4 py-3">{t('vehicles.validFrom')}</th>
+              <th className="px-4 py-3">{t('vehicles.validUntil')}</th>
+              <th className="px-4 py-3">{t('vehicles.status')}</th>
+              <th className={`px-4 py-3 ${!effectiveAdminMode && 'hidden'}`}>
+                {t('vehicles.issuedBy')}
+              </th>
+              <th className={`px-4 py-3 ${!effectiveAdminMode && 'hidden'}`}>
+                {t('vehicles.issueReason')}
+              </th>
+              <th className={`px-4 py-3 ${!effectiveAdminMode && 'hidden'}`}>
+                {t('vehicles.revokedAt')}
+              </th>
+              <th className={`px-4 py-3 ${!effectiveAdminMode && 'hidden'}`}>
+                {t('vehicles.revokedBy')}
+              </th>
+              <th className={`px-4 py-3 text-right ${!effectiveAdminMode && 'hidden'}`}>
+                {t('vehicles.actions')}
+              </th>
+            </tr>
             </thead>
 
             <tbody>
-              {vehicles.map((p) => (
-                <tr
-                  key={p.id}
-                  className={`border-t ${
-                    p.status === 'inactive'
-                      ? 'bg-gray-100'
-                      : p.status === 'revoked'
-                        ? 'bg-red-50'
-                        : ''
-                  }`}
-                >
-                  <td
-                    className={`px-4 py-3 text-center ${!effectiveAdminMode && 'hidden'}`}
+            {vehicles.map((p) => (
+              <tr
+                key={p.id}
+                className={`border-t ${
+                  p.status === 'inactive'
+                    ? 'bg-gray-100'
+                    : p.status === 'revoked'
+                      ? 'bg-red-50'
+                      : ''
+                }`}
+              >
+                <td className={`px-4 py-3 text-center ${!effectiveAdminMode && 'hidden'}`}>
+                  <button
+                    onClick={() => copyToClipboard(p.id)}
+                    className="rounded p-1 text-neutral-600 hover:bg-gray-200"
+                    title={t('common.copy')}
                   >
-                    <button
-                      onClick={() => copyToClipboard(p.id)}
-                      className="rounded p-1 text-neutral-600 hover:bg-gray-200"
-                      title={t('common.copy')}
-                    >
-                      <IconCopy size={14} />
-                    </button>
-                  </td>
+                    <IconCopy size={14} />
+                  </button>
+                </td>
 
-                  <td className="px-4 py-3">
+                <td className="px-4 py-3">
                     <a
                       href={`https://ivao.aero/Member.aspx?Id=${p.vid}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-atmos-700 hover:underline"
+                      className="text-blue-600 hover:underline"
                     >
                       {p.vid}
                     </a>
-                  </td>
+                </td>
 
-                  <td className="px-4 py-3">{formatDate(p.validFrom)}</td>
+                <td className="px-4 py-3">{formatDate(p.validFrom)}</td>
 
-                  <td className="px-4 py-3">
-                    {p.validUntil
-                      ? formatDate(p.validUntil)
-                      : t('vehicles.unlimited')}
-                  </td>
+                <td className="px-4 py-3">
+                  {p.validUntil ? formatDate(p.validUntil) : t('vehicles.unlimited')}
+                </td>
 
-                  <td className="px-4 py-3">
-                    {p.status === 'active' && (
-                      <span className="rounded-lg bg-[#EAF9EF] px-3 py-1 text-xs font-semibold text-green-500">
+                <td className="px-4 py-3">
+                  {p.status === 'active' && (
+
+                    <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-800">
                         {t('vehicles.active')}
                       </span>
-                    )}
-                    {p.status === 'inactive' && (
-                      <span className="rounded-lg bg-gray-200 px-3 py-1 text-xs font-semibold text-gray-500">
+                  )}
+                  {p.status === 'inactive' && (
+                    <span className="rounded-full bg-gray-200 px-3 py-1 text-xs font-semibold text-gray-700">
                         {t('vehicles.inactive')}
                       </span>
-                    )}
-                    {p.status === 'revoked' && (
-                      <span className="rounded-lg bg-red-100 px-3 py-1 text-xs font-semibold text-red-500">
+                  )}
+                  {p.status === 'revoked' && (
+                    <span className="rounded-full bg-red-100 px-3 py-1 text-xs font-semibold text-red-700">
                         {t('vehicles.revoked')}
                       </span>
-                    )}
-                  </td>
+                  )}
+                </td>
 
-                  <td
-                    className={`px-4 py-3 ${!effectiveAdminMode && 'hidden'}`}
+
+                <td className={`px-4 py-3 ${!effectiveAdminMode && 'hidden'}`}>
+                  <a
+                    href={`https://ivao.aero/Member.aspx?Id=${p.issuedByVid}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:underline"
                   >
+                    {p.issuedByVid}
+                  </a>
+                </td>
+
+                <td className={`px-4 py-3 max-w-xs truncate ${!effectiveAdminMode && 'hidden'}`}>
+                  {p.issueReason ?? '—'}
+                </td>
+
+                <td className={`px-4 py-3 ${!effectiveAdminMode && 'hidden'}`}>
+                  {formatDate(p.revokedAt)}
+                </td>
+
+                <td className={`px-4 py-3 ${!effectiveAdminMode && 'hidden'}`}>
+                  {p.revokedByVid ? (
                     <a
-                      href={`https://ivao.aero/Member.aspx?Id=${p.issuedByVid}`}
+                      href={`https://ivao.aero/Member.aspx?Id=${p.revokedByVid}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-blue-600 hover:underline"
                     >
-                      {p.issuedByVid}
+                      {p.revokedByVid}
                     </a>
-                  </td>
+                  ) : (
+                    '—'
+                  )}
+                </td>
 
-                  <td
-                    className={`max-w-xs truncate px-4 py-3 ${!effectiveAdminMode && 'hidden'}`}
-                  >
-                    {p.issueReason ?? '—'}
-                  </td>
+                <td className={`px-4 py-3 text-right ${!effectiveAdminMode && 'hidden'}`}>
+                  {p.status === 'active' && (
+                    <button
+                      className="rounded-lg p-1.5 text-red-700 hover:bg-red-100 disabled:opacity-50"
+                      onClick={() => setRevokeTargetId(p.id)}
+                      disabled={revokeMutation.isPending}
+                      title={t('common.revoke')}
+                    >
+                      <IconX size={18} />
+                    </button>
+                  )}
+                </td>
 
-                  <td
-                    className={`px-4 py-3 ${!effectiveAdminMode && 'hidden'}`}
-                  >
-                    {formatDate(p.revokedAt)}
-                  </td>
-
-                  <td
-                    className={`px-4 py-3 ${!effectiveAdminMode && 'hidden'}`}
-                  >
-                    {p.revokedByVid ? (
-                      <a
-                        href={`https://ivao.aero/Member.aspx?Id=${p.revokedByVid}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-600 hover:underline"
-                      >
-                        {p.revokedByVid}
-                      </a>
-                    ) : (
-                      '—'
-                    )}
-                  </td>
-
-                  <td
-                    className={`px-4 py-3 text-right ${!effectiveAdminMode && 'hidden'}`}
-                  >
-                    {p.status === 'inactive' && p.validFrom > new Date() && (
-                      <button
-                        className="rounded-lg p-1.5 text-atmos-700 hover:bg-atmos-50 disabled:opacity-50"
-                        onClick={() => {
-                          setEditTargetId(p.id);
-                          setEditTargetVid(p.vid);
-                          setEditOpen(true);
-                          setEditValidFrom(
-                            p.validFrom
-                              ? p.validFrom instanceof Date
-                                ? p.validFrom.toISOString().split('T')[0]
-                                : new Date(p.validFrom)
-                                    .toISOString()
-                                    .split('T')[0]
-                              : '',
-                          );
-                          setEditReason(p.issueReason || '');
-                          setEditValidUntil(
-                            p.validUntil
-                              ? p.validUntil instanceof Date
-                                ? p.validUntil.toISOString().split('T')[0]
-                                : new Date(p.validUntil)
-                                    .toISOString()
-                                    .split('T')[0]
-                              : '',
-                          );
-                        }}
-                        disabled={editMutation.isPending}
-                        title={t('vehicles.editor.submitButton')}
-                      >
-                        <IconPencil size={18} />
-                      </button>
-                    )}
-                    {p.status === 'active' && (
-                      <button
-                        className="rounded-lg p-1.5 text-red-700 hover:bg-red-100 disabled:opacity-50"
-                        onClick={() => setRevokeTargetId(p.id)}
-                        disabled={revokeMutation.isPending}
-                        title={t('vehicles.revoker.revokeButton')}
-                      >
-                        <IconX size={18} />
-                      </button>
-                    )}
-                  </td>
-                </tr>
-              ))}
+              </tr>
+            ))}
             </tbody>
           </table>
         </div>
@@ -513,7 +402,7 @@ export function VehiclesPage() {
           onClick={closeCreate}
         >
           <div
-            className="w-full max-w-lg rounded-2xl bg-white p-6 text-neutral-900 shadow-xl"
+            className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl text-neutral-900"
             onClick={(e) => e.stopPropagation()}
           >
             <h3 className="text-xl font-semibold text-black">
@@ -604,84 +493,6 @@ export function VehiclesPage() {
         </div>
       )}
 
-      {/* EDIT MODAL */}
-      {editOpen && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
-          onClick={closeEdit}
-        >
-          <div
-            className="w-full max-w-lg rounded-2xl bg-white p-6 text-neutral-900 shadow-xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h3 className="text-xl font-semibold text-black">
-              {t('vehicles.editor.title')}
-            </h3>
-
-            <div className="mt-4 flex flex-col gap-4">
-              <input
-                type="text"
-                value={editTargetVid}
-                disabled={true}
-                className={`w-full rounded-xl border px-3 py-2 text-gray-600`}
-              />
-              <input
-                type="date"
-                value={editValidFrom}
-                onChange={(e) => setEditValidFrom(e.target.value)}
-                className="rounded-xl border px-3 py-2"
-              />
-
-              <div className="flex flex-col gap-2">
-                {!isUnlimited && (
-                  <input
-                    type="date"
-                    value={editValidUntil}
-                    onChange={(e) => setEditValidUntil(e.target.value)}
-                    className="rounded-xl border px-3 py-2"
-                  />
-                )}
-              </div>
-
-              <textarea
-                placeholder={t('vehicles.issueReason')}
-                value={editReason}
-                onChange={(e) => setEditReason(e.target.value)}
-                rows={3}
-                className="rounded-xl border px-3 py-2"
-              />
-            </div>
-
-            <div className="mt-6 flex justify-end gap-3">
-              <button
-                className="relative z-10 w-full rounded-xl bg-red-600 px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
-                disabled={cancelMutation.isPending}
-                onClick={submitCancel}
-              >
-                {t('vehicles.editor.cancelButton')}
-              </button>
-
-              <button
-                className="rounded-xl px-4 py-2 text-sm font-semibold text-neutral-700 hover:bg-gray-100"
-                onClick={closeEdit}
-              >
-                {t('vehicles.revoker.cancelButton')}
-              </button>
-
-              <button
-                className="rounded-xl bg-atmos-700 px-4 py-2 text-sm font-semibold text-white hover:bg-atmos-600 disabled:opacity-50"
-                disabled={!canSubmitEdit}
-                onClick={submitEdit}
-              >
-                {createMutation.isPending
-                  ? t('notif.loading.name')
-                  : t('vehicles.editor.submitButton')}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* REVOKE MODAL */}
       {revokeTargetId && (
         <div
@@ -689,7 +500,7 @@ export function VehiclesPage() {
           onClick={closeRevoke}
         >
           <div
-            className="w-full max-w-md rounded-2xl bg-white p-6 text-neutral-900 shadow-xl"
+            className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl text-neutral-900"
             onClick={(e) => e.stopPropagation()}
           >
             <h3 className="text-xl font-semibold text-black">
@@ -715,7 +526,7 @@ export function VehiclesPage() {
                   style={{ width: `${holdProgress * 100}%` }}
                 />
                 <button
-                  className="relative z-10 w-full select-none px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
+                  className="relative z-10 w-full px-4 py-2 text-sm font-semibold text-white select-none disabled:opacity-60"
                   disabled={revokeMutation.isPending}
                   onMouseDown={startHold}
                   onMouseUp={stopHold}
