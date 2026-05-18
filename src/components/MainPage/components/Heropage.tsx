@@ -23,7 +23,7 @@ export function HeroText() {
     morning: 'url(\'https://cdn.by.ivao.aero/images/main_page_morning.webp\')',
     day: 'url(\'https://cdn.by.ivao.aero/images/main_page_day.webp\')',
     evening: 'url(\'https://cdn.by.ivao.aero/images/main_page_evening.webp\')',
-    night: 'url(\'https://cdn.by.ivao.aero/images/main_page_night.webp\')',
+    night: 'url(\'https://cdn.by.ivao.aero/images/backgrounds/main_page_night.webp\')',
   };
 
   const byTransferMail = useCallback(() => {

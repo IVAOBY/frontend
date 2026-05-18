@@ -164,7 +164,6 @@ export function VehiclesPage() {
 
   const stopHold = () => {
     if (holdTimer) clearInterval(holdTimer);
-    // слишком быстро "тыкнули" — покажем подсказку
     if (holdProgress < 0.3) setHoldHint(true);
     setHoldProgress(0);
     setHoldTimer(null);
@@ -190,7 +189,6 @@ export function VehiclesPage() {
           closeCreate();
         },
         onError: () => {
-          // окно можно оставить открытым; глобальная ошибка покажется ниже
         },
       },
     );
