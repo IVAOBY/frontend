@@ -9,7 +9,6 @@ export const getMe = async (): Promise<Me | null> => {
     return await Http<Me>({
       method: 'GET',
       url: '/users/me',
-      withCredentials: true,
     });
   } catch (error) {
     if (error?.response?.status === 401 || error?.response?.status === 403) {

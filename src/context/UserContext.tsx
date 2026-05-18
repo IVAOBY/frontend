@@ -1,13 +1,13 @@
-// src/context/UserContext.tsx
 import React, { createContext, useCallback, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { getAuthLoginUrl } from '../constants/app';
 import { useLogout, useMe } from '../hooks/query/useMe';
+import { Me } from '../types/Me';
 
 interface AuthContextType {
   signed: boolean;
-  user: any | null;
+  user: Me | null;
   isLoading: boolean;
   signIn: () => void;
   signOut: () => void;
