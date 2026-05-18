@@ -144,7 +144,7 @@ export const Footer = () => {
             </div>
             <div className="flex flex-row">
               <SocialIcon
-                href="https://discord.by.ivao.aero/"
+                href="https://ds.by.ivao.aero/"
                 src={discordIcon}
                 alt="Discord"
               />
@@ -164,7 +164,7 @@ export const Footer = () => {
         <hr className="my-6 border-gray-200 dark:border-gray-700" />
         <div className="text-center">
           <span className="text-sm text-gray-500 dark:text-gray-400">
-            © {currentYear}, International Virtual Aviation Organisation - IVAO
+            © {currentYear}, International Virtual Aviation Organisation — IVAO
             Belarus. {t('footer.copyrightMessage')}
           </span>
         </div>

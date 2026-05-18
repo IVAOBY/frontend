@@ -44,11 +44,6 @@ const FAQ = lazy(() =>
     default: module.FAQ,
   })),
 );
-const ScenaryPage = lazy(() =>
-  import('./pages/Scenary').then((module) => ({
-    default: module.ScenaryPage,
-  })),
-);
 const FirstStepP = lazy(() =>
   import('./pages/FirstStepPilot').then((module) => ({
     default: module.FirstStepP,
@@ -171,8 +166,6 @@ export default function App() {
                     <Route path="/airport/:icao" element={<AirportPage />} />
                     <Route path="/about-us" element={<AboutUs />} />
                     <Route path="/faq" element={<FAQ />} />
-                    <Route path="/scenery" element={<ScenaryPage />} />
-                    <Route path="/scenery/:id" element={<ScenaryPage />} />
                     <Route path="/pilots/first-step" element={<FirstStepP />} />
                     <Route path="/news/:id" element={<NewsPage />} />
                     {/*<Route path="/map" element={<MapPage />} />*/}

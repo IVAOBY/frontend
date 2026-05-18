@@ -110,6 +110,11 @@ export interface Translations {
       submitButton: string;
       unlimited: string;
     }
+    editor: {
+      title: string;
+      submitButton: string;
+      cancelButton: string;
+    }
     revoker: {
       title: string;
       description: string;
