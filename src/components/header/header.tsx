@@ -37,7 +37,6 @@ import ru from '../../assets/image/ru.svg';
 import steps from '../../assets/image/steps.svg';
 import { STORAGE_KEYS } from '../../constants/app';
 import { AuthContext } from '../../context/UserContext';
-import { useMe } from '../../hooks/query/useMe';
 
 const categories = [
   {
@@ -193,18 +192,11 @@ export function HeaderResponsive() {
   const [currentPath, setCurrentPath] = useState('/');
 
   const authContext = useContext(AuthContext);
-  const { signed, user, isLoading } = authContext;
-  const { data: me } = useMe();
+  const { signed, user } = authContext;
 
   const location = useLocation();
   const navigate = useNavigate();
   const { i18n } = useTranslation();
-
-  if (isLoading) {
-    console.log('User data: loading...');
-  } else {
-    console.log('User data:', user);
-  }
 
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 768);
 
@@ -280,8 +272,6 @@ export function HeaderResponsive() {
     return 'bg-atmos-700';
   }, [opened, isSmallScreen, scrollPosition, currentPath]);
 
-  console.log('User data:', me);
-
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${headerClassName}`}
@@ -305,7 +295,7 @@ export function HeaderResponsive() {
           <AuthButton
             scrollPosition={scrollPosition}
             signed={signed}
-            user={me} // ИСПРАВЛЕНИЕ: было просто user
+            user={user}
             handleAuthAction={handleAuthAction}
           />
           <LanguageButton

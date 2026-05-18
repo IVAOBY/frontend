@@ -1,5 +1,5 @@
 // API Configuration
-export const API_BASE_URL = import.meta.env.VITE_API_URL_BASE as string;
+export const API_BASE_URL = import.meta.env.VITE_API_URL as string;
 
 // Auth Configuration
 export const getAuthLoginUrl = (returnUrl: string = window.location.href) =>
@@ -7,7 +7,6 @@ export const getAuthLoginUrl = (returnUrl: string = window.location.href) =>
 
 // Local Storage Keys
 export const STORAGE_KEYS = {
-  TOKEN: 'token',
   LANGUAGE: 'language',
   WARNING_CLOSED: 'warningClosed',
 } as const;

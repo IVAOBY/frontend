@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
+import { getAuthLoginUrl } from '../constants/app';
 
 const API_URL = import.meta.env.VITE_API_URL || 'https://api.by.ivao.aero';
 
@@ -10,22 +11,15 @@ const axiosInstance = axios.create({
   },
 });
 
-axiosInstance.interceptors.request.use(
-  (config) => {
-    console.log(`[HTTP] ${config.method?.toUpperCase()} ${config.url}`);
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
-
 axiosInstance.interceptors.response.use(
-  (response) => {
-    return response;
-  },
+  (response) => response,
   (error) => {
-    console.error('[HTTP Error]', error.response?.status, error.response?.data);
+    if (
+      error.response?.status === 401 &&
+      !error.config?.url?.includes('/users/me')
+    ) {
+      window.location.href = getAuthLoginUrl(window.location.href);
+    }
     return Promise.reject(error);
   }
 );
