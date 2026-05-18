@@ -16,12 +16,13 @@ import { useParams } from 'react-router-dom';
 
 import { Notification } from '../../../components/Notification/Notification';
 import { AuthContext } from '../../../context/UserContext';
+import { useMe } from '../../../hooks/query/useMe';
 import {
   useBookEvent,
   useUnbookEvent,
 } from '../../../hooks/query/useBookingMutations';
 import { useEventParts } from '../../../hooks/query/useEvents';
-import { BookingEntity, PartsEntity } from '../../../types/Events';
+import { BookingEntity, EventAtcPositions, PartsEntity } from '../../../types/Events';
 
 const positionIcons = {
   ground: <IconCar size={41} />,
@@ -53,24 +54,88 @@ const atcRatingNames = [
   'CAI',
 ];
 
+const toNumber = (value: unknown): number | undefined => {
+  if (typeof value === 'number' && Number.isFinite(value)) return value;
+  if (typeof value === 'string') {
+    const parsed = Number(value);
+    if (Number.isFinite(parsed)) return parsed;
+  }
+  return undefined;
+};
+
+const normalizeAtcRating = (value: unknown): number => {
+  if (typeof value === 'number' && Number.isFinite(value)) return value;
+  if (typeof value === 'string') {
+    const normalized = value.toUpperCase();
+    const idx = atcRatingNames.findIndex(
+      (name) => normalized === name || normalized.includes(name),
+    );
+    if (idx !== -1) return idx;
+    const numeric = Number(normalized);
+    if (Number.isFinite(numeric)) return numeric;
+  }
+  if (value && typeof value === 'object') {
+    const rating = value as { id?: unknown; shortName?: unknown };
+    const numericId = toNumber(rating.id);
+    if (typeof numericId === 'number') return numericId;
+    if (typeof rating.shortName === 'string') {
+      return normalizeAtcRating(rating.shortName);
+    }
+  }
+  return 0;
+};
+
 export function ShiftComponent() {
   const { t } = useTranslation();
   const { id } = useParams();
-  const { decodedToken, signed } = useContext(AuthContext);
+  const { signed } = useContext(AuthContext);
+  const { data: me, isLoading: isLoadingMe } = useMe();
   const { data, error, isError, isLoading } = useEventParts(id);
 
   const { mutate: bookEvent } = useBookEvent();
   const { mutate: unbookEvent } = useUnbookEvent();
 
+  const userId = toNumber(me?.id);
+  const userRating = normalizeAtcRating(me?.ratings?.atc);
+  const loading = isLoading || isLoadingMe;
+
+  const matchesPosition = (
+    bookingPosition: BookingEntity['atcPosition'],
+    eventPosition: EventAtcPositions,
+  ) => {
+    const bookingIds = [
+      toNumber(bookingPosition?.id),
+      toNumber((bookingPosition as any)?.atcPositionId),
+      toNumber(bookingPosition?.position?.id),
+    ].filter((v) => typeof v === 'number');
+
+    const eventIds = [
+      toNumber((eventPosition as any)?.atcPositionId),
+      toNumber(eventPosition?.position?.id),
+    ].filter((v) => typeof v === 'number');
+
+    const hasMatchingId = bookingIds.some((bId) =>
+      eventIds.some((eId) => eId === bId),
+    );
+    if (hasMatchingId) return true;
+
+    const bookingCallsign =
+      bookingPosition?.position?.callsign?.toLowerCase() ?? '';
+    const eventCallsign = eventPosition?.position?.callsign?.toLowerCase() ?? '';
+    return !!bookingCallsign && bookingCallsign === eventCallsign;
+  };
+
   const isBookedForPosition = (
     bookings: BookingEntity[],
-    atcPositionId: number,
+    eventPosition: EventAtcPositions,
   ) => {
-    return bookings.some(
-      (booking) =>
-        booking.atcPosition?.id === atcPositionId &&
-        booking.bookedUser?.id === decodedToken?.userData.id,
-    );
+    if (!userId) return false;
+    return bookings.some((booking) => {
+      return (
+        matchesPosition(booking.atcPosition, eventPosition) &&
+        booking.bookedUser?.id === userId
+      );
+    });
   };
 
   const hasSufficientRating = (userRating: number, positionFRA: number) => {
@@ -79,13 +144,13 @@ export function ShiftComponent() {
 
   const getBookingIdForPosition = (
     bookings: BookingEntity[],
-    atcPositionId: number,
+    eventPosition: EventAtcPositions,
   ) => {
-    const booking = bookings.find(
-      (booking) =>
-        booking.atcPosition?.id === atcPositionId &&
-        booking.bookedUser?.id === decodedToken?.userData.id,
-    );
+    if (!userId) return undefined;
+    const booking = bookings.find((booking) => {
+      const matches = matchesPosition(booking.atcPosition, eventPosition);
+      return matches && booking.bookedUser?.id === userId;
+    });
 
     return booking ? booking.id : undefined;
   };
@@ -109,15 +174,27 @@ export function ShiftComponent() {
     }
   };
 
-  const handleBookClick = (partId: number, atcPositionId: number) => {
+  const handleBookClick = (
+    partId: number,
+    eventPosition: EventAtcPositions,
+  ) => {
     const position = data
       ?.find((part) => part.id === partId)
-      ?.positions.find((pos) => pos.id === atcPositionId);
+      ?.positions.find((pos) => pos.id === eventPosition.id);
 
     if (!position || !position.position) {
       return;
     }
-    handleBook(partId, atcPositionId);
+    const targetAtcId =
+      toNumber((position as any).atcPositionId) ??
+      toNumber(position.atcPositionId) ??
+      toNumber(position.position?.id) ??
+      toNumber(eventPosition.position?.id) ??
+      toNumber(eventPosition.id) ??
+      toNumber(position.id);
+    if (typeof targetAtcId === 'number') {
+      handleBook(partId, targetAtcId);
+    }
   };
 
   return (
@@ -129,7 +206,7 @@ export function ShiftComponent() {
           notificationId="documents-error-maindocuments"
         />
       )}
-      {isLoading || isError ? (
+      {loading || isError ? (
         <div className="mt-8">
           <div className="h-6 w-[700px] animate-pulse rounded bg-gray-200"></div>
 
@@ -203,18 +280,26 @@ export function ShiftComponent() {
                   .map(({ position, type }) => {
                     const bookingsForPosition = part.booking.filter(
                       (bookingItem) =>
-                        bookingItem.atcPosition?.id === position.id,
+                        matchesPosition(bookingItem.atcPosition, position),
                     );
                     const hasStatusOne = bookingsForPosition.some(
                       (booking) => booking.status === 1,
                     );
-                    const userRating = Number(
-                      decodedToken?.userData.ratings.atc,
+                    const userHasBooking = isBookedForPosition(
+                      part.booking,
+                      position,
                     );
-                    const canBook = hasSufficientRating(
-                      userRating,
+                    const acceptedByOther =
+                      hasStatusOne &&
+                      !bookingsForPosition.some(
+                        (booking) =>
+                          booking.status === 1 &&
+                          booking.bookedUser?.id === userId,
+                      );
+                    const positionFra = normalizeAtcRating(
                       position.position.fra,
                     );
+                    const canBook = hasSufficientRating(userRating, positionFra);
 
                     return (
                       <div
@@ -237,7 +322,9 @@ export function ShiftComponent() {
                             </div>
                             <div className="text-[15px] font-semibold text-[#ABA7A7]">
                               {position.position.callsign},{' '}
-                              {atcRatingNames[position.position.fra]}+
+                              {atcRatingNames[positionFra] ??
+                                position.position.fra}
+                              +
                             </div>
                           </div>
                         </div>
@@ -248,8 +335,7 @@ export function ShiftComponent() {
                                   .filter(
                                     (booking) =>
                                       booking.status === 1 ||
-                                      booking.bookedUser.id ==
-                                        decodedToken?.userData.id,
+                                      booking.bookedUser.id === userId,
                                   )
                                   .map((booking) => (
                                     <div
@@ -291,17 +377,17 @@ export function ShiftComponent() {
                                 )))}
                           <div className="mt-[20px] flex">
                             {signed &&
-                            isBookedForPosition(part.booking, position.id) ? (
+                            isBookedForPosition(part.booking, position) ? (
                               <div
                                 onClick={() => {
                                   if (
-                                    !hasStatusOne &&
+                                    userHasBooking &&
                                     new Date() < new Date(part.endDate)
                                   ) {
                                     const bookingId: number =
                                       getBookingIdForPosition(
                                         part.booking,
-                                        position.id,
+                                        position,
                                       );
                                     if (typeof bookingId !== 'undefined') {
                                       handleUnbook(bookingId);
@@ -309,8 +395,7 @@ export function ShiftComponent() {
                                   }
                                 }}
                                 className={`leading-16 flex gap-3 rounded-xl px-1.5 pr-3 text-lg font-semibold text-white backdrop-blur-[5px] transition duration-500 ${
-                                  !canBook ||
-                                  hasStatusOne ||
+                                  !userHasBooking ||
                                   new Date() > new Date(part.endDate)
                                     ? 'cursor-not-allowed bg-gray-500'
                                     : 'bg-[#E93434] hover:cursor-pointer hover:opacity-80'
@@ -326,22 +411,22 @@ export function ShiftComponent() {
                                 onClick={() => {
                                   if (
                                     canBook &&
-                                    !hasStatusOne &&
+                                    !acceptedByOther &&
                                     new Date() < new Date(part.endDate)
                                   ) {
-                                    handleBookClick(part.id, position.id);
+                                    handleBookClick(part.id, position);
                                   }
                                 }}
                                 className={`leading-16 flex gap-1.5 rounded-xl px-1.5 pr-3 text-lg font-semibold text-white backdrop-blur-[5px] transition duration-500 ${
                                   !canBook ||
-                                  hasStatusOne ||
+                                  acceptedByOther ||
                                   new Date() > new Date(part.endDate)
                                     ? 'cursor-not-allowed bg-gray-500'
                                     : 'bg-atmos-700 hover:cursor-pointer hover:opacity-80'
                                 }`}
                               >
                                 {!canBook ||
-                                hasStatusOne ||
+                                acceptedByOther ||
                                 new Date() > new Date(part.endDate) ? (
                                   <IconSquareRoundedX className="ml-1.5 mt-0.5" />
                                 ) : (
