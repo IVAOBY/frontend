@@ -51,7 +51,7 @@ const copyToClipboard = async (text: string) => {
 
 export function VehiclesPage() {
   const { t } = useTranslation();
-  const { signed } = useContext(AuthContext)
+  const { signed } = useContext(AuthContext);
   const { data: me, isLoading: isLoadingMe } = useMe()
 
   const canAdmin = signed && !!me && canUseVehiclesAdmin(me)
