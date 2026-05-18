@@ -4,11 +4,19 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Http from '../../utils/Http';
 import { Me } from '../../types/Me';
 
-export const getMe = async () => {
-  return Http<Me>({
-    method: 'GET',
-    url: '/users/me',
-  });
+export const getMe = async (): Promise<Me | null> => {
+  try {
+    return await Http<Me>({
+      method: 'GET',
+      url: '/users/me',
+      withCredentials: true,
+    });
+  } catch (error) {
+    if (error?.response?.status === 401 || error?.response?.status === 403) {
+      return null;
+    }
+    throw error;
+  }
 };
 
 export const useMe = () => {
@@ -18,6 +26,7 @@ export const useMe = () => {
     retry: false,
     staleTime: 60_000,
     gcTime: 10 * 60_000,
+    throwOnError: false,
   });
 };
 
@@ -35,7 +44,7 @@ export const useLogout = () => {
   return useMutation({
     mutationFn: logout,
     onSuccess: () => {
-      queryClient.removeQueries({ queryKey: ['me'] });
+      queryClient.invalidateQueries({ queryKey: ['me'] });
     },
   });
 };

@@ -1,65 +1,59 @@
-import { createContext } from 'react';
-import React, { useCallback } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
+// src/context/UserContext.tsx
+import React, { createContext, useCallback, useMemo } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { getAuthLoginUrl } from '../constants/app';
-import { useMe, useLogout } from '../hooks/query/useMe';
-import { Me } from '../types/Me';
+import { useLogout, useMe } from '../hooks/query/useMe';
 
-interface AuthContextProps {
+interface AuthContextType {
   signed: boolean;
-  loading: boolean;
-  user: Me | null;
+  user: any | null;
+  isLoading: boolean;
   signIn: () => void;
   signOut: () => void;
 }
 
-export const AuthContext = createContext<AuthContextProps>({
+export const AuthContext = createContext<AuthContextType>({
   signed: false,
-  loading: true,
   user: null,
+  isLoading: true,
   signIn: () => {},
   signOut: () => {},
 });
 
-interface AuthProviderProps {
-  children: React.ReactNode;
-}
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const navigate = useNavigate();
+  const location = useLocation();
 
-export function AuthProvider({ children }: AuthProviderProps) {
-  const queryClient = useQueryClient();
-
-  const {
-    data: user,
-    isLoading,
-    isError,
-  } = useMe();
-
+  const { data: user, isLoading } = useMe();
   const { mutate: logout } = useLogout();
 
+  const signed = useMemo(() => !!user, [user]);
+
   const signIn = useCallback(() => {
-    window.location.href = getAuthLoginUrl(window.location.href);
-  }, []);
+    const currentUrl = `${window.location.origin}${location.pathname}${location.search}`;
+    window.location.href = getAuthLoginUrl(currentUrl);
+  }, [location]);
 
   const signOut = useCallback(() => {
     logout(undefined, {
-      onSettled: () => {
-        queryClient.removeQueries({ queryKey: ['me'] });
+      onSuccess: () => {
+        navigate('/');
+        window.location.reload();
       },
     });
-  }, [logout, queryClient]);
+  }, [logout, navigate]);
 
-  return (
-    <AuthContext.Provider
-      value={{
-        signed: !!user && !isError,
-        loading: isLoading,
-        user: isError ? null : user ?? null,
-        signIn,
-        signOut,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
+  const value = useMemo(
+    () => ({
+      signed,
+      user,
+      isLoading,
+      signIn,
+      signOut,
+    }),
+    [signed, user, isLoading, signIn, signOut]
   );
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
