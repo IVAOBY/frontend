@@ -185,13 +185,7 @@ export function ShiftComponent() {
     if (!position || !position.position) {
       return;
     }
-    const targetAtcId =
-      toNumber((position as any).atcPositionId) ??
-      toNumber(position.atcPositionId) ??
-      toNumber(position.position?.id) ??
-      toNumber(eventPosition.position?.id) ??
-      toNumber(eventPosition.id) ??
-      toNumber(position.id);
+    const targetAtcId = toNumber(position.id) ?? toNumber(eventPosition.id);
     if (typeof targetAtcId === 'number') {
       handleBook(partId, targetAtcId);
     }
