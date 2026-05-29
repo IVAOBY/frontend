@@ -20,9 +20,9 @@ export function HeroText() {
   }, []);
 
   const backgroundImage: Record<typeof timeOfDay, string> = {
-    morning: 'url(\'https://cdn.by.ivao.aero/images/main_page_morning.webp\')',
-    day: 'url(\'https://cdn.by.ivao.aero/images/main_page_day.webp\')',
-    evening: 'url(\'https://cdn.by.ivao.aero/images/main_page_evening.webp\')',
+    morning: 'url(\'https://cdn.by.ivao.aero/images/backgrounds/main_page_morning.webp\')',
+    day: 'url(\'https://cdn.by.ivao.aero/images/backgrounds/main_page_day.webp\')',
+    evening: 'url(\'https://cdn.by.ivao.aero/images/backgrounds/main_page_evening.webp\')',
     night: 'url(\'https://cdn.by.ivao.aero/images/backgrounds/main_page_night.webp\')',
   };
 

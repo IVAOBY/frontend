@@ -82,11 +82,6 @@ const categories = [
     icon: <IconAirTrafficControl size={20} />,
     links: [
       {
-        href: '/atc/first-step',
-        label: 'navbar.atc.start',
-        icon: <img src={steps} width={20} alt="ATC First Step" />,
-      },
-      {
         href: 'https://www.ban.by/en/aeronautical-information-aip/amdt',
         label: 'navbar.atc.charts',
         icon: <IconFileInfo size={20} />,
@@ -336,7 +331,7 @@ export function HeaderResponsive() {
             <AuthButton
               scrollPosition={scrollPosition}
               signed={signed}
-              user={me} // ИСПРАВЛЕНИЕ: было user
+              user={user}
               handleAuthAction={handleAuthAction}
             />
             <LanguageButton
