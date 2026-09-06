@@ -233,14 +233,18 @@ export function AgendaNews() {
                             : 'IVAO BY HQ'}
                       </div>
                     </div>
-                    <div className="truncate text-lg font-bold">
-                      {newsItem.name[i18n.language]}
-                    </div>
-                    <div className="mt-2 text-sm leading-snug">
-                      {newsItem.description[i18n.language]?.length > 96
-                        ? `${newsItem.description[i18n.language].slice(0, 96)}...`
-                        : newsItem.description[i18n.language]}
-                    </div>
+                    <div
+                      className="truncate text-lg font-bold"
+                      dangerouslySetInnerHTML={{
+                        __html: newsItem.name[i18n.language] ?? '',
+                      }}
+                    />
+                    <div
+                      className="mt-2 text-sm leading-snug"
+                      dangerouslySetInnerHTML={{
+                        __html: newsItem.description[i18n.language] ?? '',
+                      }}
+                    />
                   </div>
                 </div>
               </div>
