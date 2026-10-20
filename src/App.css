@@ -10,3 +10,9 @@ a:hover {
     color: #3c55ac!important;
     transition-duration: 0.4s!important;
 }
+
+.shadow-md {
+    --tw-shadow: 0 0px 7px -1px rgb(0 0 0 / 0.15), 0 0px 0px 0px rgb(0 0 0 / 0);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+

@@ -229,7 +229,6 @@ export function ShiftComponent() {
                   hour: '2-digit',
                   minute: '2-digit',
                 })}`}
-                z
                 {` – ${new Date(part.endDate).toLocaleTimeString('eu', {
                   timeZone: 'UTC',
                   hour12: false,
@@ -298,7 +297,7 @@ export function ShiftComponent() {
                     return (
                       <div
                         key={position.id}
-                        className="flex w-[300px] flex-col rounded-2xl bg-white p-[19px] shadow-lg"
+                        className="flex w-[363px] flex-col rounded-3xl bg-white p-[19px] shadow-md"
                       >
                         <div
                           className={
@@ -388,14 +387,14 @@ export function ShiftComponent() {
                                     }
                                   }
                                 }}
-                                className={`leading-16 flex gap-3 rounded-xl px-1.5 pr-3 text-lg font-semibold text-white backdrop-blur-[5px] transition duration-500 ${
+                                className={`flex gap-1.5 self-start font-semibold whitespace-nowrap rounded-xl px-1.5 py-1 pr-3 text-lg leading-4 text-white backdrop-blur-[5px] transition duration-500 ${
                                   !userHasBooking ||
                                   new Date() > new Date(part.endDate)
-                                    ? 'cursor-not-allowed bg-gray-500'
+                                    ? 'cursor-not-allowed bg-gray-300'
                                     : 'bg-[#E93434] hover:cursor-pointer hover:opacity-80'
                                 }`}
                               >
-                                <IconSquareRoundedMinus className="ml-1.5 mt-0.5" />
+                                <IconSquareRoundedMinus />
                                 <div className="my-auto flex-auto">
                                   {t('events.booking.unbook')}
                                 </div>
@@ -411,20 +410,20 @@ export function ShiftComponent() {
                                     handleBookClick(part.id, position);
                                   }
                                 }}
-                                className={`leading-16 flex gap-1.5 rounded-xl px-1.5 pr-3 text-lg font-semibold text-white backdrop-blur-[5px] transition duration-500 ${
+                                className={`flex gap-1.5 self-start font-semibold whitespace-nowrap rounded-xl px-1.5 py-1 pr-3 text-lg leading-4 text-white backdrop-blur-[5px] transition duration-500 ${
                                   !canBook ||
                                   acceptedByOther ||
                                   new Date() > new Date(part.endDate)
-                                    ? 'cursor-not-allowed bg-gray-500'
-                                    : 'bg-atmos-700 hover:cursor-pointer hover:opacity-80'
+                                    ? 'cursor-not-allowed bg-gray-300'
+                                    : 'bg-atmos-700 hover:cursor-pointer hover:opacity-t80'
                                 }`}
                               >
                                 {!canBook ||
                                 acceptedByOther ||
                                 new Date() > new Date(part.endDate) ? (
-                                  <IconSquareRoundedX className="ml-1.5 mt-0.5" />
+                                  <IconSquareRoundedX />
                                 ) : (
-                                  <IconSquareRoundedPlus className="ml-1.5 mt-0.5" />
+                                  <IconSquareRoundedPlus />
                                 )}
                                 <div className="my-auto flex-auto">
                                   {t('events.booking.book')}
