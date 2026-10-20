@@ -896,13 +896,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ivaoby/common@npm:latest":
-  version: 0.0.4-a
-  resolution: "@ivaoby/common@npm:0.0.4-a::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40ivaoby%2Fcommon%2F0.0.4-a%2Fe8a7c1f4f690317e48277c38e4da8d96e89c4022"
-  checksum: 10c0/955bb49ec3a8e1fe3a65e942b7e05b51e40ab9458f757b10fce51d8e427ed484e766935300d6a5b4998251f350109d32ba98cf85f9e1bc466526ed363ae184f2
-  languageName: node
-  linkType: hard
-
 "@jest/expect-utils@npm:^29.7.0":
   version: 29.7.0
   resolution: "@jest/expect-utils@npm:29.7.0"
@@ -2890,7 +2883,6 @@ __metadata:
     "@ianvs/prettier-plugin-sort-imports": "npm:^4.1.1"
     "@ivao/eslint-config": "npm:^1.1.0"
     "@ivao/prettier-config": "npm:^1.1.0"
-    "@ivaoby/common": "npm:latest"
     "@mantine/core": "npm:^6.0.21"
     "@mantine/form": "npm:^6.0.18"
     "@mantine/hooks": "npm:^6.0.21"
@@ -3045,9 +3037,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001587, caniuse-lite@npm:^1.0.30001599":
-  version: 1.0.30001762
-  resolution: "caniuse-lite@npm:1.0.30001762"
-  checksum: 10c0/93707eac5b0240af3f2ce6e2d7ab504a6fefcf9c2f9cd8fb9d488e496a333c61e557dab0472c1b00c17bc386a5dbb792aa4c778cda2d768e17f986617d7aec53
+  version: 1.0.30001817
+  resolution: "caniuse-lite@npm:1.0.30001817"
+  checksum: 10c0/6cb289db2bac703031ce98198ecf2f9e5b243282fcc9966789dd874eb0f97b59006277dd0646224dab8c605bee4c19f75d9f2f53638656371c831adcb5fc7fb5
   languageName: node
   linkType: hard
 
