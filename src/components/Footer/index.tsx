@@ -144,7 +144,7 @@ export const Footer = () => {
             </div>
             <div className="flex flex-row">
               <SocialIcon
-                href="https://discord.by.ivao.aero/"
+                href="https://ds.by.ivao.aero/"
                 src={discordIcon}
                 alt="Discord"
               />

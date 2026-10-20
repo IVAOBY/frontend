@@ -1,10 +1,11 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState, useMemo } from 'react';
 
 import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react';
 import {
   IconAirTrafficControl,
   IconArticle,
-  IconBook, IconCar,
+  IconBook,
+  IconCar,
   IconEye,
   IconFileInfo,
   IconFocus2,
@@ -24,7 +25,7 @@ import {
   IconWorld,
 } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import by from '../../assets/image/by.svg';
 import discord from '../../assets/image/discord.svg';
@@ -34,7 +35,7 @@ import ivaoLogo from '../../assets/image/logo_s_black.svg';
 import bylogoblue from '../../assets/image/logobyblue.svg';
 import ru from '../../assets/image/ru.svg';
 import steps from '../../assets/image/steps.svg';
-import { getAuthLoginUrl, STORAGE_KEYS } from '../../constants/app';
+import { STORAGE_KEYS } from '../../constants/app';
 import { AuthContext } from '../../context/UserContext';
 
 const categories = [
@@ -58,7 +59,6 @@ const categories = [
         label: 'navbar.division.staff',
         icon: <IconIdBadge2 size={20} />,
       },
-      //{ href: '/contact-us', label: 'navbar.division.contact', icon: <IconMailForward size={20} /> },
       {
         href: 'https://discord.by.ivao.aero',
         label: 'navbar.division.discord',
@@ -82,12 +82,6 @@ const categories = [
     icon: <IconAirTrafficControl size={20} />,
     links: [
       {
-        href: '/atc/first-step',
-        label: 'navbar.atc.start',
-        icon: <img src={steps} width={20} alt="ATC First Step" />,
-      },
-      //{ href: '/sector', label: 'navbar.atc.sector', icon: <IconMapCog size={20} /> },
-      {
         href: 'https://www.ban.by/en/aeronautical-information-aip/amdt',
         label: 'navbar.atc.charts',
         icon: <IconFileInfo size={20} />,
@@ -99,9 +93,10 @@ const categories = [
         icon: <IconLock size={20} />,
         external: true,
       },
-      { href: '/vehicles',
+      {
+        href: '/vehicles',
         label: 'navbar.atc.vehicles',
-        icon: <IconCar size={20} />
+        icon: <IconCar size={20} />,
       },
       {
         href: '/documents/category/1',
@@ -153,8 +148,6 @@ const categories = [
     label: 'navbar.community.index',
     icon: <IconUsersGroup size={20} />,
     links: [
-      //{ href: 'https://google.com', label: 'navbar.community.events', icon: <IconCalendarEvent size={20} />, external: true },
-      //{ href: 'https://google.com', label: 'navbar.community.training', icon: <IconSchool size={20} />, external: true },
       {
         href: '/documents',
         label: 'navbar.atc.docs',
@@ -192,12 +185,24 @@ export function HeaderResponsive() {
   const [opened, setOpened] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [currentPath, setCurrentPath] = useState('/');
+
   const authContext = useContext(AuthContext);
-  const [urlParams] = useSearchParams();
-  const ivaoToken = urlParams.get('token');
-  const { signed, decodedToken } = useContext(AuthContext);
-  const serverUrl = getAuthLoginUrl();
+  const { signed, user } = authContext;
+
   const location = useLocation();
+  const navigate = useNavigate();
+  const { i18n } = useTranslation();
+
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     setCurrentPath(location.pathname);
@@ -210,56 +215,66 @@ export function HeaderResponsive() {
 
     window.addEventListener('scroll', handleScroll);
 
-    if (ivaoToken) {
-      void authContext.signIn(ivaoToken);
-    }
-
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [ivaoToken, authContext]);
+  }, []); // ИСПРАВЛЕНИЕ: убрали authContext из dependencies
 
-  const handleImageClick = () => {
+  const handleImageClick = useCallback(() => {
     navigate('/');
     window.scrollTo(0, 0);
-  };
+  }, [navigate]);
 
-  const navigate = useNavigate();
-  const { i18n } = useTranslation();
-
-  const changeLanguage = (newLanguage: string) => {
+  const changeLanguage = useCallback((newLanguage: string) => {
     void i18n.changeLanguage(newLanguage);
     localStorage.setItem(STORAGE_KEYS.LANGUAGE, newLanguage);
-  };
+  }, [i18n]);
 
-  const isSmallScreen = window.innerWidth <= 768;
+  const handleAuthAction = useCallback(() => {
+    if (!signed) {
+      authContext.signIn();
+    } else {
+      authContext.signOut();
+    }
+  }, [signed, authContext]);
+
+  // ИСПРАВЛЕНИЕ: мемоизируем вычисление стилей
+  const headerClassName = useMemo(() => {
+    if (opened && isSmallScreen) {
+      return 'bg-atmos-700 transition-none';
+    }
+    if (scrollPosition > 0) {
+      return 'bg-white shadow-lg';
+    }
+    if (currentPath === '/') {
+      return 'bg-transparent';
+    }
+    return 'bg-atmos-700';
+  }, [opened, isSmallScreen, scrollPosition, currentPath]);
+
+  const logoSrc = useMemo(() => {
+    if (opened) return bylogo;
+    if (currentPath === '/') {
+      return scrollPosition === 0 ? bylogo : bylogoblue;
+    }
+    return scrollPosition > 0 ? bylogoblue : bylogo;
+  }, [opened, currentPath, scrollPosition]);
+
+  const mobileButtonClassName = useMemo(() => {
+    if (opened && isSmallScreen) return 'text-white';
+    if (scrollPosition > 0) return 'text-atmos-700';
+    if (currentPath === '/') return 'bg-transparent';
+    return 'bg-atmos-700';
+  }, [opened, isSmallScreen, scrollPosition, currentPath]);
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${
-        opened && isSmallScreen
-          ? 'bg-atmos-700 transition-none'
-          : scrollPosition > 0
-            ? 'bg-white shadow-lg'
-            : currentPath === '/'
-              ? 'bg-transparent'
-              : 'bg-atmos-700'
-      }`}
+      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${headerClassName}`}
     >
       <div className="container mx-auto flex h-28 items-center justify-between px-4">
         <img
           className="h-16 w-48 cursor-pointer"
-          src={
-            opened
-              ? bylogo
-              : currentPath === '/'
-                ? scrollPosition === 0
-                  ? bylogo
-                  : bylogoblue
-                : scrollPosition > 0
-                  ? bylogoblue
-                  : bylogo
-          }
+          src={logoSrc}
           onClick={handleImageClick}
           alt="Logo"
         />
@@ -275,24 +290,17 @@ export function HeaderResponsive() {
           <AuthButton
             scrollPosition={scrollPosition}
             signed={signed}
-            decodedToken={decodedToken}
-            handleAuthAction={() => handleAuthAction(authContext, serverUrl)}
+            user={user}
+            handleAuthAction={handleAuthAction}
           />
           <LanguageButton
             scrollPosition={scrollPosition}
             changeLanguage={changeLanguage}
           />
         </div>
+
         <button
-          className={`md:hidden ${
-            opened && isSmallScreen
-              ? 'text-white'
-              : scrollPosition > 0
-                ? 'text-atmos-700'
-                : currentPath === '/'
-                  ? 'bg-transparent'
-                  : 'bg-atmos-700'
-          }`}
+          className={`md:hidden ${mobileButtonClassName}`}
           onClick={() => setOpened(!opened)}
         >
           <svg
@@ -312,8 +320,7 @@ export function HeaderResponsive() {
         </button>
 
         {opened && (
-          <div
-            className="absolute inset-x-0 top-24 rounded-b-md bg-atmos-700 shadow-lg transition-all duration-500 md:hidden">
+          <div className="absolute inset-x-0 top-24 rounded-b-md bg-atmos-700 shadow-lg transition-all duration-500 md:hidden">
             {categories.map((category) => (
               <CommonDropdownContent
                 key={category.label}
@@ -324,8 +331,8 @@ export function HeaderResponsive() {
             <AuthButton
               scrollPosition={scrollPosition}
               signed={signed}
-              decodedToken={decodedToken}
-              handleAuthAction={() => handleAuthAction(authContext, serverUrl)}
+              user={user}
+              handleAuthAction={handleAuthAction}
             />
             <LanguageButton
               scrollPosition={scrollPosition}
@@ -338,7 +345,8 @@ export function HeaderResponsive() {
   );
 }
 
-const isSmallScreen = window.innerWidth <= 991;
+// ИСПРАВЛЕНИЕ: вынесли за пределы компонента
+const isSmallScreenGlobal = () => window.innerWidth <= 991;
 
 function CommonDropdownContent({ scrollPosition, category }) {
   const navigate = useNavigate();
@@ -348,10 +356,17 @@ function CommonDropdownContent({ scrollPosition, category }) {
     window.open(link, '_blank');
   }, []);
 
+  // ИСПРАВЛЕНИЕ: мемоизируем проверку размера экрана
+  const isSmallScreen = useMemo(() => isSmallScreenGlobal(), []);
+
   return (
     <Menu>
       <MenuButton
-        className={`flex items-center space-x-2 px-1 py-2 font-bold ${scrollPosition > 0 && !isSmallScreen ? 'text-blue-900  hover:text-ocean-600' : 'text-white hover:text-gray-200'}`}
+        className={`flex items-center space-x-2 px-1 py-2 font-bold ${
+          scrollPosition > 0 && !isSmallScreen
+            ? 'text-blue-900 hover:text-ocean-600'
+            : 'text-white hover:text-gray-200'
+        }`}
       >
         {category.icon}
         <span>{t(category.label)}</span>
@@ -373,7 +388,9 @@ function CommonDropdownContent({ scrollPosition, category }) {
             <MenuItem key={label}>
               {({ active }) => (
                 <button
-                  className={`flex w-full items-center px-4 py-2 text-left font-light text-black ${active && 'bg-gray-100'}`}
+                  className={`flex w-full items-center px-4 py-2 text-left font-light text-black ${
+                    active && 'bg-gray-100'
+                  }`}
                   onClick={() => (external ? menuLink(href) : navigate(href))}
                 >
                   {icon}
@@ -388,29 +405,33 @@ function CommonDropdownContent({ scrollPosition, category }) {
   );
 }
 
-function AuthButton({
-                      scrollPosition,
-                      signed,
-                      decodedToken,
-                      handleAuthAction,
-                    }) {
+function AuthButton({ scrollPosition, signed, user, handleAuthAction }) {
   const { t } = useTranslation();
+  const isSmallScreen = useMemo(() => isSmallScreenGlobal(), []);
 
   return (
     <>
       {signed ? (
         <button
-          className={`flex items-center space-x-2 px-1 py-2 font-bold ${scrollPosition > 0 && !isSmallScreen ? 'text-blue-900  hover:text-ocean-600' : 'text-white hover:text-gray-200'}`}
+          className={`flex items-center space-x-2 px-1 py-2 font-bold ${
+            scrollPosition > 0 && !isSmallScreen
+              ? 'text-blue-900 hover:text-ocean-600'
+              : 'text-white hover:text-gray-200'
+          }`}
           onClick={handleAuthAction}
         >
           <IconLogout size={20} />
           <span>
-            {decodedToken?.userData.name.first} {decodedToken?.userData.id}
+            {user?.name?.first} {user?.id}
           </span>
         </button>
       ) : (
         <button
-          className={`flex items-center space-x-2 px-1 py-2 font-bold ${scrollPosition > 0 && !isSmallScreen ? 'text-blue-900  hover:text-ocean-600' : 'text-white hover:text-gray-200'}`}
+          className={`flex items-center space-x-2 px-1 py-2 font-bold ${
+            scrollPosition > 0 && !isSmallScreen
+              ? 'text-blue-900 hover:text-ocean-600'
+              : 'text-white hover:text-gray-200'
+          }`}
           onClick={handleAuthAction}
         >
           <IconLogin2 size={20} />
@@ -423,11 +444,14 @@ function AuthButton({
 
 function LanguageButton({ scrollPosition, changeLanguage }) {
   const { t } = useTranslation();
+  const isSmallScreen = useMemo(() => isSmallScreenGlobal(), []);
 
   return (
     <Menu>
       <MenuButton
-        className={`flex items-center space-x-2 px-1 py-2 font-bold hover:text-gray-300 ${scrollPosition > 0 && !isSmallScreen ? 'text-blue-900' : 'text-white'}`}
+        className={`flex items-center space-x-2 px-1 py-2 font-bold hover:text-gray-300 ${
+          scrollPosition > 0 && !isSmallScreen ? 'text-blue-900' : 'text-white'
+        }`}
       >
         <IconLanguage size={25} />
       </MenuButton>
@@ -448,7 +472,9 @@ function LanguageButton({ scrollPosition, changeLanguage }) {
             <MenuItem key={lang}>
               {({ active }) => (
                 <button
-                  className={`w-full items-center px-4 py-2 text-left ${active && 'bg-gray-100'}`}
+                  className={`w-full items-center px-4 py-2 text-left ${
+                    active && 'bg-gray-100'
+                  }`}
                   onClick={() => changeLanguage(lang)}
                 >
                   <img
@@ -471,12 +497,4 @@ function LanguageButton({ scrollPosition, changeLanguage }) {
       </Transition>
     </Menu>
   );
-}
-
-function handleAuthAction(authContext, serverUrl) {
-  if (!authContext.signed) {
-    window.location.href = serverUrl;
-  } else {
-    authContext.signOut();
-  }
 }

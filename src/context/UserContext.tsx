@@ -1,108 +1,59 @@
-import React, { createContext, useCallback, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useMemo } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import jwtDecode from 'jwt-decode';
+import { getAuthLoginUrl } from '../constants/app';
+import { useLogout, useMe } from '../hooks/query/useMe';
+import { Me } from '../types/Me';
 
-import { getAuthLoginUrl, STORAGE_KEYS } from '../constants/app';
-import { DecodedTokenInt } from '../hooks/types';
-
-interface AuthProviderProps {
-  children: React.ReactNode;
-}
-
-interface AuthContextProps {
+interface AuthContextType {
   signed: boolean;
-  token: string;
-  decodedToken: DecodedTokenInt | null;
-  signIn: (ivaoToken: string) => void;
+  user: Me | null;
+  isLoading: boolean;
+  signIn: () => void;
   signOut: () => void;
-  refreshToken: () => void;
 }
 
-export const AuthContext = createContext<AuthContextProps>({
+export const AuthContext = createContext<AuthContextType>({
   signed: false,
-  token: '',
-  decodedToken: null,
+  user: null,
+  isLoading: true,
   signIn: () => {},
   signOut: () => {},
-  refreshToken: () => {},
 });
 
-function removeTokenFromUrl() {
-  if (window.history.replaceState) {
-    const urlWithoutToken =
-      window.location.protocol +
-      '//' +
-      window.location.host +
-      window.location.pathname;
-    window.history.replaceState({}, document.title, urlWithoutToken);
-  }
-}
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const navigate = useNavigate();
+  const location = useLocation();
 
-export function AuthProvider({ children }: AuthProviderProps) {
-  const [token, setToken] = useState<string>(
-    localStorage.getItem(STORAGE_KEYS.TOKEN) || '',
-  );
-  const [decodedToken, setDecodedToken] = useState<DecodedTokenInt | null>(
-    null,
-  );
+  const { data: user, isLoading } = useMe();
+  const { mutate: logout } = useLogout();
 
-  const signIn = useCallback((ivaoToken: string) => {
-    try {
-      localStorage.setItem(STORAGE_KEYS.TOKEN, ivaoToken);
-      removeTokenFromUrl();
-      setToken(ivaoToken);
-    } catch (error) {
-      // Silent fail - localStorage might not be available
-      signOut();
-    }
-  }, []);
+  const signed = useMemo(() => !!user, [user]);
+
+  const signIn = useCallback(() => {
+    const currentUrl = `${window.location.origin}${location.pathname}${location.search}`;
+    window.location.href = getAuthLoginUrl(currentUrl);
+  }, [location]);
 
   const signOut = useCallback(() => {
-    localStorage.removeItem(STORAGE_KEYS.TOKEN);
-    setToken('');
-  }, []);
+    logout(undefined, {
+      onSuccess: () => {
+        navigate('/');
+        window.location.reload();
+      },
+    });
+  }, [logout, navigate]);
 
-  const refreshToken = useCallback(() => {
-    window.location.href = getAuthLoginUrl();
-  }, []);
-
-  useEffect(() => {
-    if (!token) {
-      setDecodedToken(null);
-      return;
-    }
-
-    try {
-      const currentTimestampSec = Math.floor(Date.now() / 1000);
-      const decoded = jwtDecode<DecodedTokenInt>(token);
-
-      if (currentTimestampSec > decoded.exp) {
-        refreshToken();
-      } else {
-        const mappedToken: DecodedTokenInt = {
-          iat: decoded.iat,
-          exp: decoded.exp,
-          userData: decoded.userData,
-        };
-
-        setDecodedToken(mappedToken);
-      }
-    } catch (error) {
-      // Invalid token - trigger refresh
-      refreshToken();
-    }
-  }, [refreshToken, token]);
-
-  const contextValue: AuthContextProps = {
-    signIn,
-    signOut,
-    refreshToken,
-    signed: !!token,
-    token,
-    decodedToken,
-  };
-
-  return (
-    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
+  const value = useMemo(
+    () => ({
+      signed,
+      user,
+      isLoading,
+      signIn,
+      signOut,
+    }),
+    [signed, user, isLoading, signIn, signOut]
   );
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

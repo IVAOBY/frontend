@@ -68,7 +68,7 @@ export function AirportsPage() {
                     <img
                       className="rounded-t-2xl shadow-md"
                       alt={airport.name}
-                      src={`https://cdn.by.ivao.aero/images/airports/${airport.icao}.png`}
+                      src={`https://cdn.by.ivao.aero/images/airports/${airport.icao}.webp`}
                     />
                   )}
                   <div className="flex w-full flex-col rounded-b-2xl bg-white py-6 pl-6 pr-16 max-md:max-w-full max-md:px-5 shadow-md">
