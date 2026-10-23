@@ -297,7 +297,7 @@ export function ShiftComponent() {
                     return (
                       <div
                         key={position.id}
-                        className="flex w-[363px] flex-col rounded-3xl bg-white p-[19px] shadow-md"
+                        className="flex w-[363px] flex-col squircle-3xl bg-white p-[19px] shadow-figma"
                       >
                         <div
                           className={
@@ -305,7 +305,7 @@ export function ShiftComponent() {
                           }
                         >
                           <div
-                            className={`flex size-14 items-center justify-center rounded-2xl ${positionColors[type]}`}
+                            className={`flex size-14 items-center justify-center squircle-2xl ${positionColors[type]}`}
                           >
                             {positionIcons[type]}
                           </div>

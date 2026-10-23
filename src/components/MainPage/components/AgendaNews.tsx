@@ -104,10 +104,10 @@ export function AgendaNews() {
           agenda.map((item) => (
             <div
               key={item.id}
-              className="mt-3 flex flex-col gap-2 drop-shadow-md"
+              className="mt-3 flex flex-col gap-2"
             >
               <div
-                className="flex w-full cursor-pointer flex-col text-[25px] font-bold leading-none text-black lg:w-5/12 lg:text-3xl"
+                className="flex w-full cursor-pointer flex-col text-[25px] font-bold leading-none text-black lg:w-1/2 lg:text-3xl"
                 onClick={() => {
                   if (item.type === 0) {
                     EventNavigate(item.id);
@@ -116,10 +116,10 @@ export function AgendaNews() {
                   }
                 }}
               >
-                <div className="flex flex-row gap-5 rounded-3xl bg-white p-5 shadow-sm">
+                <div className="flex flex-row gap-5 squircle-3xl bg-white p-5 shadow-figma">
                   <div className="flex items-center">
                     <div
-                      className={`size-[50px] rounded-xl p-2 text-white lg:size-[70px] lg:p-4 ${
+                      className={`size-[50px] squircle-2xl p-2 text-white lg:size-[70px] lg:p-4 ${
                         item.type === 0
                           ? 'bg-green-500'
                           : item.type === 1

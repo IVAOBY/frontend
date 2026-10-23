@@ -36,7 +36,7 @@ interface TagProps {
 
 const Tag = ({ icon, label, className = '', children }: TagProps) => (
   <div
-    className={`flex items-center gap-1.5 rounded-xl bg-atmos-700 px-3 py-[7px] text-[15px] font-semibold leading-4 text-white ${className}`}
+    className={`flex items-center gap-1.5 rounded-xl bg-atmos-700 px-3 py-[5px] text-[16px] font-semibold leading-4 text-white ${className}`}
   >
     {icon}
     {children}
@@ -115,13 +115,13 @@ export const EventHeader = ({ data, registrationStatus, t }) => {
 
       {registrationStatus === 'open' ? (
         <div
-          className="flex items-center gap-1.5 rounded-xl bg-green-500 px-3 py-[5px] text-[18px] font-semibold leading-4 text-white backdrop-blur-[5px]">
+          className="flex items-center gap-1.5 rounded-xl bg-green-500 px-3 py-[5px] text-[16px] font-semibold leading-4 text-white backdrop-blur-[5px]">
           <IconClockCheck size={20} />
           <div className="my-auto flex-auto">{t('events.tags.shift.open')}</div>
         </div>
       ) : registrationStatus === 'closed' ? (
         <div
-          className="flex items-center gap-1.5 rounded-xl bg-semantic-red-500 px-3 py-[5px] text-[18px] font-semibold leading-4 text-white backdrop-blur-[5px]">
+          className="flex items-center gap-1.5 rounded-xl bg-semantic-red-500 px-3 py-[5px] text-[16px] font-semibold leading-4 text-white backdrop-blur-[5px]">
           <IconClockCancel size={20} />
           <div className="my-auto flex-auto">{t('events.tags.shift.close')}</div>
         </div>
@@ -163,22 +163,22 @@ export function EventPage() {
             {data.name[i18n.language]}
           </div>
           <EventHeader data={data} registrationStatus={registrationStatus} t={t} />
-          <div className="mt-8 flex flex-col gap-5 lg:flex-row">
+          <div className="mt-8 flex flex-col gap-4 lg:flex-row">
             <div className="w-full rounded-3xl xl:w-1/2">
               <img
                 src={data.imageUrl}
                 alt={data.name.en}
-                className="size-full rounded-3xl object-cover shadow-md"
+                className="size-full squircle-3xl object-cover shadow-figma"
               />
             </div>
             <div
-              className="flex w-full flex-col rounded-3xl bg-white font-['Montserrat'] shadow-md xl:w-1/2">
-              <div className="mx-8 my-10 grow">
+              className="flex w-full flex-col squircle-3xl bg-white font-['Montserrat'] shadow-figma xl:w-1/2">
+              <div className="mx-6 my-7 grow">
                 <p className="text-3xl font-semibold leading-7 text-black">
                   {t('events.content.title')}
                 </p>
                 <div
-                  className="mt-8 max-w-[647px] break-words text-xl font-medium leading-6 tracking-tighter text-black"
+                  className="mt-3 break-words text-xl font-medium leading-6 tracking-tighter text-black"
                   dangerouslySetInnerHTML={{
                     __html: data.description[i18n.language] || 'Failed to load',
                   }}
@@ -189,9 +189,10 @@ export function EventPage() {
                   onClick={() => {
                     window.open(data.infoUrl, '_blank');
                   }}
-                  className="leading-16 mx-8 mb-4 flex max-w-[300px] gap-3 rounded-xl bg-[#0D2C99] px-1.5 pr-3 text-lg font-semibold text-white backdrop-blur-[5px] transition duration-500 hover:cursor-pointer hover:opacity-80"
+                  className="leading-16 mx-6 mb-5 flex w-fit self-start gap-3 rounded-xl bg-atmos-700 px-4 text-lg font-semibold text-white backdrop-blur-[5px] transition duration-500 hover:cursor-pointer hover:opacity-80
+"
                 >
-                  <IconInfoSquareRounded className="ml-1.5 mt-0.5" />
+                  <IconInfoSquareRounded className="mt-0.5" />
                   <div className="my-auto flex-auto">{t('events.content.link')}</div>
                 </div>
               )}
