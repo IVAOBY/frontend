@@ -57,7 +57,7 @@ ${me.name.first} ${me.name.last}`;
         <div className="leading-none">
           <p
             className="font-['Futura PT'] text-[32px] font-bold uppercase text-white drop-shadow-lg sm:text-[40px] md:text-[70px] lg:text-[100px]">
-            {t('mainpage.heropage.title')},
+            {t('mainpage.heropage.title')}
           </p>
           <p
             className="font-['Futura PT'] my-[-10px] ml-[-4px] text-[60px] font-bold uppercase text-white drop-shadow-lg sm:text-[80px] md:ml-[-8px] md:mt-[-20px] md:text-[125px] xl:ml-[-20px] xl:text-[250px]">

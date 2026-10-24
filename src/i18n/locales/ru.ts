@@ -66,7 +66,7 @@ const ruTranslations: { translations: Translations } = {
                 consoleText: 'Приложение работает в среде',
             },
             heropage: {
-                title: 'Знакомьтесь',
+                title: 'Знакомьтесь,',
                 title2: 'Беларусь',
                 joinbutton: 'Регистрация',
                 transfer: 'Перейти в BY',

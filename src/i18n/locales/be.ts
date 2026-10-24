@@ -66,7 +66,7 @@ const beTranslations: { translations: Translations } = {
                 consoleText: 'Прыкладанне працуе ў асяроддзі',
             },
             heropage: {
-                title: 'Знаёмцеся',
+                title: 'Знаёмцеся,',
                 title2: 'Беларусь',
                 joinbutton: 'Рэгістрацыя',
                 transfer: 'Перайсці ў BY',
