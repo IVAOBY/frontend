@@ -90,11 +90,11 @@ export function StaffPage() {
                                 ? 'Vacant position'
                                 : 'Staff Photo'
                             }
-                            className="aspect-square w-full squircle-t-2xl"
+                            className="squircle-t-2xl aspect-square w-full"
                             loading="lazy"
                           />
 
-                          <div className="flex w-full flex-col items-start squircle-b-2xl bg-white p-5 py-2 pl-2 md:py-5 md:pl-8">
+                          <div className="squircle-b-2xl flex w-full flex-col items-start bg-white p-5 py-2 pl-2 md:py-5 md:pl-8">
                             <div className="md:text-md rounded-2xl bg-stone-300 px-3 py-1 text-sm font-medium leading-5 text-black md:px-3 md:py-1">
                               {typeof position.name === 'string'
                                 ? position.name
@@ -112,7 +112,9 @@ export function StaffPage() {
                                 </>
                               ) : hasUser ? (
                                 <>
-                                  <span>{position.user?.name?.first ?? ''}</span>
+                                  <span>
+                                    {position.user?.name?.first ?? ''}
+                                  </span>
                                   <br />
                                   <span>{position.user?.id ?? ''}</span>
                                 </>
@@ -134,7 +136,9 @@ export function StaffPage() {
                                 <button
                                   type="button"
                                   className="size-9 cursor-pointer rounded-xl bg-atmos-700 p-1.5 transition hover:bg-ocean-600 md:size-10 md:p-2"
-                                  onClick={() => handleEmailClick(positionEmail)}
+                                  onClick={() =>
+                                    handleEmailClick(positionEmail)
+                                  }
                                   aria-label={`Email ${position.prefix}-${position.id}`}
                                 >
                                   <IconMailOpened className="text-white" />

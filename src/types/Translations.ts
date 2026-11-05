@@ -109,19 +109,19 @@ export interface Translations {
       title: string;
       submitButton: string;
       unlimited: string;
-    }
+    };
     editor: {
       title: string;
       submitButton: string;
       cancelButton: string;
-    }
+    };
     revoker: {
       title: string;
       description: string;
       revokeButton: string;
       cancelButton: string;
       holdHint: string;
-    }
+    };
   };
   footer: {
     copyrightMessage: string;
@@ -222,7 +222,7 @@ export interface Translations {
     hidden: {
       tag: string;
       description: string;
-    }
+    };
   };
   airports: {
     main: {

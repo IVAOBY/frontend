@@ -3,7 +3,7 @@ import { IconCheck, IconX } from '@tabler/icons-react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { t } from 'i18next';
 
-import {BookingCreateData, BookingEntity} from '../../types/Events';
+import { BookingCreateData, BookingEntity } from '../../types/Events';
 import Http from '../../utils/Http';
 
 export const useBookEvent = () => {

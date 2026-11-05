@@ -108,8 +108,8 @@ const Agenda = lazy(() =>
 export default function App() {
   const CONTACT_US_ENABLED = 0;
   const PrivateRoute: React.FC<{ path: string; element: React.ReactNode }> = ({
-                                                                                element,
-                                                                              }) => {
+    element,
+  }) => {
     const { signed } = useContext(AuthContext);
     if (!signed) {
       window.location.href = getAuthLoginUrl();

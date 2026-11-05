@@ -1,4 +1,5 @@
 import React, { createContext, useCallback, useMemo } from 'react';
+
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { getAuthLoginUrl } from '../constants/app';
@@ -52,7 +53,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       signIn,
       signOut,
     }),
-    [signed, user, isLoading, signIn, signOut]
+    [signed, user, isLoading, signIn, signOut],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
