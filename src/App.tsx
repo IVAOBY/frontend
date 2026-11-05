@@ -99,6 +99,11 @@ const GetInTouchSimple = lazy(() =>
     default: module.GetInTouchSimple,
   })),
 );
+const Agenda = lazy(() =>
+  import('./pages/agenda').then((module) => ({
+    default: module.Agenda,
+  })),
+);
 
 export default function App() {
   const CONTACT_US_ENABLED = 0;
@@ -172,6 +177,7 @@ export default function App() {
                     <Route path="/staff" element={<StaffPage />} />
                     <Route path="/vehicles" element={<VehiclesPage />} />
                     <Route path="/training" element={<Training />} />
+                    <Route path="/agenda" element={<Agenda />} />
 
                     {/* Документы */}
                     <Route path="/documents" element={<DocumentsMain />} />
