@@ -46,7 +46,7 @@ export function DocumentsMain() {
                   .map((document) => (
                     <div
                       key={document.id}
-                      className="hover:-scale-10 flex max-w-[287px] cursor-pointer flex-col rounded-xl bg-white p-4 shadow-lg duration-300 hover:-translate-y-1 hover:bg-gray-50"
+                      className="hover:-scale-20 flex max-w-[287px] cursor-pointer flex-col squircle-2xl bg-white p-4 shadow-figma duration-300 hover:-translate-y-1 hover:bg-gray-50"
                       onClick={() => documentsRedirect(document)}
                     >
                       <p className="text-2xl font-bold text-black">
