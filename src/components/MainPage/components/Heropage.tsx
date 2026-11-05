@@ -69,7 +69,7 @@ ${me.name.first} ${me.name.last}`;
           {signed ? null : (
             <CustomButton
               size="xl"
-              className="rounded-xl"
+              className="squircle-xl transition duration-300 hover:scale-105"
               onClick={() =>
                 openLink('https://ivao.aero/members/person/register.htm')
               }
@@ -80,7 +80,7 @@ ${me.name.first} ${me.name.last}`;
           {signed && !isLoading && me && me.divisionId !== 'BY' ? (
             <CustomButton
               size="xl"
-              className="rounded-xl"
+              className="squircle-xl transition duration-300 hover:scale-105"
               variant="white"
               onClick={byTransferMail}
             >
