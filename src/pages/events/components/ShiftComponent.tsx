@@ -387,7 +387,7 @@ export function ShiftComponent() {
                                     }
                                   }
                                 }}
-                                className={`flex gap-1.5 self-start font-semibold whitespace-nowrap rounded-xl px-1.5 py-1 pr-3 text-lg leading-4 text-white backdrop-blur-[5px] transition duration-500 ${
+                                className={`flex gap-1.5 self-start font-semibold whitespace-nowrap rounded-xl px-1.5 py-1 pr-3 text-lg leading-4 text-white backdrop-blur-[5px] transition duration-300 ${
                                   !userHasBooking ||
                                   new Date() > new Date(part.endDate)
                                     ? 'cursor-not-allowed bg-gray-300'
@@ -410,7 +410,7 @@ export function ShiftComponent() {
                                     handleBookClick(part.id, position);
                                   }
                                 }}
-                                className={`flex gap-1.5 self-start font-semibold whitespace-nowrap rounded-xl px-1.5 py-1 pr-3 text-lg leading-4 text-white backdrop-blur-[5px] transition duration-500 ${
+                                className={`flex gap-1.5 self-start font-semibold whitespace-nowrap rounded-xl px-1.5 py-1 pr-3 text-lg leading-4 text-white backdrop-blur-[5px] transition duration-300 ${
                                   !canBook ||
                                   acceptedByOther ||
                                   new Date() > new Date(part.endDate)

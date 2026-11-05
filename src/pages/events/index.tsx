@@ -178,7 +178,7 @@ export function EventPage() {
                   {t('events.content.title')}
                 </p>
                 <div
-                  className="mt-3 break-words text-xl font-medium leading-6 tracking-tighter text-black"
+                  className="mt-3 break-words text-xl font-medium leading-6 tracking-tighter text-black text-justify"
                   dangerouslySetInnerHTML={{
                     __html: data.description[i18n.language] || 'Failed to load',
                   }}
@@ -189,8 +189,7 @@ export function EventPage() {
                   onClick={() => {
                     window.open(data.infoUrl, '_blank');
                   }}
-                  className="leading-16 mx-6 mb-5 flex w-fit self-start gap-3 rounded-xl bg-atmos-700 px-4 text-lg font-semibold text-white backdrop-blur-[5px] transition duration-500 hover:cursor-pointer hover:opacity-80
-"
+                  className="leading-16 mx-6 mb-5 flex w-fit self-start gap-3 rounded-xl bg-atmos-700 px-1.5 pr-4 text-lg font-semibold text-white backdrop-blur-[5px] transition duration-300 hover:cursor-pointer hover:opacity-90 hover:scale-105"
                 >
                   <IconInfoSquareRounded className="mt-0.5" />
                   <div className="my-auto flex-auto">{t('events.content.link')}</div>
