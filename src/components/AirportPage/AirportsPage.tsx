@@ -84,7 +84,7 @@ export function AirportsPage() {
                       {airport.description}
                     </div>
                     <div
-                      className="mt-5 flex gap-1.5 self-start font-semibold whitespace-nowrap rounded-xl bg-atmos-700 px-1.5 py-1 pr-3 text-xl leading-4 text-white backdrop-blur-[5px] transition duration-500  hover:cursor-pointer hover:opacity-80 hover:scale-105"
+                      className="mt-5 flex gap-1.5 self-start font-semibold whitespace-nowrap rounded-xl bg-atmos-700 px-1.5 py-1 pr-3 text-xl leading-4 text-white backdrop-blur-[5px] transition duration-300  hover:cursor-pointer hover:opacity-90 hover:scale-105"
                       onClick={() => aboutAirport(airport.icao)}
                     >
                       <IconInfoSquareRounded />
@@ -142,7 +142,7 @@ export function AirportsPage() {
                     </div>
                     <div
                       onClick={() => aboutAirport(airport.icao)}
-                      className="mt-4 flex gap-1.5 self-start font-semibold whitespace-nowrap rounded-xl bg-atmos-700 px-1.5 py-1 pr-3 text-lg leading-4 text-white backdrop-blur-[5px] transition duration-300  hover:cursor-pointer hover:opacity-80 hover:scale-105"
+                      className="mt-4 flex gap-1.5 self-start font-semibold whitespace-nowrap rounded-xl bg-atmos-700 px-1.5 py-1 pr-3 text-lg leading-4 text-white backdrop-blur-[5px] transition duration-300  hover:cursor-pointer hover:opacity-90 hover:scale-105"
                     >
                       <IconInfoSquareRounded />
                       <div className="mt-1 flex-auto">

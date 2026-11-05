@@ -97,16 +97,16 @@ export function AirportPage() {
                   {airport.name}
                 </p>
                 <div className="flex flex-row gap-3">
-                  <div className="mt-2 size-min justify-center rounded-xl bg-black px-4 py-2 text-center text-xl font-bold leading-4 text-white">
+                  <div className="mt-2 size-min justify-center squircle-xl bg-black px-4 py-2 text-center text-xl font-bold leading-4 text-white">
                     {airport.icao}
                   </div>
                   {airport.iata && (
-                    <div className="mt-2 size-min justify-center rounded-xl bg-[#D7D7DC] px-4 py-2 text-center text-xl font-bold leading-4 text-[#958F8F]">
+                    <div className="mt-2 size-min justify-center squircle-xl bg-[#D7D7DC] px-4 py-2 text-center text-xl font-bold leading-4 text-[#958F8F]">
                       {airport.iata}
                     </div>
                   )}
                 </div>
-                <div className="mt-2 text-xl font-bold leading-4 text-gray-600 md:ml-auto md:text-end">
+                <div className="mt-2 text-xl font-bold leading-4 text-[#958F8F] md:ml-auto md:text-end">
                   {decimalToDMS(airport.latitude, airport.longitude)} |{' '}
                   {airport.elevation} ft
                 </div>
@@ -134,26 +134,26 @@ export function AirportPage() {
             <div className="mt-16 flex flex-col gap-5 lg:flex-row">
               <div className="flex max-w-[855px] flex-col gap-3">
                 <div className="flex flex-col gap-3 md:flex-row">
-                  <div className="flex w-full items-center overflow-hidden rounded-lg bg-atmos-700 shadow-md md:max-w-[250px]">
-                    <div className="px-4 py-2 font-semibold text-white">TA</div>
-                    <div className="size-full content-center bg-white px-4 py-2 text-center font-semibold text-black">
+                  <div className="flex w-full items-center overflow-hidden squircle-lg bg-atmos-700 shadow-figma md:max-w-[250px]">
+                    <div className="px-3 py-2 font-semibold text-white text-2xl">TA</div>
+                    <div className="size-full content-center bg-white px-4 py-3 text-center font-semibold text-black text-xl">
                       6000ft
                     </div>
                   </div>
-                  <div className="flex w-full items-center overflow-hidden rounded-lg bg-atmos-700 shadow-md">
-                    <div className="px-4 py-2 font-semibold text-white">TL</div>
-                    <p className="w-full bg-white px-4 py-2 text-center font-semibold text-neutral-400">
+                  <div className="flex w-full items-center overflow-hidden squircle-lg bg-atmos-700 shadow-figma">
+                    <div className="px-3 py-2 font-semibold text-white text-2xl">TL</div>
+                    <p className="size-full content-center bg-white px-4 py-3 text-center font-semibold text-neutral-400 text-xl">
                       <span className="text-black">FL80</span> {t('airports.current.tl.or')}{' '}
                       <span className="text-black">FL90</span> ({t('airports.current.tl.qnh')})
                     </p>
                   </div>
                 </div>
-                <div className="bg-white">
-                  <div className="flex items-center overflow-hidden rounded-lg bg-atmos-700 shadow-md">
+                <div>
+                  <div className="flex items-center overflow-hidden squircle-lg bg-atmos-700 shadow-figma">
                     <div className="h-full px-1 py-4">
                       <img alt={airport.name} src={metaricon} />
                     </div>
-                    <div className="min-h-[80px] w-full content-center bg-white px-4 py-2 font-semibold text-black">
+                    <div className="min-h-[80px] w-full content-center bg-white px-4 py-2 font-semibold text-black text-xl">
                       {airport.metar.metar ? (
                         <>
                           <span className="text-atmos-700">METAR</span>{' '}
@@ -165,11 +165,11 @@ export function AirportPage() {
                     </div>
                   </div>
                 </div>
-                <div className="flex  items-center overflow-hidden rounded-lg bg-atmos-700 shadow-md">
+                <div className="flex  items-center overflow-hidden squircle-lg bg-atmos-700 shadow-figma">
                   <div className="px-1 py-9">
-                    <IconRadar2 size={50} stroke-width={1.5} />
+                    <IconRadar2 size={47} stroke-width={1.5} />
                   </div>
-                  <div className="min-h-[122px] w-[855px] content-center bg-white px-4 py-2 font-semibold text-black">
+                  <div className="min-h-[122px] w-[855px] content-center bg-white px-4 py-2 font-semibold text-black text-xl">
                     {airport.taf.taf ? (
                       <>
                         <span className="text-atmos-700">TAF</span>{' '}
@@ -181,16 +181,16 @@ export function AirportPage() {
                   </div>
                 </div>
               </div>
-              <div className="flex max-h-[370px] w-[650px] items-center justify-center rounded-lg bg-atmos-700 max-md:hidden">
+              <div className="flex max-h-[370px] w-[650px] items-center justify-center squircle-xl bg-atmos-700 max-md:hidden">
                 <div className="flex size-1/4 flex-col items-center justify-center rounded-xl border-4 border-black bg-amber-300 text-center text-3xl font-bold text-black shadow-lg">
                   <div>INOP</div>
                   <div className="-mt-2 text-sm">SEE T/LOG</div>
                 </div>
               </div>
             </div>
-            <div className="mt-[30px] flex flex-col gap-5 sm:flex-row">
+            <div className="mt-5 flex flex-col gap-5 sm:flex-row">
               {airport.atcPositions?.length > 0 && (
-                <div className="flex flex-col gap-3 rounded-2xl bg-white p-[19px] shadow-md">
+                <div className="flex flex-col gap-3 squircle-2xl bg-white p-[19px] shadow-figma">
                   {airport.atcPositions
                     ?.filter(
                       (position) =>
@@ -230,7 +230,7 @@ export function AirportPage() {
                         className="flex w-[338px] flex-row items-center gap-3"
                       >
                         <div
-                          className={`flex size-14 items-center justify-center rounded-2xl ${positionColors[type]}`}
+                          className={`flex size-14 items-center justify-center squircle-xl ${positionColors[type]}`}
                         >
                           {positionIcons[type]}
                         </div>
@@ -247,7 +247,7 @@ export function AirportPage() {
                 </div>
               )}
               {airport.runways.length > 0 && (
-                <div className="rounded-xl bg-white p-4 shadow-md sm:w-[573px]">
+                <div className="squircle-2xl bg-white p-4 shadow-figma sm:w-[573px]">
                   <h2 className="mb-4 text-3xl font-semibold uppercase text-black">
                     <span className="font-bold">{t('airports.current.runways.rwy')}</span> {t('airports.current.runways.airport')}
                   </h2>
@@ -258,7 +258,7 @@ export function AirportPage() {
                         className="mb-4 flex flex-row flex-wrap gap-1"
                       >
                         <div className="flex items-center gap-3">
-                          <span className="flex h-10 w-16 items-center justify-center rounded-xl border-2 border-black bg-red-500 text-xl font-bold text-white">
+                          <span className="flex h-10 w-[4.5rem] items-center justify-center squircle-xl border-2 border-black bg-red-500 text-xl font-bold text-white">
                             {runway.designation}
                           </span>
                           <span className="text-lg font-semibold text-black">
@@ -323,7 +323,7 @@ export function AirportPage() {
                 </div>
               )}
               {airport.sceneries.length > 0 && (
-                <div className="rounded-xl bg-white p-4 shadow-md sm:w-[565px]">
+                <div className="squircle-2xl bg-white p-4 shadow-figma sm:w-[565px]">
                   <h2 className="mb-4 text-3xl font-semibold uppercase text-black">
                     {t('airports.current.sceneries')}
                   </h2>

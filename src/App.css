@@ -36,14 +36,13 @@ a:hover {
 
 .squircle-t-2xl {
     @supports (corner-shape: squircle) {corner-shape: squircle; border-top-left-radius: 2rem; border-top-right-radius: 2rem}
-    @supports not (corner-shape: squircle) {border-radius: 1rem};
+    @supports not (corner-shape: squircle) {border-top-left-radius: 1rem; border-top-right-radius: 1rem};
 }
 
 .squircle-b-2xl {
     @supports (corner-shape: squircle) {corner-shape: squircle; border-bottom-left-radius: 2rem; border-bottom-right-radius: 2rem }
-    @supports not (corner-shape: squircle) {border-radius: 1rem};
+    @supports not (corner-shape: squircle) {border-bottom-left-radius: 1rem; border-bottom-right-radius: 1rem};
 }
-
 .squircle-xl {
     --border-radius: 0.75rem;
 }
