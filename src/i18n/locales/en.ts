@@ -74,7 +74,7 @@ const enTranslations: { translations: Translations } = {
       widgets: {
         first: 'First Steps',
         discord: {
-          message: 'And where is all? 🛩️',
+          message: "Where's everyone?🛩️",
           message2: 'Whoa, come in soon:',
         },
         airports: 'Division Airfields',
