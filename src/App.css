@@ -3,89 +3,62 @@
 @tailwind utilities;
 
 a {
-  color: #0d2c99 !important;
-  text-decoration: underline;
+    color: #0d2c99!important;
+    text-decoration: underline;
 }
 a:hover {
-  color: #3c55ac !important;
-  transition-duration: 0.4s !important;
+    color: #3c55ac!important;
+    transition-duration: 0.4s!important;
 }
 
 .shadow-figma {
-  --tw-shadow: 0 0px 7px -1px rgb(0 0 0 / 0.15), 0 0px 0px 0px rgb(0 0 0 / 0);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
-    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+    --tw-shadow: 0 0px 7px -1px rgb(0 0 0 / 0.15), 0 0px 0px 0px rgb(0 0 0 / 0);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 .shadow-figma-sm {
-  --tw-shadow: 0 0 13px -4px rgb(0 0 0 / 0.1), 0 0px 24px -3px rgb(0 0 0 / 0.1);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
-    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+    --tw-shadow: 0 0 13px -4px rgb(0 0 0 / 0.10), 0 0px 24px -3px rgb(0 0 0 / 0.10);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-.squircle-3xl,
-.squircle-2xl,
-.squircle-xl,
-.squircle-lg,
-.squircle-md,
-.squircle,
-.squircle-sm {
-  @supports (corner-shape: squircle) {
-    corner-shape: squircle;
-    border-radius: calc(var(--border-radius) * 2);
-  }
-  @supports not (corner-shape: squircle) {
-    border-radius: var(--border-radius);
-  }
+.squircle-3xl, .squircle-2xl, .squircle-xl, .squircle-lg, .squircle-md, .squircle, .squircle-sm {
+    @supports (corner-shape: squircle) {corner-shape: squircle; border-radius: calc(var(--border-radius) * 2);}
+    @supports not (corner-shape: squircle) {border-radius: var(--border-radius);};
 }
 
 .squircle-3xl {
-  --border-radius: 1.5rem;
+    --border-radius: 1.5rem;
 }
 
 .squircle-2xl {
-  --border-radius: 1rem;
+    --border-radius: 1rem;
 }
 
 .squircle-t-2xl {
-  @supports (corner-shape: squircle) {
-    corner-shape: squircle;
-    border-top-left-radius: 2rem;
-    border-top-right-radius: 2rem;
-  }
-  @supports not (corner-shape: squircle) {
-    border-top-left-radius: 1rem;
-    border-top-right-radius: 1rem;
-  }
+    @supports (corner-shape: squircle) {corner-shape: squircle; border-top-left-radius: 2rem; border-top-right-radius: 2rem}
+    @supports not (corner-shape: squircle) {border-top-left-radius: 1rem; border-top-right-radius: 1rem};
 }
 
 .squircle-b-2xl {
-  @supports (corner-shape: squircle) {
-    corner-shape: squircle;
-    border-bottom-left-radius: 2rem;
-    border-bottom-right-radius: 2rem;
-  }
-  @supports not (corner-shape: squircle) {
-    border-bottom-left-radius: 1rem;
-    border-bottom-right-radius: 1rem;
-  }
+    @supports (corner-shape: squircle) {corner-shape: squircle; border-bottom-left-radius: 2rem; border-bottom-right-radius: 2rem }
+    @supports not (corner-shape: squircle) {border-bottom-left-radius: 1rem; border-bottom-right-radius: 1rem};
 }
 .squircle-xl {
-  --border-radius: 0.75rem;
+    --border-radius: 0.75rem;
 }
 
 .squircle-lg {
-  --border-radius: 0.5rem;
+    --border-radius: 0.5rem;
 }
 
 .squircle-md {
-  --border-radius: 0.375rem;
+    --border-radius: 0.375rem;
 }
 
 .squircle {
-  --border-radius: 0.25rem;
+    --border-radius: 0.25rem;
 }
 
 .squircle-sm {
-  --border-radius: 0.125rem;
+    --border-radius: 0.125rem;
 }
