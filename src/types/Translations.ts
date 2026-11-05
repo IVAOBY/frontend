@@ -252,6 +252,18 @@ export interface Translations {
     helpText: string;
     helpButton: string;
   };
+  agenda: {
+    title: string;
+    more: string;
+    empty: string;
+    colors: string;
+    types: {
+      event: string;
+      training: string;
+      exam: string;
+      maintenance: string;
+    };
+  };
   FAQ: {
     page: {
       title: string;

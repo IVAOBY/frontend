@@ -75,7 +75,7 @@ const beTranslations: { translations: Translations } = {
                 first: 'Першыя крокі',
                 discord: {
                     message: 'А дзе ўвесь двіж? 🛩️',
-                    message2: 'Воу-воу, хутчэй заходзь:',
+                    message2: 'Воў-воў, хутчэй заходзь:',
                 },
                 airports: 'Аэрадромы Дывізіёна',
                 charts: 'Схема',
@@ -260,6 +260,18 @@ const beTranslations: { translations: Translations } = {
             helpText:
                 'Вы можаце нам дапагчы ў распрацоўцы сцэнаряў для аэрапортаў дывізіёна? Далучайцеся!',
             helpButton: 'Я з вамі!',
+        },
+        agenda: {
+            title: 'Каляндар падзей',
+            more: 'Больш падрабязна',
+            empty: 'На гэты дзень нічога не плануецца',
+            colors: 'Каляровыя коды',
+            types: {
+                event: 'Івент',
+                training: 'Трэніроўка',
+                exam: 'Экзамен',
+                maintenance: 'Тэх. работы'
+            },
         },
         FAQ: {
             page: {

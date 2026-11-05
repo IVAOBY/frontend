@@ -74,7 +74,7 @@ const enTranslations: { translations: Translations } = {
             widgets: {
                 first: 'First Steps',
                 discord: {
-                    message: 'And where is all the movement? 🛩️',
+                    message: 'And where is all? 🛩️',
                     message2: 'Whoa, come in soon:',
                 },
                 airports: 'Division Airfields',
@@ -261,6 +261,18 @@ const enTranslations: { translations: Translations } = {
             helpText:
                 'Can you help us develop scenarios for division airports? Join us!',
             helpButton: "I'm in!",
+        },
+        agenda: {
+            title: 'Agenda',
+            more: 'More details',
+            empty: 'Nothing is planned for this day',
+            colors: 'Color codes',
+            types: {
+                event: 'Event',
+                training: 'Training',
+                exam: 'Exam',
+                maintenance: 'Maintenance'
+            },
         },
         FAQ: {
             page: {
