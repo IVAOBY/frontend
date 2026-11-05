@@ -16,17 +16,13 @@ import { useParams } from 'react-router-dom';
 
 import { Notification } from '../../../components/Notification/Notification';
 import { AuthContext } from '../../../context/UserContext';
+import { useMe } from '../../../hooks/query/useMe';
 import {
   useBookEvent,
   useUnbookEvent,
 } from '../../../hooks/query/useBookingMutations';
 import { useEventParts } from '../../../hooks/query/useEvents';
-import { useMe } from '../../../hooks/query/useMe';
-import {
-  BookingEntity,
-  EventAtcPositions,
-  PartsEntity,
-} from '../../../types/Events';
+import { BookingEntity, EventAtcPositions, PartsEntity } from '../../../types/Events';
 
 const positionIcons = {
   ground: <IconCar size={41} />,
@@ -125,8 +121,7 @@ export function ShiftComponent() {
 
     const bookingCallsign =
       bookingPosition?.position?.callsign?.toLowerCase() ?? '';
-    const eventCallsign =
-      eventPosition?.position?.callsign?.toLowerCase() ?? '';
+    const eventCallsign = eventPosition?.position?.callsign?.toLowerCase() ?? '';
     return !!bookingCallsign && bookingCallsign === eventCallsign;
   };
 
@@ -297,15 +292,12 @@ export function ShiftComponent() {
                     const positionFra = normalizeAtcRating(
                       position.position.fra,
                     );
-                    const canBook = hasSufficientRating(
-                      userRating,
-                      positionFra,
-                    );
+                    const canBook = hasSufficientRating(userRating, positionFra);
 
                     return (
                       <div
                         key={position.id}
-                        className="squircle-3xl shadow-figma flex w-[363px] flex-col bg-white p-[19px]"
+                        className="flex w-[363px] flex-col squircle-3xl bg-white p-[19px] shadow-figma"
                       >
                         <div
                           className={
@@ -313,7 +305,7 @@ export function ShiftComponent() {
                           }
                         >
                           <div
-                            className={`squircle-2xl flex size-14 items-center justify-center ${positionColors[type]}`}
+                            className={`flex size-14 items-center justify-center squircle-2xl ${positionColors[type]}`}
                           >
                             {positionIcons[type]}
                           </div>
@@ -395,7 +387,7 @@ export function ShiftComponent() {
                                     }
                                   }
                                 }}
-                                className={`flex gap-1.5 self-start whitespace-nowrap rounded-xl px-1.5 py-1 pr-3 text-lg font-semibold leading-4 text-white backdrop-blur-[5px] transition duration-300 ${
+                                className={`flex gap-1.5 self-start font-semibold whitespace-nowrap rounded-xl px-1.5 py-1 pr-3 text-lg leading-4 text-white backdrop-blur-[5px] transition duration-300 ${
                                   !userHasBooking ||
                                   new Date() > new Date(part.endDate)
                                     ? 'cursor-not-allowed bg-gray-300'
@@ -418,12 +410,12 @@ export function ShiftComponent() {
                                     handleBookClick(part.id, position);
                                   }
                                 }}
-                                className={`flex gap-1.5 self-start whitespace-nowrap rounded-xl px-1.5 py-1 pr-3 text-lg font-semibold leading-4 text-white backdrop-blur-[5px] transition duration-300 ${
+                                className={`flex gap-1.5 self-start font-semibold whitespace-nowrap rounded-xl px-1.5 py-1 pr-3 text-lg leading-4 text-white backdrop-blur-[5px] transition duration-300 ${
                                   !canBook ||
                                   acceptedByOther ||
                                   new Date() > new Date(part.endDate)
                                     ? 'cursor-not-allowed bg-gray-300'
-                                    : 'hover:opacity-t80 bg-atmos-700 hover:cursor-pointer'
+                                    : 'bg-atmos-700 hover:cursor-pointer hover:opacity-t80'
                                 }`}
                               >
                                 {!canBook ||
