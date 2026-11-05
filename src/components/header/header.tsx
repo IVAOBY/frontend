@@ -1,6 +1,18 @@
-import React, { useCallback, useContext, useEffect, useState, useMemo } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 
-import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react';
+import {
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+  Transition,
+} from '@headlessui/react';
 import {
   IconAirTrafficControl,
   IconArticle,
@@ -225,10 +237,13 @@ export function HeaderResponsive() {
     window.scrollTo(0, 0);
   }, [navigate]);
 
-  const changeLanguage = useCallback((newLanguage: string) => {
-    void i18n.changeLanguage(newLanguage);
-    localStorage.setItem(STORAGE_KEYS.LANGUAGE, newLanguage);
-  }, [i18n]);
+  const changeLanguage = useCallback(
+    (newLanguage: string) => {
+      void i18n.changeLanguage(newLanguage);
+      localStorage.setItem(STORAGE_KEYS.LANGUAGE, newLanguage);
+    },
+    [i18n],
+  );
 
   const handleAuthAction = useCallback(() => {
     if (!signed) {

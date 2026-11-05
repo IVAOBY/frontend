@@ -59,12 +59,11 @@ export function DocumentsCategory() {
               ))}
           </div>
         ) : (
-            <div className="mt-0 text-base leading-5 text-neutral-400 md:text-xl">
-              {t('documents.error.nodoc')}
-            </div>
-          )
-        )
-        )}
+          <div className="mt-0 text-base leading-5 text-neutral-400 md:text-xl">
+            {t('documents.error.nodoc')}
+          </div>
+        ))
+      )}
     </BreadcrumbLayout>
   );
 }

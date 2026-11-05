@@ -42,18 +42,18 @@ export interface EventTag {
   id: number;
   category: 'user' | 'int' | 'div';
   type:
-      | 'Airbridge'
-      | 'FlyOut'
-      | 'FlyIn'
-      | 'Online'
-      | 'MSE'
-      | 'RFO'
-      | 'RFE'
-      | 'Pass'
-      | 'PDE'
-      | 'VFR'
-      | 'IRL'
-      | 'SO';
+    | 'Airbridge'
+    | 'FlyOut'
+    | 'FlyIn'
+    | 'Online'
+    | 'MSE'
+    | 'RFO'
+    | 'RFE'
+    | 'Pass'
+    | 'PDE'
+    | 'VFR'
+    | 'IRL'
+    | 'SO';
   hq: boolean;
 }
 

@@ -1,4 +1,5 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
+
 import { useTranslation } from 'react-i18next';
 
 import { AuthContext } from '../../../context/UserContext';
@@ -6,7 +7,9 @@ import { useMe } from '../../../hooks/query/useMe';
 import { CustomButton } from '../../Button';
 
 export function HeroText() {
-  const [timeOfDay, setTimeOfDay] = useState<'morning' | 'day' | 'evening' | 'night'>('day');
+  const [timeOfDay, setTimeOfDay] = useState<
+    'morning' | 'day' | 'evening' | 'night'
+  >('day');
   const { signed } = useContext(AuthContext);
   const { data: me, isLoading } = useMe();
   const { t } = useTranslation();
@@ -20,10 +23,13 @@ export function HeroText() {
   }, []);
 
   const backgroundImage: Record<typeof timeOfDay, string> = {
-    morning: 'url(\'https://cdn.by.ivao.aero/images/backgrounds/main_page_morning.webp\')',
-    day: 'url(\'https://cdn.by.ivao.aero/images/backgrounds/main_page_day.webp\')',
-    evening: 'url(\'https://cdn.by.ivao.aero/images/backgrounds/main_page_evening.webp\')',
-    night: 'url(\'https://cdn.by.ivao.aero/images/backgrounds/main_page_night.webp\')',
+    morning:
+      "url('https://cdn.by.ivao.aero/images/backgrounds/main_page_morning.webp')",
+    day: "url('https://cdn.by.ivao.aero/images/backgrounds/main_page_day.webp')",
+    evening:
+      "url('https://cdn.by.ivao.aero/images/backgrounds/main_page_evening.webp')",
+    night:
+      "url('https://cdn.by.ivao.aero/images/backgrounds/main_page_night.webp')",
   };
 
   const byTransferMail = useCallback(() => {
@@ -55,12 +61,10 @@ ${me.name.first} ${me.name.last}`;
     >
       <div className="container z-10 mx-auto flex max-w-screen-2xl flex-col gap-4 px-4 py-8">
         <div className="leading-none">
-          <p
-            className="font-['Futura PT'] text-[32px] font-bold uppercase text-white drop-shadow-lg sm:text-[40px] md:text-[70px] lg:text-[100px]">
+          <p className="font-['Futura PT'] text-[32px] font-bold uppercase text-white drop-shadow-lg sm:text-[40px] md:text-[70px] lg:text-[100px]">
             {t('mainpage.heropage.title')}
           </p>
-          <p
-            className="font-['Futura PT'] my-[-10px] ml-[-4px] text-[60px] font-bold uppercase text-white drop-shadow-lg sm:text-[80px] md:ml-[-8px] md:mt-[-20px] md:text-[125px] xl:ml-[-20px] xl:text-[250px]">
+          <p className="font-['Futura PT'] my-[-10px] ml-[-4px] text-[60px] font-bold uppercase text-white drop-shadow-lg sm:text-[80px] md:ml-[-8px] md:mt-[-20px] md:text-[125px] xl:ml-[-20px] xl:text-[250px]">
             {t('mainpage.heropage.title2')}
           </p>
         </div>
@@ -69,7 +73,7 @@ ${me.name.first} ${me.name.last}`;
           {signed ? null : (
             <CustomButton
               size="xl"
-              className="rounded-xl"
+              className="squircle-xl transition duration-300 hover:scale-105"
               onClick={() =>
                 openLink('https://ivao.aero/members/person/register.htm')
               }
@@ -80,7 +84,7 @@ ${me.name.first} ${me.name.last}`;
           {signed && !isLoading && me && me.divisionId !== 'BY' ? (
             <CustomButton
               size="xl"
-              className="rounded-xl"
+              className="squircle-xl transition duration-300 hover:scale-105"
               variant="white"
               onClick={byTransferMail}
             >
@@ -90,8 +94,7 @@ ${me.name.first} ${me.name.last}`;
         </div>
       </div>
 
-      <div
-        className="absolute bottom-0 left-0 h-[200px] w-full bg-gradient-to-t from-background-body to-transparent md:h-[390px]" />
+      <div className="absolute bottom-0 left-0 h-[200px] w-full bg-gradient-to-t from-background-body to-transparent md:h-[390px]" />
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
+
 import { getAuthLoginUrl } from '../constants/app';
 
 const API_URL = import.meta.env.VITE_API_URL || 'https://api.by.ivao.aero';
@@ -21,7 +22,7 @@ axiosInstance.interceptors.response.use(
       window.location.href = getAuthLoginUrl(window.location.href);
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 async function Http<T = any>(config: AxiosRequestConfig): Promise<T> {

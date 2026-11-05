@@ -1,8 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import Http from '../../utils/Http';
 import { Me } from '../../types/Me';
+import Http from '../../utils/Http';
 
 export const getMe = async (): Promise<Me | null> => {
   try {
