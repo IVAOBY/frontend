@@ -3,7 +3,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 
 import type { Agenda } from '../../types/News';
-
 import Http from '../../utils/Http';
 
 export type AgendaItem = Agenda;
@@ -235,7 +234,7 @@ export function useAgendaData({ cursor, selectedDay }: UseAgendaDataParams) {
   );
 
   const selectedDayEvents = useMemo(
-    () => (selectedDay ? eventsByDay.get(selectedDay) ?? [] : []),
+    () => (selectedDay ? (eventsByDay.get(selectedDay) ?? []) : []),
     [eventsByDay, selectedDay],
   );
 
@@ -243,19 +242,14 @@ export function useAgendaData({ cursor, selectedDay }: UseAgendaDataParams) {
   const monthEvents = useMemo(
     () =>
       allEvents.filter(
-        (item) =>
-          toDayKey(new Date(item.startDate)).slice(0, 7) === cursorMonthKey,
+        (item) => toDayKey(new Date(item.startDate)).slice(0, 7) === cursorMonthKey,
       ),
     [allEvents, cursorMonthKey],
   );
 
   /* ---- флаги загрузки: «не покрыто и нет ошибки» ---- */
-  const monthStartNum = toDayNum(
-    new Date(Date.UTC(cursor.year, cursor.month, 1)),
-  );
-  const monthEndNum = toDayNum(
-    new Date(Date.UTC(cursor.year, cursor.month + 1, 0)),
-  );
+  const monthStartNum = toDayNum(new Date(Date.UTC(cursor.year, cursor.month, 1)));
+  const monthEndNum = toDayNum(new Date(Date.UTC(cursor.year, cursor.month + 1, 0)));
 
   const isUpcomingLoading =
     !error && !isCovered([todayNum, upcomingEndNum], loaded);
