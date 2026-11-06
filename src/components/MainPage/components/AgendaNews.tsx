@@ -7,6 +7,7 @@ import {
   IconSettings,
 } from '@tabler/icons-react';
 import { format } from 'date-fns';
+import DOMPurify from 'dompurify';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
@@ -112,7 +113,7 @@ export function AgendaNews() {
                   if (item.type === 0) {
                     EventNavigate(item.id);
                   } else {
-                    window.open(item.link, '_blank');
+                    if (/^https:\/\//.test(item.link)) window.open(item.link, '_blank');
                   }
                 }}
               >
@@ -236,13 +237,13 @@ export function AgendaNews() {
                     <div
                       className="truncate text-lg font-bold"
                       dangerouslySetInnerHTML={{
-                        __html: newsItem.name[i18n.language] ?? '',
+                        __html: DOMPurify.sanitize(newsItem.name[i18n.language] ?? ''),
                       }}
                     />
                     <div
                       className="mt-2 text-sm leading-snug"
                       dangerouslySetInnerHTML={{
-                        __html: newsItem.description[i18n.language] ?? '',
+                        __html: DOMPurify.sanitize(newsItem.description[i18n.language] ?? ''),
                       }}
                     />
                   </div>

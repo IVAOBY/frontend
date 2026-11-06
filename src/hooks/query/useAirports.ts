@@ -13,7 +13,7 @@ export const fetchAirport = async () => {
 export const fetchAirportById = (icao: string | undefined) => {
   return Http<Airport[]>({
     method: 'GET',
-    url: `/airports?search=${icao}`,
+    url: `/airports?search=${encodeURIComponent(icao)}`,
   });
 };
 

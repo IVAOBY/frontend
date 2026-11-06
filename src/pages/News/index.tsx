@@ -1,5 +1,6 @@
 import { IconCalendarTime, IconUser } from '@tabler/icons-react';
 import { format } from 'date-fns';
+import DOMPurify from 'dompurify';
 import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
@@ -73,7 +74,7 @@ export function NewsPage() {
             <p
               className="m-5 w-[700px] break-words text-gray-700 md:text-lg"
               dangerouslySetInnerHTML={{
-                __html: data.description[i18n.language],
+                __html: DOMPurify.sanitize(data.description[i18n.language]),
               }}
             />
           </div>

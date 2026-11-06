@@ -110,6 +110,6 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [require('tailwind-corner-smoothing')],
   darkMode: ['class', '[data-theme="dark"]'],
 } satisfies Config;
