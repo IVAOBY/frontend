@@ -1864,6 +1864,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/dompurify@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "@types/dompurify@npm:3.2.0"
+  dependencies:
+    dompurify: "npm:*"
+  checksum: 10c0/e83fec586ffbb1b43f7c8479f2a99c223814d240db912d53fb126aaeea52a4091deceeb75632b5d76004d88ef0fbf444984887b121dece6fa69f4172ed4b2b07
+  languageName: node
+  linkType: hard
+
 "@types/estree@npm:1.0.8":
   version: 1.0.8
   resolution: "@types/estree@npm:1.0.8"
@@ -1991,6 +2000,13 @@ __metadata:
   version: 2.0.3
   resolution: "@types/stack-utils@npm:2.0.3"
   checksum: 10c0/1f4658385ae936330581bcb8aa3a066df03867d90281cdf89cc356d404bd6579be0f11902304e1f775d92df22c6dd761d4451c804b0a4fba973e06211e9bd77c
+  languageName: node
+  linkType: hard
+
+"@types/trusted-types@npm:^2.0.7":
+  version: 2.0.7
+  resolution: "@types/trusted-types@npm:2.0.7"
+  checksum: 10c0/4c4855f10de7c6c135e0d32ce462419d8abbbc33713b31d294596c0cc34ae1fa6112a2f9da729c8f7a20707782b0d69da3b1f8df6645b0366d08825ca1522e0c
   languageName: node
   linkType: hard
 
@@ -2896,6 +2912,7 @@ __metadata:
     "@testing-library/jest-dom": "npm:^6.1.4"
     "@testing-library/react": "npm:^14.1.2"
     "@testing-library/user-event": "npm:^14.5.1"
+    "@types/dompurify": "npm:^3.2.0"
     "@types/jest": "npm:^29.5.10"
     "@types/mapbox-gl": "npm:^2.7.19"
     "@types/node": "npm:^20.10.0"
@@ -2908,6 +2925,7 @@ __metadata:
     class-variance-authority: "npm:^0.7.0"
     clsx: "npm:^2.0.0"
     date-fns: "npm:^2.30.0"
+    dompurify: "npm:^3.4.17"
     eslint: "npm:^8.56.0"
     eslint-config-prettier: "npm:^9.1.0"
     eslint-plugin-jsx-a11y: "npm:^6.8.0"
@@ -2931,6 +2949,7 @@ __metadata:
     react-router-dom: "npm:^6.20.0"
     react-snowfall: "npm:^2.2.0"
     react-spinners: "npm:^0.13.8"
+    tailwind-corner-smoothing: "npm:^1.2.0"
     tailwind-merge: "npm:^2.2.0"
     tailwindcss: "npm:^3.4.0"
     typescript: "npm:^5.3.2"
@@ -3519,6 +3538,18 @@ __metadata:
     "@babel/runtime": "npm:^7.8.7"
     csstype: "npm:^3.0.2"
   checksum: 10c0/f735074d66dd759b36b158fa26e9d00c9388ee0e8c9b16af941c38f014a37fc80782de83afefd621681b19ac0501034b4f1c4a3bff5caa1b8667f0212b5e124c
+  languageName: node
+  linkType: hard
+
+"dompurify@npm:*, dompurify@npm:^3.4.17":
+  version: 3.4.17
+  resolution: "dompurify@npm:3.4.17"
+  dependencies:
+    "@types/trusted-types": "npm:^2.0.7"
+  dependenciesMeta:
+    "@types/trusted-types":
+      optional: true
+  checksum: 10c0/6a12251ef5e700fc91b6d96d33e9f8b5fd590c55276f632cf42d182c5808e9f48d5bef435ab26eac235dfcc05ed8fe95e1c8308dcc502bf1050e561f14d0361a
   languageName: node
   linkType: hard
 
@@ -8048,6 +8079,13 @@ __metadata:
   version: 6.2.0
   resolution: "tabbable@npm:6.2.0"
   checksum: 10c0/ced8b38f05f2de62cd46836d77c2646c42b8c9713f5bd265daf0e78ff5ac73d3ba48a7ca45f348bafeef29b23da7187c72250742d37627883ef89cbd7fa76898
+  languageName: node
+  linkType: hard
+
+"tailwind-corner-smoothing@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "tailwind-corner-smoothing@npm:1.2.0"
+  checksum: 10c0/f578e1da3e097605cc5f2cc407c932337096f06c14f04644fe7c23eda1fd2817b41af55c1e3a83b949b220310cef4e16d31a9c210c7014b87e00b737cc35b932
   languageName: node
   linkType: hard
 

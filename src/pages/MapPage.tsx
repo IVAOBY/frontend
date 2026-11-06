@@ -8,7 +8,7 @@
 //     <Container>
 //       <Stack align="center">
 //         <Map
-//           mapboxAccessToken="pk.eyJ1IjoiaGFudDIiLCJhIjoiY2xsNzY5Y2l4MHZrNjNlb3pudmgycnFhayJ9.bqU_JTNxY8d7CYVZPreMjQ"
+//           mapboxAccessToken={import.meta.env.VITE_MAPBOX_TOKEN}
 //           initialViewState={{
 //             longitude: 28.0,
 //             latitude: 53.8,

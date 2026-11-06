@@ -18,6 +18,7 @@ import {
   IconUsers,
 } from '@tabler/icons-react';
 import { format } from 'date-fns';
+import DOMPurify from 'dompurify';
 import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
@@ -197,14 +198,14 @@ export function EventPage() {
                 <div
                   className="mt-3 break-words text-justify text-xl font-medium leading-6 tracking-tighter text-black"
                   dangerouslySetInnerHTML={{
-                    __html: data.description[i18n.language] || 'Failed to load',
+                    __html: DOMPurify.sanitize(data.description[i18n.language] || ''),
                   }}
                 ></div>
               </div>
               {data.infoUrl && (
                 <div
                   onClick={() => {
-                    window.open(data.infoUrl, '_blank');
+                    if (/^https:\/\//.test(data.infoUrl)) window.open(data.infoUrl, '_blank');
                   }}
                   className="leading-16 mx-6 mb-5 flex w-fit gap-3 self-start rounded-xl bg-atmos-700 px-1.5 pr-4 text-lg font-semibold text-white backdrop-blur-[5px] transition duration-300 hover:scale-105 hover:cursor-pointer hover:opacity-90"
                 >
