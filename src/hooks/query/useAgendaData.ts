@@ -2,9 +2,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useQueryClient } from '@tanstack/react-query';
 
+import { agendaControllerGetCalendar } from '../../api/agenda/agenda';
 import type { Agenda } from '../../types/News';
-
-import Http from '../../utils/Http';
 
 export type AgendaItem = Agenda;
 
@@ -90,10 +89,10 @@ const isCovered = (interval: Interval, loaded: Interval[]) =>
 /* ---------- API ---------- */
 // endDate включительно. Если бэкенд считает его исключительно — добавьте +1 день в fetchGap.
 export const fetchAgendaRange = async (startDate: string, endDate: string) => {
-  const response = await Http<AgendaItem[]>({
-    method: 'GET',
-    url: `/agenda/calendar?startDate=${startDate}&endDate=${endDate}`,
-  });
+  const response = await (agendaControllerGetCalendar({
+    startDate,
+    endDate,
+  }) as unknown as Promise<AgendaItem[]>);
   return response || [];
 };
 

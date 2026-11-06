@@ -1,13 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 
+import { agendaControllerGetAgenda } from '../../api/agenda/agenda';
 import { Agenda } from '../../types/News';
-import Http from '../../utils/Http';
 
 export const fetchAgendaMain = async () => {
-  const response = await Http<Agenda[]>({
-    method: 'GET',
-    url: `/agenda?limit=4`,
-  });
+  const response = await (agendaControllerGetAgenda({
+    limit: 4,
+  }) as unknown as Promise<Agenda[]>);
   return response || [];
 };
 

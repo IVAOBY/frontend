@@ -3,19 +3,15 @@ import { IconCheck, IconX } from '@tabler/icons-react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { t } from 'i18next';
 
+import { bookingControllerCreate, bookingControllerRemove } from '../../api/booking/booking';
 import { BookingCreateData, BookingEntity } from '../../types/Events';
-import Http from '../../utils/Http';
 
 export const useBookEvent = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (data: BookingCreateData) =>
-      Http<BookingCreateData>({
-        method: 'post',
-        url: '/events-booking/book',
-        data,
-      }),
+      bookingControllerCreate(data as never) as unknown as Promise<BookingCreateData>,
     onSuccess: async (data) => {
       await queryClient.invalidateQueries({ queryKey: ['event-parts'] });
 
@@ -49,10 +45,7 @@ export const useUnbookEvent = () => {
 
   return useMutation({
     mutationFn: (bookingId: number) =>
-      Http<BookingEntity>({
-        method: 'DELETE',
-        url: `/events-booking/unbook/${bookingId}`,
-      }),
+      bookingControllerRemove(bookingId) as unknown as Promise<BookingEntity>,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['event-parts'] });
       notifications.show({

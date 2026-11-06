@@ -1,20 +1,19 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { Airport } from '../../types/Airport';
-import Http from '../../utils/Http';
+import {
+  airportsControllerGetAllAirports,
+  airportsControllerSearchAirport,
+} from '../../api/airports/airports';
 
 export const fetchAirport = async () => {
-  return Http<Airport[]>({
-    method: 'GET',
-    url: `/airports/all`,
-  });
+  return airportsControllerGetAllAirports() as unknown as Promise<Airport[]>;
 };
 
 export const fetchAirportById = (icao: string | undefined) => {
-  return Http<Airport[]>({
-    method: 'GET',
-    url: `/airports?search=${encodeURIComponent(icao)}`,
-  });
+  return airportsControllerSearchAirport({
+    search: encodeURIComponent(icao!),
+  }) as unknown as Promise<Airport[]>;
 };
 
 export const useAirports = () => {
@@ -29,9 +28,6 @@ export const useAirports = () => {
 };
 
 export const useAirportById = (icao: string | undefined = undefined) => {
-  {
-    /*TODO: Use airport from useAirports, if this exist*/
-  }
   return useQuery({
     queryKey: ['airports', icao],
     queryFn: async () => {

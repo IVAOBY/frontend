@@ -1,20 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 
+import { newsControllerGetAllNews, newsControllerGetNewsById } from '../../../api/news/news';
 import { NewsEntity } from '../../../types/News';
-import Http from '../../../utils/Http';
 
 export const fetchNews = async () => {
-  return Http<NewsEntity[]>({
-    method: 'GET',
-    url: `/news`,
-  });
+  return newsControllerGetAllNews() as unknown as Promise<NewsEntity[]>;
 };
 
 export const fetchNewsById = (id: string | undefined) => {
-  return Http<NewsEntity>({
-    method: 'GET',
-    url: `/news/${id}`,
-  });
+  return newsControllerGetNewsById(Number(id)) as unknown as Promise<NewsEntity>;
 };
 
 const useNews = () => {

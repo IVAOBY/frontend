@@ -1,13 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 
+import { staffControllerGetAllStaffPositions } from '../../api/staff-positions/staff-positions';
 import { DepartmentWithPositions } from '../../types/Staff';
-import Http from '../../utils/Http';
 
 export const fetchStaff = async () => {
-  const response = await Http<DepartmentWithPositions[]>({
-    method: 'GET',
-    url: `/staff/positions`,
-  });
+  const response = await (staffControllerGetAllStaffPositions() as unknown as Promise<
+    DepartmentWithPositions[]
+  >);
   return response || [];
 };
 

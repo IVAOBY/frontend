@@ -3,21 +3,18 @@ import { useEffect, useState } from 'react';
 import { notifications } from '@mantine/notifications';
 import { useQuery } from '@tanstack/react-query';
 
+import { eventControllerFindOne } from '../../api/events/events';
+import { partControllerFindOneEvent } from '../../api/part/part';
 import { EventEntity, PartsEntity } from '../../types/Events';
-import Http from '../../utils/Http';
 
 const fetchEvent = (id: string | undefined) => {
-  return Http<EventEntity>({
-    method: 'GET',
-    url: `/events/${id}`,
-  });
+  return eventControllerFindOne(Number(id)) as unknown as Promise<EventEntity>;
 };
 
 const fetchEventPart = (id: string) => {
-  return Http<PartsEntity[]>({
-    method: 'GET',
-    url: `/events-parts/event/${id}`,
-  });
+  return partControllerFindOneEvent(
+    Number(id),
+  ) as unknown as Promise<PartsEntity[]>;
 };
 
 export const useEvents = (id: string) => {

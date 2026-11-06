@@ -1,6 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import Http from '../../utils/Http';
+import {
+  vehiclesControllerCancel,
+  vehiclesControllerCreate,
+  vehiclesControllerEdit,
+  vehiclesControllerGetActive,
+  vehiclesControllerGetAll,
+  vehiclesControllerRevoke,
+} from '../../api/vehicles/vehicles';
 
 interface VehiclePermissionDto {
   id: string;
@@ -17,14 +24,8 @@ interface VehiclePermissionDto {
   revokedByVid?: number | null;
 }
 
-/**
- * Возможные статусы разрешения
- */
 export type VehiclePermissionStatus = 'active' | 'inactive' | 'revoked';
 
-/**
- * UI-модель
- */
 export interface VehiclePermission {
   id: string;
   vid: number;
@@ -43,9 +44,6 @@ export interface VehiclePermission {
   status: VehiclePermissionStatus;
 }
 
-/**
- * Определение статуса (ТОЛЬКО для /vehicles/all)
- */
 const resolveStatus = (
   dto: VehiclePermissionDto,
   now: Date,
@@ -61,14 +59,10 @@ const resolveStatus = (
   return 'active';
 };
 
-/**
- * GET /vehicles/active
- */
 const fetchActiveVehicles = async (): Promise<VehiclePermission[]> => {
-  const data = await Http<VehiclePermissionDto[]>({
-    method: 'GET',
-    url: '/vehicles/active',
-  });
+  const data = await (vehiclesControllerGetActive() as unknown as Promise<
+    VehiclePermissionDto[]
+  >);
 
   if (!Array.isArray(data)) return [];
 
@@ -91,14 +85,10 @@ const fetchActiveVehicles = async (): Promise<VehiclePermission[]> => {
   }));
 };
 
-/**
- * GET /vehicles/all
- */
 const fetchAllVehicles = async (): Promise<VehiclePermission[]> => {
-  const data = await Http<VehiclePermissionDto[]>({
-    method: 'GET',
-    url: '/vehicles/all',
-  });
+  const data = await (vehiclesControllerGetAll() as unknown as Promise<
+    VehiclePermissionDto[]
+  >);
 
   if (!Array.isArray(data)) return [];
 
@@ -123,9 +113,6 @@ const fetchAllVehicles = async (): Promise<VehiclePermission[]> => {
   }));
 };
 
-/**
- * React Query hook (read)
- */
 export const useVehicles = (adminMode: boolean = false) => {
   return useQuery<VehiclePermission[], Error>({
     queryKey: ['vehicles', adminMode ? 'all' : 'active'],
@@ -135,114 +122,66 @@ export const useVehicles = (adminMode: boolean = false) => {
   });
 };
 
-/* ============================================================
-   MUTATIONS
-   ============================================================ */
-
-/**
- * POST /vehicles
- */
-const createVehiclePermission = async (payload: {
-  vid: number;
-  validFrom: string;
-  validUntil: string | null;
-  issueReason: string | null;
-}) => {
-  return Http({
-    method: 'POST',
-    url: '/vehicles',
-    data: payload,
-  });
-};
-
-/**
- * PATCH /vehicles
- */
-const editVehiclePermission = async (payload: {
-  id: string;
-  validFrom?: string;
-  validUntil?: string | null;
-  issueReason?: string | null;
-}) => {
-  return Http({
-    method: 'PATCH',
-    url: '/vehicles',
-    data: payload,
-  });
-};
-
-/**
- * POST /vehicles/revoke
- */
-const revokeVehiclePermission = async (id: string) => {
-  return Http({
-    method: 'POST',
-    url: '/vehicles/revoke',
-    data: { id },
-  });
-};
-
-/**
- * DELETE /vehicles/cancel
- */
-const cancelVehiclePermission = async (id: string) => {
-  return Http({
-    method: 'DELETE',
-    url: '/vehicles/cancel',
-    data: { id },
-  });
-};
-
-/**
- * Create hook
- */
 export const useCreateVehiclePermission = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: createVehiclePermission,
+    mutationFn: (payload: {
+      vid: number;
+      validFrom: string;
+      validUntil: string | null;
+      issueReason: string | null;
+    }) =>
+      vehiclesControllerCreate({
+        vid: payload.vid,
+        validFrom: payload.validFrom,
+        validUntil: payload.validUntil ?? undefined,
+        issueReason: payload.issueReason ?? undefined,
+      }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['vehicles'] });
     },
   });
 };
 
-/**
- * Edit hook
- */
 export const useEditVehiclePermission = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: editVehiclePermission,
+    mutationFn: (payload: {
+      id: string;
+      validFrom?: string;
+      validUntil?: string | null;
+      issueReason?: string | null;
+    }) =>
+      vehiclesControllerEdit({
+        id: payload.id,
+        validFrom: payload.validFrom!,
+        validUntil: payload.validUntil ?? undefined,
+        issueReason: payload.issueReason ?? undefined,
+      }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['vehicles'] });
     },
   });
 };
 
-/**
- * Cancel hook
- */
 export const useCancelVehiclePermission = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: cancelVehiclePermission,
+    mutationFn: (id: string) => vehiclesControllerCancel({ id }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['vehicles'] }); // TODO: optimize
+      queryClient.invalidateQueries({ queryKey: ['vehicles'] });
     },
   });
 };
 
-/**
- * Revoke hook
- */
 export const useRevokeVehiclePermission = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: revokeVehiclePermission,
+    mutationFn: (id: string) => vehiclesControllerRevoke({ id }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['vehicles'] });
     },

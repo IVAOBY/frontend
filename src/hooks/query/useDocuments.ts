@@ -1,27 +1,26 @@
 import { useQuery } from '@tanstack/react-query';
 
+import { documentsCategoryControllerGetAllNews } from '../../api/documents-category/documents-category';
+import { documentsCategoryControllerGetNewsById } from '../../api/documents-category/documents-category';
+import { documentsControllerGetDocumentById } from '../../api/documents/documents';
 import { DocumentsCategoryType, DocumentsType } from '../../types/Documents';
-import Http from '../../utils/Http';
 
 export const fetchDocumentsCategory = async () => {
-  return Http<DocumentsCategoryType[]>({
-    method: 'GET',
-    url: `/documents-category`,
-  });
+  return documentsCategoryControllerGetAllNews() as unknown as Promise<
+    DocumentsCategoryType[]
+  >;
 };
 
 export const fetchDocumentById = (id: string | undefined) => {
-  return Http<DocumentsType>({
-    method: 'GET',
-    url: `/documents/${id}`,
-  });
+  return documentsControllerGetDocumentById(
+    Number(id),
+  ) as unknown as Promise<DocumentsType>;
 };
 
 export const fetchCategoryById = (id: string | undefined) => {
-  return Http<DocumentsCategoryType>({
-    method: 'GET',
-    url: `/documents-category/${id}`,
-  });
+  return documentsCategoryControllerGetNewsById(
+    Number(id),
+  ) as unknown as Promise<DocumentsCategoryType>;
 };
 
 export const useCategory = () => {

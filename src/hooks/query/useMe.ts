@@ -1,14 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
+import { authControllerLogout } from '../../api/authentication/authentication';
+import { usersControllerGetMyProfile } from '../../api/users/users';
 import { Me } from '../../types/Me';
-import Http from '../../utils/Http';
 
 export const getMe = async (): Promise<Me | null> => {
   try {
-    return await Http<Me>({
-      method: 'GET',
-      url: '/users/me',
-    });
+    return (await usersControllerGetMyProfile()) as unknown as Me;
   } catch (error) {
     if (error?.response?.status === 401 || error?.response?.status === 403) {
       return null;
@@ -29,11 +27,7 @@ export const useMe = () => {
 };
 
 export const logout = async () => {
-  return Http({
-    method: 'POST',
-    url: '/auth/logout',
-    withCredentials: true,
-  });
+  return authControllerLogout({ goto: window.location.href });
 };
 
 export const useLogout = () => {
