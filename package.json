@@ -51,7 +51,8 @@
     "commitmsg": "commitlint -E HUSKY_GIT_PARAMS",
     "preview": "vite preview",
     "format": "prettier src -w --log-level warn",
-    "lint": "eslint src/ --cache --report-unused-disable-directives --no-ignore"
+    "lint": "eslint src/ --cache --report-unused-disable-directives --no-ignore",
+    "gen:api": "orval"
   },
   "eslintConfig": {
     "extends": [
@@ -125,6 +126,7 @@
     "eslint-plugin-react-refresh": "^0.4.5",
     "eslint-plugin-storybook": "^0.6.15",
     "eslint-plugin-tailwindcss": "^3.14.1",
+    "orval": "8.46.0",
     "postcss": "^8.1.0",
     "prettier": "^3.2.4",
     "prettier-plugin-tailwindcss": "0.7.2",

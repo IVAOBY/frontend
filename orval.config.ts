@@ -7,10 +7,12 @@ export default defineConfig({
       target: './src/api/client.ts',
       schemas: './src/api/model',
       client: 'react-query',
+      httpClient: 'axios',
       mode: 'tags-split',
+      clean: true,
       override: {
         mutator: {
-          path: './src/api/mutator/customInstance.ts',
+          path: './src/utils/customInstance.ts',
           name: 'customInstance',
         },
       },

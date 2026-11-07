@@ -14,6 +14,12 @@ import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
+import type {
+  BookingEntity,
+  EventAtcPositions,
+  PartsEntity,
+} from '../../../api/model';
+
 import { Notification } from '../../../components/Notification/Notification';
 import { AuthContext } from '../../../context/UserContext';
 import {
@@ -22,11 +28,6 @@ import {
 } from '../../../hooks/query/useBookingMutations';
 import { useEventParts } from '../../../hooks/query/useEvents';
 import { useMe } from '../../../hooks/query/useMe';
-import {
-  BookingEntity,
-  EventAtcPositions,
-  PartsEntity,
-} from '../../../types/Events';
 
 const positionIcons = {
   ground: <IconCar size={41} />,
@@ -96,8 +97,8 @@ export function ShiftComponent() {
   const { data: me, isLoading: isLoadingMe } = useMe();
   const { data, error, isError, isLoading } = useEventParts(id);
 
-  const { mutate: bookEvent } = useBookEvent();
-  const { mutate: unbookEvent } = useUnbookEvent();
+  const { mutate: bookEvent } = useBookEvent(Number(id));
+  const { mutate: unbookEvent } = useUnbookEvent(Number(id));
 
   const userId = toNumber(me?.id);
   const userRating = normalizeAtcRating(me?.ratings?.atc);
@@ -165,9 +166,11 @@ export function ShiftComponent() {
       const part = data.find((p) => p.id === partId);
       if (part) {
         bookEvent({
-          atcPositionId,
-          eventId: part.eventId,
-          eventPartId: part.id,
+          data: {
+            atcPositionId,
+            eventId: part.eventId,
+            eventPartId: part.id,
+          },
         });
       }
     }
@@ -175,7 +178,7 @@ export function ShiftComponent() {
 
   const handleUnbook = (bookingId: number) => {
     if (signed) {
-      unbookEvent(bookingId);
+      unbookEvent({ id: bookingId });
     }
   };
 

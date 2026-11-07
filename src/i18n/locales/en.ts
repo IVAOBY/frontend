@@ -266,6 +266,12 @@ const enTranslations: { translations: Translations } = {
       title: 'Agenda',
       more: 'More details',
       empty: 'Nothing is planned for this day',
+      emptyUpcoming: 'No upcoming events yet',
+      emptyMonth: 'No events this month',
+      upcoming: 'Upcoming',
+      today: 'Today',
+      prevMonth: 'Previous month',
+      nextMonth: 'Next month',
       colors: 'Color codes',
       types: {
         event: 'Event',

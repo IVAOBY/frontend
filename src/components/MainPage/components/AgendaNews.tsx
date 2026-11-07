@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 
 import useNews from '../../../hooks/query/MainPage/useNews';
 import useAgenda from '../../../hooks/query/useAgenda';
-import { NewsEntity } from '../../../types/News';
+import type { NewsEntity } from '../../../api/model';
 import { Notification } from '../../Notification/Notification';
 import Pagination from '../../Pagination';
 

@@ -1,32 +1,13 @@
 import { useEffect, useState } from 'react';
 
 import { notifications } from '@mantine/notifications';
-import { useQuery } from '@tanstack/react-query';
 
-import { eventControllerFindOne } from '../../api/events/events';
-import { partControllerFindOneEvent } from '../../api/part/part';
-import { EventEntity, PartsEntity } from '../../types/Events';
-
-const fetchEvent = (id: string | undefined) => {
-  return eventControllerFindOne(Number(id)) as unknown as Promise<EventEntity>;
-};
-
-const fetchEventPart = (id: string) => {
-  return partControllerFindOneEvent(
-    Number(id),
-  ) as unknown as Promise<PartsEntity[]>;
-};
+import { usePartFindOneEvent } from '../../api/event-parts/event-parts';
+import { useEventFindOne } from '../../api/events/events';
 
 export const useEvents = (id: string) => {
-  return useQuery({
-    queryKey: ['event', id],
-    queryFn: async () => {
-      if (!id) throw new Error('Event ID is required for fetching data.');
-      return await fetchEvent(id);
-    },
-    enabled: !!id,
-    staleTime: 5 * 60 * 1000,
-    gcTime: 30 * 60 * 1000,
+  return useEventFindOne(Number(id), {
+    query: { enabled: !!id, staleTime: 5 * 60 * 1000, gcTime: 30 * 60 * 1000 },
   });
 };
 
@@ -58,16 +39,13 @@ export const useEventDetails = (id: string) => {
 };
 
 export const useEventParts = (id: string) => {
-  return useQuery({
-    queryKey: ['event-parts', id],
-    queryFn: async () => {
-      if (!id) throw new Error('Event ID is required for fetching data.');
-      return await fetchEventPart(id);
+  return usePartFindOneEvent(Number(id), {
+    query: {
+      enabled: !!id,
+      staleTime: 0,
+      gcTime: 3600000,
+      refetchOnWindowFocus: true,
+      refetchOnMount: true,
     },
-    enabled: !!id,
-    staleTime: 0,
-    gcTime: 3600000,
-    refetchOnWindowFocus: true,
-    refetchOnMount: true,
   });
 };

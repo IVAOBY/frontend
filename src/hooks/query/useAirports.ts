@@ -1,41 +1,20 @@
-import { useQuery } from '@tanstack/react-query';
-
-import { Airport } from '../../types/Airport';
 import {
-  airportsControllerGetAllAirports,
-  airportsControllerSearchAirport,
+  useAirportsGetAllAirports,
+  useAirportsSearchAirport,
 } from '../../api/airports/airports';
 
-export const fetchAirport = async () => {
-  return airportsControllerGetAllAirports() as unknown as Promise<Airport[]>;
-};
-
-export const fetchAirportById = (icao: string | undefined) => {
-  return airportsControllerSearchAirport({
-    search: encodeURIComponent(icao!),
-  }) as unknown as Promise<Airport[]>;
-};
+const STALE_TIME = 60 * 60 * 1000;
+const GC_TIME = 6 * 60 * 60 * 1000;
 
 export const useAirports = () => {
-  return useQuery({
-    queryKey: ['airports'],
-    queryFn: async () => {
-      return await fetchAirport();
-    },
-    staleTime: 60 * 60 * 1000,
-    gcTime: 6 * 60 * 60 * 1000,
+  return useAirportsGetAllAirports({
+    query: { staleTime: STALE_TIME, gcTime: GC_TIME },
   });
 };
 
 export const useAirportById = (icao: string | undefined = undefined) => {
-  return useQuery({
-    queryKey: ['airports', icao],
-    queryFn: async () => {
-      if (!icao) throw new Error('Airport ICAO is required for fetching data.');
-      return await fetchAirportById(icao);
-    },
-    enabled: !!icao,
-    staleTime: 60 * 60 * 1000,
-    gcTime: 6 * 60 * 60 * 1000,
-  });
+  return useAirportsSearchAirport(
+    { search: icao ?? '' },
+    { query: { enabled: !!icao, staleTime: STALE_TIME, gcTime: GC_TIME } },
+  );
 };
