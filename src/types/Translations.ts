@@ -37,6 +37,7 @@ export interface Translations {
       webeye: string;
       ivao: string;
       tracker: string;
+      agenda: string;
     };
     user: {
       login: string;
@@ -254,6 +255,7 @@ export interface Translations {
   };
   agenda: {
     title: string;
+    all: string;
     more: string;
     empty: string;
     colors: string;

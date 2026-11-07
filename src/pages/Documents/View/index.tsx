@@ -37,7 +37,9 @@ export function DocumentView() {
               <div className="rounded-[25px] bg-white px-[32px] py-[41px] shadow-md">
                 <div
                   dangerouslySetInnerHTML={{
-                    __html: DOMPurify.sanitize(data.content[i18n.language] || ''),
+                    __html: DOMPurify.sanitize(
+                      data.content[i18n.language] || '',
+                    ),
                   }}
                   className="text-[#494949]"
                 ></div>

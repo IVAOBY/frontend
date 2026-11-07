@@ -40,6 +40,7 @@ const enTranslations: { translations: Translations } = {
         webeye: 'WebEye',
         ivao: 'IVAO website',
         tracker: 'Tracker',
+        agenda: 'Agenda',
       },
       user: {
         login: 'Login',
@@ -264,6 +265,7 @@ const enTranslations: { translations: Translations } = {
     },
     agenda: {
       title: 'Agenda',
+      all: 'All events',
       more: 'More details',
       empty: 'Nothing is planned for this day',
       colors: 'Color codes',
