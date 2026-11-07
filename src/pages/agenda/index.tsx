@@ -195,7 +195,7 @@ function AgendaCard({
 
       {/* Контент справа (без картинки — на всю ширину, слева) */}
       <div
-        className={`flex min-w-0 flex-1 flex-col gap-3 p-5 ${hasImage ? 'lg:max-w-[55%]' : ''}`}
+        className={`flex flex-1 flex-col gap-3 p-5 ${hasImage ? 'lg:max-w-[55%]' : ''}`}
       >
         <div className="flex items-center gap-4">
           <div
@@ -245,7 +245,7 @@ function AgendaCard({
 
         {hasImage && description && (
           <div
-            className="sm:line-clamp-7 break-words text-justify text-base font-medium leading-6 text-neutral-600 md:line-clamp-2 lg:line-clamp-2 xl:line-clamp-3 2xl:line-clamp-4 [&_*]:!text-inherit"
+            className="line-clamp-5 break-words text-justify text-base font-medium leading-6 text-neutral-600 md:line-clamp-2 lg:line-clamp-2 xl:line-clamp-3 2xl:line-clamp-4 [&_*]:!text-inherit"
             dangerouslySetInnerHTML={{ __html: description }}
           />
         )}

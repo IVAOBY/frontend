@@ -40,6 +40,7 @@ const enTranslations: { translations: Translations } = {
         webeye: 'WebEye',
         ivao: 'IVAO website',
         tracker: 'Tracker',
+        agenda: 'Agenda',
       },
       user: {
         login: 'Login',

@@ -40,6 +40,7 @@ const beTranslations: { translations: Translations } = {
         webeye: 'WebEye',
         ivao: 'Сайт IVAO',
         tracker: 'Трэкер',
+        agenda: 'Каляндар падзей',
       },
       user: {
         login: 'Увайсці',
@@ -66,7 +67,7 @@ const beTranslations: { translations: Translations } = {
         consoleText: 'Прыкладанне працуе ў асяроддзі',
       },
       heropage: {
-        title: 'Знаёмцеся',
+        title: 'Знаёмцеся,',
         title2: 'Беларусь',
         joinbutton: 'Рэгістрацыя',
         transfer: 'Перайсці ў BY',

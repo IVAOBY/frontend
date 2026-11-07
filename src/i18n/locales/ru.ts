@@ -40,6 +40,7 @@ const ruTranslations: { translations: Translations } = {
         webeye: 'WebEye',
         ivao: 'Сайт IVAO',
         tracker: 'Трекер',
+        agenda: 'Календарь событий',
       },
       user: {
         login: 'Войти',
@@ -66,7 +67,7 @@ const ruTranslations: { translations: Translations } = {
         consoleText: 'Приложение работает в среде',
       },
       heropage: {
-        title: 'Знакомьтесь',
+        title: 'Знакомьтесь,',
         title2: 'Беларусь',
         joinbutton: 'Регистрация',
         transfer: 'Перейти в BY',
