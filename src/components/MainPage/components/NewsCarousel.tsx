@@ -423,6 +423,7 @@ export function NewsCarousel({
   const dragged = useRef(false);
 
   const onPointerDown = (e: PointerEvent<HTMLDivElement>) => {
+    e.currentTarget.setPointerCapture(e.pointerId);
     startX.current = e.clientX;
     dragged.current = false;
     setPaused(true);

@@ -75,7 +75,7 @@ export function AirportPage() {
   }, [icao]);
 
   const openLink = useCallback(function (link: string | undefined) {
-    window.open(link, '_blank');
+    if (link && /^https:\/\//.test(link)) window.open(link, '_blank');
   }, []);
 
   return (

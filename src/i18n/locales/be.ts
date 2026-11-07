@@ -264,6 +264,7 @@ const beTranslations: { translations: Translations } = {
     },
     agenda: {
       title: 'Каляндар падзей',
+      all: 'Усе падзеі',
       more: 'Больш падрабязна',
       empty: 'На гэты дзень нічога не плануецца',
       colors: 'Каляровыя коды',

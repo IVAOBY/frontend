@@ -264,6 +264,7 @@ const ruTranslations: { translations: Translations } = {
     },
     agenda: {
       title: 'Календарь событий',
+      all: 'Все события',
       more: 'Подробнее',
       empty: 'В этот день ничего не запланировано',
       colors: 'Цветовые коды',

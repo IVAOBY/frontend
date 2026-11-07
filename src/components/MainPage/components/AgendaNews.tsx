@@ -98,7 +98,7 @@ export function AgendaNews() {
                            if (item.type === 0) {
                              EventNavigate(item.id);
                            } else {
-                             window.open(item.link, '_blank');
+                             if (/^https:\/\//.test(item.link)) window.open(item.link, '_blank');
                            }
                          }}
                     >
