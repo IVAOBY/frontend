@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useContext, useMemo } from 'react';
+import React, { lazy, Suspense, useContext } from 'react';
 
 import { AppShell, MantineProvider } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
@@ -18,6 +18,16 @@ import './App.css';
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister';
 import { QueryClient } from '@tanstack/react-query';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {},
+  },
+});
+
+const persister = createSyncStoragePersister({
+  storage: window.localStorage,
+});
 
 import { AirportPage } from './components/AirportPage/AirportPage';
 import { Centered } from './components/Layout';
@@ -123,24 +133,6 @@ export default function App() {
 
     return <>{element}</>;
   };
-
-  const queryClient = useMemo(
-    () =>
-      new QueryClient({
-        defaultOptions: {
-          queries: {},
-        },
-      }),
-    [],
-  );
-
-  const persister = useMemo(
-    () =>
-      createSyncStoragePersister({
-        storage: window.localStorage,
-      }),
-    [],
-  );
 
   return (
     <MantineProvider theme={ivaoTheme}>
