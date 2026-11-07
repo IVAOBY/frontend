@@ -1,5 +1,7 @@
 import { useCallback, useState } from 'react';
 
+import DOMPurify from 'dompurify';
+
 import {
   IconBooks,
   IconCalendarEvent,
@@ -246,7 +248,7 @@ function AgendaCard({
         {hasImage && description && (
           <div
             className="line-clamp-5 break-words text-justify text-base font-medium leading-6 text-neutral-600 md:line-clamp-2 lg:line-clamp-2 xl:line-clamp-3 2xl:line-clamp-4 [&_*]:!text-inherit"
-            dangerouslySetInnerHTML={{ __html: description }}
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(description) }}
           />
         )}
 
