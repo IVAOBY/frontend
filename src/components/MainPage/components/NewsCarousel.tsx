@@ -1,17 +1,14 @@
-import {
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-  type CSSProperties,
-  type KeyboardEvent,
-  type PointerEvent,
-  type WheelEvent,
-} from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 import { format } from 'date-fns';
 import { useTranslation } from 'react-i18next';
+
+import type {
+  CSSProperties,
+  KeyboardEvent,
+  PointerEvent,
+  WheelEvent,
+} from 'react';
 
 import { NewsEntity } from '../../../types/News';
 
@@ -44,7 +41,8 @@ const BOTTOM_ROW = 'flex h-10 shrink-0 items-center justify-center';
 // Карточка: высота = высоте стадии (lg), ширина из пропорции 8:9.
 // 8:9 = картинка 16:9 + текстовый блок 16:9 друг под другом.
 // Все карточки лежат в left:0, а по горизонтали их двигает только transform.
-const CARD_BOX = 'absolute left-0 top-1/2 aspect-[8/9] w-[80%] lg:h-full lg:w-auto';
+const CARD_BOX =
+  'absolute left-0 top-1/2 aspect-[8/9] w-[80%] lg:h-full lg:w-auto';
 
 /* ---------- Раскладка карточек ---------- */
 type Mode = 'single' | 'start' | 'middle' | 'end';
@@ -67,7 +65,8 @@ function anchorFor(offset: number, mode: Mode, count: number): Anchor {
   }
   if (offset > 0) {
     // на первой новости вторая стоит на месте будущей активной, то есть по центру
-    if (mode === 'start') return offset === 1 && count >= 3 ? 'center' : 'right';
+    if (mode === 'start')
+      return offset === 1 && count >= 3 ? 'center' : 'right';
     return 'right';
   }
   if (mode === 'end') return offset === -1 && count >= 3 ? 'center' : 'left';
@@ -123,11 +122,11 @@ function getSlot(offset: number, mode: Mode, count: number, size: Size): Slot {
   const hidden = depth >= (edgeMode ? 3 : 2);
   const inset = hidden ? card * HIDDEN_INSET : 0;
   const x =
-      anchor === 'left'
-          ? -((1 - scale) * card) / 2 + inset
-          : anchor === 'right'
-              ? stage - (card * (1 + scale)) / 2 - inset
-              : (stage - card) / 2;
+    anchor === 'left'
+      ? -((1 - scale) * card) / 2 + inset
+      : anchor === 'right'
+        ? stage - (card * (1 + scale)) / 2 - inset
+        : (stage - card) / 2;
 
   return {
     x,
@@ -143,100 +142,100 @@ function getSlot(offset: number, mode: Mode, count: number, size: Size): Slot {
 
 // HTML из админки -> чистый текст (для заголовка и описания на карточке)
 const toText = (html: string) =>
-    new DOMParser().parseFromString(html, 'text/html').body.textContent?.trim() ??
-    '';
+  new DOMParser().parseFromString(html, 'text/html').body.textContent?.trim() ??
+  '';
 
 /* ---------- Точки: окно из 5 штук ---------- */
 // Синяя точка стоит на 1-й, 2-й позиции в начале, на 3-й в середине,
 // на 4-й и 5-й в конце. В середине сами точки «листаются» внутри окна.
 function Dots({
-                count,
-                active,
-                onSelect,
-              }: {
+  count,
+  active,
+  onSelect,
+}: {
   count: number;
   active: number;
   onSelect: (i: number) => void;
 }) {
   const visible = Math.min(count, DOTS_VISIBLE);
   const start =
-      count <= DOTS_VISIBLE
-          ? 0
-          : Math.max(0, Math.min(active - 2, count - DOTS_VISIBLE));
+    count <= DOTS_VISIBLE
+      ? 0
+      : Math.max(0, Math.min(active - 2, count - DOTS_VISIBLE));
 
   return (
-      <div className="overflow-hidden" style={{ width: visible * DOT_STEP }}>
-        <div
-            className="flex transition-transform duration-700 ease-out motion-reduce:transition-none"
-            style={{ transform: `translateX(${-start * DOT_STEP}px)` }}
-        >
-          {Array.from({ length: count }).map((_, i) => {
-            const pos = i - start;
-            const isEdge =
-                count > DOTS_VISIBLE &&
-                ((pos === 0 && start > 0) ||
-                    (pos === DOTS_VISIBLE - 1 && start < count - DOTS_VISIBLE));
+    <div className="overflow-hidden" style={{ width: visible * DOT_STEP }}>
+      <div
+        className="flex transition-transform duration-700 ease-out motion-reduce:transition-none"
+        style={{ transform: `translateX(${-start * DOT_STEP}px)` }}
+      >
+        {Array.from({ length: count }).map((_, i) => {
+          const pos = i - start;
+          const isEdge =
+            count > DOTS_VISIBLE &&
+            ((pos === 0 && start > 0) ||
+              (pos === DOTS_VISIBLE - 1 && start < count - DOTS_VISIBLE));
 
-            return (
-                <button
-                    key={i}
-                    type="button"
-                    aria-label={`${i + 1} / ${count}`}
-                    aria-current={i === active}
-                    onClick={() => onSelect(i)}
-                    style={{ width: DOT_STEP }}
-                    className="flex h-5 shrink-0 items-center justify-center"
-                >
+          return (
+            <button
+              key={i}
+              type="button"
+              aria-label={`${i + 1} / ${count}`}
+              aria-current={i === active}
+              onClick={() => onSelect(i)}
+              style={{ width: DOT_STEP }}
+              className="flex h-5 shrink-0 items-center justify-center"
+            >
               <span
-                  className={`block size-2 rounded-full transition-all duration-700 ${
-                      i === active ? 'bg-atmos-700' : 'bg-gray-300'
-                  } ${isEdge ? 'scale-50' : ''}`}
+                className={`block size-2 rounded-full transition-all duration-700 ${
+                  i === active ? 'bg-atmos-700' : 'bg-gray-300'
+                } ${isEdge ? 'scale-50' : ''}`}
               />
-                </button>
-            );
-          })}
-        </div>
+            </button>
+          );
+        })}
       </div>
+    </div>
   );
 }
 
 /* ---------- Скелет ---------- */
 export function NewsCarouselSkeleton() {
   const body = (
-      <>
-        <div className="aspect-video w-full shrink-0 bg-gray-200" />
-        <div className="flex aspect-video w-full flex-col gap-3 p-5">
-          <div className="h-5 w-16 rounded-md bg-gray-200" />
-          <div className="h-5 w-4/5 rounded-md bg-gray-200" />
-          <div className="h-3 w-full rounded bg-gray-200" />
-          <div className="h-3 w-2/3 rounded bg-gray-200" />
-        </div>
-      </>
+    <>
+      <div className="aspect-video w-full shrink-0 bg-gray-200" />
+      <div className="flex aspect-video w-full flex-col gap-3 p-5">
+        <div className="h-5 w-16 rounded-md bg-gray-200" />
+        <div className="h-5 w-4/5 rounded-md bg-gray-200" />
+        <div className="h-3 w-full rounded bg-gray-200" />
+        <div className="h-3 w-2/3 rounded bg-gray-200" />
+      </div>
+    </>
   );
   const card = `${CARD_BOX} flex animate-pulse flex-col overflow-hidden squircle-3xl bg-white -translate-y-1/2`;
 
   return (
-      <div className="flex h-full min-h-0 flex-col" aria-hidden>
-        <div className="relative aspect-[20/19] w-full lg:aspect-auto lg:min-h-0 lg:flex-1">
-          <div className={`${card} left-auto right-0 z-0 opacity-60`}>{body}</div>
-          <div className={`${card} left-1/2 z-10 -translate-x-1/2 opacity-80`}>
-            {body}
-          </div>
-          <div className={`${card} z-20 shadow-figma`}>{body}</div>
+    <div className="flex h-full min-h-0 flex-col" aria-hidden>
+      <div className="relative aspect-[20/19] w-full lg:aspect-auto lg:min-h-0 lg:flex-1">
+        <div className={`${card} left-auto right-0 z-0 opacity-60`}>{body}</div>
+        <div className={`${card} left-1/2 z-10 -translate-x-1/2 opacity-80`}>
+          {body}
         </div>
-        <div className={BOTTOM_ROW} />
+        <div className={`${card} shadow-figma z-20`}>{body}</div>
       </div>
+      <div className={BOTTOM_ROW} />
+    </div>
   );
 }
 
 /* ---------- Карточка ---------- */
 function NewsCard({
-                    item,
-                    slot,
-                    transition,
-                    onSelect,
-                    onRead,
-                  }: {
+  item,
+  slot,
+  transition,
+  onSelect,
+  onRead,
+}: {
   item: NewsEntity;
   slot: Slot;
   transition: string;
@@ -249,12 +248,12 @@ function NewsCard({
   const lang = i18n.language;
 
   const title = useMemo(
-      () => toText(item.name[lang] ?? item.name.en ?? ''),
-      [item.name, lang],
+    () => toText(item.name[lang] ?? item.name.en ?? ''),
+    [item.name, lang],
   );
   const description = useMemo(
-      () => toText(item.description[lang] ?? item.description.en ?? ''),
-      [item.description, lang],
+    () => toText(item.description[lang] ?? item.description.en ?? ''),
+    [item.description, lang],
   );
 
   const style: CSSProperties = {
@@ -271,76 +270,76 @@ function NewsCard({
   const fade = transition === 'none' ? 'none' : `opacity ${MOVE_MS}ms ${EASE}`;
 
   return (
-      <div
-          aria-hidden={!slot.interactive}
-          onClick={slot.active ? undefined : onSelect}
-          style={style}
-          className={`${CARD_BOX} ${slot.active ? 'cursor-default' : 'cursor-pointer'}`}
-      >
-        {/* тень вынесена в отдельный слой: её прозрачность плавно меняется,
+    <div
+      aria-hidden={!slot.interactive}
+      onClick={slot.active ? undefined : onSelect}
+      style={style}
+      className={`${CARD_BOX} ${slot.active ? 'cursor-default' : 'cursor-pointer'}`}
+    >
+      {/* тень вынесена в отдельный слой: её прозрачность плавно меняется,
           а у спрятанных карточек тени нет, поэтому они не складываются в тёмное пятно */}
-        <div
-            className="pointer-events-none absolute inset-0 squircle-3xl shadow-figma"
-            style={{ opacity: slot.shadow, transition: fade }}
-        />
+      <div
+        className="squircle-3xl shadow-figma pointer-events-none absolute inset-0"
+        style={{ opacity: slot.shadow, transition: fade }}
+      />
 
-        <div className="relative flex size-full flex-col overflow-hidden squircle-3xl bg-white text-black">
-          <div className="aspect-video w-full shrink-0 bg-gray-200">
-            <img
-                src={item.image_url}
-                alt={title}
-                decoding="async"
-                draggable={false}
-                className="size-full object-cover"
-            />
-          </div>
+      <div className="squircle-3xl relative flex size-full flex-col overflow-hidden bg-white text-black">
+        <div className="aspect-video w-full shrink-0 bg-gray-200">
+          <img
+            src={item.image_url}
+            alt={title}
+            decoding="async"
+            draggable={false}
+            className="size-full object-cover"
+          />
+        </div>
 
-          <div className="flex aspect-video w-full shrink-0 flex-col gap-[1.8cqw] overflow-hidden p-[4.5cqw]">
-          <span className="w-fit rounded-lg bg-neutral-900 px-[3cqw] pt-[0.6cqw] pb-[0.5cqw] text-[3.2cqw] font-semibold leading-[1.5] text-white">
+        <div className="flex aspect-video w-full shrink-0 flex-col gap-[1.8cqw] overflow-hidden p-[4.5cqw]">
+          <span className="w-fit rounded-lg bg-neutral-900 px-[3cqw] pb-[0.5cqw] pt-[0.6cqw] text-[3.2cqw] font-semibold leading-[1.5] text-white">
             {format(new Date(item.publishedAt), 'dd.MM.yyyy')}
           </span>
 
-            <h3 className="line-clamp-2 text-[6cqw] font-bold leading-[1.4]">
-              {title}
-            </h3>
+          <h3 className="line-clamp-2 text-[6cqw] font-bold leading-[1.4]">
+            {title}
+          </h3>
 
-            <p className="line-clamp-3 break-words text-[3.5cqw] text-justify font-medium leading-[1.45] text-neutral-600">
-              {description}
-            </p>
+          <p className="line-clamp-3 break-words text-justify text-[3.5cqw] font-medium leading-[1.45] text-neutral-600">
+            {description}
+          </p>
 
-            {/* новость открывается только отсюда; у неактивной карточки кнопка
+          {/* новость открывается только отсюда; у неактивной карточки кнопка
               не ловит клики, и клик по ней просто выводит карточку вперёд */}
-            <button
-                type="button"
-                tabIndex={slot.active ? 0 : -1}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onRead();
-                }}
-                className={`mt-auto w-fit text-[3cqw] font-medium text-neutral-400 transition-colors hover:text-atmos-700 ${
-                    slot.active ? '' : 'pointer-events-none'
-                }`}
-            >
-              {t('news.readMore', 'Читать далее...')}
-            </button>
-          </div>
-
-          {/* белая вуаль: карточка остаётся непрозрачной, но выглядит светлее */}
-          <div
-              className="pointer-events-none absolute inset-0 bg-white"
-              style={{ opacity: slot.veil, transition: fade }}
-          />
+          <button
+            type="button"
+            tabIndex={slot.active ? 0 : -1}
+            onClick={(e) => {
+              e.stopPropagation();
+              onRead();
+            }}
+            className={`mt-auto w-fit text-[3cqw] font-medium text-neutral-400 transition-colors hover:text-atmos-700 ${
+              slot.active ? '' : 'pointer-events-none'
+            }`}
+          >
+            {t('news.readMore', 'Читать далее...')}
+          </button>
         </div>
+
+        {/* белая вуаль: карточка остаётся непрозрачной, но выглядит светлее */}
+        <div
+          className="pointer-events-none absolute inset-0 bg-white"
+          style={{ opacity: slot.veil, transition: fade }}
+        />
       </div>
+    </div>
   );
 }
 
 /* ---------- Карусель ---------- */
 export function NewsCarousel({
-                               news,
-                               isLoading,
-                               onOpen,
-                             }: {
+  news,
+  isLoading,
+  onOpen,
+}: {
   /** Уже отфильтрованные и отсортированные новости (новые первыми). Показываются все. */
   news: NewsEntity[];
   isLoading: boolean;
@@ -355,10 +354,10 @@ export function NewsCarousel({
   const mode = getMode(active, count);
 
   const reduceMotion = useMemo(
-      () =>
-          typeof window !== 'undefined' &&
-          window.matchMedia('(prefers-reduced-motion: reduce)').matches,
-      [],
+    () =>
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+    [],
   );
 
   // направление автоплея: идёт вперёд до конца, потом назад до начала и так далее
@@ -401,9 +400,9 @@ export function NewsCarousel({
   }, [count, isLoading]);
 
   const transition =
-      animate && !reduceMotion
-          ? `transform ${MOVE_MS}ms ${EASE}, filter ${MOVE_MS}ms ${EASE}`
-          : 'none';
+    animate && !reduceMotion
+      ? `transform ${MOVE_MS}ms ${EASE}, filter ${MOVE_MS}ms ${EASE}`
+      : 'none';
 
   /* ---- автоплей: стоит на паузе при наведении, фокусе и свайпе ---- */
   useEffect(() => {
@@ -448,7 +447,10 @@ export function NewsCarousel({
   const wheelLock = useRef(false);
   const onWheel = (e: WheelEvent<HTMLDivElement>) => {
     if (wheelLock.current) return;
-    if (Math.abs(e.deltaX) < WHEEL_MIN || Math.abs(e.deltaX) < Math.abs(e.deltaY)) {
+    if (
+      Math.abs(e.deltaX) < WHEEL_MIN ||
+      Math.abs(e.deltaX) < Math.abs(e.deltaY)
+    ) {
       return;
     }
     go(active + (e.deltaX > 0 ? 1 : -1));
@@ -471,50 +473,50 @@ export function NewsCarousel({
   const to = Math.min(count - 1, active + RENDER_RANGE);
 
   return (
+    <div
+      role="region"
+      aria-roledescription="carousel"
+      aria-label={t('news.title', 'Новости')}
+      className="flex h-full min-h-0 flex-col"
+      onKeyDown={onKeyDown}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
+    >
       <div
-          role="region"
-          aria-roledescription="carousel"
-          aria-label={t('news.title', 'Новости')}
-          className="flex h-full min-h-0 flex-col"
-          onKeyDown={onKeyDown}
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-          onFocus={() => setPaused(true)}
-          onBlur={() => setPaused(false)}
+        ref={stageRef}
+        className="relative aspect-[20/19] w-full touch-pan-y select-none lg:aspect-auto lg:min-h-0 lg:flex-1"
+        onPointerDown={onPointerDown}
+        onPointerUp={onPointerUp}
+        onPointerCancel={() => {
+          startX.current = null;
+        }}
+        onWheel={onWheel}
       >
-        <div
-            ref={stageRef}
-            className="relative aspect-[20/19] w-full touch-pan-y select-none lg:aspect-auto lg:min-h-0 lg:flex-1"
-            onPointerDown={onPointerDown}
-            onPointerUp={onPointerUp}
-            onPointerCancel={() => {
-              startX.current = null;
-            }}
-            onWheel={onWheel}
-        >
-          {news.slice(from, to + 1).map((item, k) => {
-            const i = from + k;
-            return (
-                <NewsCard
-                    key={item.id}
-                    item={item}
-                    slot={getSlot(i - active, mode, count, size)}
-                    transition={transition}
-                    onSelect={() => {
-                      if (!dragged.current) go(i);
-                    }}
-                    onRead={() => {
-                      if (!dragged.current) onOpen(item);
-                    }}
-                />
-            );
-          })}
-        </div>
-
-        <div className={BOTTOM_ROW}>
-          {count > 1 && <Dots count={count} active={active} onSelect={go} />}
-        </div>
+        {news.slice(from, to + 1).map((item, k) => {
+          const i = from + k;
+          return (
+            <NewsCard
+              key={item.id}
+              item={item}
+              slot={getSlot(i - active, mode, count, size)}
+              transition={transition}
+              onSelect={() => {
+                if (!dragged.current) go(i);
+              }}
+              onRead={() => {
+                if (!dragged.current) onOpen(item);
+              }}
+            />
+          );
+        })}
       </div>
+
+      <div className={BOTTOM_ROW}>
+        {count > 1 && <Dots count={count} active={active} onSelect={go} />}
+      </div>
+    </div>
   );
 }
 
