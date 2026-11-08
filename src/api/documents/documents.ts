@@ -5,10 +5,10 @@
  * API service for handling IVAO Belarus Divisions Web infrastructure.
  * OpenAPI spec version: 1.13.2
  */
-import {
-  useMutation,
-  useQuery
-} from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
+
+import type { BodyType, ErrorType } from '../../utils/customInstance';
+import type { CreateDocumentDto, Documents, ErrorResponseDto } from '../model';
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -21,24 +21,17 @@ import type {
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
-  UseQueryResult
+  UseQueryResult,
 } from '@tanstack/react-query';
 
-import type {
-  CreateDocumentDto,
-  Documents,
-  ErrorResponseDto
-} from '../model';
-
 import { customInstance } from '../../utils/customInstance';
-import type { ErrorType , BodyType } from '../../utils/customInstance';
-
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-
-const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
+const withQueryKey = <T extends object, K>(
+  query: T,
+  queryKey: K,
+): T & { queryKey: K } => {
   const result = { queryKey } as T & { queryKey: K };
   for (const key of Object.keys(query)) {
     // The explicit queryKey always wins, matching the previous
@@ -57,475 +50,775 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
  * @summary Получить все документы
  */
 export const documentsGetAllDocuments = (
-
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<Documents[]>(
-      {url: `/documents`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
+  return customInstance<Documents[]>(
+    { url: `/documents`, method: 'GET', signal },
+    options,
+  );
+};
 
 export const getDocumentsGetAllDocumentsQueryKey = () => {
-    return [
-    `/documents`
-    ] as const;
-    }
+  return [`/documents`] as const;
+};
 
+export const getDocumentsGetAllDocumentsQueryOptions = <
+  TData = Awaited<ReturnType<typeof documentsGetAllDocuments>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof documentsGetAllDocuments>>,
+      TError,
+      TData
+    >
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-export const getDocumentsGetAllDocumentsQueryOptions = <TData = Awaited<ReturnType<typeof documentsGetAllDocuments>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof documentsGetAllDocuments>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
+  const queryKey =
+    queryOptions?.queryKey ?? getDocumentsGetAllDocumentsQueryKey();
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof documentsGetAllDocuments>>
+  > = ({ signal }) => documentsGetAllDocuments(requestOptions, signal);
 
-  const queryKey =  queryOptions?.queryKey ?? getDocumentsGetAllDocumentsQueryKey();
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof documentsGetAllDocuments>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type DocumentsGetAllDocumentsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof documentsGetAllDocuments>>
+>;
+export type DocumentsGetAllDocumentsQueryError = ErrorType<unknown>;
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof documentsGetAllDocuments>>> = ({ signal }) => documentsGetAllDocuments(requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof documentsGetAllDocuments>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type DocumentsGetAllDocumentsQueryResult = NonNullable<Awaited<ReturnType<typeof documentsGetAllDocuments>>>
-export type DocumentsGetAllDocumentsQueryError = ErrorType<unknown>
-
-
-export function useDocumentsGetAllDocuments<TData = Awaited<ReturnType<typeof documentsGetAllDocuments>>, TError = ErrorType<unknown>>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof documentsGetAllDocuments>>, TError, TData>> & Pick<
+export function useDocumentsGetAllDocuments<
+  TData = Awaited<ReturnType<typeof documentsGetAllDocuments>>,
+  TError = ErrorType<unknown>,
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof documentsGetAllDocuments>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof documentsGetAllDocuments>>,
           TError,
           Awaited<ReturnType<typeof documentsGetAllDocuments>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useDocumentsGetAllDocuments<TData = Awaited<ReturnType<typeof documentsGetAllDocuments>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof documentsGetAllDocuments>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useDocumentsGetAllDocuments<
+  TData = Awaited<ReturnType<typeof documentsGetAllDocuments>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof documentsGetAllDocuments>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof documentsGetAllDocuments>>,
           TError,
           Awaited<ReturnType<typeof documentsGetAllDocuments>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useDocumentsGetAllDocuments<TData = Awaited<ReturnType<typeof documentsGetAllDocuments>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof documentsGetAllDocuments>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useDocumentsGetAllDocuments<
+  TData = Awaited<ReturnType<typeof documentsGetAllDocuments>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof documentsGetAllDocuments>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Получить все документы
  */
 
-export function useDocumentsGetAllDocuments<TData = Awaited<ReturnType<typeof documentsGetAllDocuments>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof documentsGetAllDocuments>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useDocumentsGetAllDocuments<
+  TData = Awaited<ReturnType<typeof documentsGetAllDocuments>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof documentsGetAllDocuments>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getDocumentsGetAllDocumentsQueryOptions(options);
 
-  const queryOptions = getDocumentsGetAllDocumentsQueryOptions(options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
 
 /**
  * @summary Создать новый документ
  */
 export const documentsCreateDocument = (
-    createDocumentDto: BodyType<CreateDocumentDto>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  createDocumentDto: BodyType<CreateDocumentDto>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<Documents>(
-      {url: `/documents`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: createDocumentDto, signal
+  return customInstance<Documents>(
+    {
+      url: `/documents`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: createDocumentDto,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
+export const getDocumentsCreateDocumentMutationKey = () =>
+  ['documentsCreateDocument'] as const;
 
+export const getDocumentsCreateDocumentMutationOptions = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof documentsCreateDocument>>,
+    TError,
+    DocumentsCreateDocumentMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof documentsCreateDocument>>,
+  TError,
+  DocumentsCreateDocumentMutationVariables,
+  TContext
+> => {
+  const mutationKey = getDocumentsCreateDocumentMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof documentsCreateDocument>>,
+    DocumentsCreateDocumentMutationVariables
+  > = (props) => {
+    const { data } = props ?? {};
 
-export const getDocumentsCreateDocumentMutationKey = () => ['documentsCreateDocument'] as const;
+    return documentsCreateDocument(data, requestOptions);
+  };
 
-export const getDocumentsCreateDocumentMutationOptions = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof documentsCreateDocument>>, TError,DocumentsCreateDocumentMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof documentsCreateDocument>>, TError,DocumentsCreateDocumentMutationVariables, TContext> => {
+  return { mutationFn, ...mutationOptions };
+};
 
-const mutationKey = getDocumentsCreateDocumentMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+export type DocumentsCreateDocumentMutationResult = NonNullable<
+  Awaited<ReturnType<typeof documentsCreateDocument>>
+>;
+export type DocumentsCreateDocumentMutationBody = BodyType<CreateDocumentDto>;
+export type DocumentsCreateDocumentMutationError = ErrorType<ErrorResponseDto>;
+export type DocumentsCreateDocumentMutationVariables = {
+  data: BodyType<CreateDocumentDto>;
+};
 
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof documentsCreateDocument>>, DocumentsCreateDocumentMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  documentsCreateDocument(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type DocumentsCreateDocumentMutationResult = NonNullable<Awaited<ReturnType<typeof documentsCreateDocument>>>
-    export type DocumentsCreateDocumentMutationBody = BodyType<CreateDocumentDto>
-    export type DocumentsCreateDocumentMutationError = ErrorType<ErrorResponseDto>
-    export type DocumentsCreateDocumentMutationVariables = {data: BodyType<CreateDocumentDto>}
-
-    /**
+/**
  * @summary Создать новый документ
  */
-export const useDocumentsCreateDocument = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof documentsCreateDocument>>, TError,DocumentsCreateDocumentMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof documentsCreateDocument>>,
-        TError,
-        DocumentsCreateDocumentMutationVariables,
-        TContext
-      > => {
-      return useMutation(getDocumentsCreateDocumentMutationOptions(options), queryClient);
-    }
-    /**
+export const useDocumentsCreateDocument = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof documentsCreateDocument>>,
+      TError,
+      DocumentsCreateDocumentMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof documentsCreateDocument>>,
+  TError,
+  DocumentsCreateDocumentMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getDocumentsCreateDocumentMutationOptions(options),
+    queryClient,
+  );
+};
+/**
  * @summary Получить документ по ID
  */
 export const documentsGetDocumentById = (
-    id: number,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: number,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<Documents>(
+    { url: `/documents/${id}`, method: 'GET', signal },
+    options,
+  );
+};
 
+export const getDocumentsGetDocumentByIdQueryKey = (id: number) => {
+  return [`/documents/${id}`] as const;
+};
 
-      return customInstance<Documents>(
-      {url: `/documents/${id}`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
-
-export const getDocumentsGetDocumentByIdQueryKey = (id: number,) => {
-    return [
-    `/documents/${id}`
-    ] as const;
-    }
-
-
-export const getDocumentsGetDocumentByIdQueryOptions = <TData = Awaited<ReturnType<typeof documentsGetDocumentById>>, TError = ErrorType<ErrorResponseDto>>(id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof documentsGetDocumentById>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getDocumentsGetDocumentByIdQueryOptions = <
+  TData = Awaited<ReturnType<typeof documentsGetDocumentById>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  id: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof documentsGetDocumentById>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
 ) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryKey =
+    queryOptions?.queryKey ?? getDocumentsGetDocumentByIdQueryKey(id);
 
-  const queryKey =  queryOptions?.queryKey ?? getDocumentsGetDocumentByIdQueryKey(id);
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof documentsGetDocumentById>>
+  > = ({ signal }) => documentsGetDocumentById(id, requestOptions, signal);
 
+  return {
+    queryKey,
+    queryFn,
+    enabled: id !== null && id !== undefined,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof documentsGetDocumentById>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type DocumentsGetDocumentByIdQueryResult = NonNullable<
+  Awaited<ReturnType<typeof documentsGetDocumentById>>
+>;
+export type DocumentsGetDocumentByIdQueryError = ErrorType<ErrorResponseDto>;
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof documentsGetDocumentById>>> = ({ signal }) => documentsGetDocumentById(id, requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof documentsGetDocumentById>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type DocumentsGetDocumentByIdQueryResult = NonNullable<Awaited<ReturnType<typeof documentsGetDocumentById>>>
-export type DocumentsGetDocumentByIdQueryError = ErrorType<ErrorResponseDto>
-
-
-export function useDocumentsGetDocumentById<TData = Awaited<ReturnType<typeof documentsGetDocumentById>>, TError = ErrorType<ErrorResponseDto>>(
- id: number, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof documentsGetDocumentById>>, TError, TData>> & Pick<
+export function useDocumentsGetDocumentById<
+  TData = Awaited<ReturnType<typeof documentsGetDocumentById>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  id: number,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof documentsGetDocumentById>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof documentsGetDocumentById>>,
           TError,
           Awaited<ReturnType<typeof documentsGetDocumentById>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useDocumentsGetDocumentById<TData = Awaited<ReturnType<typeof documentsGetDocumentById>>, TError = ErrorType<ErrorResponseDto>>(
- id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof documentsGetDocumentById>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useDocumentsGetDocumentById<
+  TData = Awaited<ReturnType<typeof documentsGetDocumentById>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  id: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof documentsGetDocumentById>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof documentsGetDocumentById>>,
           TError,
           Awaited<ReturnType<typeof documentsGetDocumentById>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useDocumentsGetDocumentById<TData = Awaited<ReturnType<typeof documentsGetDocumentById>>, TError = ErrorType<ErrorResponseDto>>(
- id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof documentsGetDocumentById>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useDocumentsGetDocumentById<
+  TData = Awaited<ReturnType<typeof documentsGetDocumentById>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  id: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof documentsGetDocumentById>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Получить документ по ID
  */
 
-export function useDocumentsGetDocumentById<TData = Awaited<ReturnType<typeof documentsGetDocumentById>>, TError = ErrorType<ErrorResponseDto>>(
- id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof documentsGetDocumentById>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useDocumentsGetDocumentById<
+  TData = Awaited<ReturnType<typeof documentsGetDocumentById>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  id: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof documentsGetDocumentById>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getDocumentsGetDocumentByIdQueryOptions(id, options);
 
-  const queryOptions = getDocumentsGetDocumentByIdQueryOptions(id,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
 
 /**
  * @summary Редактировать документ
  */
 export const documentsEditDocument = (
-    id: number,
-    createDocumentDto: BodyType<CreateDocumentDto>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: number,
+  createDocumentDto: BodyType<CreateDocumentDto>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<Documents>(
-      {url: `/documents/${id}`, method: 'PUT',
-      headers: {'Content-Type': 'application/json', },
-      data: createDocumentDto, signal
+  return customInstance<Documents>(
+    {
+      url: `/documents/${id}`,
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      data: createDocumentDto,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
+export const getDocumentsEditDocumentMutationKey = () =>
+  ['documentsEditDocument'] as const;
 
+export const getDocumentsEditDocumentMutationOptions = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof documentsEditDocument>>,
+    TError,
+    DocumentsEditDocumentMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof documentsEditDocument>>,
+  TError,
+  DocumentsEditDocumentMutationVariables,
+  TContext
+> => {
+  const mutationKey = getDocumentsEditDocumentMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof documentsEditDocument>>,
+    DocumentsEditDocumentMutationVariables
+  > = (props) => {
+    const { id, data } = props ?? {};
 
-export const getDocumentsEditDocumentMutationKey = () => ['documentsEditDocument'] as const;
+    return documentsEditDocument(id, data, requestOptions);
+  };
 
-export const getDocumentsEditDocumentMutationOptions = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof documentsEditDocument>>, TError,DocumentsEditDocumentMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof documentsEditDocument>>, TError,DocumentsEditDocumentMutationVariables, TContext> => {
+  return { mutationFn, ...mutationOptions };
+};
 
-const mutationKey = getDocumentsEditDocumentMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+export type DocumentsEditDocumentMutationResult = NonNullable<
+  Awaited<ReturnType<typeof documentsEditDocument>>
+>;
+export type DocumentsEditDocumentMutationBody = BodyType<CreateDocumentDto>;
+export type DocumentsEditDocumentMutationError = ErrorType<ErrorResponseDto>;
+export type DocumentsEditDocumentMutationVariables = {
+  id: number;
+  data: BodyType<CreateDocumentDto>;
+};
 
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof documentsEditDocument>>, DocumentsEditDocumentMutationVariables> = (props) => {
-          const {id,data} = props ?? {};
-
-          return  documentsEditDocument(id,data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type DocumentsEditDocumentMutationResult = NonNullable<Awaited<ReturnType<typeof documentsEditDocument>>>
-    export type DocumentsEditDocumentMutationBody = BodyType<CreateDocumentDto>
-    export type DocumentsEditDocumentMutationError = ErrorType<ErrorResponseDto>
-    export type DocumentsEditDocumentMutationVariables = {id: number;data: BodyType<CreateDocumentDto>}
-
-    /**
+/**
  * @summary Редактировать документ
  */
-export const useDocumentsEditDocument = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof documentsEditDocument>>, TError,DocumentsEditDocumentMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof documentsEditDocument>>,
-        TError,
-        DocumentsEditDocumentMutationVariables,
-        TContext
-      > => {
-      return useMutation(getDocumentsEditDocumentMutationOptions(options), queryClient);
-    }
-    /**
+export const useDocumentsEditDocument = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof documentsEditDocument>>,
+      TError,
+      DocumentsEditDocumentMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof documentsEditDocument>>,
+  TError,
+  DocumentsEditDocumentMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getDocumentsEditDocumentMutationOptions(options),
+    queryClient,
+  );
+};
+/**
  * @summary Удалить документ
  */
 export const documentsDeleteDocument = (
-    id: number,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: number,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<void>(
+    { url: `/documents/${id}`, method: 'DELETE', signal },
+    options,
+  );
+};
 
+export const getDocumentsDeleteDocumentMutationKey = () =>
+  ['documentsDeleteDocument'] as const;
 
-      return customInstance<void>(
-      {url: `/documents/${id}`, method: 'DELETE', signal
-    },
-      options);
-    }
+export const getDocumentsDeleteDocumentMutationOptions = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof documentsDeleteDocument>>,
+    TError,
+    DocumentsDeleteDocumentMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof documentsDeleteDocument>>,
+  TError,
+  DocumentsDeleteDocumentMutationVariables,
+  TContext
+> => {
+  const mutationKey = getDocumentsDeleteDocumentMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof documentsDeleteDocument>>,
+    DocumentsDeleteDocumentMutationVariables
+  > = (props) => {
+    const { id } = props ?? {};
 
+    return documentsDeleteDocument(id, requestOptions);
+  };
 
+  return { mutationFn, ...mutationOptions };
+};
 
-export const getDocumentsDeleteDocumentMutationKey = () => ['documentsDeleteDocument'] as const;
+export type DocumentsDeleteDocumentMutationResult = NonNullable<
+  Awaited<ReturnType<typeof documentsDeleteDocument>>
+>;
 
-export const getDocumentsDeleteDocumentMutationOptions = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof documentsDeleteDocument>>, TError,DocumentsDeleteDocumentMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof documentsDeleteDocument>>, TError,DocumentsDeleteDocumentMutationVariables, TContext> => {
+export type DocumentsDeleteDocumentMutationError = ErrorType<ErrorResponseDto>;
+export type DocumentsDeleteDocumentMutationVariables = { id: number };
 
-const mutationKey = getDocumentsDeleteDocumentMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof documentsDeleteDocument>>, DocumentsDeleteDocumentMutationVariables> = (props) => {
-          const {id} = props ?? {};
-
-          return  documentsDeleteDocument(id,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type DocumentsDeleteDocumentMutationResult = NonNullable<Awaited<ReturnType<typeof documentsDeleteDocument>>>
-
-    export type DocumentsDeleteDocumentMutationError = ErrorType<ErrorResponseDto>
-    export type DocumentsDeleteDocumentMutationVariables = {id: number}
-
-    /**
+/**
  * @summary Удалить документ
  */
-export const useDocumentsDeleteDocument = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof documentsDeleteDocument>>, TError,DocumentsDeleteDocumentMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof documentsDeleteDocument>>,
-        TError,
-        DocumentsDeleteDocumentMutationVariables,
-        TContext
-      > => {
-      return useMutation(getDocumentsDeleteDocumentMutationOptions(options), queryClient);
-    }
-    /**
+export const useDocumentsDeleteDocument = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof documentsDeleteDocument>>,
+      TError,
+      DocumentsDeleteDocumentMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof documentsDeleteDocument>>,
+  TError,
+  DocumentsDeleteDocumentMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getDocumentsDeleteDocumentMutationOptions(options),
+    queryClient,
+  );
+};
+/**
  * @summary Получить документы по ID категории
  */
 export const documentsGetDocumentsByCat = (
-    categoryId: number,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  categoryId: number,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<Documents[]>(
+    { url: `/documents/category/${categoryId}`, method: 'GET', signal },
+    options,
+  );
+};
 
+export const getDocumentsGetDocumentsByCatQueryKey = (categoryId: number) => {
+  return [`/documents/category/${categoryId}`] as const;
+};
 
-      return customInstance<Documents[]>(
-      {url: `/documents/category/${categoryId}`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
-
-export const getDocumentsGetDocumentsByCatQueryKey = (categoryId: number,) => {
-    return [
-    `/documents/category/${categoryId}`
-    ] as const;
-    }
-
-
-export const getDocumentsGetDocumentsByCatQueryOptions = <TData = Awaited<ReturnType<typeof documentsGetDocumentsByCat>>, TError = ErrorType<ErrorResponseDto>>(categoryId: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof documentsGetDocumentsByCat>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getDocumentsGetDocumentsByCatQueryOptions = <
+  TData = Awaited<ReturnType<typeof documentsGetDocumentsByCat>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  categoryId: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof documentsGetDocumentsByCat>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
 ) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryKey =
+    queryOptions?.queryKey ?? getDocumentsGetDocumentsByCatQueryKey(categoryId);
 
-  const queryKey =  queryOptions?.queryKey ?? getDocumentsGetDocumentsByCatQueryKey(categoryId);
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof documentsGetDocumentsByCat>>
+  > = ({ signal }) =>
+    documentsGetDocumentsByCat(categoryId, requestOptions, signal);
 
+  return {
+    queryKey,
+    queryFn,
+    enabled: categoryId !== null && categoryId !== undefined,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof documentsGetDocumentsByCat>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type DocumentsGetDocumentsByCatQueryResult = NonNullable<
+  Awaited<ReturnType<typeof documentsGetDocumentsByCat>>
+>;
+export type DocumentsGetDocumentsByCatQueryError = ErrorType<ErrorResponseDto>;
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof documentsGetDocumentsByCat>>> = ({ signal }) => documentsGetDocumentsByCat(categoryId, requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: categoryId !== null && categoryId !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof documentsGetDocumentsByCat>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type DocumentsGetDocumentsByCatQueryResult = NonNullable<Awaited<ReturnType<typeof documentsGetDocumentsByCat>>>
-export type DocumentsGetDocumentsByCatQueryError = ErrorType<ErrorResponseDto>
-
-
-export function useDocumentsGetDocumentsByCat<TData = Awaited<ReturnType<typeof documentsGetDocumentsByCat>>, TError = ErrorType<ErrorResponseDto>>(
- categoryId: number, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof documentsGetDocumentsByCat>>, TError, TData>> & Pick<
+export function useDocumentsGetDocumentsByCat<
+  TData = Awaited<ReturnType<typeof documentsGetDocumentsByCat>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  categoryId: number,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof documentsGetDocumentsByCat>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof documentsGetDocumentsByCat>>,
           TError,
           Awaited<ReturnType<typeof documentsGetDocumentsByCat>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useDocumentsGetDocumentsByCat<TData = Awaited<ReturnType<typeof documentsGetDocumentsByCat>>, TError = ErrorType<ErrorResponseDto>>(
- categoryId: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof documentsGetDocumentsByCat>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useDocumentsGetDocumentsByCat<
+  TData = Awaited<ReturnType<typeof documentsGetDocumentsByCat>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  categoryId: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof documentsGetDocumentsByCat>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof documentsGetDocumentsByCat>>,
           TError,
           Awaited<ReturnType<typeof documentsGetDocumentsByCat>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useDocumentsGetDocumentsByCat<TData = Awaited<ReturnType<typeof documentsGetDocumentsByCat>>, TError = ErrorType<ErrorResponseDto>>(
- categoryId: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof documentsGetDocumentsByCat>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useDocumentsGetDocumentsByCat<
+  TData = Awaited<ReturnType<typeof documentsGetDocumentsByCat>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  categoryId: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof documentsGetDocumentsByCat>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Получить документы по ID категории
  */
 
-export function useDocumentsGetDocumentsByCat<TData = Awaited<ReturnType<typeof documentsGetDocumentsByCat>>, TError = ErrorType<ErrorResponseDto>>(
- categoryId: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof documentsGetDocumentsByCat>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useDocumentsGetDocumentsByCat<
+  TData = Awaited<ReturnType<typeof documentsGetDocumentsByCat>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  categoryId: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof documentsGetDocumentsByCat>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getDocumentsGetDocumentsByCatQueryOptions(
+    categoryId,
+    options,
+  );
 
-  const queryOptions = getDocumentsGetDocumentsByCatQueryOptions(categoryId,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-

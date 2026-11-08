@@ -9,8 +9,8 @@
 /**
  * Status of the GDPR request
  */
-export type GdprHistoryResponseStatus = typeof GdprHistoryResponseStatus[keyof typeof GdprHistoryResponseStatus];
-
+export type GdprHistoryResponseStatus =
+  (typeof GdprHistoryResponseStatus)[keyof typeof GdprHistoryResponseStatus];
 
 export const GdprHistoryResponseStatus = {
   NUMBER_0: 0,

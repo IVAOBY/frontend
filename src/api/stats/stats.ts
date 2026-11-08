@@ -5,9 +5,10 @@
  * API service for handling IVAO Belarus Divisions Web infrastructure.
  * OpenAPI spec version: 1.13.2
  */
-import {
-  useQuery
-} from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
+
+import type { ErrorType } from '../../utils/customInstance';
+import type { AtcDto, PilotDto } from '../model';
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -17,23 +18,17 @@ import type {
   QueryKey,
   UndefinedInitialDataOptions,
   UseQueryOptions,
-  UseQueryResult
+  UseQueryResult,
 } from '@tanstack/react-query';
 
-import type {
-  AtcDto,
-  PilotDto
-} from '../model';
-
 import { customInstance } from '../../utils/customInstance';
-import type { ErrorType } from '../../utils/customInstance';
-
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-
-const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
+const withQueryKey = <T extends object, K>(
+  query: T,
+  queryKey: K,
+): T & { queryKey: K } => {
   const result = { queryKey } as T & { queryKey: K };
   for (const key of Object.keys(query)) {
     // The explicit queryKey always wins, matching the previous
@@ -53,184 +48,263 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
  * @summary Получить статистику по пилотам
  */
 export const statsGetPilots = (
-
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<PilotDto[]>(
-      {url: `/stats/pilots`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
+  return customInstance<PilotDto[]>(
+    { url: `/stats/pilots`, method: 'GET', signal },
+    options,
+  );
+};
 
 export const getStatsGetPilotsQueryKey = () => {
-    return [
-    `/stats/pilots`
-    ] as const;
-    }
+  return [`/stats/pilots`] as const;
+};
 
+export const getStatsGetPilotsQueryOptions = <
+  TData = Awaited<ReturnType<typeof statsGetPilots>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof statsGetPilots>>, TError, TData>
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-export const getStatsGetPilotsQueryOptions = <TData = Awaited<ReturnType<typeof statsGetPilots>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof statsGetPilots>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
+  const queryKey = queryOptions?.queryKey ?? getStatsGetPilotsQueryKey();
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof statsGetPilots>>> = ({
+    signal,
+  }) => statsGetPilots(requestOptions, signal);
 
-  const queryKey =  queryOptions?.queryKey ?? getStatsGetPilotsQueryKey();
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof statsGetPilots>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type StatsGetPilotsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof statsGetPilots>>
+>;
+export type StatsGetPilotsQueryError = ErrorType<unknown>;
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof statsGetPilots>>> = ({ signal }) => statsGetPilots(requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof statsGetPilots>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type StatsGetPilotsQueryResult = NonNullable<Awaited<ReturnType<typeof statsGetPilots>>>
-export type StatsGetPilotsQueryError = ErrorType<unknown>
-
-
-export function useStatsGetPilots<TData = Awaited<ReturnType<typeof statsGetPilots>>, TError = ErrorType<unknown>>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof statsGetPilots>>, TError, TData>> & Pick<
+export function useStatsGetPilots<
+  TData = Awaited<ReturnType<typeof statsGetPilots>>,
+  TError = ErrorType<unknown>,
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof statsGetPilots>>, TError, TData>
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof statsGetPilots>>,
           TError,
           Awaited<ReturnType<typeof statsGetPilots>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useStatsGetPilots<TData = Awaited<ReturnType<typeof statsGetPilots>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof statsGetPilots>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useStatsGetPilots<
+  TData = Awaited<ReturnType<typeof statsGetPilots>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof statsGetPilots>>, TError, TData>
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof statsGetPilots>>,
           TError,
           Awaited<ReturnType<typeof statsGetPilots>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useStatsGetPilots<TData = Awaited<ReturnType<typeof statsGetPilots>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof statsGetPilots>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useStatsGetPilots<
+  TData = Awaited<ReturnType<typeof statsGetPilots>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof statsGetPilots>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Получить статистику по пилотам
  */
 
-export function useStatsGetPilots<TData = Awaited<ReturnType<typeof statsGetPilots>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof statsGetPilots>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useStatsGetPilots<
+  TData = Awaited<ReturnType<typeof statsGetPilots>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof statsGetPilots>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getStatsGetPilotsQueryOptions(options);
 
-  const queryOptions = getStatsGetPilotsQueryOptions(options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
 
 /**
  * Возвращает список активных авиадиспетчеров.
  * @summary Получить статистику по авиадиспетчерам (ATC)
  */
 export const statsGetATC = (
-
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<AtcDto[]>(
-      {url: `/stats/atc`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
+  return customInstance<AtcDto[]>(
+    { url: `/stats/atc`, method: 'GET', signal },
+    options,
+  );
+};
 
 export const getStatsGetATCQueryKey = () => {
-    return [
-    `/stats/atc`
-    ] as const;
-    }
+  return [`/stats/atc`] as const;
+};
 
+export const getStatsGetATCQueryOptions = <
+  TData = Awaited<ReturnType<typeof statsGetATC>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof statsGetATC>>, TError, TData>
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-export const getStatsGetATCQueryOptions = <TData = Awaited<ReturnType<typeof statsGetATC>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof statsGetATC>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
+  const queryKey = queryOptions?.queryKey ?? getStatsGetATCQueryKey();
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof statsGetATC>>> = ({
+    signal,
+  }) => statsGetATC(requestOptions, signal);
 
-  const queryKey =  queryOptions?.queryKey ?? getStatsGetATCQueryKey();
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof statsGetATC>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type StatsGetATCQueryResult = NonNullable<
+  Awaited<ReturnType<typeof statsGetATC>>
+>;
+export type StatsGetATCQueryError = ErrorType<unknown>;
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof statsGetATC>>> = ({ signal }) => statsGetATC(requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof statsGetATC>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type StatsGetATCQueryResult = NonNullable<Awaited<ReturnType<typeof statsGetATC>>>
-export type StatsGetATCQueryError = ErrorType<unknown>
-
-
-export function useStatsGetATC<TData = Awaited<ReturnType<typeof statsGetATC>>, TError = ErrorType<unknown>>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof statsGetATC>>, TError, TData>> & Pick<
+export function useStatsGetATC<
+  TData = Awaited<ReturnType<typeof statsGetATC>>,
+  TError = ErrorType<unknown>,
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof statsGetATC>>, TError, TData>
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof statsGetATC>>,
           TError,
           Awaited<ReturnType<typeof statsGetATC>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useStatsGetATC<TData = Awaited<ReturnType<typeof statsGetATC>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof statsGetATC>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useStatsGetATC<
+  TData = Awaited<ReturnType<typeof statsGetATC>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof statsGetATC>>, TError, TData>
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof statsGetATC>>,
           TError,
           Awaited<ReturnType<typeof statsGetATC>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useStatsGetATC<TData = Awaited<ReturnType<typeof statsGetATC>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof statsGetATC>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useStatsGetATC<
+  TData = Awaited<ReturnType<typeof statsGetATC>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof statsGetATC>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Получить статистику по авиадиспетчерам (ATC)
  */
 
-export function useStatsGetATC<TData = Awaited<ReturnType<typeof statsGetATC>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof statsGetATC>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useStatsGetATC<
+  TData = Awaited<ReturnType<typeof statsGetATC>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof statsGetATC>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getStatsGetATCQueryOptions(options);
 
-  const queryOptions = getStatsGetATCQueryOptions(options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-

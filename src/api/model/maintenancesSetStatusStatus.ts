@@ -6,8 +6,8 @@
  * OpenAPI spec version: 1.13.2
  */
 
-export type MaintenancesSetStatusStatus = typeof MaintenancesSetStatusStatus[keyof typeof MaintenancesSetStatusStatus];
-
+export type MaintenancesSetStatusStatus =
+  (typeof MaintenancesSetStatusStatus)[keyof typeof MaintenancesSetStatusStatus];
 
 export const MaintenancesSetStatusStatus = {
   NUMBER_0: 0,

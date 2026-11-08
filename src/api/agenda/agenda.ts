@@ -5,9 +5,15 @@
  * API service for handling IVAO Belarus Divisions Web infrastructure.
  * OpenAPI spec version: 1.13.2
  */
-import {
-  useQuery
-} from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
+
+import type { ErrorType } from '../../utils/customInstance';
+import type {
+  AgendaGetAgendaParams,
+  AgendaGetCalendarParams,
+  AgendaItem,
+  ErrorResponseDto,
+} from '../model';
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -17,25 +23,17 @@ import type {
   QueryKey,
   UndefinedInitialDataOptions,
   UseQueryOptions,
-  UseQueryResult
+  UseQueryResult,
 } from '@tanstack/react-query';
 
-import type {
-  AgendaGetAgendaParams,
-  AgendaGetCalendarParams,
-  AgendaItem,
-  ErrorResponseDto
-} from '../model';
-
 import { customInstance } from '../../utils/customInstance';
-import type { ErrorType } from '../../utils/customInstance';
-
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-
-const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
+const withQueryKey = <T extends object, K>(
+  query: T,
+  queryKey: K,
+): T & { queryKey: K } => {
   const result = { queryKey } as T & { queryKey: K };
   for (const key of Object.keys(query)) {
     // The explicit queryKey always wins, matching the previous
@@ -55,186 +53,322 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
  * @summary Получение агенды
  */
 export const agendaGetAgenda = (
-    params?: AgendaGetAgendaParams,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  params?: AgendaGetAgendaParams,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<AgendaItem[]>(
+    { url: `/agenda`, method: 'GET', params, signal },
+    options,
+  );
+};
 
+export const getAgendaGetAgendaQueryKey = (params?: AgendaGetAgendaParams) => {
+  return [`/agenda`, ...(params ? [params] : [])] as const;
+};
 
-      return customInstance<AgendaItem[]>(
-      {url: `/agenda`, method: 'GET',
-        params, signal
-    },
-      options);
-    }
-
-
-
-
-export const getAgendaGetAgendaQueryKey = (params?: AgendaGetAgendaParams,) => {
-    return [
-    `/agenda`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getAgendaGetAgendaQueryOptions = <TData = Awaited<ReturnType<typeof agendaGetAgenda>>, TError = ErrorType<unknown>>(params?: AgendaGetAgendaParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof agendaGetAgenda>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getAgendaGetAgendaQueryOptions = <
+  TData = Awaited<ReturnType<typeof agendaGetAgenda>>,
+  TError = ErrorType<unknown>,
+>(
+  params?: AgendaGetAgendaParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof agendaGetAgenda>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
 ) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryKey = queryOptions?.queryKey ?? getAgendaGetAgendaQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getAgendaGetAgendaQueryKey(params);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof agendaGetAgenda>>> = ({
+    signal,
+  }) => agendaGetAgenda(params, requestOptions, signal);
 
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof agendaGetAgenda>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type AgendaGetAgendaQueryResult = NonNullable<
+  Awaited<ReturnType<typeof agendaGetAgenda>>
+>;
+export type AgendaGetAgendaQueryError = ErrorType<unknown>;
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof agendaGetAgenda>>> = ({ signal }) => agendaGetAgenda(params, requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof agendaGetAgenda>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type AgendaGetAgendaQueryResult = NonNullable<Awaited<ReturnType<typeof agendaGetAgenda>>>
-export type AgendaGetAgendaQueryError = ErrorType<unknown>
-
-
-export function useAgendaGetAgenda<TData = Awaited<ReturnType<typeof agendaGetAgenda>>, TError = ErrorType<unknown>>(
- params: undefined |  AgendaGetAgendaParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof agendaGetAgenda>>, TError, TData>> & Pick<
+export function useAgendaGetAgenda<
+  TData = Awaited<ReturnType<typeof agendaGetAgenda>>,
+  TError = ErrorType<unknown>,
+>(
+  params: undefined | AgendaGetAgendaParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof agendaGetAgenda>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof agendaGetAgenda>>,
           TError,
           Awaited<ReturnType<typeof agendaGetAgenda>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useAgendaGetAgenda<TData = Awaited<ReturnType<typeof agendaGetAgenda>>, TError = ErrorType<unknown>>(
- params?: AgendaGetAgendaParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof agendaGetAgenda>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useAgendaGetAgenda<
+  TData = Awaited<ReturnType<typeof agendaGetAgenda>>,
+  TError = ErrorType<unknown>,
+>(
+  params?: AgendaGetAgendaParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof agendaGetAgenda>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof agendaGetAgenda>>,
           TError,
           Awaited<ReturnType<typeof agendaGetAgenda>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useAgendaGetAgenda<TData = Awaited<ReturnType<typeof agendaGetAgenda>>, TError = ErrorType<unknown>>(
- params?: AgendaGetAgendaParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof agendaGetAgenda>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useAgendaGetAgenda<
+  TData = Awaited<ReturnType<typeof agendaGetAgenda>>,
+  TError = ErrorType<unknown>,
+>(
+  params?: AgendaGetAgendaParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof agendaGetAgenda>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Получение агенды
  */
 
-export function useAgendaGetAgenda<TData = Awaited<ReturnType<typeof agendaGetAgenda>>, TError = ErrorType<unknown>>(
- params?: AgendaGetAgendaParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof agendaGetAgenda>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useAgendaGetAgenda<
+  TData = Awaited<ReturnType<typeof agendaGetAgenda>>,
+  TError = ErrorType<unknown>,
+>(
+  params?: AgendaGetAgendaParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof agendaGetAgenda>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getAgendaGetAgendaQueryOptions(params, options);
 
-  const queryOptions = getAgendaGetAgendaQueryOptions(params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
 
 /**
  * Элементы агенды в заданном диапазоне дат (не более 1 года).
  * @summary Получение календаря
  */
 export const agendaGetCalendar = (
-    params: AgendaGetCalendarParams,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  params: AgendaGetCalendarParams,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<AgendaItem[]>(
+    { url: `/agenda/calendar`, method: 'GET', params, signal },
+    options,
+  );
+};
 
-
-      return customInstance<AgendaItem[]>(
-      {url: `/agenda/calendar`, method: 'GET',
-        params, signal
-    },
-      options);
-    }
-
-
-
-
-export const getAgendaGetCalendarQueryKey = (params?: AgendaGetCalendarParams,) => {
-    return [
-    `/agenda/calendar`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getAgendaGetCalendarQueryOptions = <TData = Awaited<ReturnType<typeof agendaGetCalendar>>, TError = ErrorType<ErrorResponseDto>>(params: AgendaGetCalendarParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof agendaGetCalendar>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getAgendaGetCalendarQueryKey = (
+  params?: AgendaGetCalendarParams,
 ) => {
+  return [`/agenda/calendar`, ...(params ? [params] : [])] as const;
+};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+export const getAgendaGetCalendarQueryOptions = <
+  TData = Awaited<ReturnType<typeof agendaGetCalendar>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  params: AgendaGetCalendarParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof agendaGetCalendar>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getAgendaGetCalendarQueryKey(params);
+  const queryKey =
+    queryOptions?.queryKey ?? getAgendaGetCalendarQueryKey(params);
 
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof agendaGetCalendar>>
+  > = ({ signal }) => agendaGetCalendar(params, requestOptions, signal);
 
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof agendaGetCalendar>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof agendaGetCalendar>>> = ({ signal }) => agendaGetCalendar(params, requestOptions, signal);
+export type AgendaGetCalendarQueryResult = NonNullable<
+  Awaited<ReturnType<typeof agendaGetCalendar>>
+>;
+export type AgendaGetCalendarQueryError = ErrorType<ErrorResponseDto>;
 
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof agendaGetCalendar>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type AgendaGetCalendarQueryResult = NonNullable<Awaited<ReturnType<typeof agendaGetCalendar>>>
-export type AgendaGetCalendarQueryError = ErrorType<ErrorResponseDto>
-
-
-export function useAgendaGetCalendar<TData = Awaited<ReturnType<typeof agendaGetCalendar>>, TError = ErrorType<ErrorResponseDto>>(
- params: AgendaGetCalendarParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof agendaGetCalendar>>, TError, TData>> & Pick<
+export function useAgendaGetCalendar<
+  TData = Awaited<ReturnType<typeof agendaGetCalendar>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  params: AgendaGetCalendarParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof agendaGetCalendar>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof agendaGetCalendar>>,
           TError,
           Awaited<ReturnType<typeof agendaGetCalendar>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useAgendaGetCalendar<TData = Awaited<ReturnType<typeof agendaGetCalendar>>, TError = ErrorType<ErrorResponseDto>>(
- params: AgendaGetCalendarParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof agendaGetCalendar>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useAgendaGetCalendar<
+  TData = Awaited<ReturnType<typeof agendaGetCalendar>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  params: AgendaGetCalendarParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof agendaGetCalendar>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof agendaGetCalendar>>,
           TError,
           Awaited<ReturnType<typeof agendaGetCalendar>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useAgendaGetCalendar<TData = Awaited<ReturnType<typeof agendaGetCalendar>>, TError = ErrorType<ErrorResponseDto>>(
- params: AgendaGetCalendarParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof agendaGetCalendar>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useAgendaGetCalendar<
+  TData = Awaited<ReturnType<typeof agendaGetCalendar>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  params: AgendaGetCalendarParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof agendaGetCalendar>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Получение календаря
  */
 
-export function useAgendaGetCalendar<TData = Awaited<ReturnType<typeof agendaGetCalendar>>, TError = ErrorType<ErrorResponseDto>>(
- params: AgendaGetCalendarParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof agendaGetCalendar>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useAgendaGetCalendar<
+  TData = Awaited<ReturnType<typeof agendaGetCalendar>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  params: AgendaGetCalendarParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof agendaGetCalendar>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getAgendaGetCalendarQueryOptions(params, options);
 
-  const queryOptions = getAgendaGetCalendarQueryOptions(params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-

@@ -6,8 +6,8 @@
  * OpenAPI spec version: 1.13.2
  */
 
-export type AirportRunwaysEntityIlsCat = typeof AirportRunwaysEntityIlsCat[keyof typeof AirportRunwaysEntityIlsCat];
-
+export type AirportRunwaysEntityIlsCat =
+  (typeof AirportRunwaysEntityIlsCat)[keyof typeof AirportRunwaysEntityIlsCat];
 
 export const AirportRunwaysEntityIlsCat = {
   NUMBER_2: '2',

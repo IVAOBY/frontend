@@ -6,8 +6,8 @@
  * OpenAPI spec version: 1.13.2
  */
 
-export type SceneriesEntityLicense = typeof SceneriesEntityLicense[keyof typeof SceneriesEntityLicense];
-
+export type SceneriesEntityLicense =
+  (typeof SceneriesEntityLicense)[keyof typeof SceneriesEntityLicense];
 
 export const SceneriesEntityLicense = {
   freeware: 'freeware',

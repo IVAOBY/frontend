@@ -9,8 +9,8 @@
 /**
  * Тип элемента: 0 — событие, 1 — тренировка, 2 — экзамен, 3 — технические работы
  */
-export type AgendaItemType = typeof AgendaItemType[keyof typeof AgendaItemType];
-
+export type AgendaItemType =
+  (typeof AgendaItemType)[keyof typeof AgendaItemType];
 
 export const AgendaItemType = {
   NUMBER_0: 0,

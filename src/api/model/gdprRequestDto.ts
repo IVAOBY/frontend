@@ -9,8 +9,8 @@ import type { GdprRequestEntry } from './gdprRequestEntry';
 
 export interface GdprRequestDto {
   /**
-     * Array of GDPR request entries
-     * @minItems 1
-     */
+   * Array of GDPR request entries
+   * @minItems 1
+   */
   entries: GdprRequestEntry[];
 }

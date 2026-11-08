@@ -5,10 +5,15 @@
  * API service for handling IVAO Belarus Divisions Web infrastructure.
  * OpenAPI spec version: 1.13.2
  */
-import {
-  useMutation,
-  useQuery
-} from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
+
+import type { BodyType, ErrorType } from '../../utils/customInstance';
+import type {
+  BookingEntity,
+  CreateBookingDto,
+  ErrorResponseDto,
+  MessageResponseDto,
+} from '../model';
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -21,25 +26,17 @@ import type {
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
-  UseQueryResult
+  UseQueryResult,
 } from '@tanstack/react-query';
 
-import type {
-  BookingEntity,
-  CreateBookingDto,
-  ErrorResponseDto,
-  MessageResponseDto
-} from '../model';
-
 import { customInstance } from '../../utils/customInstance';
-import type { ErrorType , BodyType } from '../../utils/customInstance';
-
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-
-const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
+const withQueryKey = <T extends object, K>(
+  query: T,
+  queryKey: K,
+): T & { queryKey: K } => {
   const result = { queryKey } as T & { queryKey: K };
   for (const key of Object.keys(query)) {
     // The explicit queryKey always wins, matching the previous
@@ -58,511 +55,757 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
  * @summary Получить бронирование по ID
  */
 export const bookingFindOne = (
-    id: number,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: number,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<BookingEntity>(
+    { url: `/events-booking/${id}`, method: 'GET', signal },
+    options,
+  );
+};
 
+export const getBookingFindOneQueryKey = (id: number) => {
+  return [`/events-booking/${id}`] as const;
+};
 
-      return customInstance<BookingEntity>(
-      {url: `/events-booking/${id}`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
-
-export const getBookingFindOneQueryKey = (id: number,) => {
-    return [
-    `/events-booking/${id}`
-    ] as const;
-    }
-
-
-export const getBookingFindOneQueryOptions = <TData = Awaited<ReturnType<typeof bookingFindOne>>, TError = ErrorType<unknown>>(id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof bookingFindOne>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getBookingFindOneQueryOptions = <
+  TData = Awaited<ReturnType<typeof bookingFindOne>>,
+  TError = ErrorType<unknown>,
+>(
+  id: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof bookingFindOne>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
 ) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryKey = queryOptions?.queryKey ?? getBookingFindOneQueryKey(id);
 
-  const queryKey =  queryOptions?.queryKey ?? getBookingFindOneQueryKey(id);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof bookingFindOne>>> = ({
+    signal,
+  }) => bookingFindOne(id, requestOptions, signal);
 
+  return {
+    queryKey,
+    queryFn,
+    enabled: id !== null && id !== undefined,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof bookingFindOne>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type BookingFindOneQueryResult = NonNullable<
+  Awaited<ReturnType<typeof bookingFindOne>>
+>;
+export type BookingFindOneQueryError = ErrorType<unknown>;
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof bookingFindOne>>> = ({ signal }) => bookingFindOne(id, requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof bookingFindOne>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type BookingFindOneQueryResult = NonNullable<Awaited<ReturnType<typeof bookingFindOne>>>
-export type BookingFindOneQueryError = ErrorType<unknown>
-
-
-export function useBookingFindOne<TData = Awaited<ReturnType<typeof bookingFindOne>>, TError = ErrorType<unknown>>(
- id: number, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof bookingFindOne>>, TError, TData>> & Pick<
+export function useBookingFindOne<
+  TData = Awaited<ReturnType<typeof bookingFindOne>>,
+  TError = ErrorType<unknown>,
+>(
+  id: number,
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof bookingFindOne>>, TError, TData>
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof bookingFindOne>>,
           TError,
           Awaited<ReturnType<typeof bookingFindOne>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useBookingFindOne<TData = Awaited<ReturnType<typeof bookingFindOne>>, TError = ErrorType<unknown>>(
- id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof bookingFindOne>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useBookingFindOne<
+  TData = Awaited<ReturnType<typeof bookingFindOne>>,
+  TError = ErrorType<unknown>,
+>(
+  id: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof bookingFindOne>>, TError, TData>
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof bookingFindOne>>,
           TError,
           Awaited<ReturnType<typeof bookingFindOne>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useBookingFindOne<TData = Awaited<ReturnType<typeof bookingFindOne>>, TError = ErrorType<unknown>>(
- id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof bookingFindOne>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useBookingFindOne<
+  TData = Awaited<ReturnType<typeof bookingFindOne>>,
+  TError = ErrorType<unknown>,
+>(
+  id: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof bookingFindOne>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Получить бронирование по ID
  */
 
-export function useBookingFindOne<TData = Awaited<ReturnType<typeof bookingFindOne>>, TError = ErrorType<unknown>>(
- id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof bookingFindOne>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useBookingFindOne<
+  TData = Awaited<ReturnType<typeof bookingFindOne>>,
+  TError = ErrorType<unknown>,
+>(
+  id: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof bookingFindOne>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getBookingFindOneQueryOptions(id, options);
 
-  const queryOptions = getBookingFindOneQueryOptions(id,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
 
 /**
  * Возвращает бронирования для события. Сотрудникам возвращаются дополнительные данные.
  * @summary Получить бронирования события
  */
 export const bookingFindOneEvent = (
-    id: number,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: number,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<BookingEntity[]>(
+    { url: `/events-booking/event/${id}`, method: 'GET', signal },
+    options,
+  );
+};
 
+export const getBookingFindOneEventQueryKey = (id: number) => {
+  return [`/events-booking/event/${id}`] as const;
+};
 
-      return customInstance<BookingEntity[]>(
-      {url: `/events-booking/event/${id}`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
-
-export const getBookingFindOneEventQueryKey = (id: number,) => {
-    return [
-    `/events-booking/event/${id}`
-    ] as const;
-    }
-
-
-export const getBookingFindOneEventQueryOptions = <TData = Awaited<ReturnType<typeof bookingFindOneEvent>>, TError = ErrorType<unknown>>(id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof bookingFindOneEvent>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getBookingFindOneEventQueryOptions = <
+  TData = Awaited<ReturnType<typeof bookingFindOneEvent>>,
+  TError = ErrorType<unknown>,
+>(
+  id: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof bookingFindOneEvent>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
 ) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryKey = queryOptions?.queryKey ?? getBookingFindOneEventQueryKey(id);
 
-  const queryKey =  queryOptions?.queryKey ?? getBookingFindOneEventQueryKey(id);
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof bookingFindOneEvent>>
+  > = ({ signal }) => bookingFindOneEvent(id, requestOptions, signal);
 
+  return {
+    queryKey,
+    queryFn,
+    enabled: id !== null && id !== undefined,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof bookingFindOneEvent>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type BookingFindOneEventQueryResult = NonNullable<
+  Awaited<ReturnType<typeof bookingFindOneEvent>>
+>;
+export type BookingFindOneEventQueryError = ErrorType<unknown>;
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof bookingFindOneEvent>>> = ({ signal }) => bookingFindOneEvent(id, requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof bookingFindOneEvent>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type BookingFindOneEventQueryResult = NonNullable<Awaited<ReturnType<typeof bookingFindOneEvent>>>
-export type BookingFindOneEventQueryError = ErrorType<unknown>
-
-
-export function useBookingFindOneEvent<TData = Awaited<ReturnType<typeof bookingFindOneEvent>>, TError = ErrorType<unknown>>(
- id: number, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof bookingFindOneEvent>>, TError, TData>> & Pick<
+export function useBookingFindOneEvent<
+  TData = Awaited<ReturnType<typeof bookingFindOneEvent>>,
+  TError = ErrorType<unknown>,
+>(
+  id: number,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof bookingFindOneEvent>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof bookingFindOneEvent>>,
           TError,
           Awaited<ReturnType<typeof bookingFindOneEvent>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useBookingFindOneEvent<TData = Awaited<ReturnType<typeof bookingFindOneEvent>>, TError = ErrorType<unknown>>(
- id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof bookingFindOneEvent>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useBookingFindOneEvent<
+  TData = Awaited<ReturnType<typeof bookingFindOneEvent>>,
+  TError = ErrorType<unknown>,
+>(
+  id: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof bookingFindOneEvent>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof bookingFindOneEvent>>,
           TError,
           Awaited<ReturnType<typeof bookingFindOneEvent>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useBookingFindOneEvent<TData = Awaited<ReturnType<typeof bookingFindOneEvent>>, TError = ErrorType<unknown>>(
- id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof bookingFindOneEvent>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useBookingFindOneEvent<
+  TData = Awaited<ReturnType<typeof bookingFindOneEvent>>,
+  TError = ErrorType<unknown>,
+>(
+  id: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof bookingFindOneEvent>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Получить бронирования события
  */
 
-export function useBookingFindOneEvent<TData = Awaited<ReturnType<typeof bookingFindOneEvent>>, TError = ErrorType<unknown>>(
- id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof bookingFindOneEvent>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useBookingFindOneEvent<
+  TData = Awaited<ReturnType<typeof bookingFindOneEvent>>,
+  TError = ErrorType<unknown>,
+>(
+  id: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof bookingFindOneEvent>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getBookingFindOneEventQueryOptions(id, options);
 
-  const queryOptions = getBookingFindOneEventQueryOptions(id,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
 
 /**
  * @summary Подтвердить бронирование (AO)
  */
 export const bookingApproveSlot = (
-    id: number,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: number,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<string>(
+    { url: `/events-booking/${id}/approve`, method: 'POST', signal },
+    options,
+  );
+};
 
+export const getBookingApproveSlotMutationKey = () =>
+  ['bookingApproveSlot'] as const;
 
-      return customInstance<string>(
-      {url: `/events-booking/${id}/approve`, method: 'POST', signal
-    },
-      options);
-    }
+export const getBookingApproveSlotMutationOptions = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof bookingApproveSlot>>,
+    TError,
+    BookingApproveSlotMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof bookingApproveSlot>>,
+  TError,
+  BookingApproveSlotMutationVariables,
+  TContext
+> => {
+  const mutationKey = getBookingApproveSlotMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof bookingApproveSlot>>,
+    BookingApproveSlotMutationVariables
+  > = (props) => {
+    const { id } = props ?? {};
 
+    return bookingApproveSlot(id, requestOptions);
+  };
 
+  return { mutationFn, ...mutationOptions };
+};
 
-export const getBookingApproveSlotMutationKey = () => ['bookingApproveSlot'] as const;
+export type BookingApproveSlotMutationResult = NonNullable<
+  Awaited<ReturnType<typeof bookingApproveSlot>>
+>;
 
-export const getBookingApproveSlotMutationOptions = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof bookingApproveSlot>>, TError,BookingApproveSlotMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof bookingApproveSlot>>, TError,BookingApproveSlotMutationVariables, TContext> => {
+export type BookingApproveSlotMutationError = ErrorType<ErrorResponseDto>;
+export type BookingApproveSlotMutationVariables = { id: number };
 
-const mutationKey = getBookingApproveSlotMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof bookingApproveSlot>>, BookingApproveSlotMutationVariables> = (props) => {
-          const {id} = props ?? {};
-
-          return  bookingApproveSlot(id,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type BookingApproveSlotMutationResult = NonNullable<Awaited<ReturnType<typeof bookingApproveSlot>>>
-
-    export type BookingApproveSlotMutationError = ErrorType<ErrorResponseDto>
-    export type BookingApproveSlotMutationVariables = {id: number}
-
-    /**
+/**
  * @summary Подтвердить бронирование (AO)
  */
-export const useBookingApproveSlot = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof bookingApproveSlot>>, TError,BookingApproveSlotMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof bookingApproveSlot>>,
-        TError,
-        BookingApproveSlotMutationVariables,
-        TContext
-      > => {
-      return useMutation(getBookingApproveSlotMutationOptions(options), queryClient);
-    }
-    /**
+export const useBookingApproveSlot = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof bookingApproveSlot>>,
+      TError,
+      BookingApproveSlotMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof bookingApproveSlot>>,
+  TError,
+  BookingApproveSlotMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getBookingApproveSlotMutationOptions(options),
+    queryClient,
+  );
+};
+/**
  * @summary Отклонить бронирование (AO)
  */
 export const bookingRejectBook = (
-    id: number,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: number,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<string>(
+    { url: `/events-booking/${id}/reject`, method: 'POST', signal },
+    options,
+  );
+};
 
+export const getBookingRejectBookMutationKey = () =>
+  ['bookingRejectBook'] as const;
 
-      return customInstance<string>(
-      {url: `/events-booking/${id}/reject`, method: 'POST', signal
-    },
-      options);
-    }
+export const getBookingRejectBookMutationOptions = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof bookingRejectBook>>,
+    TError,
+    BookingRejectBookMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof bookingRejectBook>>,
+  TError,
+  BookingRejectBookMutationVariables,
+  TContext
+> => {
+  const mutationKey = getBookingRejectBookMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof bookingRejectBook>>,
+    BookingRejectBookMutationVariables
+  > = (props) => {
+    const { id } = props ?? {};
 
+    return bookingRejectBook(id, requestOptions);
+  };
 
+  return { mutationFn, ...mutationOptions };
+};
 
-export const getBookingRejectBookMutationKey = () => ['bookingRejectBook'] as const;
+export type BookingRejectBookMutationResult = NonNullable<
+  Awaited<ReturnType<typeof bookingRejectBook>>
+>;
 
-export const getBookingRejectBookMutationOptions = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof bookingRejectBook>>, TError,BookingRejectBookMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof bookingRejectBook>>, TError,BookingRejectBookMutationVariables, TContext> => {
+export type BookingRejectBookMutationError = ErrorType<ErrorResponseDto>;
+export type BookingRejectBookMutationVariables = { id: number };
 
-const mutationKey = getBookingRejectBookMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof bookingRejectBook>>, BookingRejectBookMutationVariables> = (props) => {
-          const {id} = props ?? {};
-
-          return  bookingRejectBook(id,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type BookingRejectBookMutationResult = NonNullable<Awaited<ReturnType<typeof bookingRejectBook>>>
-
-    export type BookingRejectBookMutationError = ErrorType<ErrorResponseDto>
-    export type BookingRejectBookMutationVariables = {id: number}
-
-    /**
+/**
  * @summary Отклонить бронирование (AO)
  */
-export const useBookingRejectBook = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof bookingRejectBook>>, TError,BookingRejectBookMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof bookingRejectBook>>,
-        TError,
-        BookingRejectBookMutationVariables,
-        TContext
-      > => {
-      return useMutation(getBookingRejectBookMutationOptions(options), queryClient);
-    }
-    /**
+export const useBookingRejectBook = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof bookingRejectBook>>,
+      TError,
+      BookingRejectBookMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof bookingRejectBook>>,
+  TError,
+  BookingRejectBookMutationVariables,
+  TContext
+> => {
+  return useMutation(getBookingRejectBookMutationOptions(options), queryClient);
+};
+/**
  * @summary Вернуть бронирование в статус ожидания (AO)
  */
 export const bookingDeclineBook = (
-    id: number,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: number,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<string>(
+    { url: `/events-booking/${id}/decline`, method: 'POST', signal },
+    options,
+  );
+};
 
+export const getBookingDeclineBookMutationKey = () =>
+  ['bookingDeclineBook'] as const;
 
-      return customInstance<string>(
-      {url: `/events-booking/${id}/decline`, method: 'POST', signal
-    },
-      options);
-    }
+export const getBookingDeclineBookMutationOptions = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof bookingDeclineBook>>,
+    TError,
+    BookingDeclineBookMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof bookingDeclineBook>>,
+  TError,
+  BookingDeclineBookMutationVariables,
+  TContext
+> => {
+  const mutationKey = getBookingDeclineBookMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof bookingDeclineBook>>,
+    BookingDeclineBookMutationVariables
+  > = (props) => {
+    const { id } = props ?? {};
 
+    return bookingDeclineBook(id, requestOptions);
+  };
 
+  return { mutationFn, ...mutationOptions };
+};
 
-export const getBookingDeclineBookMutationKey = () => ['bookingDeclineBook'] as const;
+export type BookingDeclineBookMutationResult = NonNullable<
+  Awaited<ReturnType<typeof bookingDeclineBook>>
+>;
 
-export const getBookingDeclineBookMutationOptions = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof bookingDeclineBook>>, TError,BookingDeclineBookMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof bookingDeclineBook>>, TError,BookingDeclineBookMutationVariables, TContext> => {
+export type BookingDeclineBookMutationError = ErrorType<ErrorResponseDto>;
+export type BookingDeclineBookMutationVariables = { id: number };
 
-const mutationKey = getBookingDeclineBookMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof bookingDeclineBook>>, BookingDeclineBookMutationVariables> = (props) => {
-          const {id} = props ?? {};
-
-          return  bookingDeclineBook(id,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type BookingDeclineBookMutationResult = NonNullable<Awaited<ReturnType<typeof bookingDeclineBook>>>
-
-    export type BookingDeclineBookMutationError = ErrorType<ErrorResponseDto>
-    export type BookingDeclineBookMutationVariables = {id: number}
-
-    /**
+/**
  * @summary Вернуть бронирование в статус ожидания (AO)
  */
-export const useBookingDeclineBook = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof bookingDeclineBook>>, TError,BookingDeclineBookMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof bookingDeclineBook>>,
-        TError,
-        BookingDeclineBookMutationVariables,
-        TContext
-      > => {
-      return useMutation(getBookingDeclineBookMutationOptions(options), queryClient);
-    }
-    /**
+export const useBookingDeclineBook = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof bookingDeclineBook>>,
+      TError,
+      BookingDeclineBookMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof bookingDeclineBook>>,
+  TError,
+  BookingDeclineBookMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getBookingDeclineBookMutationOptions(options),
+    queryClient,
+  );
+};
+/**
  * @summary Забронировать ATC-позицию на событии
  */
 export const bookingCreate = (
-    createBookingDto: BodyType<CreateBookingDto>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  createBookingDto: BodyType<CreateBookingDto>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<BookingEntity>(
-      {url: `/events-booking/book`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: createBookingDto, signal
+  return customInstance<BookingEntity>(
+    {
+      url: `/events-booking/book`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: createBookingDto,
+      signal,
     },
-      options);
-    }
-
-
-
+    options,
+  );
+};
 
 export const getBookingCreateMutationKey = () => ['bookingCreate'] as const;
 
-export const getBookingCreateMutationOptions = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof bookingCreate>>, TError,BookingCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof bookingCreate>>, TError,BookingCreateMutationVariables, TContext> => {
+export const getBookingCreateMutationOptions = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof bookingCreate>>,
+    TError,
+    BookingCreateMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof bookingCreate>>,
+  TError,
+  BookingCreateMutationVariables,
+  TContext
+> => {
+  const mutationKey = getBookingCreateMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-const mutationKey = getBookingCreateMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof bookingCreate>>,
+    BookingCreateMutationVariables
+  > = (props) => {
+    const { data } = props ?? {};
 
+    return bookingCreate(data, requestOptions);
+  };
 
+  return { mutationFn, ...mutationOptions };
+};
 
+export type BookingCreateMutationResult = NonNullable<
+  Awaited<ReturnType<typeof bookingCreate>>
+>;
+export type BookingCreateMutationBody = BodyType<CreateBookingDto>;
+export type BookingCreateMutationError = ErrorType<ErrorResponseDto>;
+export type BookingCreateMutationVariables = {
+  data: BodyType<CreateBookingDto>;
+};
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof bookingCreate>>, BookingCreateMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  bookingCreate(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type BookingCreateMutationResult = NonNullable<Awaited<ReturnType<typeof bookingCreate>>>
-    export type BookingCreateMutationBody = BodyType<CreateBookingDto>
-    export type BookingCreateMutationError = ErrorType<ErrorResponseDto>
-    export type BookingCreateMutationVariables = {data: BodyType<CreateBookingDto>}
-
-    /**
+/**
  * @summary Забронировать ATC-позицию на событии
  */
-export const useBookingCreate = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof bookingCreate>>, TError,BookingCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof bookingCreate>>,
-        TError,
-        BookingCreateMutationVariables,
-        TContext
-      > => {
-      return useMutation(getBookingCreateMutationOptions(options), queryClient);
-    }
-    /**
+export const useBookingCreate = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof bookingCreate>>,
+      TError,
+      BookingCreateMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof bookingCreate>>,
+  TError,
+  BookingCreateMutationVariables,
+  TContext
+> => {
+  return useMutation(getBookingCreateMutationOptions(options), queryClient);
+};
+/**
  * @summary Отменить своё бронирование
  */
 export const bookingRemove = (
-    id: number,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: number,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<MessageResponseDto>(
-      {url: `/events-booking/unbook/${id}`, method: 'DELETE', signal
-    },
-      options);
-    }
-
-
-
+  return customInstance<MessageResponseDto>(
+    { url: `/events-booking/unbook/${id}`, method: 'DELETE', signal },
+    options,
+  );
+};
 
 export const getBookingRemoveMutationKey = () => ['bookingRemove'] as const;
 
-export const getBookingRemoveMutationOptions = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof bookingRemove>>, TError,BookingRemoveMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof bookingRemove>>, TError,BookingRemoveMutationVariables, TContext> => {
+export const getBookingRemoveMutationOptions = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof bookingRemove>>,
+    TError,
+    BookingRemoveMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof bookingRemove>>,
+  TError,
+  BookingRemoveMutationVariables,
+  TContext
+> => {
+  const mutationKey = getBookingRemoveMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-const mutationKey = getBookingRemoveMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof bookingRemove>>,
+    BookingRemoveMutationVariables
+  > = (props) => {
+    const { id } = props ?? {};
 
+    return bookingRemove(id, requestOptions);
+  };
 
+  return { mutationFn, ...mutationOptions };
+};
 
+export type BookingRemoveMutationResult = NonNullable<
+  Awaited<ReturnType<typeof bookingRemove>>
+>;
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof bookingRemove>>, BookingRemoveMutationVariables> = (props) => {
-          const {id} = props ?? {};
+export type BookingRemoveMutationError = ErrorType<ErrorResponseDto>;
+export type BookingRemoveMutationVariables = { id: number };
 
-          return  bookingRemove(id,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type BookingRemoveMutationResult = NonNullable<Awaited<ReturnType<typeof bookingRemove>>>
-
-    export type BookingRemoveMutationError = ErrorType<ErrorResponseDto>
-    export type BookingRemoveMutationVariables = {id: number}
-
-    /**
+/**
  * @summary Отменить своё бронирование
  */
-export const useBookingRemove = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof bookingRemove>>, TError,BookingRemoveMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof bookingRemove>>,
-        TError,
-        BookingRemoveMutationVariables,
-        TContext
-      > => {
-      return useMutation(getBookingRemoveMutationOptions(options), queryClient);
-    }
+export const useBookingRemove = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof bookingRemove>>,
+      TError,
+      BookingRemoveMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof bookingRemove>>,
+  TError,
+  BookingRemoveMutationVariables,
+  TContext
+> => {
+  return useMutation(getBookingRemoveMutationOptions(options), queryClient);
+};

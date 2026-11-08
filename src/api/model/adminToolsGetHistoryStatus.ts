@@ -6,8 +6,8 @@
  * OpenAPI spec version: 1.13.2
  */
 
-export type AdminToolsGetHistoryStatus = typeof AdminToolsGetHistoryStatus[keyof typeof AdminToolsGetHistoryStatus];
-
+export type AdminToolsGetHistoryStatus =
+  (typeof AdminToolsGetHistoryStatus)[keyof typeof AdminToolsGetHistoryStatus];
 
 export const AdminToolsGetHistoryStatus = {
   NUMBER_0: 0,

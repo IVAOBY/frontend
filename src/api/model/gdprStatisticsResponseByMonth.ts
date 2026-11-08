@@ -9,8 +9,10 @@
 /**
  * Statistics by month (key — `YYYY-MM`)
  */
-export type GdprStatisticsResponseByMonth = {[key: string]: {
-  total: number;
-  completed: number;
-  failed: number;
-}};
+export type GdprStatisticsResponseByMonth = {
+  [key: string]: {
+    total: number;
+    completed: number;
+    failed: number;
+  };
+};

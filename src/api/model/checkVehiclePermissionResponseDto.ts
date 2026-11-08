@@ -10,9 +10,9 @@ export interface CheckVehiclePermissionResponseDto {
   vid: number;
   hasPermission: boolean;
   /**
-     * UUID активного разрешения
-     * @nullable
-     */
+   * UUID активного разрешения
+   * @nullable
+   */
   uid: string | null;
   /** @nullable */
   validFrom: string | null;

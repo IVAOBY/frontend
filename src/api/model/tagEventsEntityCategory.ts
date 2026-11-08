@@ -6,8 +6,8 @@
  * OpenAPI spec version: 1.13.2
  */
 
-export type TagEventsEntityCategory = typeof TagEventsEntityCategory[keyof typeof TagEventsEntityCategory];
-
+export type TagEventsEntityCategory =
+  (typeof TagEventsEntityCategory)[keyof typeof TagEventsEntityCategory];
 
 export const TagEventsEntityCategory = {
   user: 'user',

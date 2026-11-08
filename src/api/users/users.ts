@@ -5,9 +5,10 @@
  * API service for handling IVAO Belarus Divisions Web infrastructure.
  * OpenAPI spec version: 1.13.2
  */
-import {
-  useQuery
-} from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
+
+import type { ErrorType } from '../../utils/customInstance';
+import type { ErrorResponseDto, User } from '../model';
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -17,23 +18,17 @@ import type {
   QueryKey,
   UndefinedInitialDataOptions,
   UseQueryOptions,
-  UseQueryResult
+  UseQueryResult,
 } from '@tanstack/react-query';
 
-import type {
-  ErrorResponseDto,
-  User
-} from '../model';
-
 import { customInstance } from '../../utils/customInstance';
-import type { ErrorType } from '../../utils/customInstance';
-
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-
-const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
+const withQueryKey = <T extends object, K>(
+  query: T,
+  queryKey: K,
+): T & { queryKey: K } => {
   const result = { queryKey } as T & { queryKey: K };
   for (const key of Object.keys(query)) {
     // The explicit queryKey always wins, matching the previous
@@ -52,184 +47,316 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
  * @summary Получить профиль текущего пользователя
  */
 export const usersGetMyProfile = (
-
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<User>(
-      {url: `/users/me`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
+  return customInstance<User>(
+    { url: `/users/me`, method: 'GET', signal },
+    options,
+  );
+};
 
 export const getUsersGetMyProfileQueryKey = () => {
-    return [
-    `/users/me`
-    ] as const;
-    }
+  return [`/users/me`] as const;
+};
 
+export const getUsersGetMyProfileQueryOptions = <
+  TData = Awaited<ReturnType<typeof usersGetMyProfile>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof usersGetMyProfile>>,
+      TError,
+      TData
+    >
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-export const getUsersGetMyProfileQueryOptions = <TData = Awaited<ReturnType<typeof usersGetMyProfile>>, TError = ErrorType<ErrorResponseDto>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof usersGetMyProfile>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
+  const queryKey = queryOptions?.queryKey ?? getUsersGetMyProfileQueryKey();
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof usersGetMyProfile>>
+  > = ({ signal }) => usersGetMyProfile(requestOptions, signal);
 
-  const queryKey =  queryOptions?.queryKey ?? getUsersGetMyProfileQueryKey();
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof usersGetMyProfile>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type UsersGetMyProfileQueryResult = NonNullable<
+  Awaited<ReturnType<typeof usersGetMyProfile>>
+>;
+export type UsersGetMyProfileQueryError = ErrorType<ErrorResponseDto>;
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof usersGetMyProfile>>> = ({ signal }) => usersGetMyProfile(requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof usersGetMyProfile>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type UsersGetMyProfileQueryResult = NonNullable<Awaited<ReturnType<typeof usersGetMyProfile>>>
-export type UsersGetMyProfileQueryError = ErrorType<ErrorResponseDto>
-
-
-export function useUsersGetMyProfile<TData = Awaited<ReturnType<typeof usersGetMyProfile>>, TError = ErrorType<ErrorResponseDto>>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof usersGetMyProfile>>, TError, TData>> & Pick<
+export function useUsersGetMyProfile<
+  TData = Awaited<ReturnType<typeof usersGetMyProfile>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof usersGetMyProfile>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof usersGetMyProfile>>,
           TError,
           Awaited<ReturnType<typeof usersGetMyProfile>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useUsersGetMyProfile<TData = Awaited<ReturnType<typeof usersGetMyProfile>>, TError = ErrorType<ErrorResponseDto>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof usersGetMyProfile>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useUsersGetMyProfile<
+  TData = Awaited<ReturnType<typeof usersGetMyProfile>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof usersGetMyProfile>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof usersGetMyProfile>>,
           TError,
           Awaited<ReturnType<typeof usersGetMyProfile>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useUsersGetMyProfile<TData = Awaited<ReturnType<typeof usersGetMyProfile>>, TError = ErrorType<ErrorResponseDto>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof usersGetMyProfile>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useUsersGetMyProfile<
+  TData = Awaited<ReturnType<typeof usersGetMyProfile>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof usersGetMyProfile>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Получить профиль текущего пользователя
  */
 
-export function useUsersGetMyProfile<TData = Awaited<ReturnType<typeof usersGetMyProfile>>, TError = ErrorType<ErrorResponseDto>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof usersGetMyProfile>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useUsersGetMyProfile<
+  TData = Awaited<ReturnType<typeof usersGetMyProfile>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof usersGetMyProfile>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getUsersGetMyProfileQueryOptions(options);
 
-  const queryOptions = getUsersGetMyProfileQueryOptions(options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
 
 /**
  * Обычный пользователь может получить только свой профиль, сотрудник — любой.
  * @summary Получить пользователя по VID
  */
 export const usersGetUserById = (
-    id: number,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: number,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<User>(
+    { url: `/users/${id}`, method: 'GET', signal },
+    options,
+  );
+};
 
+export const getUsersGetUserByIdQueryKey = (id: number) => {
+  return [`/users/${id}`] as const;
+};
 
-      return customInstance<User>(
-      {url: `/users/${id}`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
-
-export const getUsersGetUserByIdQueryKey = (id: number,) => {
-    return [
-    `/users/${id}`
-    ] as const;
-    }
-
-
-export const getUsersGetUserByIdQueryOptions = <TData = Awaited<ReturnType<typeof usersGetUserById>>, TError = ErrorType<ErrorResponseDto>>(id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof usersGetUserById>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getUsersGetUserByIdQueryOptions = <
+  TData = Awaited<ReturnType<typeof usersGetUserById>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  id: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof usersGetUserById>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
 ) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryKey = queryOptions?.queryKey ?? getUsersGetUserByIdQueryKey(id);
 
-  const queryKey =  queryOptions?.queryKey ?? getUsersGetUserByIdQueryKey(id);
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof usersGetUserById>>
+  > = ({ signal }) => usersGetUserById(id, requestOptions, signal);
 
+  return {
+    queryKey,
+    queryFn,
+    enabled: id !== null && id !== undefined,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof usersGetUserById>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type UsersGetUserByIdQueryResult = NonNullable<
+  Awaited<ReturnType<typeof usersGetUserById>>
+>;
+export type UsersGetUserByIdQueryError = ErrorType<ErrorResponseDto>;
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof usersGetUserById>>> = ({ signal }) => usersGetUserById(id, requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof usersGetUserById>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type UsersGetUserByIdQueryResult = NonNullable<Awaited<ReturnType<typeof usersGetUserById>>>
-export type UsersGetUserByIdQueryError = ErrorType<ErrorResponseDto>
-
-
-export function useUsersGetUserById<TData = Awaited<ReturnType<typeof usersGetUserById>>, TError = ErrorType<ErrorResponseDto>>(
- id: number, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof usersGetUserById>>, TError, TData>> & Pick<
+export function useUsersGetUserById<
+  TData = Awaited<ReturnType<typeof usersGetUserById>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  id: number,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof usersGetUserById>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof usersGetUserById>>,
           TError,
           Awaited<ReturnType<typeof usersGetUserById>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useUsersGetUserById<TData = Awaited<ReturnType<typeof usersGetUserById>>, TError = ErrorType<ErrorResponseDto>>(
- id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof usersGetUserById>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useUsersGetUserById<
+  TData = Awaited<ReturnType<typeof usersGetUserById>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  id: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof usersGetUserById>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof usersGetUserById>>,
           TError,
           Awaited<ReturnType<typeof usersGetUserById>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useUsersGetUserById<TData = Awaited<ReturnType<typeof usersGetUserById>>, TError = ErrorType<ErrorResponseDto>>(
- id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof usersGetUserById>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useUsersGetUserById<
+  TData = Awaited<ReturnType<typeof usersGetUserById>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  id: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof usersGetUserById>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Получить пользователя по VID
  */
 
-export function useUsersGetUserById<TData = Awaited<ReturnType<typeof usersGetUserById>>, TError = ErrorType<ErrorResponseDto>>(
- id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof usersGetUserById>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useUsersGetUserById<
+  TData = Awaited<ReturnType<typeof usersGetUserById>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  id: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof usersGetUserById>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getUsersGetUserByIdQueryOptions(id, options);
 
-  const queryOptions = getUsersGetUserByIdQueryOptions(id,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-

@@ -6,8 +6,8 @@
  * OpenAPI spec version: 1.13.2
  */
 
-export type SceneriesEntitySimulator = typeof SceneriesEntitySimulator[keyof typeof SceneriesEntitySimulator];
-
+export type SceneriesEntitySimulator =
+  (typeof SceneriesEntitySimulator)[keyof typeof SceneriesEntitySimulator];
 
 export const SceneriesEntitySimulator = {
   fs9: 'fs9',

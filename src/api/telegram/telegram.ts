@@ -5,10 +5,15 @@
  * API service for handling IVAO Belarus Divisions Web infrastructure.
  * OpenAPI spec version: 1.13.2
  */
-import {
-  useMutation,
-  useQuery
-} from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
+
+import type { ErrorType } from '../../utils/customInstance';
+import type {
+  ErrorResponseDto,
+  TelegramAllowlistAddedDto,
+  TelegramAllowlistDto,
+  TelegramAllowlistRemovedDto,
+} from '../model';
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -21,25 +26,17 @@ import type {
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
-  UseQueryResult
+  UseQueryResult,
 } from '@tanstack/react-query';
 
-import type {
-  ErrorResponseDto,
-  TelegramAllowlistAddedDto,
-  TelegramAllowlistDto,
-  TelegramAllowlistRemovedDto
-} from '../model';
-
 import { customInstance } from '../../utils/customInstance';
-import type { ErrorType } from '../../utils/customInstance';
-
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-
-const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
+const withQueryKey = <T extends object, K>(
+  query: T,
+  queryKey: K,
+): T & { queryKey: K } => {
   const result = { queryKey } as T & { queryKey: K };
   for (const key of Object.keys(query)) {
     // The explicit queryKey always wins, matching the previous
@@ -58,221 +55,332 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
  * @summary Получить allowlist Telegram-бота (HQ, WD)
  */
 export const telegramAllowlistGetAll = (
-
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<TelegramAllowlistDto>(
-      {url: `/telegram/allowlist`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
+  return customInstance<TelegramAllowlistDto>(
+    { url: `/telegram/allowlist`, method: 'GET', signal },
+    options,
+  );
+};
 
 export const getTelegramAllowlistGetAllQueryKey = () => {
-    return [
-    `/telegram/allowlist`
-    ] as const;
-    }
+  return [`/telegram/allowlist`] as const;
+};
 
+export const getTelegramAllowlistGetAllQueryOptions = <
+  TData = Awaited<ReturnType<typeof telegramAllowlistGetAll>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof telegramAllowlistGetAll>>,
+      TError,
+      TData
+    >
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-export const getTelegramAllowlistGetAllQueryOptions = <TData = Awaited<ReturnType<typeof telegramAllowlistGetAll>>, TError = ErrorType<ErrorResponseDto>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof telegramAllowlistGetAll>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
+  const queryKey =
+    queryOptions?.queryKey ?? getTelegramAllowlistGetAllQueryKey();
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof telegramAllowlistGetAll>>
+  > = ({ signal }) => telegramAllowlistGetAll(requestOptions, signal);
 
-  const queryKey =  queryOptions?.queryKey ?? getTelegramAllowlistGetAllQueryKey();
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof telegramAllowlistGetAll>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type TelegramAllowlistGetAllQueryResult = NonNullable<
+  Awaited<ReturnType<typeof telegramAllowlistGetAll>>
+>;
+export type TelegramAllowlistGetAllQueryError = ErrorType<ErrorResponseDto>;
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof telegramAllowlistGetAll>>> = ({ signal }) => telegramAllowlistGetAll(requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof telegramAllowlistGetAll>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type TelegramAllowlistGetAllQueryResult = NonNullable<Awaited<ReturnType<typeof telegramAllowlistGetAll>>>
-export type TelegramAllowlistGetAllQueryError = ErrorType<ErrorResponseDto>
-
-
-export function useTelegramAllowlistGetAll<TData = Awaited<ReturnType<typeof telegramAllowlistGetAll>>, TError = ErrorType<ErrorResponseDto>>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof telegramAllowlistGetAll>>, TError, TData>> & Pick<
+export function useTelegramAllowlistGetAll<
+  TData = Awaited<ReturnType<typeof telegramAllowlistGetAll>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof telegramAllowlistGetAll>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof telegramAllowlistGetAll>>,
           TError,
           Awaited<ReturnType<typeof telegramAllowlistGetAll>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useTelegramAllowlistGetAll<TData = Awaited<ReturnType<typeof telegramAllowlistGetAll>>, TError = ErrorType<ErrorResponseDto>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof telegramAllowlistGetAll>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useTelegramAllowlistGetAll<
+  TData = Awaited<ReturnType<typeof telegramAllowlistGetAll>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof telegramAllowlistGetAll>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof telegramAllowlistGetAll>>,
           TError,
           Awaited<ReturnType<typeof telegramAllowlistGetAll>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useTelegramAllowlistGetAll<TData = Awaited<ReturnType<typeof telegramAllowlistGetAll>>, TError = ErrorType<ErrorResponseDto>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof telegramAllowlistGetAll>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useTelegramAllowlistGetAll<
+  TData = Awaited<ReturnType<typeof telegramAllowlistGetAll>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof telegramAllowlistGetAll>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Получить allowlist Telegram-бота (HQ, WD)
  */
 
-export function useTelegramAllowlistGetAll<TData = Awaited<ReturnType<typeof telegramAllowlistGetAll>>, TError = ErrorType<ErrorResponseDto>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof telegramAllowlistGetAll>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useTelegramAllowlistGetAll<
+  TData = Awaited<ReturnType<typeof telegramAllowlistGetAll>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof telegramAllowlistGetAll>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getTelegramAllowlistGetAllQueryOptions(options);
 
-  const queryOptions = getTelegramAllowlistGetAllQueryOptions(options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
 
 /**
  * @summary Добавить Telegram ID в allowlist (HQ, WD)
  */
 export const telegramAllowlistAdd = (
-    id: string,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: string,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<TelegramAllowlistAddedDto>(
+    { url: `/telegram/allowlist/${id}`, method: 'POST', signal },
+    options,
+  );
+};
 
+export const getTelegramAllowlistAddMutationKey = () =>
+  ['telegramAllowlistAdd'] as const;
 
-      return customInstance<TelegramAllowlistAddedDto>(
-      {url: `/telegram/allowlist/${id}`, method: 'POST', signal
-    },
-      options);
-    }
+export const getTelegramAllowlistAddMutationOptions = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof telegramAllowlistAdd>>,
+    TError,
+    TelegramAllowlistAddMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof telegramAllowlistAdd>>,
+  TError,
+  TelegramAllowlistAddMutationVariables,
+  TContext
+> => {
+  const mutationKey = getTelegramAllowlistAddMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof telegramAllowlistAdd>>,
+    TelegramAllowlistAddMutationVariables
+  > = (props) => {
+    const { id } = props ?? {};
 
+    return telegramAllowlistAdd(id, requestOptions);
+  };
 
+  return { mutationFn, ...mutationOptions };
+};
 
-export const getTelegramAllowlistAddMutationKey = () => ['telegramAllowlistAdd'] as const;
+export type TelegramAllowlistAddMutationResult = NonNullable<
+  Awaited<ReturnType<typeof telegramAllowlistAdd>>
+>;
 
-export const getTelegramAllowlistAddMutationOptions = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof telegramAllowlistAdd>>, TError,TelegramAllowlistAddMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof telegramAllowlistAdd>>, TError,TelegramAllowlistAddMutationVariables, TContext> => {
+export type TelegramAllowlistAddMutationError = ErrorType<ErrorResponseDto>;
+export type TelegramAllowlistAddMutationVariables = { id: string };
 
-const mutationKey = getTelegramAllowlistAddMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof telegramAllowlistAdd>>, TelegramAllowlistAddMutationVariables> = (props) => {
-          const {id} = props ?? {};
-
-          return  telegramAllowlistAdd(id,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type TelegramAllowlistAddMutationResult = NonNullable<Awaited<ReturnType<typeof telegramAllowlistAdd>>>
-
-    export type TelegramAllowlistAddMutationError = ErrorType<ErrorResponseDto>
-    export type TelegramAllowlistAddMutationVariables = {id: string}
-
-    /**
+/**
  * @summary Добавить Telegram ID в allowlist (HQ, WD)
  */
-export const useTelegramAllowlistAdd = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof telegramAllowlistAdd>>, TError,TelegramAllowlistAddMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof telegramAllowlistAdd>>,
-        TError,
-        TelegramAllowlistAddMutationVariables,
-        TContext
-      > => {
-      return useMutation(getTelegramAllowlistAddMutationOptions(options), queryClient);
-    }
-    /**
+export const useTelegramAllowlistAdd = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof telegramAllowlistAdd>>,
+      TError,
+      TelegramAllowlistAddMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof telegramAllowlistAdd>>,
+  TError,
+  TelegramAllowlistAddMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getTelegramAllowlistAddMutationOptions(options),
+    queryClient,
+  );
+};
+/**
  * @summary Удалить Telegram ID из allowlist (HQ, WD)
  */
 export const telegramAllowlistRemove = (
-    id: string,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: string,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<TelegramAllowlistRemovedDto>(
+    { url: `/telegram/allowlist/${id}`, method: 'DELETE', signal },
+    options,
+  );
+};
 
+export const getTelegramAllowlistRemoveMutationKey = () =>
+  ['telegramAllowlistRemove'] as const;
 
-      return customInstance<TelegramAllowlistRemovedDto>(
-      {url: `/telegram/allowlist/${id}`, method: 'DELETE', signal
-    },
-      options);
-    }
+export const getTelegramAllowlistRemoveMutationOptions = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof telegramAllowlistRemove>>,
+    TError,
+    TelegramAllowlistRemoveMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof telegramAllowlistRemove>>,
+  TError,
+  TelegramAllowlistRemoveMutationVariables,
+  TContext
+> => {
+  const mutationKey = getTelegramAllowlistRemoveMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof telegramAllowlistRemove>>,
+    TelegramAllowlistRemoveMutationVariables
+  > = (props) => {
+    const { id } = props ?? {};
 
+    return telegramAllowlistRemove(id, requestOptions);
+  };
 
+  return { mutationFn, ...mutationOptions };
+};
 
-export const getTelegramAllowlistRemoveMutationKey = () => ['telegramAllowlistRemove'] as const;
+export type TelegramAllowlistRemoveMutationResult = NonNullable<
+  Awaited<ReturnType<typeof telegramAllowlistRemove>>
+>;
 
-export const getTelegramAllowlistRemoveMutationOptions = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof telegramAllowlistRemove>>, TError,TelegramAllowlistRemoveMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof telegramAllowlistRemove>>, TError,TelegramAllowlistRemoveMutationVariables, TContext> => {
+export type TelegramAllowlistRemoveMutationError = ErrorType<ErrorResponseDto>;
+export type TelegramAllowlistRemoveMutationVariables = { id: string };
 
-const mutationKey = getTelegramAllowlistRemoveMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof telegramAllowlistRemove>>, TelegramAllowlistRemoveMutationVariables> = (props) => {
-          const {id} = props ?? {};
-
-          return  telegramAllowlistRemove(id,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type TelegramAllowlistRemoveMutationResult = NonNullable<Awaited<ReturnType<typeof telegramAllowlistRemove>>>
-
-    export type TelegramAllowlistRemoveMutationError = ErrorType<ErrorResponseDto>
-    export type TelegramAllowlistRemoveMutationVariables = {id: string}
-
-    /**
+/**
  * @summary Удалить Telegram ID из allowlist (HQ, WD)
  */
-export const useTelegramAllowlistRemove = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof telegramAllowlistRemove>>, TError,TelegramAllowlistRemoveMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof telegramAllowlistRemove>>,
-        TError,
-        TelegramAllowlistRemoveMutationVariables,
-        TContext
-      > => {
-      return useMutation(getTelegramAllowlistRemoveMutationOptions(options), queryClient);
-    }
+export const useTelegramAllowlistRemove = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof telegramAllowlistRemove>>,
+      TError,
+      TelegramAllowlistRemoveMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof telegramAllowlistRemove>>,
+  TError,
+  TelegramAllowlistRemoveMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getTelegramAllowlistRemoveMutationOptions(options),
+    queryClient,
+  );
+};

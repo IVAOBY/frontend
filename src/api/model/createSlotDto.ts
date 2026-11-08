@@ -6,4 +6,6 @@
  * OpenAPI spec version: 1.13.2
  */
 
-export interface CreateSlotDto { [key: string]: unknown }
+export interface CreateSlotDto {
+  [key: string]: unknown;
+}

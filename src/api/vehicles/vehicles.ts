@@ -5,25 +5,9 @@
  * API service for handling IVAO Belarus Divisions Web infrastructure.
  * OpenAPI spec version: 1.13.2
  */
-import {
-  useMutation,
-  useQuery
-} from '@tanstack/react-query';
-import type {
-  DataTag,
-  DefinedInitialDataOptions,
-  DefinedUseQueryResult,
-  MutationFunction,
-  QueryClient,
-  QueryFunction,
-  QueryKey,
-  UndefinedInitialDataOptions,
-  UseMutationOptions,
-  UseMutationResult,
-  UseQueryOptions,
-  UseQueryResult
-} from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
+import type { BodyType, ErrorType } from '../../utils/customInstance';
 import type {
   ActiveVehiclePermissionDto,
   CancelVehiclePermissionResponseDto,
@@ -36,18 +20,31 @@ import type {
   RevokePermissionDto,
   RevokeVehiclePermissionResponseDto,
   VehiclePermissionEntity,
-  VehiclePermissionWithStatusDto
+  VehiclePermissionWithStatusDto,
 } from '../model';
+import type {
+  DataTag,
+  DefinedInitialDataOptions,
+  DefinedUseQueryResult,
+  MutationFunction,
+  QueryClient,
+  QueryFunction,
+  QueryKey,
+  UndefinedInitialDataOptions,
+  UseMutationOptions,
+  UseMutationResult,
+  UseQueryOptions,
+  UseQueryResult,
+} from '@tanstack/react-query';
 
 import { customInstance } from '../../utils/customInstance';
-import type { ErrorType , BodyType } from '../../utils/customInstance';
-
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-
-const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
+const withQueryKey = <T extends object, K>(
+  query: T,
+  queryKey: K,
+): T & { queryKey: K } => {
   const result = { queryKey } as T & { queryKey: K };
   for (const key of Object.keys(query)) {
     // The explicit queryKey always wins, matching the previous
@@ -73,93 +70,153 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
  * @summary Получить активные разрешения Follow Me Car
  */
 export const vehiclesGetActive = (
-
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<ActiveVehiclePermissionDto[]>(
-      {url: `/vehicles/active`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
+  return customInstance<ActiveVehiclePermissionDto[]>(
+    { url: `/vehicles/active`, method: 'GET', signal },
+    options,
+  );
+};
 
 export const getVehiclesGetActiveQueryKey = () => {
-    return [
-    `/vehicles/active`
-    ] as const;
-    }
+  return [`/vehicles/active`] as const;
+};
 
+export const getVehiclesGetActiveQueryOptions = <
+  TData = Awaited<ReturnType<typeof vehiclesGetActive>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof vehiclesGetActive>>,
+      TError,
+      TData
+    >
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-export const getVehiclesGetActiveQueryOptions = <TData = Awaited<ReturnType<typeof vehiclesGetActive>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof vehiclesGetActive>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
+  const queryKey = queryOptions?.queryKey ?? getVehiclesGetActiveQueryKey();
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof vehiclesGetActive>>
+  > = ({ signal }) => vehiclesGetActive(requestOptions, signal);
 
-  const queryKey =  queryOptions?.queryKey ?? getVehiclesGetActiveQueryKey();
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof vehiclesGetActive>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type VehiclesGetActiveQueryResult = NonNullable<
+  Awaited<ReturnType<typeof vehiclesGetActive>>
+>;
+export type VehiclesGetActiveQueryError = ErrorType<unknown>;
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof vehiclesGetActive>>> = ({ signal }) => vehiclesGetActive(requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof vehiclesGetActive>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type VehiclesGetActiveQueryResult = NonNullable<Awaited<ReturnType<typeof vehiclesGetActive>>>
-export type VehiclesGetActiveQueryError = ErrorType<unknown>
-
-
-export function useVehiclesGetActive<TData = Awaited<ReturnType<typeof vehiclesGetActive>>, TError = ErrorType<unknown>>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof vehiclesGetActive>>, TError, TData>> & Pick<
+export function useVehiclesGetActive<
+  TData = Awaited<ReturnType<typeof vehiclesGetActive>>,
+  TError = ErrorType<unknown>,
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof vehiclesGetActive>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof vehiclesGetActive>>,
           TError,
           Awaited<ReturnType<typeof vehiclesGetActive>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useVehiclesGetActive<TData = Awaited<ReturnType<typeof vehiclesGetActive>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof vehiclesGetActive>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useVehiclesGetActive<
+  TData = Awaited<ReturnType<typeof vehiclesGetActive>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof vehiclesGetActive>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof vehiclesGetActive>>,
           TError,
           Awaited<ReturnType<typeof vehiclesGetActive>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useVehiclesGetActive<TData = Awaited<ReturnType<typeof vehiclesGetActive>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof vehiclesGetActive>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useVehiclesGetActive<
+  TData = Awaited<ReturnType<typeof vehiclesGetActive>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof vehiclesGetActive>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Получить активные разрешения Follow Me Car
  */
 
-export function useVehiclesGetActive<TData = Awaited<ReturnType<typeof vehiclesGetActive>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof vehiclesGetActive>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useVehiclesGetActive<
+  TData = Awaited<ReturnType<typeof vehiclesGetActive>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof vehiclesGetActive>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getVehiclesGetActiveQueryOptions(options);
 
-  const queryOptions = getVehiclesGetActiveQueryOptions(options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
 
 /**
  *
@@ -170,93 +227,133 @@ export function useVehiclesGetActive<TData = Awaited<ReturnType<typeof vehiclesG
  * @summary Получить историю всех разрешений
  */
 export const vehiclesGetAll = (
-
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<VehiclePermissionWithStatusDto[]>(
-      {url: `/vehicles/all`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
+  return customInstance<VehiclePermissionWithStatusDto[]>(
+    { url: `/vehicles/all`, method: 'GET', signal },
+    options,
+  );
+};
 
 export const getVehiclesGetAllQueryKey = () => {
-    return [
-    `/vehicles/all`
-    ] as const;
-    }
+  return [`/vehicles/all`] as const;
+};
 
+export const getVehiclesGetAllQueryOptions = <
+  TData = Awaited<ReturnType<typeof vehiclesGetAll>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof vehiclesGetAll>>, TError, TData>
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-export const getVehiclesGetAllQueryOptions = <TData = Awaited<ReturnType<typeof vehiclesGetAll>>, TError = ErrorType<ErrorResponseDto>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof vehiclesGetAll>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
+  const queryKey = queryOptions?.queryKey ?? getVehiclesGetAllQueryKey();
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof vehiclesGetAll>>> = ({
+    signal,
+  }) => vehiclesGetAll(requestOptions, signal);
 
-  const queryKey =  queryOptions?.queryKey ?? getVehiclesGetAllQueryKey();
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof vehiclesGetAll>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type VehiclesGetAllQueryResult = NonNullable<
+  Awaited<ReturnType<typeof vehiclesGetAll>>
+>;
+export type VehiclesGetAllQueryError = ErrorType<ErrorResponseDto>;
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof vehiclesGetAll>>> = ({ signal }) => vehiclesGetAll(requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof vehiclesGetAll>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type VehiclesGetAllQueryResult = NonNullable<Awaited<ReturnType<typeof vehiclesGetAll>>>
-export type VehiclesGetAllQueryError = ErrorType<ErrorResponseDto>
-
-
-export function useVehiclesGetAll<TData = Awaited<ReturnType<typeof vehiclesGetAll>>, TError = ErrorType<ErrorResponseDto>>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof vehiclesGetAll>>, TError, TData>> & Pick<
+export function useVehiclesGetAll<
+  TData = Awaited<ReturnType<typeof vehiclesGetAll>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof vehiclesGetAll>>, TError, TData>
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof vehiclesGetAll>>,
           TError,
           Awaited<ReturnType<typeof vehiclesGetAll>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useVehiclesGetAll<TData = Awaited<ReturnType<typeof vehiclesGetAll>>, TError = ErrorType<ErrorResponseDto>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof vehiclesGetAll>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useVehiclesGetAll<
+  TData = Awaited<ReturnType<typeof vehiclesGetAll>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof vehiclesGetAll>>, TError, TData>
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof vehiclesGetAll>>,
           TError,
           Awaited<ReturnType<typeof vehiclesGetAll>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useVehiclesGetAll<TData = Awaited<ReturnType<typeof vehiclesGetAll>>, TError = ErrorType<ErrorResponseDto>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof vehiclesGetAll>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useVehiclesGetAll<
+  TData = Awaited<ReturnType<typeof vehiclesGetAll>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof vehiclesGetAll>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Получить историю всех разрешений
  */
 
-export function useVehiclesGetAll<TData = Awaited<ReturnType<typeof vehiclesGetAll>>, TError = ErrorType<ErrorResponseDto>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof vehiclesGetAll>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useVehiclesGetAll<
+  TData = Awaited<ReturnType<typeof vehiclesGetAll>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof vehiclesGetAll>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getVehiclesGetAllQueryOptions(options);
 
-  const queryOptions = getVehiclesGetAllQueryOptions(options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
 
 /**
  *
@@ -266,93 +363,133 @@ export function useVehiclesGetAll<TData = Awaited<ReturnType<typeof vehiclesGetA
  * @summary Получить свои разрешения
  */
 export const vehiclesGetMe = (
-
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<VehiclePermissionWithStatusDto[]>(
-      {url: `/vehicles/me`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
+  return customInstance<VehiclePermissionWithStatusDto[]>(
+    { url: `/vehicles/me`, method: 'GET', signal },
+    options,
+  );
+};
 
 export const getVehiclesGetMeQueryKey = () => {
-    return [
-    `/vehicles/me`
-    ] as const;
-    }
+  return [`/vehicles/me`] as const;
+};
 
+export const getVehiclesGetMeQueryOptions = <
+  TData = Awaited<ReturnType<typeof vehiclesGetMe>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof vehiclesGetMe>>, TError, TData>
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-export const getVehiclesGetMeQueryOptions = <TData = Awaited<ReturnType<typeof vehiclesGetMe>>, TError = ErrorType<ErrorResponseDto>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof vehiclesGetMe>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
+  const queryKey = queryOptions?.queryKey ?? getVehiclesGetMeQueryKey();
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof vehiclesGetMe>>> = ({
+    signal,
+  }) => vehiclesGetMe(requestOptions, signal);
 
-  const queryKey =  queryOptions?.queryKey ?? getVehiclesGetMeQueryKey();
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof vehiclesGetMe>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type VehiclesGetMeQueryResult = NonNullable<
+  Awaited<ReturnType<typeof vehiclesGetMe>>
+>;
+export type VehiclesGetMeQueryError = ErrorType<ErrorResponseDto>;
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof vehiclesGetMe>>> = ({ signal }) => vehiclesGetMe(requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof vehiclesGetMe>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type VehiclesGetMeQueryResult = NonNullable<Awaited<ReturnType<typeof vehiclesGetMe>>>
-export type VehiclesGetMeQueryError = ErrorType<ErrorResponseDto>
-
-
-export function useVehiclesGetMe<TData = Awaited<ReturnType<typeof vehiclesGetMe>>, TError = ErrorType<ErrorResponseDto>>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof vehiclesGetMe>>, TError, TData>> & Pick<
+export function useVehiclesGetMe<
+  TData = Awaited<ReturnType<typeof vehiclesGetMe>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof vehiclesGetMe>>, TError, TData>
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof vehiclesGetMe>>,
           TError,
           Awaited<ReturnType<typeof vehiclesGetMe>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useVehiclesGetMe<TData = Awaited<ReturnType<typeof vehiclesGetMe>>, TError = ErrorType<ErrorResponseDto>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof vehiclesGetMe>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useVehiclesGetMe<
+  TData = Awaited<ReturnType<typeof vehiclesGetMe>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof vehiclesGetMe>>, TError, TData>
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof vehiclesGetMe>>,
           TError,
           Awaited<ReturnType<typeof vehiclesGetMe>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useVehiclesGetMe<TData = Awaited<ReturnType<typeof vehiclesGetMe>>, TError = ErrorType<ErrorResponseDto>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof vehiclesGetMe>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useVehiclesGetMe<
+  TData = Awaited<ReturnType<typeof vehiclesGetMe>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof vehiclesGetMe>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Получить свои разрешения
  */
 
-export function useVehiclesGetMe<TData = Awaited<ReturnType<typeof vehiclesGetMe>>, TError = ErrorType<ErrorResponseDto>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof vehiclesGetMe>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useVehiclesGetMe<
+  TData = Awaited<ReturnType<typeof vehiclesGetMe>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof vehiclesGetMe>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getVehiclesGetMeQueryOptions(options);
 
-  const queryOptions = getVehiclesGetMeQueryOptions(options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
 
 /**
  *
@@ -365,346 +502,481 @@ export function useVehiclesGetMe<TData = Awaited<ReturnType<typeof vehiclesGetMe
  * @summary Выдать разрешение на Follow Me Car
  */
 export const vehiclesCreate = (
-    createPermissionDto: BodyType<CreatePermissionDto>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  createPermissionDto: BodyType<CreatePermissionDto>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<CreateVehiclePermissionResponseDto>(
-      {url: `/vehicles`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: createPermissionDto, signal
+  return customInstance<CreateVehiclePermissionResponseDto>(
+    {
+      url: `/vehicles`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: createPermissionDto,
+      signal,
     },
-      options);
-    }
-
-
-
+    options,
+  );
+};
 
 export const getVehiclesCreateMutationKey = () => ['vehiclesCreate'] as const;
 
-export const getVehiclesCreateMutationOptions = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof vehiclesCreate>>, TError,VehiclesCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof vehiclesCreate>>, TError,VehiclesCreateMutationVariables, TContext> => {
+export const getVehiclesCreateMutationOptions = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof vehiclesCreate>>,
+    TError,
+    VehiclesCreateMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof vehiclesCreate>>,
+  TError,
+  VehiclesCreateMutationVariables,
+  TContext
+> => {
+  const mutationKey = getVehiclesCreateMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-const mutationKey = getVehiclesCreateMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof vehiclesCreate>>,
+    VehiclesCreateMutationVariables
+  > = (props) => {
+    const { data } = props ?? {};
 
+    return vehiclesCreate(data, requestOptions);
+  };
 
+  return { mutationFn, ...mutationOptions };
+};
 
+export type VehiclesCreateMutationResult = NonNullable<
+  Awaited<ReturnType<typeof vehiclesCreate>>
+>;
+export type VehiclesCreateMutationBody = BodyType<CreatePermissionDto>;
+export type VehiclesCreateMutationError = ErrorType<ErrorResponseDto>;
+export type VehiclesCreateMutationVariables = {
+  data: BodyType<CreatePermissionDto>;
+};
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof vehiclesCreate>>, VehiclesCreateMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  vehiclesCreate(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type VehiclesCreateMutationResult = NonNullable<Awaited<ReturnType<typeof vehiclesCreate>>>
-    export type VehiclesCreateMutationBody = BodyType<CreatePermissionDto>
-    export type VehiclesCreateMutationError = ErrorType<ErrorResponseDto>
-    export type VehiclesCreateMutationVariables = {data: BodyType<CreatePermissionDto>}
-
-    /**
+/**
  * @summary Выдать разрешение на Follow Me Car
  */
-export const useVehiclesCreate = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof vehiclesCreate>>, TError,VehiclesCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof vehiclesCreate>>,
-        TError,
-        VehiclesCreateMutationVariables,
-        TContext
-      > => {
-      return useMutation(getVehiclesCreateMutationOptions(options), queryClient);
-    }
-    /**
+export const useVehiclesCreate = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof vehiclesCreate>>,
+      TError,
+      VehiclesCreateMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof vehiclesCreate>>,
+  TError,
+  VehiclesCreateMutationVariables,
+  TContext
+> => {
+  return useMutation(getVehiclesCreateMutationOptions(options), queryClient);
+};
+/**
  * Редактирует существующее разрешение.
  * @summary Редактировать разрешение
  */
 export const vehiclesEdit = (
-    editPermissionDto: BodyType<EditPermissionDto>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  editPermissionDto: BodyType<EditPermissionDto>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<VehiclePermissionEntity>(
-      {url: `/vehicles`, method: 'PATCH',
-      headers: {'Content-Type': 'application/json', },
-      data: editPermissionDto, signal
+  return customInstance<VehiclePermissionEntity>(
+    {
+      url: `/vehicles`,
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      data: editPermissionDto,
+      signal,
     },
-      options);
-    }
-
-
-
+    options,
+  );
+};
 
 export const getVehiclesEditMutationKey = () => ['vehiclesEdit'] as const;
 
-export const getVehiclesEditMutationOptions = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof vehiclesEdit>>, TError,VehiclesEditMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof vehiclesEdit>>, TError,VehiclesEditMutationVariables, TContext> => {
+export const getVehiclesEditMutationOptions = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof vehiclesEdit>>,
+    TError,
+    VehiclesEditMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof vehiclesEdit>>,
+  TError,
+  VehiclesEditMutationVariables,
+  TContext
+> => {
+  const mutationKey = getVehiclesEditMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-const mutationKey = getVehiclesEditMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof vehiclesEdit>>,
+    VehiclesEditMutationVariables
+  > = (props) => {
+    const { data } = props ?? {};
 
+    return vehiclesEdit(data, requestOptions);
+  };
 
+  return { mutationFn, ...mutationOptions };
+};
 
+export type VehiclesEditMutationResult = NonNullable<
+  Awaited<ReturnType<typeof vehiclesEdit>>
+>;
+export type VehiclesEditMutationBody = BodyType<EditPermissionDto>;
+export type VehiclesEditMutationError = ErrorType<ErrorResponseDto>;
+export type VehiclesEditMutationVariables = {
+  data: BodyType<EditPermissionDto>;
+};
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof vehiclesEdit>>, VehiclesEditMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  vehiclesEdit(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type VehiclesEditMutationResult = NonNullable<Awaited<ReturnType<typeof vehiclesEdit>>>
-    export type VehiclesEditMutationBody = BodyType<EditPermissionDto>
-    export type VehiclesEditMutationError = ErrorType<ErrorResponseDto>
-    export type VehiclesEditMutationVariables = {data: BodyType<EditPermissionDto>}
-
-    /**
+/**
  * @summary Редактировать разрешение
  */
-export const useVehiclesEdit = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof vehiclesEdit>>, TError,VehiclesEditMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof vehiclesEdit>>,
-        TError,
-        VehiclesEditMutationVariables,
-        TContext
-      > => {
-      return useMutation(getVehiclesEditMutationOptions(options), queryClient);
-    }
-    /**
+export const useVehiclesEdit = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof vehiclesEdit>>,
+      TError,
+      VehiclesEditMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof vehiclesEdit>>,
+  TError,
+  VehiclesEditMutationVariables,
+  TContext
+> => {
+  return useMutation(getVehiclesEditMutationOptions(options), queryClient);
+};
+/**
  *
  * Проверяет, есть ли у указанного VID активное разрешение
  * на текущий момент времени.
  * @summary Проверить наличие активного разрешения
  */
 export const vehiclesCheck = (
-    checkPermissionDto: BodyType<CheckPermissionDto>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  checkPermissionDto: BodyType<CheckPermissionDto>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<CheckVehiclePermissionResponseDto>(
-      {url: `/vehicles/check`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: checkPermissionDto, signal
+  return customInstance<CheckVehiclePermissionResponseDto>(
+    {
+      url: `/vehicles/check`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: checkPermissionDto,
+      signal,
     },
-      options);
-    }
-
-
-
+    options,
+  );
+};
 
 export const getVehiclesCheckMutationKey = () => ['vehiclesCheck'] as const;
 
-export const getVehiclesCheckMutationOptions = <TError = ErrorType<unknown>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof vehiclesCheck>>, TError,VehiclesCheckMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof vehiclesCheck>>, TError,VehiclesCheckMutationVariables, TContext> => {
+export const getVehiclesCheckMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof vehiclesCheck>>,
+    TError,
+    VehiclesCheckMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof vehiclesCheck>>,
+  TError,
+  VehiclesCheckMutationVariables,
+  TContext
+> => {
+  const mutationKey = getVehiclesCheckMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-const mutationKey = getVehiclesCheckMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof vehiclesCheck>>,
+    VehiclesCheckMutationVariables
+  > = (props) => {
+    const { data } = props ?? {};
 
+    return vehiclesCheck(data, requestOptions);
+  };
 
+  return { mutationFn, ...mutationOptions };
+};
 
+export type VehiclesCheckMutationResult = NonNullable<
+  Awaited<ReturnType<typeof vehiclesCheck>>
+>;
+export type VehiclesCheckMutationBody = BodyType<CheckPermissionDto>;
+export type VehiclesCheckMutationError = ErrorType<unknown>;
+export type VehiclesCheckMutationVariables = {
+  data: BodyType<CheckPermissionDto>;
+};
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof vehiclesCheck>>, VehiclesCheckMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  vehiclesCheck(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type VehiclesCheckMutationResult = NonNullable<Awaited<ReturnType<typeof vehiclesCheck>>>
-    export type VehiclesCheckMutationBody = BodyType<CheckPermissionDto>
-    export type VehiclesCheckMutationError = ErrorType<unknown>
-    export type VehiclesCheckMutationVariables = {data: BodyType<CheckPermissionDto>}
-
-    /**
+/**
  * @summary Проверить наличие активного разрешения
  */
-export const useVehiclesCheck = <TError = ErrorType<unknown>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof vehiclesCheck>>, TError,VehiclesCheckMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof vehiclesCheck>>,
-        TError,
-        VehiclesCheckMutationVariables,
-        TContext
-      > => {
-      return useMutation(getVehiclesCheckMutationOptions(options), queryClient);
-    }
-    /**
+export const useVehiclesCheck = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof vehiclesCheck>>,
+      TError,
+      VehiclesCheckMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof vehiclesCheck>>,
+  TError,
+  VehiclesCheckMutationVariables,
+  TContext
+> => {
+  return useMutation(getVehiclesCheckMutationOptions(options), queryClient);
+};
+/**
  *
  * Отзывает ранее выданное разрешение.
  * Повторный отзыв невозможен.
  * @summary Отозвать разрешение
  */
 export const vehiclesRevoke = (
-    revokePermissionDto: BodyType<RevokePermissionDto>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  revokePermissionDto: BodyType<RevokePermissionDto>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<RevokeVehiclePermissionResponseDto>(
-      {url: `/vehicles/revoke`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: revokePermissionDto, signal
+  return customInstance<RevokeVehiclePermissionResponseDto>(
+    {
+      url: `/vehicles/revoke`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: revokePermissionDto,
+      signal,
     },
-      options);
-    }
-
-
-
+    options,
+  );
+};
 
 export const getVehiclesRevokeMutationKey = () => ['vehiclesRevoke'] as const;
 
-export const getVehiclesRevokeMutationOptions = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof vehiclesRevoke>>, TError,VehiclesRevokeMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof vehiclesRevoke>>, TError,VehiclesRevokeMutationVariables, TContext> => {
+export const getVehiclesRevokeMutationOptions = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof vehiclesRevoke>>,
+    TError,
+    VehiclesRevokeMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof vehiclesRevoke>>,
+  TError,
+  VehiclesRevokeMutationVariables,
+  TContext
+> => {
+  const mutationKey = getVehiclesRevokeMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-const mutationKey = getVehiclesRevokeMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof vehiclesRevoke>>,
+    VehiclesRevokeMutationVariables
+  > = (props) => {
+    const { data } = props ?? {};
 
+    return vehiclesRevoke(data, requestOptions);
+  };
 
+  return { mutationFn, ...mutationOptions };
+};
 
+export type VehiclesRevokeMutationResult = NonNullable<
+  Awaited<ReturnType<typeof vehiclesRevoke>>
+>;
+export type VehiclesRevokeMutationBody = BodyType<RevokePermissionDto>;
+export type VehiclesRevokeMutationError = ErrorType<ErrorResponseDto>;
+export type VehiclesRevokeMutationVariables = {
+  data: BodyType<RevokePermissionDto>;
+};
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof vehiclesRevoke>>, VehiclesRevokeMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  vehiclesRevoke(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type VehiclesRevokeMutationResult = NonNullable<Awaited<ReturnType<typeof vehiclesRevoke>>>
-    export type VehiclesRevokeMutationBody = BodyType<RevokePermissionDto>
-    export type VehiclesRevokeMutationError = ErrorType<ErrorResponseDto>
-    export type VehiclesRevokeMutationVariables = {data: BodyType<RevokePermissionDto>}
-
-    /**
+/**
  * @summary Отозвать разрешение
  */
-export const useVehiclesRevoke = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof vehiclesRevoke>>, TError,VehiclesRevokeMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof vehiclesRevoke>>,
-        TError,
-        VehiclesRevokeMutationVariables,
-        TContext
-      > => {
-      return useMutation(getVehiclesRevokeMutationOptions(options), queryClient);
-    }
-    /**
+export const useVehiclesRevoke = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof vehiclesRevoke>>,
+      TError,
+      VehiclesRevokeMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof vehiclesRevoke>>,
+  TError,
+  VehiclesRevokeMutationVariables,
+  TContext
+> => {
+  return useMutation(getVehiclesRevokeMutationOptions(options), queryClient);
+};
+/**
  * Отменяет существующее будущее разрешение.
  * @summary Отменить разрешение
  */
 export const vehiclesCancel = (
-    revokePermissionDto: BodyType<RevokePermissionDto>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  revokePermissionDto: BodyType<RevokePermissionDto>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<CancelVehiclePermissionResponseDto>(
-      {url: `/vehicles/cancel`, method: 'DELETE',
-      headers: {'Content-Type': 'application/json', },
-      data: revokePermissionDto, signal
+  return customInstance<CancelVehiclePermissionResponseDto>(
+    {
+      url: `/vehicles/cancel`,
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      data: revokePermissionDto,
+      signal,
     },
-      options);
-    }
-
-
-
+    options,
+  );
+};
 
 export const getVehiclesCancelMutationKey = () => ['vehiclesCancel'] as const;
 
-export const getVehiclesCancelMutationOptions = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof vehiclesCancel>>, TError,VehiclesCancelMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof vehiclesCancel>>, TError,VehiclesCancelMutationVariables, TContext> => {
+export const getVehiclesCancelMutationOptions = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof vehiclesCancel>>,
+    TError,
+    VehiclesCancelMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof vehiclesCancel>>,
+  TError,
+  VehiclesCancelMutationVariables,
+  TContext
+> => {
+  const mutationKey = getVehiclesCancelMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-const mutationKey = getVehiclesCancelMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof vehiclesCancel>>,
+    VehiclesCancelMutationVariables
+  > = (props) => {
+    const { data } = props ?? {};
 
+    return vehiclesCancel(data, requestOptions);
+  };
 
+  return { mutationFn, ...mutationOptions };
+};
 
+export type VehiclesCancelMutationResult = NonNullable<
+  Awaited<ReturnType<typeof vehiclesCancel>>
+>;
+export type VehiclesCancelMutationBody = BodyType<RevokePermissionDto>;
+export type VehiclesCancelMutationError = ErrorType<ErrorResponseDto>;
+export type VehiclesCancelMutationVariables = {
+  data: BodyType<RevokePermissionDto>;
+};
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof vehiclesCancel>>, VehiclesCancelMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  vehiclesCancel(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type VehiclesCancelMutationResult = NonNullable<Awaited<ReturnType<typeof vehiclesCancel>>>
-    export type VehiclesCancelMutationBody = BodyType<RevokePermissionDto>
-    export type VehiclesCancelMutationError = ErrorType<ErrorResponseDto>
-    export type VehiclesCancelMutationVariables = {data: BodyType<RevokePermissionDto>}
-
-    /**
+/**
  * @summary Отменить разрешение
  */
-export const useVehiclesCancel = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof vehiclesCancel>>, TError,VehiclesCancelMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof vehiclesCancel>>,
-        TError,
-        VehiclesCancelMutationVariables,
-        TContext
-      > => {
-      return useMutation(getVehiclesCancelMutationOptions(options), queryClient);
-    }
-    /**
+export const useVehiclesCancel = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof vehiclesCancel>>,
+      TError,
+      VehiclesCancelMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof vehiclesCancel>>,
+  TError,
+  VehiclesCancelMutationVariables,
+  TContext
+> => {
+  return useMutation(getVehiclesCancelMutationOptions(options), queryClient);
+};
+/**
  *
  * Принудительно очищает кеш разрешений.
  *
@@ -714,65 +986,82 @@ export const useVehiclesCancel = <TError = ErrorType<ErrorResponseDto>,
  * @summary Очистить кеш разрешений (служебный)
  */
 export const vehiclesCleanup = (
-
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<CancelVehiclePermissionResponseDto>(
-      {url: `/vehicles/caches/purge`, method: 'DELETE', signal
-    },
-      options);
-    }
-
-
-
+  return customInstance<CancelVehiclePermissionResponseDto>(
+    { url: `/vehicles/caches/purge`, method: 'DELETE', signal },
+    options,
+  );
+};
 
 export const getVehiclesCleanupMutationKey = () => ['vehiclesCleanup'] as const;
 
-export const getVehiclesCleanupMutationOptions = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof vehiclesCleanup>>, TError,void, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof vehiclesCleanup>>, TError,void, TContext> => {
+export const getVehiclesCleanupMutationOptions = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof vehiclesCleanup>>,
+    TError,
+    void,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof vehiclesCleanup>>,
+  TError,
+  void,
+  TContext
+> => {
+  const mutationKey = getVehiclesCleanupMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-const mutationKey = getVehiclesCleanupMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof vehiclesCleanup>>,
+    void
+  > = () => {
+    return vehiclesCleanup(requestOptions);
+  };
 
+  return { mutationFn, ...mutationOptions };
+};
 
+export type VehiclesCleanupMutationResult = NonNullable<
+  Awaited<ReturnType<typeof vehiclesCleanup>>
+>;
 
+export type VehiclesCleanupMutationError = ErrorType<ErrorResponseDto>;
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof vehiclesCleanup>>, void> = () => {
-
-
-          return  vehiclesCleanup(requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type VehiclesCleanupMutationResult = NonNullable<Awaited<ReturnType<typeof vehiclesCleanup>>>
-
-    export type VehiclesCleanupMutationError = ErrorType<ErrorResponseDto>
-
-
-    /**
+/**
  * @deprecated
  * @summary Очистить кеш разрешений (служебный)
  */
-export const useVehiclesCleanup = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof vehiclesCleanup>>, TError,void, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof vehiclesCleanup>>,
-        TError,
-        void,
-        TContext
-      > => {
-      return useMutation(getVehiclesCleanupMutationOptions(options), queryClient);
-    }
+export const useVehiclesCleanup = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof vehiclesCleanup>>,
+      TError,
+      void,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof vehiclesCleanup>>,
+  TError,
+  void,
+  TContext
+> => {
+  return useMutation(getVehiclesCleanupMutationOptions(options), queryClient);
+};

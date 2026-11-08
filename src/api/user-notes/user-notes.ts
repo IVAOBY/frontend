@@ -5,10 +5,19 @@
  * API service for handling IVAO Belarus Divisions Web infrastructure.
  * OpenAPI spec version: 1.13.2
  */
-import {
-  useMutation,
-  useQuery
-} from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
+
+import type { BodyType, ErrorType } from '../../utils/customInstance';
+import type {
+  DeleteResultDto,
+  EditNoteDto,
+  ErrorResponseDto,
+  NoteInput,
+  UserNotesDeleteNoteParams,
+  UserNotesEditNoteParams,
+  UserNotesEntity,
+  UserNotesFindParams,
+} from '../model';
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -21,29 +30,17 @@ import type {
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
-  UseQueryResult
+  UseQueryResult,
 } from '@tanstack/react-query';
 
-import type {
-  DeleteResultDto,
-  EditNoteDto,
-  ErrorResponseDto,
-  NoteInput,
-  UserNotesDeleteNoteParams,
-  UserNotesEditNoteParams,
-  UserNotesEntity,
-  UserNotesFindParams
-} from '../model';
-
 import { customInstance } from '../../utils/customInstance';
-import type { ErrorType , BodyType } from '../../utils/customInstance';
-
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-
-const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
+const withQueryKey = <T extends object, K>(
+  query: T,
+  queryKey: K,
+): T & { queryKey: K } => {
   const result = { queryKey } as T & { queryKey: K };
   for (const key of Object.keys(query)) {
     // The explicit queryKey always wins, matching the previous
@@ -63,297 +60,430 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
  * @summary Получить заметки пользователя
  */
 export const userNotesFind = (
-    params?: UserNotesFindParams,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  params?: UserNotesFindParams,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<UserNotesEntity | UserNotesEntity[]>(
+    { url: `/users/notes`, method: 'GET', params, signal },
+    options,
+  );
+};
 
+export const getUserNotesFindQueryKey = (params?: UserNotesFindParams) => {
+  return [`/users/notes`, ...(params ? [params] : [])] as const;
+};
 
-      return customInstance<UserNotesEntity | UserNotesEntity[]>(
-      {url: `/users/notes`, method: 'GET',
-        params, signal
-    },
-      options);
-    }
-
-
-
-
-export const getUserNotesFindQueryKey = (params?: UserNotesFindParams,) => {
-    return [
-    `/users/notes`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getUserNotesFindQueryOptions = <TData = Awaited<ReturnType<typeof userNotesFind>>, TError = ErrorType<ErrorResponseDto>>(params?: UserNotesFindParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof userNotesFind>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getUserNotesFindQueryOptions = <
+  TData = Awaited<ReturnType<typeof userNotesFind>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  params?: UserNotesFindParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof userNotesFind>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
 ) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryKey = queryOptions?.queryKey ?? getUserNotesFindQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getUserNotesFindQueryKey(params);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof userNotesFind>>> = ({
+    signal,
+  }) => userNotesFind(params, requestOptions, signal);
 
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof userNotesFind>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type UserNotesFindQueryResult = NonNullable<
+  Awaited<ReturnType<typeof userNotesFind>>
+>;
+export type UserNotesFindQueryError = ErrorType<ErrorResponseDto>;
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof userNotesFind>>> = ({ signal }) => userNotesFind(params, requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof userNotesFind>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type UserNotesFindQueryResult = NonNullable<Awaited<ReturnType<typeof userNotesFind>>>
-export type UserNotesFindQueryError = ErrorType<ErrorResponseDto>
-
-
-export function useUserNotesFind<TData = Awaited<ReturnType<typeof userNotesFind>>, TError = ErrorType<ErrorResponseDto>>(
- params: undefined |  UserNotesFindParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof userNotesFind>>, TError, TData>> & Pick<
+export function useUserNotesFind<
+  TData = Awaited<ReturnType<typeof userNotesFind>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  params: undefined | UserNotesFindParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof userNotesFind>>, TError, TData>
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof userNotesFind>>,
           TError,
           Awaited<ReturnType<typeof userNotesFind>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useUserNotesFind<TData = Awaited<ReturnType<typeof userNotesFind>>, TError = ErrorType<ErrorResponseDto>>(
- params?: UserNotesFindParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof userNotesFind>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useUserNotesFind<
+  TData = Awaited<ReturnType<typeof userNotesFind>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  params?: UserNotesFindParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof userNotesFind>>, TError, TData>
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof userNotesFind>>,
           TError,
           Awaited<ReturnType<typeof userNotesFind>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useUserNotesFind<TData = Awaited<ReturnType<typeof userNotesFind>>, TError = ErrorType<ErrorResponseDto>>(
- params?: UserNotesFindParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof userNotesFind>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useUserNotesFind<
+  TData = Awaited<ReturnType<typeof userNotesFind>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  params?: UserNotesFindParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof userNotesFind>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Получить заметки пользователя
  */
 
-export function useUserNotesFind<TData = Awaited<ReturnType<typeof userNotesFind>>, TError = ErrorType<ErrorResponseDto>>(
- params?: UserNotesFindParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof userNotesFind>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useUserNotesFind<
+  TData = Awaited<ReturnType<typeof userNotesFind>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  params?: UserNotesFindParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof userNotesFind>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getUserNotesFindQueryOptions(params, options);
 
-  const queryOptions = getUserNotesFindQueryOptions(params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
 
 /**
  * Позволяет изменить текст существующей заметки.
  * @summary Редактировать существующую заметку
  */
 export const userNotesEditNote = (
-    editNoteDto: BodyType<EditNoteDto>,
-    params: UserNotesEditNoteParams,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  editNoteDto: BodyType<EditNoteDto>,
+  params: UserNotesEditNoteParams,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<UserNotesEntity>(
-      {url: `/users/notes`, method: 'PATCH',
-      headers: {'Content-Type': 'application/json', },
+  return customInstance<UserNotesEntity>(
+    {
+      url: `/users/notes`,
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
       data: editNoteDto,
-        params, signal
+      params,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
+export const getUserNotesEditNoteMutationKey = () =>
+  ['userNotesEditNote'] as const;
 
+export const getUserNotesEditNoteMutationOptions = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof userNotesEditNote>>,
+    TError,
+    UserNotesEditNoteMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof userNotesEditNote>>,
+  TError,
+  UserNotesEditNoteMutationVariables,
+  TContext
+> => {
+  const mutationKey = getUserNotesEditNoteMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof userNotesEditNote>>,
+    UserNotesEditNoteMutationVariables
+  > = (props) => {
+    const { data, params } = props ?? {};
 
-export const getUserNotesEditNoteMutationKey = () => ['userNotesEditNote'] as const;
+    return userNotesEditNote(data, params, requestOptions);
+  };
 
-export const getUserNotesEditNoteMutationOptions = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof userNotesEditNote>>, TError,UserNotesEditNoteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof userNotesEditNote>>, TError,UserNotesEditNoteMutationVariables, TContext> => {
+  return { mutationFn, ...mutationOptions };
+};
 
-const mutationKey = getUserNotesEditNoteMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+export type UserNotesEditNoteMutationResult = NonNullable<
+  Awaited<ReturnType<typeof userNotesEditNote>>
+>;
+export type UserNotesEditNoteMutationBody = BodyType<EditNoteDto>;
+export type UserNotesEditNoteMutationError = ErrorType<ErrorResponseDto>;
+export type UserNotesEditNoteMutationVariables = {
+  data: BodyType<EditNoteDto>;
+  params: UserNotesEditNoteParams;
+};
 
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof userNotesEditNote>>, UserNotesEditNoteMutationVariables> = (props) => {
-          const {data,params} = props ?? {};
-
-          return  userNotesEditNote(data,params,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type UserNotesEditNoteMutationResult = NonNullable<Awaited<ReturnType<typeof userNotesEditNote>>>
-    export type UserNotesEditNoteMutationBody = BodyType<EditNoteDto>
-    export type UserNotesEditNoteMutationError = ErrorType<ErrorResponseDto>
-    export type UserNotesEditNoteMutationVariables = {data: BodyType<EditNoteDto>;params: UserNotesEditNoteParams}
-
-    /**
+/**
  * @summary Редактировать существующую заметку
  */
-export const useUserNotesEditNote = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof userNotesEditNote>>, TError,UserNotesEditNoteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof userNotesEditNote>>,
-        TError,
-        UserNotesEditNoteMutationVariables,
-        TContext
-      > => {
-      return useMutation(getUserNotesEditNoteMutationOptions(options), queryClient);
-    }
-    /**
+export const useUserNotesEditNote = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof userNotesEditNote>>,
+      TError,
+      UserNotesEditNoteMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof userNotesEditNote>>,
+  TError,
+  UserNotesEditNoteMutationVariables,
+  TContext
+> => {
+  return useMutation(getUserNotesEditNoteMutationOptions(options), queryClient);
+};
+/**
  * Позволяет удалить существующую заметку.
  * @summary Удалить заметку
  */
 export const userNotesDeleteNote = (
-    params: UserNotesDeleteNoteParams,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  params: UserNotesDeleteNoteParams,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<DeleteResultDto>(
+    { url: `/users/notes`, method: 'DELETE', params, signal },
+    options,
+  );
+};
 
+export const getUserNotesDeleteNoteMutationKey = () =>
+  ['userNotesDeleteNote'] as const;
 
-      return customInstance<DeleteResultDto>(
-      {url: `/users/notes`, method: 'DELETE',
-        params, signal
-    },
-      options);
-    }
+export const getUserNotesDeleteNoteMutationOptions = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof userNotesDeleteNote>>,
+    TError,
+    UserNotesDeleteNoteMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof userNotesDeleteNote>>,
+  TError,
+  UserNotesDeleteNoteMutationVariables,
+  TContext
+> => {
+  const mutationKey = getUserNotesDeleteNoteMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof userNotesDeleteNote>>,
+    UserNotesDeleteNoteMutationVariables
+  > = (props) => {
+    const { params } = props ?? {};
 
+    return userNotesDeleteNote(params, requestOptions);
+  };
 
+  return { mutationFn, ...mutationOptions };
+};
 
-export const getUserNotesDeleteNoteMutationKey = () => ['userNotesDeleteNote'] as const;
+export type UserNotesDeleteNoteMutationResult = NonNullable<
+  Awaited<ReturnType<typeof userNotesDeleteNote>>
+>;
 
-export const getUserNotesDeleteNoteMutationOptions = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof userNotesDeleteNote>>, TError,UserNotesDeleteNoteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof userNotesDeleteNote>>, TError,UserNotesDeleteNoteMutationVariables, TContext> => {
+export type UserNotesDeleteNoteMutationError = ErrorType<ErrorResponseDto>;
+export type UserNotesDeleteNoteMutationVariables = {
+  params: UserNotesDeleteNoteParams;
+};
 
-const mutationKey = getUserNotesDeleteNoteMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof userNotesDeleteNote>>, UserNotesDeleteNoteMutationVariables> = (props) => {
-          const {params} = props ?? {};
-
-          return  userNotesDeleteNote(params,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type UserNotesDeleteNoteMutationResult = NonNullable<Awaited<ReturnType<typeof userNotesDeleteNote>>>
-
-    export type UserNotesDeleteNoteMutationError = ErrorType<ErrorResponseDto>
-    export type UserNotesDeleteNoteMutationVariables = {params: UserNotesDeleteNoteParams}
-
-    /**
+/**
  * @summary Удалить заметку
  */
-export const useUserNotesDeleteNote = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof userNotesDeleteNote>>, TError,UserNotesDeleteNoteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof userNotesDeleteNote>>,
-        TError,
-        UserNotesDeleteNoteMutationVariables,
-        TContext
-      > => {
-      return useMutation(getUserNotesDeleteNoteMutationOptions(options), queryClient);
-    }
-    /**
+export const useUserNotesDeleteNote = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof userNotesDeleteNote>>,
+      TError,
+      UserNotesDeleteNoteMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof userNotesDeleteNote>>,
+  TError,
+  UserNotesDeleteNoteMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getUserNotesDeleteNoteMutationOptions(options),
+    queryClient,
+  );
+};
+/**
  * Позволяет создать новую заметку для пользователя.
  * @summary Создать новую заметку
  */
 export const userNotesCreateNote = (
-    noteInput: BodyType<NoteInput>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  noteInput: BodyType<NoteInput>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<UserNotesEntity>(
-      {url: `/users/notes/create`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: noteInput, signal
+  return customInstance<UserNotesEntity>(
+    {
+      url: `/users/notes/create`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: noteInput,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
+export const getUserNotesCreateNoteMutationKey = () =>
+  ['userNotesCreateNote'] as const;
 
+export const getUserNotesCreateNoteMutationOptions = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof userNotesCreateNote>>,
+    TError,
+    UserNotesCreateNoteMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof userNotesCreateNote>>,
+  TError,
+  UserNotesCreateNoteMutationVariables,
+  TContext
+> => {
+  const mutationKey = getUserNotesCreateNoteMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof userNotesCreateNote>>,
+    UserNotesCreateNoteMutationVariables
+  > = (props) => {
+    const { data } = props ?? {};
 
-export const getUserNotesCreateNoteMutationKey = () => ['userNotesCreateNote'] as const;
+    return userNotesCreateNote(data, requestOptions);
+  };
 
-export const getUserNotesCreateNoteMutationOptions = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof userNotesCreateNote>>, TError,UserNotesCreateNoteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof userNotesCreateNote>>, TError,UserNotesCreateNoteMutationVariables, TContext> => {
+  return { mutationFn, ...mutationOptions };
+};
 
-const mutationKey = getUserNotesCreateNoteMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+export type UserNotesCreateNoteMutationResult = NonNullable<
+  Awaited<ReturnType<typeof userNotesCreateNote>>
+>;
+export type UserNotesCreateNoteMutationBody = BodyType<NoteInput>;
+export type UserNotesCreateNoteMutationError = ErrorType<ErrorResponseDto>;
+export type UserNotesCreateNoteMutationVariables = {
+  data: BodyType<NoteInput>;
+};
 
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof userNotesCreateNote>>, UserNotesCreateNoteMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  userNotesCreateNote(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type UserNotesCreateNoteMutationResult = NonNullable<Awaited<ReturnType<typeof userNotesCreateNote>>>
-    export type UserNotesCreateNoteMutationBody = BodyType<NoteInput>
-    export type UserNotesCreateNoteMutationError = ErrorType<ErrorResponseDto>
-    export type UserNotesCreateNoteMutationVariables = {data: BodyType<NoteInput>}
-
-    /**
+/**
  * @summary Создать новую заметку
  */
-export const useUserNotesCreateNote = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof userNotesCreateNote>>, TError,UserNotesCreateNoteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof userNotesCreateNote>>,
-        TError,
-        UserNotesCreateNoteMutationVariables,
-        TContext
-      > => {
-      return useMutation(getUserNotesCreateNoteMutationOptions(options), queryClient);
-    }
+export const useUserNotesCreateNote = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof userNotesCreateNote>>,
+      TError,
+      UserNotesCreateNoteMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof userNotesCreateNote>>,
+  TError,
+  UserNotesCreateNoteMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getUserNotesCreateNoteMutationOptions(options),
+    queryClient,
+  );
+};

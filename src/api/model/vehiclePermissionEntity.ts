@@ -6,4 +6,6 @@
  * OpenAPI spec version: 1.13.2
  */
 
-export interface VehiclePermissionEntity { [key: string]: unknown }
+export interface VehiclePermissionEntity {
+  [key: string]: unknown;
+}

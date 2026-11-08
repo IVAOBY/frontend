@@ -6,4 +6,6 @@
  * OpenAPI spec version: 1.13.2
  */
 
-export interface CreateCategoryDto { [key: string]: unknown }
+export interface CreateCategoryDto {
+  [key: string]: unknown;
+}

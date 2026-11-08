@@ -11,8 +11,8 @@ export interface DeleteResultDto {
   /** Сырой ответ драйвера БД */
   raw?: DeleteResultDtoRaw;
   /**
-     * Количество затронутых строк
-     * @nullable
-     */
+   * Количество затронутых строк
+   * @nullable
+   */
   affected?: number | null;
 }

@@ -5,10 +5,16 @@
  * API service for handling IVAO Belarus Divisions Web infrastructure.
  * OpenAPI spec version: 1.13.2
  */
-import {
-  useMutation,
-  useQuery
-} from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
+
+import type { BodyType, ErrorType } from '../../utils/customInstance';
+import type {
+  CreateNewsDto,
+  ErrorResponseDto,
+  NewsEntity,
+  NewsGetAllNewsParams,
+  UpdateNewsDto,
+} from '../model';
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -21,26 +27,17 @@ import type {
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
-  UseQueryResult
+  UseQueryResult,
 } from '@tanstack/react-query';
 
-import type {
-  CreateNewsDto,
-  ErrorResponseDto,
-  NewsEntity,
-  NewsGetAllNewsParams,
-  UpdateNewsDto
-} from '../model';
-
 import { customInstance } from '../../utils/customInstance';
-import type { ErrorType , BodyType } from '../../utils/customInstance';
-
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-
-const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
+const withQueryKey = <T extends object, K>(
+  query: T,
+  queryKey: K,
+): T & { queryKey: K } => {
   const result = { queryKey } as T & { queryKey: K };
   for (const key of Object.keys(query)) {
     // The explicit queryKey always wins, matching the previous
@@ -60,449 +57,668 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
  * @summary Получить список новостей
  */
 export const newsGetAllNews = (
-    params?: NewsGetAllNewsParams,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  params?: NewsGetAllNewsParams,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<NewsEntity[]>(
+    { url: `/news`, method: 'GET', params, signal },
+    options,
+  );
+};
 
+export const getNewsGetAllNewsQueryKey = (params?: NewsGetAllNewsParams) => {
+  return [`/news`, ...(params ? [params] : [])] as const;
+};
 
-      return customInstance<NewsEntity[]>(
-      {url: `/news`, method: 'GET',
-        params, signal
-    },
-      options);
-    }
-
-
-
-
-export const getNewsGetAllNewsQueryKey = (params?: NewsGetAllNewsParams,) => {
-    return [
-    `/news`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getNewsGetAllNewsQueryOptions = <TData = Awaited<ReturnType<typeof newsGetAllNews>>, TError = ErrorType<unknown>>(params?: NewsGetAllNewsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof newsGetAllNews>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getNewsGetAllNewsQueryOptions = <
+  TData = Awaited<ReturnType<typeof newsGetAllNews>>,
+  TError = ErrorType<unknown>,
+>(
+  params?: NewsGetAllNewsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof newsGetAllNews>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
 ) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryKey = queryOptions?.queryKey ?? getNewsGetAllNewsQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getNewsGetAllNewsQueryKey(params);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof newsGetAllNews>>> = ({
+    signal,
+  }) => newsGetAllNews(params, requestOptions, signal);
 
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof newsGetAllNews>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type NewsGetAllNewsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof newsGetAllNews>>
+>;
+export type NewsGetAllNewsQueryError = ErrorType<unknown>;
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof newsGetAllNews>>> = ({ signal }) => newsGetAllNews(params, requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof newsGetAllNews>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type NewsGetAllNewsQueryResult = NonNullable<Awaited<ReturnType<typeof newsGetAllNews>>>
-export type NewsGetAllNewsQueryError = ErrorType<unknown>
-
-
-export function useNewsGetAllNews<TData = Awaited<ReturnType<typeof newsGetAllNews>>, TError = ErrorType<unknown>>(
- params: undefined |  NewsGetAllNewsParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof newsGetAllNews>>, TError, TData>> & Pick<
+export function useNewsGetAllNews<
+  TData = Awaited<ReturnType<typeof newsGetAllNews>>,
+  TError = ErrorType<unknown>,
+>(
+  params: undefined | NewsGetAllNewsParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof newsGetAllNews>>, TError, TData>
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof newsGetAllNews>>,
           TError,
           Awaited<ReturnType<typeof newsGetAllNews>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useNewsGetAllNews<TData = Awaited<ReturnType<typeof newsGetAllNews>>, TError = ErrorType<unknown>>(
- params?: NewsGetAllNewsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof newsGetAllNews>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useNewsGetAllNews<
+  TData = Awaited<ReturnType<typeof newsGetAllNews>>,
+  TError = ErrorType<unknown>,
+>(
+  params?: NewsGetAllNewsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof newsGetAllNews>>, TError, TData>
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof newsGetAllNews>>,
           TError,
           Awaited<ReturnType<typeof newsGetAllNews>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useNewsGetAllNews<TData = Awaited<ReturnType<typeof newsGetAllNews>>, TError = ErrorType<unknown>>(
- params?: NewsGetAllNewsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof newsGetAllNews>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useNewsGetAllNews<
+  TData = Awaited<ReturnType<typeof newsGetAllNews>>,
+  TError = ErrorType<unknown>,
+>(
+  params?: NewsGetAllNewsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof newsGetAllNews>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Получить список новостей
  */
 
-export function useNewsGetAllNews<TData = Awaited<ReturnType<typeof newsGetAllNews>>, TError = ErrorType<unknown>>(
- params?: NewsGetAllNewsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof newsGetAllNews>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useNewsGetAllNews<
+  TData = Awaited<ReturnType<typeof newsGetAllNews>>,
+  TError = ErrorType<unknown>,
+>(
+  params?: NewsGetAllNewsParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof newsGetAllNews>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getNewsGetAllNewsQueryOptions(params, options);
 
-  const queryOptions = getNewsGetAllNewsQueryOptions(params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
 
 /**
  * @summary Создать новость (PR, ED, TD)
  */
 export const newsCreateNews = (
-    createNewsDto: BodyType<CreateNewsDto>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  createNewsDto: BodyType<CreateNewsDto>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<NewsEntity>(
-      {url: `/news`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: createNewsDto, signal
+  return customInstance<NewsEntity>(
+    {
+      url: `/news`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: createNewsDto,
+      signal,
     },
-      options);
-    }
-
-
-
+    options,
+  );
+};
 
 export const getNewsCreateNewsMutationKey = () => ['newsCreateNews'] as const;
 
-export const getNewsCreateNewsMutationOptions = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof newsCreateNews>>, TError,NewsCreateNewsMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof newsCreateNews>>, TError,NewsCreateNewsMutationVariables, TContext> => {
+export const getNewsCreateNewsMutationOptions = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof newsCreateNews>>,
+    TError,
+    NewsCreateNewsMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof newsCreateNews>>,
+  TError,
+  NewsCreateNewsMutationVariables,
+  TContext
+> => {
+  const mutationKey = getNewsCreateNewsMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-const mutationKey = getNewsCreateNewsMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof newsCreateNews>>,
+    NewsCreateNewsMutationVariables
+  > = (props) => {
+    const { data } = props ?? {};
 
+    return newsCreateNews(data, requestOptions);
+  };
 
+  return { mutationFn, ...mutationOptions };
+};
 
+export type NewsCreateNewsMutationResult = NonNullable<
+  Awaited<ReturnType<typeof newsCreateNews>>
+>;
+export type NewsCreateNewsMutationBody = BodyType<CreateNewsDto>;
+export type NewsCreateNewsMutationError = ErrorType<ErrorResponseDto>;
+export type NewsCreateNewsMutationVariables = { data: BodyType<CreateNewsDto> };
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof newsCreateNews>>, NewsCreateNewsMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  newsCreateNews(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type NewsCreateNewsMutationResult = NonNullable<Awaited<ReturnType<typeof newsCreateNews>>>
-    export type NewsCreateNewsMutationBody = BodyType<CreateNewsDto>
-    export type NewsCreateNewsMutationError = ErrorType<ErrorResponseDto>
-    export type NewsCreateNewsMutationVariables = {data: BodyType<CreateNewsDto>}
-
-    /**
+/**
  * @summary Создать новость (PR, ED, TD)
  */
-export const useNewsCreateNews = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof newsCreateNews>>, TError,NewsCreateNewsMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof newsCreateNews>>,
-        TError,
-        NewsCreateNewsMutationVariables,
-        TContext
-      > => {
-      return useMutation(getNewsCreateNewsMutationOptions(options), queryClient);
-    }
-    /**
+export const useNewsCreateNews = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof newsCreateNews>>,
+      TError,
+      NewsCreateNewsMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof newsCreateNews>>,
+  TError,
+  NewsCreateNewsMutationVariables,
+  TContext
+> => {
+  return useMutation(getNewsCreateNewsMutationOptions(options), queryClient);
+};
+/**
  * @summary Получить новость по ID
  */
 export const newsGetNewsById = (
-    id: number,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: number,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<NewsEntity>(
+    { url: `/news/${id}`, method: 'GET', signal },
+    options,
+  );
+};
 
+export const getNewsGetNewsByIdQueryKey = (id: number) => {
+  return [`/news/${id}`] as const;
+};
 
-      return customInstance<NewsEntity>(
-      {url: `/news/${id}`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
-
-export const getNewsGetNewsByIdQueryKey = (id: number,) => {
-    return [
-    `/news/${id}`
-    ] as const;
-    }
-
-
-export const getNewsGetNewsByIdQueryOptions = <TData = Awaited<ReturnType<typeof newsGetNewsById>>, TError = ErrorType<ErrorResponseDto>>(id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof newsGetNewsById>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getNewsGetNewsByIdQueryOptions = <
+  TData = Awaited<ReturnType<typeof newsGetNewsById>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  id: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof newsGetNewsById>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
 ) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryKey = queryOptions?.queryKey ?? getNewsGetNewsByIdQueryKey(id);
 
-  const queryKey =  queryOptions?.queryKey ?? getNewsGetNewsByIdQueryKey(id);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof newsGetNewsById>>> = ({
+    signal,
+  }) => newsGetNewsById(id, requestOptions, signal);
 
+  return {
+    queryKey,
+    queryFn,
+    enabled: id !== null && id !== undefined,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof newsGetNewsById>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type NewsGetNewsByIdQueryResult = NonNullable<
+  Awaited<ReturnType<typeof newsGetNewsById>>
+>;
+export type NewsGetNewsByIdQueryError = ErrorType<ErrorResponseDto>;
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof newsGetNewsById>>> = ({ signal }) => newsGetNewsById(id, requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof newsGetNewsById>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type NewsGetNewsByIdQueryResult = NonNullable<Awaited<ReturnType<typeof newsGetNewsById>>>
-export type NewsGetNewsByIdQueryError = ErrorType<ErrorResponseDto>
-
-
-export function useNewsGetNewsById<TData = Awaited<ReturnType<typeof newsGetNewsById>>, TError = ErrorType<ErrorResponseDto>>(
- id: number, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof newsGetNewsById>>, TError, TData>> & Pick<
+export function useNewsGetNewsById<
+  TData = Awaited<ReturnType<typeof newsGetNewsById>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  id: number,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof newsGetNewsById>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof newsGetNewsById>>,
           TError,
           Awaited<ReturnType<typeof newsGetNewsById>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useNewsGetNewsById<TData = Awaited<ReturnType<typeof newsGetNewsById>>, TError = ErrorType<ErrorResponseDto>>(
- id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof newsGetNewsById>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useNewsGetNewsById<
+  TData = Awaited<ReturnType<typeof newsGetNewsById>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  id: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof newsGetNewsById>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof newsGetNewsById>>,
           TError,
           Awaited<ReturnType<typeof newsGetNewsById>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useNewsGetNewsById<TData = Awaited<ReturnType<typeof newsGetNewsById>>, TError = ErrorType<ErrorResponseDto>>(
- id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof newsGetNewsById>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useNewsGetNewsById<
+  TData = Awaited<ReturnType<typeof newsGetNewsById>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  id: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof newsGetNewsById>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Получить новость по ID
  */
 
-export function useNewsGetNewsById<TData = Awaited<ReturnType<typeof newsGetNewsById>>, TError = ErrorType<ErrorResponseDto>>(
- id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof newsGetNewsById>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useNewsGetNewsById<
+  TData = Awaited<ReturnType<typeof newsGetNewsById>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  id: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof newsGetNewsById>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getNewsGetNewsByIdQueryOptions(id, options);
 
-  const queryOptions = getNewsGetNewsByIdQueryOptions(id,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
 
 /**
  * @summary Редактировать новость (PR, ED, TD)
  */
 export const newsEditNews = (
-    id: number,
-    updateNewsDto: BodyType<UpdateNewsDto>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: number,
+  updateNewsDto: BodyType<UpdateNewsDto>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<NewsEntity>(
-      {url: `/news/${id}`, method: 'PUT',
-      headers: {'Content-Type': 'application/json', },
-      data: updateNewsDto, signal
+  return customInstance<NewsEntity>(
+    {
+      url: `/news/${id}`,
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      data: updateNewsDto,
+      signal,
     },
-      options);
-    }
-
-
-
+    options,
+  );
+};
 
 export const getNewsEditNewsMutationKey = () => ['newsEditNews'] as const;
 
-export const getNewsEditNewsMutationOptions = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof newsEditNews>>, TError,NewsEditNewsMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof newsEditNews>>, TError,NewsEditNewsMutationVariables, TContext> => {
+export const getNewsEditNewsMutationOptions = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof newsEditNews>>,
+    TError,
+    NewsEditNewsMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof newsEditNews>>,
+  TError,
+  NewsEditNewsMutationVariables,
+  TContext
+> => {
+  const mutationKey = getNewsEditNewsMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-const mutationKey = getNewsEditNewsMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof newsEditNews>>,
+    NewsEditNewsMutationVariables
+  > = (props) => {
+    const { id, data } = props ?? {};
 
+    return newsEditNews(id, data, requestOptions);
+  };
 
+  return { mutationFn, ...mutationOptions };
+};
 
+export type NewsEditNewsMutationResult = NonNullable<
+  Awaited<ReturnType<typeof newsEditNews>>
+>;
+export type NewsEditNewsMutationBody = BodyType<UpdateNewsDto>;
+export type NewsEditNewsMutationError = ErrorType<ErrorResponseDto>;
+export type NewsEditNewsMutationVariables = {
+  id: number;
+  data: BodyType<UpdateNewsDto>;
+};
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof newsEditNews>>, NewsEditNewsMutationVariables> = (props) => {
-          const {id,data} = props ?? {};
-
-          return  newsEditNews(id,data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type NewsEditNewsMutationResult = NonNullable<Awaited<ReturnType<typeof newsEditNews>>>
-    export type NewsEditNewsMutationBody = BodyType<UpdateNewsDto>
-    export type NewsEditNewsMutationError = ErrorType<ErrorResponseDto>
-    export type NewsEditNewsMutationVariables = {id: number;data: BodyType<UpdateNewsDto>}
-
-    /**
+/**
  * @summary Редактировать новость (PR, ED, TD)
  */
-export const useNewsEditNews = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof newsEditNews>>, TError,NewsEditNewsMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof newsEditNews>>,
-        TError,
-        NewsEditNewsMutationVariables,
-        TContext
-      > => {
-      return useMutation(getNewsEditNewsMutationOptions(options), queryClient);
-    }
-    /**
+export const useNewsEditNews = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof newsEditNews>>,
+      TError,
+      NewsEditNewsMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof newsEditNews>>,
+  TError,
+  NewsEditNewsMutationVariables,
+  TContext
+> => {
+  return useMutation(getNewsEditNewsMutationOptions(options), queryClient);
+};
+/**
  * @summary Удалить новость (PR, ED, TD)
  */
 export const newsDeleteNews = (
-    id: number,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: number,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<NewsEntity>(
-      {url: `/news/${id}`, method: 'DELETE', signal
-    },
-      options);
-    }
-
-
-
+  return customInstance<NewsEntity>(
+    { url: `/news/${id}`, method: 'DELETE', signal },
+    options,
+  );
+};
 
 export const getNewsDeleteNewsMutationKey = () => ['newsDeleteNews'] as const;
 
-export const getNewsDeleteNewsMutationOptions = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof newsDeleteNews>>, TError,NewsDeleteNewsMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof newsDeleteNews>>, TError,NewsDeleteNewsMutationVariables, TContext> => {
+export const getNewsDeleteNewsMutationOptions = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof newsDeleteNews>>,
+    TError,
+    NewsDeleteNewsMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof newsDeleteNews>>,
+  TError,
+  NewsDeleteNewsMutationVariables,
+  TContext
+> => {
+  const mutationKey = getNewsDeleteNewsMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-const mutationKey = getNewsDeleteNewsMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof newsDeleteNews>>,
+    NewsDeleteNewsMutationVariables
+  > = (props) => {
+    const { id } = props ?? {};
 
+    return newsDeleteNews(id, requestOptions);
+  };
 
+  return { mutationFn, ...mutationOptions };
+};
 
+export type NewsDeleteNewsMutationResult = NonNullable<
+  Awaited<ReturnType<typeof newsDeleteNews>>
+>;
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof newsDeleteNews>>, NewsDeleteNewsMutationVariables> = (props) => {
-          const {id} = props ?? {};
+export type NewsDeleteNewsMutationError = ErrorType<ErrorResponseDto>;
+export type NewsDeleteNewsMutationVariables = { id: number };
 
-          return  newsDeleteNews(id,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type NewsDeleteNewsMutationResult = NonNullable<Awaited<ReturnType<typeof newsDeleteNews>>>
-
-    export type NewsDeleteNewsMutationError = ErrorType<ErrorResponseDto>
-    export type NewsDeleteNewsMutationVariables = {id: number}
-
-    /**
+/**
  * @summary Удалить новость (PR, ED, TD)
  */
-export const useNewsDeleteNews = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof newsDeleteNews>>, TError,NewsDeleteNewsMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof newsDeleteNews>>,
-        TError,
-        NewsDeleteNewsMutationVariables,
-        TContext
-      > => {
-      return useMutation(getNewsDeleteNewsMutationOptions(options), queryClient);
-    }
-    /**
+export const useNewsDeleteNews = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof newsDeleteNews>>,
+      TError,
+      NewsDeleteNewsMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof newsDeleteNews>>,
+  TError,
+  NewsDeleteNewsMutationVariables,
+  TContext
+> => {
+  return useMutation(getNewsDeleteNewsMutationOptions(options), queryClient);
+};
+/**
  * @summary Опубликовать новость в Discord (PR, ED, TD)
  */
 export const newsPublishToDiscord = (
-    id: number,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: number,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<NewsEntity>(
+    { url: `/news/publish-to-discord/${id}`, method: 'POST', signal },
+    options,
+  );
+};
 
+export const getNewsPublishToDiscordMutationKey = () =>
+  ['newsPublishToDiscord'] as const;
 
-      return customInstance<NewsEntity>(
-      {url: `/news/publish-to-discord/${id}`, method: 'POST', signal
-    },
-      options);
-    }
+export const getNewsPublishToDiscordMutationOptions = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof newsPublishToDiscord>>,
+    TError,
+    NewsPublishToDiscordMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof newsPublishToDiscord>>,
+  TError,
+  NewsPublishToDiscordMutationVariables,
+  TContext
+> => {
+  const mutationKey = getNewsPublishToDiscordMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof newsPublishToDiscord>>,
+    NewsPublishToDiscordMutationVariables
+  > = (props) => {
+    const { id } = props ?? {};
 
+    return newsPublishToDiscord(id, requestOptions);
+  };
 
+  return { mutationFn, ...mutationOptions };
+};
 
-export const getNewsPublishToDiscordMutationKey = () => ['newsPublishToDiscord'] as const;
+export type NewsPublishToDiscordMutationResult = NonNullable<
+  Awaited<ReturnType<typeof newsPublishToDiscord>>
+>;
 
-export const getNewsPublishToDiscordMutationOptions = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof newsPublishToDiscord>>, TError,NewsPublishToDiscordMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof newsPublishToDiscord>>, TError,NewsPublishToDiscordMutationVariables, TContext> => {
+export type NewsPublishToDiscordMutationError = ErrorType<ErrorResponseDto>;
+export type NewsPublishToDiscordMutationVariables = { id: number };
 
-const mutationKey = getNewsPublishToDiscordMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof newsPublishToDiscord>>, NewsPublishToDiscordMutationVariables> = (props) => {
-          const {id} = props ?? {};
-
-          return  newsPublishToDiscord(id,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type NewsPublishToDiscordMutationResult = NonNullable<Awaited<ReturnType<typeof newsPublishToDiscord>>>
-
-    export type NewsPublishToDiscordMutationError = ErrorType<ErrorResponseDto>
-    export type NewsPublishToDiscordMutationVariables = {id: number}
-
-    /**
+/**
  * @summary Опубликовать новость в Discord (PR, ED, TD)
  */
-export const useNewsPublishToDiscord = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof newsPublishToDiscord>>, TError,NewsPublishToDiscordMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof newsPublishToDiscord>>,
-        TError,
-        NewsPublishToDiscordMutationVariables,
-        TContext
-      > => {
-      return useMutation(getNewsPublishToDiscordMutationOptions(options), queryClient);
-    }
+export const useNewsPublishToDiscord = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof newsPublishToDiscord>>,
+      TError,
+      NewsPublishToDiscordMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof newsPublishToDiscord>>,
+  TError,
+  NewsPublishToDiscordMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getNewsPublishToDiscordMutationOptions(options),
+    queryClient,
+  );
+};

@@ -5,10 +5,15 @@
  * API service for handling IVAO Belarus Divisions Web infrastructure.
  * OpenAPI spec version: 1.13.2
  */
-import {
-  useMutation,
-  useQuery
-} from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
+
+import type { BodyType, ErrorType } from '../../utils/customInstance';
+import type {
+  CreateTrainingDto,
+  ErrorResponseDto,
+  TrainingEntity,
+  TrainingFindAllParams,
+} from '../model';
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -21,25 +26,17 @@ import type {
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
-  UseQueryResult
+  UseQueryResult,
 } from '@tanstack/react-query';
 
-import type {
-  CreateTrainingDto,
-  ErrorResponseDto,
-  TrainingEntity,
-  TrainingFindAllParams
-} from '../model';
-
 import { customInstance } from '../../utils/customInstance';
-import type { ErrorType , BodyType } from '../../utils/customInstance';
-
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-
-const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
+const withQueryKey = <T extends object, K>(
+  query: T,
+  queryKey: K,
+): T & { queryKey: K } => {
   const result = { queryKey } as T & { queryKey: K };
   for (const key of Object.keys(query)) {
     // The explicit queryKey always wins, matching the previous
@@ -59,388 +56,604 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
  * @summary Получить список тренировок
  */
 export const trainingFindAll = (
-    params?: TrainingFindAllParams,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  params?: TrainingFindAllParams,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<TrainingEntity[]>(
+    { url: `/training`, method: 'GET', params, signal },
+    options,
+  );
+};
 
+export const getTrainingFindAllQueryKey = (params?: TrainingFindAllParams) => {
+  return [`/training`, ...(params ? [params] : [])] as const;
+};
 
-      return customInstance<TrainingEntity[]>(
-      {url: `/training`, method: 'GET',
-        params, signal
-    },
-      options);
-    }
-
-
-
-
-export const getTrainingFindAllQueryKey = (params?: TrainingFindAllParams,) => {
-    return [
-    `/training`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getTrainingFindAllQueryOptions = <TData = Awaited<ReturnType<typeof trainingFindAll>>, TError = ErrorType<unknown>>(params?: TrainingFindAllParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof trainingFindAll>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getTrainingFindAllQueryOptions = <
+  TData = Awaited<ReturnType<typeof trainingFindAll>>,
+  TError = ErrorType<unknown>,
+>(
+  params?: TrainingFindAllParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof trainingFindAll>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
 ) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryKey = queryOptions?.queryKey ?? getTrainingFindAllQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getTrainingFindAllQueryKey(params);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof trainingFindAll>>> = ({
+    signal,
+  }) => trainingFindAll(params, requestOptions, signal);
 
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof trainingFindAll>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type TrainingFindAllQueryResult = NonNullable<
+  Awaited<ReturnType<typeof trainingFindAll>>
+>;
+export type TrainingFindAllQueryError = ErrorType<unknown>;
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof trainingFindAll>>> = ({ signal }) => trainingFindAll(params, requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof trainingFindAll>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type TrainingFindAllQueryResult = NonNullable<Awaited<ReturnType<typeof trainingFindAll>>>
-export type TrainingFindAllQueryError = ErrorType<unknown>
-
-
-export function useTrainingFindAll<TData = Awaited<ReturnType<typeof trainingFindAll>>, TError = ErrorType<unknown>>(
- params: undefined |  TrainingFindAllParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof trainingFindAll>>, TError, TData>> & Pick<
+export function useTrainingFindAll<
+  TData = Awaited<ReturnType<typeof trainingFindAll>>,
+  TError = ErrorType<unknown>,
+>(
+  params: undefined | TrainingFindAllParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof trainingFindAll>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof trainingFindAll>>,
           TError,
           Awaited<ReturnType<typeof trainingFindAll>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useTrainingFindAll<TData = Awaited<ReturnType<typeof trainingFindAll>>, TError = ErrorType<unknown>>(
- params?: TrainingFindAllParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof trainingFindAll>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useTrainingFindAll<
+  TData = Awaited<ReturnType<typeof trainingFindAll>>,
+  TError = ErrorType<unknown>,
+>(
+  params?: TrainingFindAllParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof trainingFindAll>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof trainingFindAll>>,
           TError,
           Awaited<ReturnType<typeof trainingFindAll>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useTrainingFindAll<TData = Awaited<ReturnType<typeof trainingFindAll>>, TError = ErrorType<unknown>>(
- params?: TrainingFindAllParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof trainingFindAll>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useTrainingFindAll<
+  TData = Awaited<ReturnType<typeof trainingFindAll>>,
+  TError = ErrorType<unknown>,
+>(
+  params?: TrainingFindAllParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof trainingFindAll>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Получить список тренировок
  */
 
-export function useTrainingFindAll<TData = Awaited<ReturnType<typeof trainingFindAll>>, TError = ErrorType<unknown>>(
- params?: TrainingFindAllParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof trainingFindAll>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useTrainingFindAll<
+  TData = Awaited<ReturnType<typeof trainingFindAll>>,
+  TError = ErrorType<unknown>,
+>(
+  params?: TrainingFindAllParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof trainingFindAll>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getTrainingFindAllQueryOptions(params, options);
 
-  const queryOptions = getTrainingFindAllQueryOptions(params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
 
 /**
  * Создает новую тренировку. Требуются права TD.
  * @summary Создать новую тренировку
  */
 export const trainingCreate = (
-    createTrainingDto: BodyType<CreateTrainingDto>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  createTrainingDto: BodyType<CreateTrainingDto>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<TrainingEntity>(
-      {url: `/training`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: createTrainingDto, signal
+  return customInstance<TrainingEntity>(
+    {
+      url: `/training`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: createTrainingDto,
+      signal,
     },
-      options);
-    }
-
-
-
+    options,
+  );
+};
 
 export const getTrainingCreateMutationKey = () => ['trainingCreate'] as const;
 
-export const getTrainingCreateMutationOptions = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof trainingCreate>>, TError,TrainingCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof trainingCreate>>, TError,TrainingCreateMutationVariables, TContext> => {
+export const getTrainingCreateMutationOptions = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof trainingCreate>>,
+    TError,
+    TrainingCreateMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof trainingCreate>>,
+  TError,
+  TrainingCreateMutationVariables,
+  TContext
+> => {
+  const mutationKey = getTrainingCreateMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-const mutationKey = getTrainingCreateMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof trainingCreate>>,
+    TrainingCreateMutationVariables
+  > = (props) => {
+    const { data } = props ?? {};
 
+    return trainingCreate(data, requestOptions);
+  };
 
+  return { mutationFn, ...mutationOptions };
+};
 
+export type TrainingCreateMutationResult = NonNullable<
+  Awaited<ReturnType<typeof trainingCreate>>
+>;
+export type TrainingCreateMutationBody = BodyType<CreateTrainingDto>;
+export type TrainingCreateMutationError = ErrorType<ErrorResponseDto>;
+export type TrainingCreateMutationVariables = {
+  data: BodyType<CreateTrainingDto>;
+};
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof trainingCreate>>, TrainingCreateMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  trainingCreate(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type TrainingCreateMutationResult = NonNullable<Awaited<ReturnType<typeof trainingCreate>>>
-    export type TrainingCreateMutationBody = BodyType<CreateTrainingDto>
-    export type TrainingCreateMutationError = ErrorType<ErrorResponseDto>
-    export type TrainingCreateMutationVariables = {data: BodyType<CreateTrainingDto>}
-
-    /**
+/**
  * @summary Создать новую тренировку
  */
-export const useTrainingCreate = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof trainingCreate>>, TError,TrainingCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof trainingCreate>>,
-        TError,
-        TrainingCreateMutationVariables,
-        TContext
-      > => {
-      return useMutation(getTrainingCreateMutationOptions(options), queryClient);
-    }
-    /**
+export const useTrainingCreate = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof trainingCreate>>,
+      TError,
+      TrainingCreateMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof trainingCreate>>,
+  TError,
+  TrainingCreateMutationVariables,
+  TContext
+> => {
+  return useMutation(getTrainingCreateMutationOptions(options), queryClient);
+};
+/**
  * Возвращает одну тренировку по указанному ID.
  * @summary Получить тренировку по ID
  */
 export const trainingFindOne = (
-    id: number,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: number,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<TrainingEntity>(
+    { url: `/training/${id}`, method: 'GET', signal },
+    options,
+  );
+};
 
+export const getTrainingFindOneQueryKey = (id: number) => {
+  return [`/training/${id}`] as const;
+};
 
-      return customInstance<TrainingEntity>(
-      {url: `/training/${id}`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
-
-export const getTrainingFindOneQueryKey = (id: number,) => {
-    return [
-    `/training/${id}`
-    ] as const;
-    }
-
-
-export const getTrainingFindOneQueryOptions = <TData = Awaited<ReturnType<typeof trainingFindOne>>, TError = ErrorType<ErrorResponseDto>>(id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof trainingFindOne>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getTrainingFindOneQueryOptions = <
+  TData = Awaited<ReturnType<typeof trainingFindOne>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  id: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof trainingFindOne>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
 ) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryKey = queryOptions?.queryKey ?? getTrainingFindOneQueryKey(id);
 
-  const queryKey =  queryOptions?.queryKey ?? getTrainingFindOneQueryKey(id);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof trainingFindOne>>> = ({
+    signal,
+  }) => trainingFindOne(id, requestOptions, signal);
 
+  return {
+    queryKey,
+    queryFn,
+    enabled: id !== null && id !== undefined,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof trainingFindOne>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type TrainingFindOneQueryResult = NonNullable<
+  Awaited<ReturnType<typeof trainingFindOne>>
+>;
+export type TrainingFindOneQueryError = ErrorType<ErrorResponseDto>;
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof trainingFindOne>>> = ({ signal }) => trainingFindOne(id, requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof trainingFindOne>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type TrainingFindOneQueryResult = NonNullable<Awaited<ReturnType<typeof trainingFindOne>>>
-export type TrainingFindOneQueryError = ErrorType<ErrorResponseDto>
-
-
-export function useTrainingFindOne<TData = Awaited<ReturnType<typeof trainingFindOne>>, TError = ErrorType<ErrorResponseDto>>(
- id: number, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof trainingFindOne>>, TError, TData>> & Pick<
+export function useTrainingFindOne<
+  TData = Awaited<ReturnType<typeof trainingFindOne>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  id: number,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof trainingFindOne>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof trainingFindOne>>,
           TError,
           Awaited<ReturnType<typeof trainingFindOne>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useTrainingFindOne<TData = Awaited<ReturnType<typeof trainingFindOne>>, TError = ErrorType<ErrorResponseDto>>(
- id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof trainingFindOne>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useTrainingFindOne<
+  TData = Awaited<ReturnType<typeof trainingFindOne>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  id: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof trainingFindOne>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof trainingFindOne>>,
           TError,
           Awaited<ReturnType<typeof trainingFindOne>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useTrainingFindOne<TData = Awaited<ReturnType<typeof trainingFindOne>>, TError = ErrorType<ErrorResponseDto>>(
- id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof trainingFindOne>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useTrainingFindOne<
+  TData = Awaited<ReturnType<typeof trainingFindOne>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  id: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof trainingFindOne>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Получить тренировку по ID
  */
 
-export function useTrainingFindOne<TData = Awaited<ReturnType<typeof trainingFindOne>>, TError = ErrorType<ErrorResponseDto>>(
- id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof trainingFindOne>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useTrainingFindOne<
+  TData = Awaited<ReturnType<typeof trainingFindOne>>,
+  TError = ErrorType<ErrorResponseDto>,
+>(
+  id: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof trainingFindOne>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getTrainingFindOneQueryOptions(id, options);
 
-  const queryOptions = getTrainingFindOneQueryOptions(id,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
 
 /**
  * Обновляет существующую тренировку. Требуются права TD.
  * @summary Обновить тренировку по ID
  */
 export const trainingUpdate = (
-    id: number,
-    createTrainingDto: BodyType<CreateTrainingDto>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: number,
+  createTrainingDto: BodyType<CreateTrainingDto>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<TrainingEntity>(
-      {url: `/training/${id}`, method: 'PUT',
-      headers: {'Content-Type': 'application/json', },
-      data: createTrainingDto, signal
+  return customInstance<TrainingEntity>(
+    {
+      url: `/training/${id}`,
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      data: createTrainingDto,
+      signal,
     },
-      options);
-    }
-
-
-
+    options,
+  );
+};
 
 export const getTrainingUpdateMutationKey = () => ['trainingUpdate'] as const;
 
-export const getTrainingUpdateMutationOptions = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof trainingUpdate>>, TError,TrainingUpdateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof trainingUpdate>>, TError,TrainingUpdateMutationVariables, TContext> => {
+export const getTrainingUpdateMutationOptions = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof trainingUpdate>>,
+    TError,
+    TrainingUpdateMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof trainingUpdate>>,
+  TError,
+  TrainingUpdateMutationVariables,
+  TContext
+> => {
+  const mutationKey = getTrainingUpdateMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-const mutationKey = getTrainingUpdateMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof trainingUpdate>>,
+    TrainingUpdateMutationVariables
+  > = (props) => {
+    const { id, data } = props ?? {};
 
+    return trainingUpdate(id, data, requestOptions);
+  };
 
+  return { mutationFn, ...mutationOptions };
+};
 
+export type TrainingUpdateMutationResult = NonNullable<
+  Awaited<ReturnType<typeof trainingUpdate>>
+>;
+export type TrainingUpdateMutationBody = BodyType<CreateTrainingDto>;
+export type TrainingUpdateMutationError = ErrorType<ErrorResponseDto>;
+export type TrainingUpdateMutationVariables = {
+  id: number;
+  data: BodyType<CreateTrainingDto>;
+};
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof trainingUpdate>>, TrainingUpdateMutationVariables> = (props) => {
-          const {id,data} = props ?? {};
-
-          return  trainingUpdate(id,data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type TrainingUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof trainingUpdate>>>
-    export type TrainingUpdateMutationBody = BodyType<CreateTrainingDto>
-    export type TrainingUpdateMutationError = ErrorType<ErrorResponseDto>
-    export type TrainingUpdateMutationVariables = {id: number;data: BodyType<CreateTrainingDto>}
-
-    /**
+/**
  * @summary Обновить тренировку по ID
  */
-export const useTrainingUpdate = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof trainingUpdate>>, TError,TrainingUpdateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof trainingUpdate>>,
-        TError,
-        TrainingUpdateMutationVariables,
-        TContext
-      > => {
-      return useMutation(getTrainingUpdateMutationOptions(options), queryClient);
-    }
-    /**
+export const useTrainingUpdate = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof trainingUpdate>>,
+      TError,
+      TrainingUpdateMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof trainingUpdate>>,
+  TError,
+  TrainingUpdateMutationVariables,
+  TContext
+> => {
+  return useMutation(getTrainingUpdateMutationOptions(options), queryClient);
+};
+/**
  * Удаляет тренировку по указанному ID. Требуются права TD.
  * @summary Удалить тренировку по ID
  */
 export const trainingRemove = (
-    id: number,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: number,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<void>(
-      {url: `/training/${id}`, method: 'DELETE', signal
-    },
-      options);
-    }
-
-
-
+  return customInstance<void>(
+    { url: `/training/${id}`, method: 'DELETE', signal },
+    options,
+  );
+};
 
 export const getTrainingRemoveMutationKey = () => ['trainingRemove'] as const;
 
-export const getTrainingRemoveMutationOptions = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof trainingRemove>>, TError,TrainingRemoveMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof trainingRemove>>, TError,TrainingRemoveMutationVariables, TContext> => {
+export const getTrainingRemoveMutationOptions = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof trainingRemove>>,
+    TError,
+    TrainingRemoveMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof trainingRemove>>,
+  TError,
+  TrainingRemoveMutationVariables,
+  TContext
+> => {
+  const mutationKey = getTrainingRemoveMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-const mutationKey = getTrainingRemoveMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof trainingRemove>>,
+    TrainingRemoveMutationVariables
+  > = (props) => {
+    const { id } = props ?? {};
 
+    return trainingRemove(id, requestOptions);
+  };
 
+  return { mutationFn, ...mutationOptions };
+};
 
+export type TrainingRemoveMutationResult = NonNullable<
+  Awaited<ReturnType<typeof trainingRemove>>
+>;
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof trainingRemove>>, TrainingRemoveMutationVariables> = (props) => {
-          const {id} = props ?? {};
+export type TrainingRemoveMutationError = ErrorType<ErrorResponseDto>;
+export type TrainingRemoveMutationVariables = { id: number };
 
-          return  trainingRemove(id,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type TrainingRemoveMutationResult = NonNullable<Awaited<ReturnType<typeof trainingRemove>>>
-
-    export type TrainingRemoveMutationError = ErrorType<ErrorResponseDto>
-    export type TrainingRemoveMutationVariables = {id: number}
-
-    /**
+/**
  * @summary Удалить тренировку по ID
  */
-export const useTrainingRemove = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof trainingRemove>>, TError,TrainingRemoveMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof trainingRemove>>,
-        TError,
-        TrainingRemoveMutationVariables,
-        TContext
-      > => {
-      return useMutation(getTrainingRemoveMutationOptions(options), queryClient);
-    }
+export const useTrainingRemove = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof trainingRemove>>,
+      TError,
+      TrainingRemoveMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof trainingRemove>>,
+  TError,
+  TrainingRemoveMutationVariables,
+  TContext
+> => {
+  return useMutation(getTrainingRemoveMutationOptions(options), queryClient);
+};

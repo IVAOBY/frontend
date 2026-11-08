@@ -6,8 +6,8 @@
  * OpenAPI spec version: 1.13.2
  */
 
-export type NewsGetAllNewsSort = typeof NewsGetAllNewsSort[keyof typeof NewsGetAllNewsSort];
-
+export type NewsGetAllNewsSort =
+  (typeof NewsGetAllNewsSort)[keyof typeof NewsGetAllNewsSort];
 
 export const NewsGetAllNewsSort = {
   ASC: 'ASC',

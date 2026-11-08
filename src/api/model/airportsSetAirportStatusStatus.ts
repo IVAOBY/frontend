@@ -6,8 +6,8 @@
  * OpenAPI spec version: 1.13.2
  */
 
-export type AirportsSetAirportStatusStatus = typeof AirportsSetAirportStatusStatus[keyof typeof AirportsSetAirportStatusStatus];
-
+export type AirportsSetAirportStatusStatus =
+  (typeof AirportsSetAirportStatusStatus)[keyof typeof AirportsSetAirportStatusStatus];
 
 export const AirportsSetAirportStatusStatus = {
   NUMBER_0: 0,

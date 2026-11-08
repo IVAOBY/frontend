@@ -5,10 +5,15 @@
  * API service for handling IVAO Belarus Divisions Web infrastructure.
  * OpenAPI spec version: 1.13.2
  */
-import {
-  useMutation,
-  useQuery
-} from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
+
+import type { ErrorType } from '../../utils/customInstance';
+import type {
+  AirportsEntity,
+  AirportsSearchAirportParams,
+  AirportsSetAirportStatusParams,
+  ErrorResponseDto,
+} from '../model';
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -21,25 +26,17 @@ import type {
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
-  UseQueryResult
+  UseQueryResult,
 } from '@tanstack/react-query';
 
-import type {
-  AirportsEntity,
-  AirportsSearchAirportParams,
-  AirportsSetAirportStatusParams,
-  ErrorResponseDto
-} from '../model';
-
 import { customInstance } from '../../utils/customInstance';
-import type { ErrorType } from '../../utils/customInstance';
-
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-
-const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
+const withQueryKey = <T extends object, K>(
+  query: T,
+  queryKey: K,
+): T & { queryKey: K } => {
   const result = { queryKey } as T & { queryKey: K };
   for (const key of Object.keys(query)) {
     // The explicit queryKey always wins, matching the previous
@@ -58,251 +55,409 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
  * @summary Поиск аэропортов по ICAO или названию
  */
 export const airportsSearchAirport = (
-    params: AirportsSearchAirportParams,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  params: AirportsSearchAirportParams,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<AirportsEntity[]>(
+    { url: `/airports`, method: 'GET', params, signal },
+    options,
+  );
+};
 
-
-      return customInstance<AirportsEntity[]>(
-      {url: `/airports`, method: 'GET',
-        params, signal
-    },
-      options);
-    }
-
-
-
-
-export const getAirportsSearchAirportQueryKey = (params?: AirportsSearchAirportParams,) => {
-    return [
-    `/airports`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getAirportsSearchAirportQueryOptions = <TData = Awaited<ReturnType<typeof airportsSearchAirport>>, TError = ErrorType<unknown>>(params: AirportsSearchAirportParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof airportsSearchAirport>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getAirportsSearchAirportQueryKey = (
+  params?: AirportsSearchAirportParams,
 ) => {
+  return [`/airports`, ...(params ? [params] : [])] as const;
+};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+export const getAirportsSearchAirportQueryOptions = <
+  TData = Awaited<ReturnType<typeof airportsSearchAirport>>,
+  TError = ErrorType<unknown>,
+>(
+  params: AirportsSearchAirportParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof airportsSearchAirport>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getAirportsSearchAirportQueryKey(params);
+  const queryKey =
+    queryOptions?.queryKey ?? getAirportsSearchAirportQueryKey(params);
 
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof airportsSearchAirport>>
+  > = ({ signal }) => airportsSearchAirport(params, requestOptions, signal);
 
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof airportsSearchAirport>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof airportsSearchAirport>>> = ({ signal }) => airportsSearchAirport(params, requestOptions, signal);
+export type AirportsSearchAirportQueryResult = NonNullable<
+  Awaited<ReturnType<typeof airportsSearchAirport>>
+>;
+export type AirportsSearchAirportQueryError = ErrorType<unknown>;
 
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof airportsSearchAirport>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type AirportsSearchAirportQueryResult = NonNullable<Awaited<ReturnType<typeof airportsSearchAirport>>>
-export type AirportsSearchAirportQueryError = ErrorType<unknown>
-
-
-export function useAirportsSearchAirport<TData = Awaited<ReturnType<typeof airportsSearchAirport>>, TError = ErrorType<unknown>>(
- params: AirportsSearchAirportParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof airportsSearchAirport>>, TError, TData>> & Pick<
+export function useAirportsSearchAirport<
+  TData = Awaited<ReturnType<typeof airportsSearchAirport>>,
+  TError = ErrorType<unknown>,
+>(
+  params: AirportsSearchAirportParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof airportsSearchAirport>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof airportsSearchAirport>>,
           TError,
           Awaited<ReturnType<typeof airportsSearchAirport>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useAirportsSearchAirport<TData = Awaited<ReturnType<typeof airportsSearchAirport>>, TError = ErrorType<unknown>>(
- params: AirportsSearchAirportParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof airportsSearchAirport>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useAirportsSearchAirport<
+  TData = Awaited<ReturnType<typeof airportsSearchAirport>>,
+  TError = ErrorType<unknown>,
+>(
+  params: AirportsSearchAirportParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof airportsSearchAirport>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof airportsSearchAirport>>,
           TError,
           Awaited<ReturnType<typeof airportsSearchAirport>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useAirportsSearchAirport<TData = Awaited<ReturnType<typeof airportsSearchAirport>>, TError = ErrorType<unknown>>(
- params: AirportsSearchAirportParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof airportsSearchAirport>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useAirportsSearchAirport<
+  TData = Awaited<ReturnType<typeof airportsSearchAirport>>,
+  TError = ErrorType<unknown>,
+>(
+  params: AirportsSearchAirportParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof airportsSearchAirport>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Поиск аэропортов по ICAO или названию
  */
 
-export function useAirportsSearchAirport<TData = Awaited<ReturnType<typeof airportsSearchAirport>>, TError = ErrorType<unknown>>(
- params: AirportsSearchAirportParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof airportsSearchAirport>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useAirportsSearchAirport<
+  TData = Awaited<ReturnType<typeof airportsSearchAirport>>,
+  TError = ErrorType<unknown>,
+>(
+  params: AirportsSearchAirportParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof airportsSearchAirport>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getAirportsSearchAirportQueryOptions(params, options);
 
-  const queryOptions = getAirportsSearchAirportQueryOptions(params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
 
 /**
  * @summary Получить список всех аэропортов
  */
 export const airportsGetAllAirports = (
-
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<AirportsEntity[]>(
-      {url: `/airports/all`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
+  return customInstance<AirportsEntity[]>(
+    { url: `/airports/all`, method: 'GET', signal },
+    options,
+  );
+};
 
 export const getAirportsGetAllAirportsQueryKey = () => {
-    return [
-    `/airports/all`
-    ] as const;
-    }
+  return [`/airports/all`] as const;
+};
 
+export const getAirportsGetAllAirportsQueryOptions = <
+  TData = Awaited<ReturnType<typeof airportsGetAllAirports>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof airportsGetAllAirports>>,
+      TError,
+      TData
+    >
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-export const getAirportsGetAllAirportsQueryOptions = <TData = Awaited<ReturnType<typeof airportsGetAllAirports>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof airportsGetAllAirports>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
+  const queryKey =
+    queryOptions?.queryKey ?? getAirportsGetAllAirportsQueryKey();
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof airportsGetAllAirports>>
+  > = ({ signal }) => airportsGetAllAirports(requestOptions, signal);
 
-  const queryKey =  queryOptions?.queryKey ?? getAirportsGetAllAirportsQueryKey();
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof airportsGetAllAirports>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type AirportsGetAllAirportsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof airportsGetAllAirports>>
+>;
+export type AirportsGetAllAirportsQueryError = ErrorType<unknown>;
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof airportsGetAllAirports>>> = ({ signal }) => airportsGetAllAirports(requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof airportsGetAllAirports>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type AirportsGetAllAirportsQueryResult = NonNullable<Awaited<ReturnType<typeof airportsGetAllAirports>>>
-export type AirportsGetAllAirportsQueryError = ErrorType<unknown>
-
-
-export function useAirportsGetAllAirports<TData = Awaited<ReturnType<typeof airportsGetAllAirports>>, TError = ErrorType<unknown>>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof airportsGetAllAirports>>, TError, TData>> & Pick<
+export function useAirportsGetAllAirports<
+  TData = Awaited<ReturnType<typeof airportsGetAllAirports>>,
+  TError = ErrorType<unknown>,
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof airportsGetAllAirports>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof airportsGetAllAirports>>,
           TError,
           Awaited<ReturnType<typeof airportsGetAllAirports>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useAirportsGetAllAirports<TData = Awaited<ReturnType<typeof airportsGetAllAirports>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof airportsGetAllAirports>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useAirportsGetAllAirports<
+  TData = Awaited<ReturnType<typeof airportsGetAllAirports>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof airportsGetAllAirports>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof airportsGetAllAirports>>,
           TError,
           Awaited<ReturnType<typeof airportsGetAllAirports>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useAirportsGetAllAirports<TData = Awaited<ReturnType<typeof airportsGetAllAirports>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof airportsGetAllAirports>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useAirportsGetAllAirports<
+  TData = Awaited<ReturnType<typeof airportsGetAllAirports>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof airportsGetAllAirports>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Получить список всех аэропортов
  */
 
-export function useAirportsGetAllAirports<TData = Awaited<ReturnType<typeof airportsGetAllAirports>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof airportsGetAllAirports>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useAirportsGetAllAirports<
+  TData = Awaited<ReturnType<typeof airportsGetAllAirports>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof airportsGetAllAirports>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getAirportsGetAllAirportsQueryOptions(options);
 
-  const queryOptions = getAirportsGetAllAirportsQueryOptions(options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
 
 /**
  * @summary Установить статус аэропорта (для персонала АО)
  */
 export const airportsSetAirportStatus = (
-    icao: string,
-    params: AirportsSetAirportStatusParams,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  icao: string,
+  params: AirportsSetAirportStatusParams,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<AirportsEntity>(
+    { url: `/airports/${icao}`, method: 'PATCH', params, signal },
+    options,
+  );
+};
 
+export const getAirportsSetAirportStatusMutationKey = () =>
+  ['airportsSetAirportStatus'] as const;
 
-      return customInstance<AirportsEntity>(
-      {url: `/airports/${icao}`, method: 'PATCH',
-        params, signal
-    },
-      options);
-    }
+export const getAirportsSetAirportStatusMutationOptions = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof airportsSetAirportStatus>>,
+    TError,
+    AirportsSetAirportStatusMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof airportsSetAirportStatus>>,
+  TError,
+  AirportsSetAirportStatusMutationVariables,
+  TContext
+> => {
+  const mutationKey = getAirportsSetAirportStatusMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof airportsSetAirportStatus>>,
+    AirportsSetAirportStatusMutationVariables
+  > = (props) => {
+    const { icao, params } = props ?? {};
 
+    return airportsSetAirportStatus(icao, params, requestOptions);
+  };
 
+  return { mutationFn, ...mutationOptions };
+};
 
-export const getAirportsSetAirportStatusMutationKey = () => ['airportsSetAirportStatus'] as const;
+export type AirportsSetAirportStatusMutationResult = NonNullable<
+  Awaited<ReturnType<typeof airportsSetAirportStatus>>
+>;
 
-export const getAirportsSetAirportStatusMutationOptions = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof airportsSetAirportStatus>>, TError,AirportsSetAirportStatusMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof airportsSetAirportStatus>>, TError,AirportsSetAirportStatusMutationVariables, TContext> => {
+export type AirportsSetAirportStatusMutationError = ErrorType<ErrorResponseDto>;
+export type AirportsSetAirportStatusMutationVariables = {
+  icao: string;
+  params: AirportsSetAirportStatusParams;
+};
 
-const mutationKey = getAirportsSetAirportStatusMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof airportsSetAirportStatus>>, AirportsSetAirportStatusMutationVariables> = (props) => {
-          const {icao,params} = props ?? {};
-
-          return  airportsSetAirportStatus(icao,params,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type AirportsSetAirportStatusMutationResult = NonNullable<Awaited<ReturnType<typeof airportsSetAirportStatus>>>
-
-    export type AirportsSetAirportStatusMutationError = ErrorType<ErrorResponseDto>
-    export type AirportsSetAirportStatusMutationVariables = {icao: string;params: AirportsSetAirportStatusParams}
-
-    /**
+/**
  * @summary Установить статус аэропорта (для персонала АО)
  */
-export const useAirportsSetAirportStatus = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof airportsSetAirportStatus>>, TError,AirportsSetAirportStatusMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof airportsSetAirportStatus>>,
-        TError,
-        AirportsSetAirportStatusMutationVariables,
-        TContext
-      > => {
-      return useMutation(getAirportsSetAirportStatusMutationOptions(options), queryClient);
-    }
+export const useAirportsSetAirportStatus = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof airportsSetAirportStatus>>,
+      TError,
+      AirportsSetAirportStatusMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof airportsSetAirportStatus>>,
+  TError,
+  AirportsSetAirportStatusMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getAirportsSetAirportStatusMutationOptions(options),
+    queryClient,
+  );
+};

@@ -5,10 +5,17 @@
  * API service for handling IVAO Belarus Divisions Web infrastructure.
  * OpenAPI spec version: 1.13.2
  */
-import {
-  useMutation,
-  useQuery
-} from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
+
+import type { BodyType, ErrorType } from '../../utils/customInstance';
+import type {
+  DiscordAuthorizeParams,
+  DiscordAuthorizePreParams,
+  DiscordLinkResultDto,
+  DiscordRedirectParams,
+  DiscordTimeoutDto,
+  ErrorResponseDto,
+} from '../model';
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -21,27 +28,17 @@ import type {
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
-  UseQueryResult
+  UseQueryResult,
 } from '@tanstack/react-query';
 
-import type {
-  DiscordAuthorizeParams,
-  DiscordAuthorizePreParams,
-  DiscordLinkResultDto,
-  DiscordRedirectParams,
-  DiscordTimeoutDto,
-  ErrorResponseDto
-} from '../model';
-
 import { customInstance } from '../../utils/customInstance';
-import type { ErrorType , BodyType } from '../../utils/customInstance';
-
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-
-const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
+const withQueryKey = <T extends object, K>(
+  query: T,
+  queryKey: K,
+): T & { queryKey: K } => {
   const result = { queryKey } as T & { queryKey: K };
   for (const key of Object.keys(query)) {
     // The explicit queryKey always wins, matching the previous
@@ -61,347 +58,585 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
  * @summary Начало привязки Discord
  */
 export const discordRedirect = (
-    params?: DiscordRedirectParams,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  params?: DiscordRedirectParams,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<unknown>(
+    { url: `/discord/redirect`, method: 'GET', params, signal },
+    options,
+  );
+};
 
+export const getDiscordRedirectQueryKey = (params?: DiscordRedirectParams) => {
+  return [`/discord/redirect`, ...(params ? [params] : [])] as const;
+};
 
-      return customInstance<unknown>(
-      {url: `/discord/redirect`, method: 'GET',
-        params, signal
-    },
-      options);
-    }
-
-
-
-
-export const getDiscordRedirectQueryKey = (params?: DiscordRedirectParams,) => {
-    return [
-    `/discord/redirect`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getDiscordRedirectQueryOptions = <TData = Awaited<ReturnType<typeof discordRedirect>>, TError = ErrorType<void | ErrorResponseDto>>(params?: DiscordRedirectParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof discordRedirect>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getDiscordRedirectQueryOptions = <
+  TData = Awaited<ReturnType<typeof discordRedirect>>,
+  TError = ErrorType<void | ErrorResponseDto>,
+>(
+  params?: DiscordRedirectParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof discordRedirect>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
 ) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryKey = queryOptions?.queryKey ?? getDiscordRedirectQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getDiscordRedirectQueryKey(params);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof discordRedirect>>> = ({
+    signal,
+  }) => discordRedirect(params, requestOptions, signal);
 
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof discordRedirect>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type DiscordRedirectQueryResult = NonNullable<
+  Awaited<ReturnType<typeof discordRedirect>>
+>;
+export type DiscordRedirectQueryError = ErrorType<void | ErrorResponseDto>;
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof discordRedirect>>> = ({ signal }) => discordRedirect(params, requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof discordRedirect>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type DiscordRedirectQueryResult = NonNullable<Awaited<ReturnType<typeof discordRedirect>>>
-export type DiscordRedirectQueryError = ErrorType<void | ErrorResponseDto>
-
-
-export function useDiscordRedirect<TData = Awaited<ReturnType<typeof discordRedirect>>, TError = ErrorType<void | ErrorResponseDto>>(
- params: undefined |  DiscordRedirectParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof discordRedirect>>, TError, TData>> & Pick<
+export function useDiscordRedirect<
+  TData = Awaited<ReturnType<typeof discordRedirect>>,
+  TError = ErrorType<void | ErrorResponseDto>,
+>(
+  params: undefined | DiscordRedirectParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof discordRedirect>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof discordRedirect>>,
           TError,
           Awaited<ReturnType<typeof discordRedirect>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useDiscordRedirect<TData = Awaited<ReturnType<typeof discordRedirect>>, TError = ErrorType<void | ErrorResponseDto>>(
- params?: DiscordRedirectParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof discordRedirect>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useDiscordRedirect<
+  TData = Awaited<ReturnType<typeof discordRedirect>>,
+  TError = ErrorType<void | ErrorResponseDto>,
+>(
+  params?: DiscordRedirectParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof discordRedirect>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof discordRedirect>>,
           TError,
           Awaited<ReturnType<typeof discordRedirect>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useDiscordRedirect<TData = Awaited<ReturnType<typeof discordRedirect>>, TError = ErrorType<void | ErrorResponseDto>>(
- params?: DiscordRedirectParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof discordRedirect>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useDiscordRedirect<
+  TData = Awaited<ReturnType<typeof discordRedirect>>,
+  TError = ErrorType<void | ErrorResponseDto>,
+>(
+  params?: DiscordRedirectParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof discordRedirect>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Начало привязки Discord
  */
 
-export function useDiscordRedirect<TData = Awaited<ReturnType<typeof discordRedirect>>, TError = ErrorType<void | ErrorResponseDto>>(
- params?: DiscordRedirectParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof discordRedirect>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useDiscordRedirect<
+  TData = Awaited<ReturnType<typeof discordRedirect>>,
+  TError = ErrorType<void | ErrorResponseDto>,
+>(
+  params?: DiscordRedirectParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof discordRedirect>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getDiscordRedirectQueryOptions(params, options);
 
-  const queryOptions = getDiscordRedirectQueryOptions(params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
 
 /**
  * Этот эндпоинт используется для внутреннего преобразования параметров и не должен вызываться напрямую.
  * @summary Промежуточный шаг авторизации Discord
  */
 export const discordAuthorizePre = (
-    params: DiscordAuthorizePreParams,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  params: DiscordAuthorizePreParams,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<unknown>(
+    { url: `/discord/authorize`, method: 'GET', params, signal },
+    options,
+  );
+};
 
-
-      return customInstance<unknown>(
-      {url: `/discord/authorize`, method: 'GET',
-        params, signal
-    },
-      options);
-    }
-
-
-
-
-export const getDiscordAuthorizePreQueryKey = (params?: DiscordAuthorizePreParams,) => {
-    return [
-    `/discord/authorize`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getDiscordAuthorizePreQueryOptions = <TData = Awaited<ReturnType<typeof discordAuthorizePre>>, TError = ErrorType<void>>(params: DiscordAuthorizePreParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof discordAuthorizePre>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getDiscordAuthorizePreQueryKey = (
+  params?: DiscordAuthorizePreParams,
 ) => {
+  return [`/discord/authorize`, ...(params ? [params] : [])] as const;
+};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+export const getDiscordAuthorizePreQueryOptions = <
+  TData = Awaited<ReturnType<typeof discordAuthorizePre>>,
+  TError = ErrorType<void>,
+>(
+  params: DiscordAuthorizePreParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof discordAuthorizePre>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getDiscordAuthorizePreQueryKey(params);
+  const queryKey =
+    queryOptions?.queryKey ?? getDiscordAuthorizePreQueryKey(params);
 
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof discordAuthorizePre>>
+  > = ({ signal }) => discordAuthorizePre(params, requestOptions, signal);
 
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof discordAuthorizePre>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof discordAuthorizePre>>> = ({ signal }) => discordAuthorizePre(params, requestOptions, signal);
+export type DiscordAuthorizePreQueryResult = NonNullable<
+  Awaited<ReturnType<typeof discordAuthorizePre>>
+>;
+export type DiscordAuthorizePreQueryError = ErrorType<void>;
 
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof discordAuthorizePre>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type DiscordAuthorizePreQueryResult = NonNullable<Awaited<ReturnType<typeof discordAuthorizePre>>>
-export type DiscordAuthorizePreQueryError = ErrorType<void>
-
-
-export function useDiscordAuthorizePre<TData = Awaited<ReturnType<typeof discordAuthorizePre>>, TError = ErrorType<void>>(
- params: DiscordAuthorizePreParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof discordAuthorizePre>>, TError, TData>> & Pick<
+export function useDiscordAuthorizePre<
+  TData = Awaited<ReturnType<typeof discordAuthorizePre>>,
+  TError = ErrorType<void>,
+>(
+  params: DiscordAuthorizePreParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof discordAuthorizePre>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof discordAuthorizePre>>,
           TError,
           Awaited<ReturnType<typeof discordAuthorizePre>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useDiscordAuthorizePre<TData = Awaited<ReturnType<typeof discordAuthorizePre>>, TError = ErrorType<void>>(
- params: DiscordAuthorizePreParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof discordAuthorizePre>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useDiscordAuthorizePre<
+  TData = Awaited<ReturnType<typeof discordAuthorizePre>>,
+  TError = ErrorType<void>,
+>(
+  params: DiscordAuthorizePreParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof discordAuthorizePre>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof discordAuthorizePre>>,
           TError,
           Awaited<ReturnType<typeof discordAuthorizePre>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useDiscordAuthorizePre<TData = Awaited<ReturnType<typeof discordAuthorizePre>>, TError = ErrorType<void>>(
- params: DiscordAuthorizePreParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof discordAuthorizePre>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useDiscordAuthorizePre<
+  TData = Awaited<ReturnType<typeof discordAuthorizePre>>,
+  TError = ErrorType<void>,
+>(
+  params: DiscordAuthorizePreParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof discordAuthorizePre>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Промежуточный шаг авторизации Discord
  */
 
-export function useDiscordAuthorizePre<TData = Awaited<ReturnType<typeof discordAuthorizePre>>, TError = ErrorType<void>>(
- params: DiscordAuthorizePreParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof discordAuthorizePre>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useDiscordAuthorizePre<
+  TData = Awaited<ReturnType<typeof discordAuthorizePre>>,
+  TError = ErrorType<void>,
+>(
+  params: DiscordAuthorizePreParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof discordAuthorizePre>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getDiscordAuthorizePreQueryOptions(params, options);
 
-  const queryOptions = getDiscordAuthorizePreQueryOptions(params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
 
 /**
  * Обрабатывает код от Discord, получает токен, данные пользователя и завершает привязку. Если указан `goto`, перенаправляет на него с результатом операции. Иначе возвращает результат в JSON.
  * @summary Завершение привязки Discord
  */
 export const discordAuthorize = (
-    params: DiscordAuthorizeParams,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  params: DiscordAuthorizeParams,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<DiscordLinkResultDto>(
+    { url: `/discord/authorize-final`, method: 'GET', params, signal },
+    options,
+  );
+};
 
-
-      return customInstance<DiscordLinkResultDto>(
-      {url: `/discord/authorize-final`, method: 'GET',
-        params, signal
-    },
-      options);
-    }
-
-
-
-
-export const getDiscordAuthorizeQueryKey = (params?: DiscordAuthorizeParams,) => {
-    return [
-    `/discord/authorize-final`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getDiscordAuthorizeQueryOptions = <TData = Awaited<ReturnType<typeof discordAuthorize>>, TError = ErrorType<void | ErrorResponseDto>>(params: DiscordAuthorizeParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof discordAuthorize>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getDiscordAuthorizeQueryKey = (
+  params?: DiscordAuthorizeParams,
 ) => {
+  return [`/discord/authorize-final`, ...(params ? [params] : [])] as const;
+};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+export const getDiscordAuthorizeQueryOptions = <
+  TData = Awaited<ReturnType<typeof discordAuthorize>>,
+  TError = ErrorType<void | ErrorResponseDto>,
+>(
+  params: DiscordAuthorizeParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof discordAuthorize>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getDiscordAuthorizeQueryKey(params);
+  const queryKey =
+    queryOptions?.queryKey ?? getDiscordAuthorizeQueryKey(params);
 
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof discordAuthorize>>
+  > = ({ signal }) => discordAuthorize(params, requestOptions, signal);
 
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof discordAuthorize>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof discordAuthorize>>> = ({ signal }) => discordAuthorize(params, requestOptions, signal);
+export type DiscordAuthorizeQueryResult = NonNullable<
+  Awaited<ReturnType<typeof discordAuthorize>>
+>;
+export type DiscordAuthorizeQueryError = ErrorType<void | ErrorResponseDto>;
 
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof discordAuthorize>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type DiscordAuthorizeQueryResult = NonNullable<Awaited<ReturnType<typeof discordAuthorize>>>
-export type DiscordAuthorizeQueryError = ErrorType<void | ErrorResponseDto>
-
-
-export function useDiscordAuthorize<TData = Awaited<ReturnType<typeof discordAuthorize>>, TError = ErrorType<void | ErrorResponseDto>>(
- params: DiscordAuthorizeParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof discordAuthorize>>, TError, TData>> & Pick<
+export function useDiscordAuthorize<
+  TData = Awaited<ReturnType<typeof discordAuthorize>>,
+  TError = ErrorType<void | ErrorResponseDto>,
+>(
+  params: DiscordAuthorizeParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof discordAuthorize>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof discordAuthorize>>,
           TError,
           Awaited<ReturnType<typeof discordAuthorize>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useDiscordAuthorize<TData = Awaited<ReturnType<typeof discordAuthorize>>, TError = ErrorType<void | ErrorResponseDto>>(
- params: DiscordAuthorizeParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof discordAuthorize>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useDiscordAuthorize<
+  TData = Awaited<ReturnType<typeof discordAuthorize>>,
+  TError = ErrorType<void | ErrorResponseDto>,
+>(
+  params: DiscordAuthorizeParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof discordAuthorize>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof discordAuthorize>>,
           TError,
           Awaited<ReturnType<typeof discordAuthorize>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useDiscordAuthorize<TData = Awaited<ReturnType<typeof discordAuthorize>>, TError = ErrorType<void | ErrorResponseDto>>(
- params: DiscordAuthorizeParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof discordAuthorize>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useDiscordAuthorize<
+  TData = Awaited<ReturnType<typeof discordAuthorize>>,
+  TError = ErrorType<void | ErrorResponseDto>,
+>(
+  params: DiscordAuthorizeParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof discordAuthorize>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Завершение привязки Discord
  */
 
-export function useDiscordAuthorize<TData = Awaited<ReturnType<typeof discordAuthorize>>, TError = ErrorType<void | ErrorResponseDto>>(
- params: DiscordAuthorizeParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof discordAuthorize>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useDiscordAuthorize<
+  TData = Awaited<ReturnType<typeof discordAuthorize>>,
+  TError = ErrorType<void | ErrorResponseDto>,
+>(
+  params: DiscordAuthorizeParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof discordAuthorize>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getDiscordAuthorizeQueryOptions(params, options);
 
-  const queryOptions = getDiscordAuthorizeQueryOptions(params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
 
 /**
  * @summary Выдать тайм-аут пользователю в Discord.
  */
 export const discordTimeoutDiscord = (
-    discordTimeoutDto: BodyType<DiscordTimeoutDto>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  discordTimeoutDto: BodyType<DiscordTimeoutDto>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<boolean>(
-      {url: `/discord/timeout`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: discordTimeoutDto, signal
+  return customInstance<boolean>(
+    {
+      url: `/discord/timeout`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: discordTimeoutDto,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
+export const getDiscordTimeoutDiscordMutationKey = () =>
+  ['discordTimeoutDiscord'] as const;
 
+export const getDiscordTimeoutDiscordMutationOptions = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof discordTimeoutDiscord>>,
+    TError,
+    DiscordTimeoutDiscordMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof discordTimeoutDiscord>>,
+  TError,
+  DiscordTimeoutDiscordMutationVariables,
+  TContext
+> => {
+  const mutationKey = getDiscordTimeoutDiscordMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof discordTimeoutDiscord>>,
+    DiscordTimeoutDiscordMutationVariables
+  > = (props) => {
+    const { data } = props ?? {};
 
-export const getDiscordTimeoutDiscordMutationKey = () => ['discordTimeoutDiscord'] as const;
+    return discordTimeoutDiscord(data, requestOptions);
+  };
 
-export const getDiscordTimeoutDiscordMutationOptions = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof discordTimeoutDiscord>>, TError,DiscordTimeoutDiscordMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof discordTimeoutDiscord>>, TError,DiscordTimeoutDiscordMutationVariables, TContext> => {
+  return { mutationFn, ...mutationOptions };
+};
 
-const mutationKey = getDiscordTimeoutDiscordMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+export type DiscordTimeoutDiscordMutationResult = NonNullable<
+  Awaited<ReturnType<typeof discordTimeoutDiscord>>
+>;
+export type DiscordTimeoutDiscordMutationBody = BodyType<DiscordTimeoutDto>;
+export type DiscordTimeoutDiscordMutationError = ErrorType<ErrorResponseDto>;
+export type DiscordTimeoutDiscordMutationVariables = {
+  data: BodyType<DiscordTimeoutDto>;
+};
 
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof discordTimeoutDiscord>>, DiscordTimeoutDiscordMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  discordTimeoutDiscord(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type DiscordTimeoutDiscordMutationResult = NonNullable<Awaited<ReturnType<typeof discordTimeoutDiscord>>>
-    export type DiscordTimeoutDiscordMutationBody = BodyType<DiscordTimeoutDto>
-    export type DiscordTimeoutDiscordMutationError = ErrorType<ErrorResponseDto>
-    export type DiscordTimeoutDiscordMutationVariables = {data: BodyType<DiscordTimeoutDto>}
-
-    /**
+/**
  * @summary Выдать тайм-аут пользователю в Discord.
  */
-export const useDiscordTimeoutDiscord = <TError = ErrorType<ErrorResponseDto>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof discordTimeoutDiscord>>, TError,DiscordTimeoutDiscordMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof discordTimeoutDiscord>>,
-        TError,
-        DiscordTimeoutDiscordMutationVariables,
-        TContext
-      > => {
-      return useMutation(getDiscordTimeoutDiscordMutationOptions(options), queryClient);
-    }
+export const useDiscordTimeoutDiscord = <
+  TError = ErrorType<ErrorResponseDto>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof discordTimeoutDiscord>>,
+      TError,
+      DiscordTimeoutDiscordMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof discordTimeoutDiscord>>,
+  TError,
+  DiscordTimeoutDiscordMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getDiscordTimeoutDiscordMutationOptions(options),
+    queryClient,
+  );
+};

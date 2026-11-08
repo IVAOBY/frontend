@@ -5,9 +5,10 @@
  * API service for handling IVAO Belarus Divisions Web infrastructure.
  * OpenAPI spec version: 1.13.2
  */
-import {
-  useQuery
-} from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
+
+import type { ErrorType } from '../../utils/customInstance';
+import type { StaffDepartment } from '../model';
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -17,22 +18,17 @@ import type {
   QueryKey,
   UndefinedInitialDataOptions,
   UseQueryOptions,
-  UseQueryResult
+  UseQueryResult,
 } from '@tanstack/react-query';
 
-import type {
-  StaffDepartment
-} from '../model';
-
 import { customInstance } from '../../utils/customInstance';
-import type { ErrorType } from '../../utils/customInstance';
-
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-
-const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
+const withQueryKey = <T extends object, K>(
+  query: T,
+  queryKey: K,
+): T & { queryKey: K } => {
   const result = { queryKey } as T & { queryKey: K };
   for (const key of Object.keys(query)) {
     // The explicit queryKey always wins, matching the previous
@@ -53,92 +49,156 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
  * @summary Получить список отделов сотрудников
  */
 export const staffDepartmentsFindAllOrderedByOrder = (
-
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<StaffDepartment[]>(
-      {url: `/staff-departments`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
+  return customInstance<StaffDepartment[]>(
+    { url: `/staff-departments`, method: 'GET', signal },
+    options,
+  );
+};
 
 export const getStaffDepartmentsFindAllOrderedByOrderQueryKey = () => {
-    return [
-    `/staff-departments`
-    ] as const;
-    }
+  return [`/staff-departments`] as const;
+};
 
+export const getStaffDepartmentsFindAllOrderedByOrderQueryOptions = <
+  TData = Awaited<ReturnType<typeof staffDepartmentsFindAllOrderedByOrder>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof staffDepartmentsFindAllOrderedByOrder>>,
+      TError,
+      TData
+    >
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-export const getStaffDepartmentsFindAllOrderedByOrderQueryOptions = <TData = Awaited<ReturnType<typeof staffDepartmentsFindAllOrderedByOrder>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof staffDepartmentsFindAllOrderedByOrder>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
+  const queryKey =
+    queryOptions?.queryKey ??
+    getStaffDepartmentsFindAllOrderedByOrderQueryKey();
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof staffDepartmentsFindAllOrderedByOrder>>
+  > = ({ signal }) =>
+    staffDepartmentsFindAllOrderedByOrder(requestOptions, signal);
 
-  const queryKey =  queryOptions?.queryKey ?? getStaffDepartmentsFindAllOrderedByOrderQueryKey();
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof staffDepartmentsFindAllOrderedByOrder>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type StaffDepartmentsFindAllOrderedByOrderQueryResult = NonNullable<
+  Awaited<ReturnType<typeof staffDepartmentsFindAllOrderedByOrder>>
+>;
+export type StaffDepartmentsFindAllOrderedByOrderQueryError =
+  ErrorType<unknown>;
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof staffDepartmentsFindAllOrderedByOrder>>> = ({ signal }) => staffDepartmentsFindAllOrderedByOrder(requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof staffDepartmentsFindAllOrderedByOrder>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type StaffDepartmentsFindAllOrderedByOrderQueryResult = NonNullable<Awaited<ReturnType<typeof staffDepartmentsFindAllOrderedByOrder>>>
-export type StaffDepartmentsFindAllOrderedByOrderQueryError = ErrorType<unknown>
-
-
-export function useStaffDepartmentsFindAllOrderedByOrder<TData = Awaited<ReturnType<typeof staffDepartmentsFindAllOrderedByOrder>>, TError = ErrorType<unknown>>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof staffDepartmentsFindAllOrderedByOrder>>, TError, TData>> & Pick<
+export function useStaffDepartmentsFindAllOrderedByOrder<
+  TData = Awaited<ReturnType<typeof staffDepartmentsFindAllOrderedByOrder>>,
+  TError = ErrorType<unknown>,
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof staffDepartmentsFindAllOrderedByOrder>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof staffDepartmentsFindAllOrderedByOrder>>,
           TError,
           Awaited<ReturnType<typeof staffDepartmentsFindAllOrderedByOrder>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useStaffDepartmentsFindAllOrderedByOrder<TData = Awaited<ReturnType<typeof staffDepartmentsFindAllOrderedByOrder>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof staffDepartmentsFindAllOrderedByOrder>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useStaffDepartmentsFindAllOrderedByOrder<
+  TData = Awaited<ReturnType<typeof staffDepartmentsFindAllOrderedByOrder>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof staffDepartmentsFindAllOrderedByOrder>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof staffDepartmentsFindAllOrderedByOrder>>,
           TError,
           Awaited<ReturnType<typeof staffDepartmentsFindAllOrderedByOrder>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useStaffDepartmentsFindAllOrderedByOrder<TData = Awaited<ReturnType<typeof staffDepartmentsFindAllOrderedByOrder>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof staffDepartmentsFindAllOrderedByOrder>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useStaffDepartmentsFindAllOrderedByOrder<
+  TData = Awaited<ReturnType<typeof staffDepartmentsFindAllOrderedByOrder>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof staffDepartmentsFindAllOrderedByOrder>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @deprecated
  * @summary Получить список отделов сотрудников
  */
 
-export function useStaffDepartmentsFindAllOrderedByOrder<TData = Awaited<ReturnType<typeof staffDepartmentsFindAllOrderedByOrder>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof staffDepartmentsFindAllOrderedByOrder>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useStaffDepartmentsFindAllOrderedByOrder<
+  TData = Awaited<ReturnType<typeof staffDepartmentsFindAllOrderedByOrder>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof staffDepartmentsFindAllOrderedByOrder>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions =
+    getStaffDepartmentsFindAllOrderedByOrderQueryOptions(options);
 
-  const queryOptions = getStaffDepartmentsFindAllOrderedByOrderQueryOptions(options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-

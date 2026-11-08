@@ -19,6 +19,11 @@ import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persist
 import { QueryClient } from '@tanstack/react-query';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 
+import { AirportPage } from './components/AirportPage/AirportPage';
+import { Centered } from './components/Layout';
+import { Loader } from './components/Loader';
+import ScrollToTop from './utils/ScrollToTop';
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {},
@@ -28,11 +33,6 @@ const queryClient = new QueryClient({
 const persister = createSyncStoragePersister({
   storage: window.localStorage,
 });
-
-import { AirportPage } from './components/AirportPage/AirportPage';
-import { Centered } from './components/Layout';
-import { Loader } from './components/Loader';
-import ScrollToTop from './utils/ScrollToTop';
 
 const MainPage = lazy(() =>
   import('./components/MainPage/MainPage').then((module) => ({

@@ -17,6 +17,7 @@ import {
   IconAirTrafficControl,
   IconArticle,
   IconBook,
+  IconCalendarWeek,
   IconCar,
   IconEye,
   IconFileInfo,
@@ -160,6 +161,11 @@ const categories = [
     label: 'navbar.community.index',
     icon: <IconUsersGroup size={20} />,
     links: [
+      {
+        href: '/agenda',
+        label: 'navbar.community.agenda',
+        icon: <IconCalendarWeek size={20} />,
+      },
       {
         href: '/documents',
         label: 'navbar.atc.docs',

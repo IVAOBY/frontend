@@ -9,17 +9,17 @@ import type { LocalizableTextDto } from './localizableTextDto';
 
 export interface UpdateMaintenanceDto {
   /**
-     * Статус технических работ (0–2)
-     * @minimum 0
-     * @maximum 2
-     */
+   * Статус технических работ (0–2)
+   * @minimum 0
+   * @maximum 2
+   */
   status?: number;
   title?: LocalizableTextDto;
   description?: LocalizableTextDto;
   startDate?: string;
   /**
-     * Дата окончания. `null` — без даты окончания
-     * @nullable
-     */
+   * Дата окончания. `null` — без даты окончания
+   * @nullable
+   */
   endDate?: string | null;
 }

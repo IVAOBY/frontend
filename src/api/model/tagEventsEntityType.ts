@@ -6,8 +6,8 @@
  * OpenAPI spec version: 1.13.2
  */
 
-export type TagEventsEntityType = typeof TagEventsEntityType[keyof typeof TagEventsEntityType];
-
+export type TagEventsEntityType =
+  (typeof TagEventsEntityType)[keyof typeof TagEventsEntityType];
 
 export const TagEventsEntityType = {
   SO: 'SO',

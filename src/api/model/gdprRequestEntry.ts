@@ -8,9 +8,9 @@
 
 export interface GdprRequestEntry {
   /**
-     * User ID for GDPR data request
-     * @minimum 1
-     */
+   * User ID for GDPR data request
+   * @minimum 1
+   */
   userId: number;
   /** Whether to export/copy user data */
   copy?: boolean;

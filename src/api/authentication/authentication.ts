@@ -5,10 +5,15 @@
  * API service for handling IVAO Belarus Divisions Web infrastructure.
  * OpenAPI spec version: 1.13.2
  */
-import {
-  useMutation,
-  useQuery
-} from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
+
+import type { ErrorType } from '../../utils/customInstance';
+import type {
+  AuthLoginParams,
+  AuthLogoutParams,
+  AuthSsoCallbackParams,
+  ErrorResponseDto,
+} from '../model';
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -21,25 +26,17 @@ import type {
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
-  UseQueryResult
+  UseQueryResult,
 } from '@tanstack/react-query';
 
-import type {
-  AuthLoginParams,
-  AuthLogoutParams,
-  AuthSsoCallbackParams,
-  ErrorResponseDto
-} from '../model';
-
 import { customInstance } from '../../utils/customInstance';
-import type { ErrorType } from '../../utils/customInstance';
-
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-
-const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
+const withQueryKey = <T extends object, K>(
+  query: T,
+  queryKey: K,
+): T & { queryKey: K } => {
   const result = { queryKey } as T & { queryKey: K };
   for (const key of Object.keys(query)) {
     // The explicit queryKey always wins, matching the previous
@@ -59,253 +56,384 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
  * @summary Инициировать вход через IVAO SSO
  */
 export const authLogin = (
-    params: AuthLoginParams,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  params: AuthLoginParams,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<unknown>(
+    { url: `/auth/login`, method: 'GET', params, signal },
+    options,
+  );
+};
 
+export const getAuthLoginQueryKey = (params?: AuthLoginParams) => {
+  return [`/auth/login`, ...(params ? [params] : [])] as const;
+};
 
-      return customInstance<unknown>(
-      {url: `/auth/login`, method: 'GET',
-        params, signal
-    },
-      options);
-    }
-
-
-
-
-export const getAuthLoginQueryKey = (params?: AuthLoginParams,) => {
-    return [
-    `/auth/login`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getAuthLoginQueryOptions = <TData = Awaited<ReturnType<typeof authLogin>>, TError = ErrorType<void | ErrorResponseDto>>(params: AuthLoginParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof authLogin>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getAuthLoginQueryOptions = <
+  TData = Awaited<ReturnType<typeof authLogin>>,
+  TError = ErrorType<void | ErrorResponseDto>,
+>(
+  params: AuthLoginParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof authLogin>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
 ) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryKey = queryOptions?.queryKey ?? getAuthLoginQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getAuthLoginQueryKey(params);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof authLogin>>> = ({
+    signal,
+  }) => authLogin(params, requestOptions, signal);
 
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof authLogin>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type AuthLoginQueryResult = NonNullable<
+  Awaited<ReturnType<typeof authLogin>>
+>;
+export type AuthLoginQueryError = ErrorType<void | ErrorResponseDto>;
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof authLogin>>> = ({ signal }) => authLogin(params, requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof authLogin>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type AuthLoginQueryResult = NonNullable<Awaited<ReturnType<typeof authLogin>>>
-export type AuthLoginQueryError = ErrorType<void | ErrorResponseDto>
-
-
-export function useAuthLogin<TData = Awaited<ReturnType<typeof authLogin>>, TError = ErrorType<void | ErrorResponseDto>>(
- params: AuthLoginParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof authLogin>>, TError, TData>> & Pick<
+export function useAuthLogin<
+  TData = Awaited<ReturnType<typeof authLogin>>,
+  TError = ErrorType<void | ErrorResponseDto>,
+>(
+  params: AuthLoginParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof authLogin>>, TError, TData>
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof authLogin>>,
           TError,
           Awaited<ReturnType<typeof authLogin>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useAuthLogin<TData = Awaited<ReturnType<typeof authLogin>>, TError = ErrorType<void | ErrorResponseDto>>(
- params: AuthLoginParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof authLogin>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useAuthLogin<
+  TData = Awaited<ReturnType<typeof authLogin>>,
+  TError = ErrorType<void | ErrorResponseDto>,
+>(
+  params: AuthLoginParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof authLogin>>, TError, TData>
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof authLogin>>,
           TError,
           Awaited<ReturnType<typeof authLogin>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useAuthLogin<TData = Awaited<ReturnType<typeof authLogin>>, TError = ErrorType<void | ErrorResponseDto>>(
- params: AuthLoginParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof authLogin>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useAuthLogin<
+  TData = Awaited<ReturnType<typeof authLogin>>,
+  TError = ErrorType<void | ErrorResponseDto>,
+>(
+  params: AuthLoginParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof authLogin>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Инициировать вход через IVAO SSO
  */
 
-export function useAuthLogin<TData = Awaited<ReturnType<typeof authLogin>>, TError = ErrorType<void | ErrorResponseDto>>(
- params: AuthLoginParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof authLogin>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useAuthLogin<
+  TData = Awaited<ReturnType<typeof authLogin>>,
+  TError = ErrorType<void | ErrorResponseDto>,
+>(
+  params: AuthLoginParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<Awaited<ReturnType<typeof authLogin>>, TError, TData>
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getAuthLoginQueryOptions(params, options);
 
-  const queryOptions = getAuthLoginQueryOptions(params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
 
 /**
  * Вызывается IVAO SSO после входа. Обменивает `code` на токен, устанавливает cookie `auth_token` и перенаправляет на сохранённый `goto`.
  * @summary Callback IVAO SSO
  */
 export const authSsoCallback = (
-    params: AuthSsoCallbackParams,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  params: AuthSsoCallbackParams,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<unknown>(
+    { url: `/auth/sso-callback`, method: 'GET', params, signal },
+    options,
+  );
+};
 
+export const getAuthSsoCallbackQueryKey = (params?: AuthSsoCallbackParams) => {
+  return [`/auth/sso-callback`, ...(params ? [params] : [])] as const;
+};
 
-      return customInstance<unknown>(
-      {url: `/auth/sso-callback`, method: 'GET',
-        params, signal
-    },
-      options);
-    }
-
-
-
-
-export const getAuthSsoCallbackQueryKey = (params?: AuthSsoCallbackParams,) => {
-    return [
-    `/auth/sso-callback`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getAuthSsoCallbackQueryOptions = <TData = Awaited<ReturnType<typeof authSsoCallback>>, TError = ErrorType<void | ErrorResponseDto>>(params: AuthSsoCallbackParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof authSsoCallback>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getAuthSsoCallbackQueryOptions = <
+  TData = Awaited<ReturnType<typeof authSsoCallback>>,
+  TError = ErrorType<void | ErrorResponseDto>,
+>(
+  params: AuthSsoCallbackParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof authSsoCallback>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
 ) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryKey = queryOptions?.queryKey ?? getAuthSsoCallbackQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getAuthSsoCallbackQueryKey(params);
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof authSsoCallback>>> = ({
+    signal,
+  }) => authSsoCallback(params, requestOptions, signal);
 
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof authSsoCallback>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type AuthSsoCallbackQueryResult = NonNullable<
+  Awaited<ReturnType<typeof authSsoCallback>>
+>;
+export type AuthSsoCallbackQueryError = ErrorType<void | ErrorResponseDto>;
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof authSsoCallback>>> = ({ signal }) => authSsoCallback(params, requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof authSsoCallback>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type AuthSsoCallbackQueryResult = NonNullable<Awaited<ReturnType<typeof authSsoCallback>>>
-export type AuthSsoCallbackQueryError = ErrorType<void | ErrorResponseDto>
-
-
-export function useAuthSsoCallback<TData = Awaited<ReturnType<typeof authSsoCallback>>, TError = ErrorType<void | ErrorResponseDto>>(
- params: AuthSsoCallbackParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof authSsoCallback>>, TError, TData>> & Pick<
+export function useAuthSsoCallback<
+  TData = Awaited<ReturnType<typeof authSsoCallback>>,
+  TError = ErrorType<void | ErrorResponseDto>,
+>(
+  params: AuthSsoCallbackParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof authSsoCallback>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof authSsoCallback>>,
           TError,
           Awaited<ReturnType<typeof authSsoCallback>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useAuthSsoCallback<TData = Awaited<ReturnType<typeof authSsoCallback>>, TError = ErrorType<void | ErrorResponseDto>>(
- params: AuthSsoCallbackParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof authSsoCallback>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useAuthSsoCallback<
+  TData = Awaited<ReturnType<typeof authSsoCallback>>,
+  TError = ErrorType<void | ErrorResponseDto>,
+>(
+  params: AuthSsoCallbackParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof authSsoCallback>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof authSsoCallback>>,
           TError,
           Awaited<ReturnType<typeof authSsoCallback>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useAuthSsoCallback<TData = Awaited<ReturnType<typeof authSsoCallback>>, TError = ErrorType<void | ErrorResponseDto>>(
- params: AuthSsoCallbackParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof authSsoCallback>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useAuthSsoCallback<
+  TData = Awaited<ReturnType<typeof authSsoCallback>>,
+  TError = ErrorType<void | ErrorResponseDto>,
+>(
+  params: AuthSsoCallbackParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof authSsoCallback>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Callback IVAO SSO
  */
 
-export function useAuthSsoCallback<TData = Awaited<ReturnType<typeof authSsoCallback>>, TError = ErrorType<void | ErrorResponseDto>>(
- params: AuthSsoCallbackParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof authSsoCallback>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useAuthSsoCallback<
+  TData = Awaited<ReturnType<typeof authSsoCallback>>,
+  TError = ErrorType<void | ErrorResponseDto>,
+>(
+  params: AuthSsoCallbackParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof authSsoCallback>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getAuthSsoCallbackQueryOptions(params, options);
 
-  const queryOptions = getAuthSsoCallbackQueryOptions(params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
 
 /**
  * Удаляет cookie `auth_token` и перенаправляет на `goto` (или на главную).
  * @summary Выход из системы
  */
 export const authLogout = (
-    params?: AuthLogoutParams,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  params?: AuthLogoutParams,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<unknown>(
-      {url: `/auth/logout`, method: 'POST',
-        params, signal
-    },
-      options);
-    }
-
-
-
+  return customInstance<unknown>(
+    { url: `/auth/logout`, method: 'POST', params, signal },
+    options,
+  );
+};
 
 export const getAuthLogoutMutationKey = () => ['authLogout'] as const;
 
-export const getAuthLogoutMutationOptions = <TError = ErrorType<void>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof authLogout>>, TError,AuthLogoutMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof authLogout>>, TError,AuthLogoutMutationVariables, TContext> => {
+export const getAuthLogoutMutationOptions = <
+  TError = ErrorType<void>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof authLogout>>,
+    TError,
+    AuthLogoutMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof authLogout>>,
+  TError,
+  AuthLogoutMutationVariables,
+  TContext
+> => {
+  const mutationKey = getAuthLogoutMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-const mutationKey = getAuthLogoutMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof authLogout>>,
+    AuthLogoutMutationVariables
+  > = (props) => {
+    const { params } = props ?? {};
 
+    return authLogout(params, requestOptions);
+  };
 
+  return { mutationFn, ...mutationOptions };
+};
 
+export type AuthLogoutMutationResult = NonNullable<
+  Awaited<ReturnType<typeof authLogout>>
+>;
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof authLogout>>, AuthLogoutMutationVariables> = (props) => {
-          const {params} = props ?? {};
+export type AuthLogoutMutationError = ErrorType<void>;
+export type AuthLogoutMutationVariables = { params?: AuthLogoutParams };
 
-          return  authLogout(params,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type AuthLogoutMutationResult = NonNullable<Awaited<ReturnType<typeof authLogout>>>
-
-    export type AuthLogoutMutationError = ErrorType<void>
-    export type AuthLogoutMutationVariables = {params?: AuthLogoutParams}
-
-    /**
+/**
  * @summary Выход из системы
  */
-export const useAuthLogout = <TError = ErrorType<void>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof authLogout>>, TError,AuthLogoutMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof authLogout>>,
-        TError,
-        AuthLogoutMutationVariables,
-        TContext
-      > => {
-      return useMutation(getAuthLogoutMutationOptions(options), queryClient);
-    }
+export const useAuthLogout = <TError = ErrorType<void>, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof authLogout>>,
+      TError,
+      AuthLogoutMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof authLogout>>,
+  TError,
+  AuthLogoutMutationVariables,
+  TContext
+> => {
+  return useMutation(getAuthLogoutMutationOptions(options), queryClient);
+};

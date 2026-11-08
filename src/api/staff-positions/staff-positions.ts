@@ -5,9 +5,10 @@
  * API service for handling IVAO Belarus Divisions Web infrastructure.
  * OpenAPI spec version: 1.13.2
  */
-import {
-  useQuery
-} from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
+
+import type { ErrorType } from '../../utils/customInstance';
+import type { DepartmentWithPositions } from '../model';
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -17,22 +18,17 @@ import type {
   QueryKey,
   UndefinedInitialDataOptions,
   UseQueryOptions,
-  UseQueryResult
+  UseQueryResult,
 } from '@tanstack/react-query';
 
-import type {
-  DepartmentWithPositions
-} from '../model';
-
 import { customInstance } from '../../utils/customInstance';
-import type { ErrorType } from '../../utils/customInstance';
-
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-
-const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
+const withQueryKey = <T extends object, K>(
+  query: T,
+  queryKey: K,
+): T & { queryKey: K } => {
   const result = { queryKey } as T & { queryKey: K };
   for (const key of Object.keys(query)) {
     // The explicit queryKey always wins, matching the previous
@@ -52,91 +48,151 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
  * @summary Получить список должностей сотрудников
  */
 export const staffGetAllStaffPositions = (
-
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<DepartmentWithPositions[]>(
-      {url: `/staff/positions`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
+  return customInstance<DepartmentWithPositions[]>(
+    { url: `/staff/positions`, method: 'GET', signal },
+    options,
+  );
+};
 
 export const getStaffGetAllStaffPositionsQueryKey = () => {
-    return [
-    `/staff/positions`
-    ] as const;
-    }
+  return [`/staff/positions`] as const;
+};
 
+export const getStaffGetAllStaffPositionsQueryOptions = <
+  TData = Awaited<ReturnType<typeof staffGetAllStaffPositions>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof staffGetAllStaffPositions>>,
+      TError,
+      TData
+    >
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-export const getStaffGetAllStaffPositionsQueryOptions = <TData = Awaited<ReturnType<typeof staffGetAllStaffPositions>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof staffGetAllStaffPositions>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
+  const queryKey =
+    queryOptions?.queryKey ?? getStaffGetAllStaffPositionsQueryKey();
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof staffGetAllStaffPositions>>
+  > = ({ signal }) => staffGetAllStaffPositions(requestOptions, signal);
 
-  const queryKey =  queryOptions?.queryKey ?? getStaffGetAllStaffPositionsQueryKey();
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof staffGetAllStaffPositions>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type StaffGetAllStaffPositionsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof staffGetAllStaffPositions>>
+>;
+export type StaffGetAllStaffPositionsQueryError = ErrorType<unknown>;
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof staffGetAllStaffPositions>>> = ({ signal }) => staffGetAllStaffPositions(requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof staffGetAllStaffPositions>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type StaffGetAllStaffPositionsQueryResult = NonNullable<Awaited<ReturnType<typeof staffGetAllStaffPositions>>>
-export type StaffGetAllStaffPositionsQueryError = ErrorType<unknown>
-
-
-export function useStaffGetAllStaffPositions<TData = Awaited<ReturnType<typeof staffGetAllStaffPositions>>, TError = ErrorType<unknown>>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof staffGetAllStaffPositions>>, TError, TData>> & Pick<
+export function useStaffGetAllStaffPositions<
+  TData = Awaited<ReturnType<typeof staffGetAllStaffPositions>>,
+  TError = ErrorType<unknown>,
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof staffGetAllStaffPositions>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof staffGetAllStaffPositions>>,
           TError,
           Awaited<ReturnType<typeof staffGetAllStaffPositions>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useStaffGetAllStaffPositions<TData = Awaited<ReturnType<typeof staffGetAllStaffPositions>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof staffGetAllStaffPositions>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useStaffGetAllStaffPositions<
+  TData = Awaited<ReturnType<typeof staffGetAllStaffPositions>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof staffGetAllStaffPositions>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof staffGetAllStaffPositions>>,
           TError,
           Awaited<ReturnType<typeof staffGetAllStaffPositions>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useStaffGetAllStaffPositions<TData = Awaited<ReturnType<typeof staffGetAllStaffPositions>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof staffGetAllStaffPositions>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useStaffGetAllStaffPositions<
+  TData = Awaited<ReturnType<typeof staffGetAllStaffPositions>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof staffGetAllStaffPositions>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Получить список должностей сотрудников
  */
 
-export function useStaffGetAllStaffPositions<TData = Awaited<ReturnType<typeof staffGetAllStaffPositions>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof staffGetAllStaffPositions>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useStaffGetAllStaffPositions<
+  TData = Awaited<ReturnType<typeof staffGetAllStaffPositions>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof staffGetAllStaffPositions>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getStaffGetAllStaffPositionsQueryOptions(options);
 
-  const queryOptions = getStaffGetAllStaffPositionsQueryOptions(options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
