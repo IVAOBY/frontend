@@ -155,16 +155,19 @@ export function VehiclesPage() {
         clearInterval(timer);
         setHoldTimer(null);
 
-        revokeMutation.mutate(revokeTargetId, {
-          onSuccess: () => {
-            closeRevoke();
+        revokeMutation.mutate(
+          { data: { id: revokeTargetId } },
+          {
+            onSuccess: () => {
+              closeRevoke();
+            },
+            onError: () => {
+              // оставляем окно открытым и показываем подсказку
+              setHoldHint(true);
+              setHoldProgress(0);
+            },
           },
-          onError: () => {
-            // оставляем окно открытым и показываем подсказку
-            setHoldHint(true);
-            setHoldProgress(0);
-          },
-        });
+        );
       }
     }, 16);
 
@@ -188,10 +191,12 @@ export function VehiclesPage() {
 
     createMutation.mutate(
       {
-        vid: Number(newVid),
-        validFrom: newValidFrom,
-        validUntil: isUnlimited ? null : newValidUntil || null,
-        issueReason: newReason || null,
+        data: {
+          vid: Number(newVid),
+          validFrom: newValidFrom,
+          validUntil: isUnlimited ? undefined : newValidUntil || undefined,
+          issueReason: newReason || undefined,
+        },
       },
       {
         onSuccess: () => {

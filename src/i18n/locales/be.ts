@@ -267,6 +267,12 @@ const beTranslations: { translations: Translations } = {
       all: 'Усе падзеі',
       more: 'Больш падрабязна',
       empty: 'На гэты дзень нічога не плануецца',
+      emptyUpcoming: 'Новых падзей пакуль няма',
+      emptyMonth: 'У гэтым месяцы падзей не было',
+      upcoming: 'Бліжэйшыя',
+      today: 'Сёння',
+      prevMonth: 'Папярэдні месяц',
+      nextMonth: 'Наступны месяц',
       colors: 'Каляровыя коды',
       types: {
         event: 'Івент',

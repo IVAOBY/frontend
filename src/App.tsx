@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useContext, useMemo } from 'react';
+import React, { lazy, Suspense, useContext } from 'react';
 
 import { AppShell, MantineProvider } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
@@ -23,6 +23,16 @@ import { AirportPage } from './components/AirportPage/AirportPage';
 import { Centered } from './components/Layout';
 import { Loader } from './components/Loader';
 import ScrollToTop from './utils/ScrollToTop';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {},
+  },
+});
+
+const persister = createSyncStoragePersister({
+  storage: window.localStorage,
+});
 
 const MainPage = lazy(() =>
   import('./components/MainPage/MainPage').then((module) => ({
@@ -123,24 +133,6 @@ export default function App() {
 
     return <>{element}</>;
   };
-
-  const queryClient = useMemo(
-    () =>
-      new QueryClient({
-        defaultOptions: {
-          queries: {},
-        },
-      }),
-    [],
-  );
-
-  const persister = useMemo(
-    () =>
-      createSyncStoragePersister({
-        storage: window.localStorage,
-      }),
-    [],
-  );
 
   return (
     <MantineProvider theme={ivaoTheme}>

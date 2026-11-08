@@ -267,6 +267,12 @@ const ruTranslations: { translations: Translations } = {
       all: 'Все события',
       more: 'Подробнее',
       empty: 'В этот день ничего не запланировано',
+      emptyUpcoming: 'Новых событий пока нет',
+      emptyMonth: 'В этом месяце событий не было',
+      upcoming: 'Ближайшие',
+      today: 'Сегодня',
+      prevMonth: 'Предыдущий месяц',
+      nextMonth: 'Следующий месяц',
       colors: 'Цветовые коды',
       types: {
         event: 'Мероприятие',

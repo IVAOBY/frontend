@@ -258,6 +258,12 @@ export interface Translations {
     all: string;
     more: string;
     empty: string;
+    emptyUpcoming: string;
+    emptyMonth: string;
+    upcoming: string;
+    today: string;
+    prevMonth: string;
+    nextMonth: string;
     colors: string;
     types: {
       event: string;

@@ -10,9 +10,10 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
+import type { NewsEntity } from '../../../api/model';
+
 import useNews from '../../../hooks/query/MainPage/useNews';
 import useAgenda from '../../../hooks/query/useAgenda';
-import { NewsEntity } from '../../../types/News';
 import { Notification } from '../../Notification/Notification';
 import { NewsCarousel } from './NewsCarousel';
 

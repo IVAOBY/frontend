@@ -2,11 +2,14 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useQueryClient } from '@tanstack/react-query';
 
-import type { Agenda } from '../../types/News';
+import type { AgendaItem } from '../../api/model';
 
-import Http from '../../utils/Http';
+import {
+  getAgendaGetCalendarQueryKey,
+  getAgendaGetCalendarQueryOptions,
+} from '../../api/agenda/agenda';
 
-export type AgendaItem = Agenda;
+export type { AgendaItem };
 
 /* ---------- Константы ---------- */
 const DAY_MS = 86_400_000;
@@ -87,16 +90,6 @@ function subtractIntervals(from: Interval[], remove: Interval[]): Interval[] {
 const isCovered = (interval: Interval, loaded: Interval[]) =>
   subtractIntervals([interval], loaded).length === 0;
 
-/* ---------- API ---------- */
-// endDate включительно. Если бэкенд считает его исключительно — добавьте +1 день в fetchGap.
-export const fetchAgendaRange = async (startDate: string, endDate: string) => {
-  const response = await Http<AgendaItem[]>({
-    method: 'GET',
-    url: `/agenda/calendar?startDate=${startDate}&endDate=${endDate}`,
-  });
-  return response || [];
-};
-
 const retry = (failureCount: number) => failureCount <= 5;
 
 const itemKey = (item: AgendaItem) => `${item.type}-${item.id}`;
@@ -167,15 +160,21 @@ export function useAgendaData({ cursor, selectedDay }: UseAgendaDataParams) {
       pendingRef.current.set(pendingKey, gap);
       setFetchingCount((n) => n + 1);
 
+      // endDate включительно. Если бэкенд считает его исключительно — добавьте +1 день.
       queryClient
-        .fetchQuery({
-          queryKey: ['agenda', 'range', startKey, endKey],
-          queryFn: () => fetchAgendaRange(startKey, endKey),
-          retry,
-          // прошлое не меняется — не перезапрашиваем никогда
-          staleTime: isPast ? Infinity : FRESH_MS,
-          gcTime: GC_MS,
-        })
+        .fetchQuery(
+          getAgendaGetCalendarQueryOptions(
+            { startDate: startKey, endDate: endKey },
+            {
+              query: {
+                retry,
+                // прошлое не меняется — не перезапрашиваем никогда
+                staleTime: isPast ? Infinity : FRESH_MS,
+                gcTime: GC_MS,
+              },
+            },
+          ),
+        )
         .then((items) => {
           if (generation !== generationRef.current) return;
           setStore((prev) => {
@@ -204,7 +203,7 @@ export function useAgendaData({ cursor, selectedDay }: UseAgendaDataParams) {
   const refresh = useCallback(() => {
     generationRef.current += 1;
     pendingRef.current.clear();
-    queryClient.removeQueries({ queryKey: ['agenda', 'range'] });
+    queryClient.removeQueries({ queryKey: getAgendaGetCalendarQueryKey() });
     setStore(new Map());
     setLoaded([]);
     setFetchingCount(0);
