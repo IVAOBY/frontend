@@ -1,7 +1,12 @@
-import {
-  IvaoMetar,
-  IvaoTAF,
-} from '@ivaoby/common/types/data/internal/ivao-weather';
+interface IvaoMetar {
+  metar: string;
+  message: string;
+}
+
+interface IvaoTAF {
+  taf: string;
+  message: string;
+}
 
 export interface Airport {
   icao: string;
