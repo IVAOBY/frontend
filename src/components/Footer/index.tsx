@@ -3,6 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import discordIcon from '../../assets/icons/footer/discord.svg';
+import donateIcon from '../../assets/icons/footer/donate.png';
 import facebookIcon from '../../assets/icons/footer/facebook.svg';
 import instagramIcon from '../../assets/icons/footer/Instagram.svg';
 import telegramIcon from '../../assets/icons/footer/Telegram.svg';
@@ -76,6 +77,21 @@ const SocialIcon = ({
   </a>
 );
 
+const DonateButton = () => {
+  const { t } = useTranslation();
+  return (
+    <a
+      href="https://www.ivao.aero/hq/donate.asp"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="relative mx-2 inline-flex items-center justify-center gap-2 rounded-lg bg-atmos-700 px-3 py-2 text-[13px] font-medium leading-none !text-white no-underline transition hover:!text-white hover:opacity-90"
+    >
+      <img src={donateIcon} alt="" className="size-[18px]" />
+      {t('footer.donate')}
+    </a>
+  );
+};
+
 export const Footer = () => {
   const { t } = useTranslation();
   const currentYear = new Date().getUTCFullYear();
@@ -124,7 +140,7 @@ export const Footer = () => {
               ]}
             />
           </div>
-          <div className="hidden flex-col justify-center gap-3 lg:flex">
+          <div className="flex hidden flex-col gap-2 lg:flex">
             <div className="flex flex-row">
               <SocialIcon
                 href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
@@ -159,6 +175,7 @@ export const Footer = () => {
                 alt="Telegram"
               />
             </div>
+            <DonateButton />
           </div>
         </div>
         <hr className="my-6 border-gray-200 dark:border-gray-700" />

@@ -177,6 +177,7 @@ const enTranslations: { translations: Translations } = {
         ivao: 'IVAO Website',
         ivaofamily: 'IVAO Family',
       },
+      donate: 'Donate',
     },
     notif: {
       loading: {
