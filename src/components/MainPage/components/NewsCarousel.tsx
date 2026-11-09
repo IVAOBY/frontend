@@ -233,12 +233,14 @@ function NewsCard({
   item,
   slot,
   transition,
+  cardIndex,
   onSelect,
   onRead,
 }: {
   item: NewsEntity;
   slot: Slot;
   transition: string;
+  cardIndex: number;
   /** клик по неактивной карточке: сделать её активной */
   onSelect: () => void;
   /** клик по активной карточке: открыть новость */
@@ -274,6 +276,7 @@ function NewsCard({
       aria-hidden={!slot.interactive}
       role={slot.interactive ? 'button' : undefined}
       tabIndex={slot.active ? 0 : -1}
+      data-card-index={cardIndex}
       onClick={slot.active ? onRead : onSelect}
       onKeyDown={(e) => {
         if (slot.active && (e.key === 'Enter' || e.key === ' ')) {
@@ -411,12 +414,14 @@ export function NewsCarousel({
 
   /* ---- листание: свайп и перетаскивание мышью ---- */
   const startX = useRef<number | null>(null);
-  const dragged = useRef(false);
+  // setPointerCapture перенаправляет click на стейдж, поэтому target записываем
+  // в pointerdown (до захвата) и используем в pointerup для определения карточки
+  const tapTarget = useRef<Element | null>(null);
 
   const onPointerDown = (e: PointerEvent<HTMLDivElement>) => {
+    tapTarget.current = e.target as Element;
     e.currentTarget.setPointerCapture(e.pointerId);
     startX.current = e.clientX;
-    dragged.current = false;
     setPaused(true);
   };
 
@@ -427,11 +432,23 @@ export function NewsCarousel({
 
     if (Math.abs(dx) > SWIPE_PX) {
       go(active + (dx < 0 ? 1 : -1));
-      // click после жеста не должен ни открывать новость, ни переключать карточку
-      dragged.current = true;
-      setTimeout(() => {
-        dragged.current = false;
-      }, 0);
+      tapTarget.current = null;
+      return;
+    }
+
+    // тап без свайпа: открываем новость или выводим карточку вперёд
+    const target = tapTarget.current;
+    tapTarget.current = null;
+    const cardEl = target?.closest('[data-card-index]') as HTMLElement | null;
+    if (!cardEl) return;
+
+    const idx = parseInt(cardEl.dataset.cardIndex ?? '-1', 10);
+    if (idx < 0) return;
+
+    if (idx === active) {
+      onOpen(news[idx]);
+    } else {
+      go(idx);
     }
   };
 
@@ -483,6 +500,7 @@ export function NewsCarousel({
         onPointerUp={onPointerUp}
         onPointerCancel={() => {
           startX.current = null;
+          tapTarget.current = null;
         }}
         onWheel={onWheel}
       >
@@ -494,12 +512,9 @@ export function NewsCarousel({
               item={item}
               slot={getSlot(i - active, mode, count, size)}
               transition={transition}
-              onSelect={() => {
-                if (!dragged.current) go(i);
-              }}
-              onRead={() => {
-                if (!dragged.current) onOpen(item);
-              }}
+              cardIndex={i}
+              onSelect={() => go(i)}
+              onRead={() => onOpen(item)}
             />
           );
         })}
