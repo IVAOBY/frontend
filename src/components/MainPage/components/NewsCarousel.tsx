@@ -10,7 +10,7 @@ import type {
   WheelEvent,
 } from 'react';
 
-import { NewsEntity } from '../../../types/News';
+import { NewsEntity } from '../../../api/model/newsEntity';
 
 /* ---------- Настройки ---------- */
 const AUTOPLAY_MS = 6000;
