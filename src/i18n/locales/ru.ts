@@ -176,6 +176,7 @@ const ruTranslations: { translations: Translations } = {
                 ivao: 'Сайт IVAO',
                 ivaofamily: 'Семья IVAO',
             },
+            donate: 'Пожертвовать',
         },
         notif: {
             loading: {
