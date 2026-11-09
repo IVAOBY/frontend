@@ -241,10 +241,10 @@ function NewsCard({
   transition: string;
   /** клик по неактивной карточке: сделать её активной */
   onSelect: () => void;
-  /** клик по «Читать далее»: открыть новость */
+  /** клик по активной карточке: открыть новость */
   onRead: () => void;
 }) {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const lang = i18n.language;
 
   const title = useMemo(
@@ -272,9 +272,17 @@ function NewsCard({
   return (
     <div
       aria-hidden={!slot.interactive}
-      onClick={slot.active ? undefined : onSelect}
+      role={slot.interactive ? 'button' : undefined}
+      tabIndex={slot.active ? 0 : -1}
+      onClick={slot.active ? onRead : onSelect}
+      onKeyDown={(e) => {
+        if (slot.active && (e.key === 'Enter' || e.key === ' ')) {
+          e.preventDefault();
+          onRead();
+        }
+      }}
       style={style}
-      className={`${CARD_BOX} ${slot.active ? 'cursor-default' : 'cursor-pointer'}`}
+      className={`${CARD_BOX} cursor-pointer`}
     >
       {/* тень вынесена в отдельный слой: её прозрачность плавно меняется,
           а у спрятанных карточек тени нет, поэтому они не складываются в тёмное пятно */}
@@ -306,22 +314,6 @@ function NewsCard({
           <p className="line-clamp-3 break-words text-justify text-[3.5cqw] font-medium leading-[1.45] text-neutral-600">
             {description}
           </p>
-
-          {/* новость открывается только отсюда; у неактивной карточки кнопка
-              не ловит клики, и клик по ней просто выводит карточку вперёд */}
-          <button
-            type="button"
-            tabIndex={slot.active ? 0 : -1}
-            onClick={(e) => {
-              e.stopPropagation();
-              onRead();
-            }}
-            className={`mt-auto w-fit text-[3cqw] font-medium text-neutral-400 transition-colors hover:text-atmos-700 ${
-              slot.active ? '' : 'pointer-events-none'
-            }`}
-          >
-            {t('news.readMore', 'Читать далее...')}
-          </button>
         </div>
 
         {/* белая вуаль: карточка остаётся непрозрачной, но выглядит светлее */}
