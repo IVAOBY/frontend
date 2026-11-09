@@ -41,6 +41,7 @@ const enTranslations: { translations: Translations } = {
         ivao: 'IVAO website',
         tracker: 'Tracker',
         agenda: 'Agenda',
+        donate: 'Donate',
       },
       user: {
         login: 'Login',

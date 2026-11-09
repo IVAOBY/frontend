@@ -38,6 +38,7 @@ export interface Translations {
       ivao: string;
       tracker: string;
       agenda: string;
+      donate: string;
     };
     user: {
       login: string;
