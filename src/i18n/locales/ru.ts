@@ -40,6 +40,7 @@ const ruTranslations: { translations: Translations } = {
                 webeye: 'WebEye',
                 ivao: 'Сайт IVAO',
                 tracker: 'Трекер',
+                donate: 'Пожертвовать',
             },
             user: {
                 login: 'Войти',

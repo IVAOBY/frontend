@@ -37,6 +37,7 @@ export interface Translations {
       webeye: string;
       ivao: string;
       tracker: string;
+      donate: string;
     };
     user: {
       login: string;

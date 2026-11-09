@@ -40,6 +40,7 @@ const beTranslations: { translations: Translations } = {
                 webeye: 'WebEye',
                 ivao: 'Сайт IVAO',
                 tracker: 'Трэкер',
+                donate: 'Дабрачэмаць',
             },
             user: {
                 login: 'Увайсці',
