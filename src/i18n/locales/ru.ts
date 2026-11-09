@@ -41,6 +41,7 @@ const ruTranslations: { translations: Translations } = {
         ivao: 'Сайт IVAO',
         tracker: 'Трекер',
         agenda: 'Календарь событий',
+        donate: 'Пожертвовать',
       },
       user: {
         login: 'Войти',

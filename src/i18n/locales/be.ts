@@ -41,6 +41,7 @@ const beTranslations: { translations: Translations } = {
         ivao: 'Сайт IVAO',
         tracker: 'Трэкер',
         agenda: 'Каляндар падзей',
+        donate: 'Дабрачэмаць',
       },
       user: {
         login: 'Увайсці',
