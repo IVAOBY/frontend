@@ -177,6 +177,7 @@ const beTranslations: { translations: Translations } = {
         ivao: 'Сайт IVAO',
         ivaofamily: "Сям'я IVAO",
       },
+      donate: 'Дабрачэмаць',
     },
     notif: {
       loading: {
