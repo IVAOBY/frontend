@@ -138,6 +138,7 @@ export interface Translations {
       ivao: string;
       ivaofamily: string;
     };
+    donate: string;
   };
   breadcrumb: {
     title: string;
