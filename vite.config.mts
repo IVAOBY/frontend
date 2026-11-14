@@ -18,10 +18,29 @@ const buildCommitMarker = () => ({
     },
 });
 
+// Имя файла ассета включает коммит. Content-hash считается до вставки
+// маркера, поэтому две сборки одного и того же дерева делят один URL
+// (assets/index-<hash>.js) — и кэш CDN продолжает отдавать старый бандл
+// под тем же именем, хотя на диске уже новая сборка. С коммитом в имени
+// каждый деплой получает уникальный URL: кеш промахивается, клиент
+// получает свежий бандл, а имя всегда согласовано с маркером.
+// Суффикс остаётся в [A-Za-z0-9_-]: scripts/deploy.sh ищет ассет как
+// /assets/index-[A-Za-z0-9_-]*\.js.
+const assetNamePattern = '[name]-[hash]-' + buildCommit;
+
 export default defineConfig({
     // depending on your application, base can also be "/"
     base: '/',
     plugins: [react(), viteTsconfigPaths(), buildCommitMarker()],
+    build: {
+        rollupOptions: {
+            output: {
+                entryFileNames: `assets/${assetNamePattern}.js`,
+                chunkFileNames: `assets/${assetNamePattern}.js`,
+                assetFileNames: `assets/${assetNamePattern}[extname]`,
+            },
+        },
+    },
     server: {
         // this ensures that the browser opens upon server start
         open: true,
