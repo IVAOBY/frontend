@@ -1,3 +1,4 @@
+import DOMPurify from 'dompurify';
 import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
@@ -36,7 +37,9 @@ export function DocumentView() {
               <div className="rounded-[25px] bg-white px-[32px] py-[41px] shadow-md">
                 <div
                   dangerouslySetInnerHTML={{
-                    __html: data.content[i18n.language] || '',
+                    __html: DOMPurify.sanitize(
+                      data.content[i18n.language] || '',
+                    ),
                   }}
                   className="text-[#494949]"
                 ></div>

@@ -37,6 +37,7 @@ export interface Translations {
       webeye: string;
       ivao: string;
       tracker: string;
+      agenda: string;
       donate: string;
     };
     user: {
@@ -110,19 +111,19 @@ export interface Translations {
       title: string;
       submitButton: string;
       unlimited: string;
-    }
+    };
     editor: {
       title: string;
       submitButton: string;
       cancelButton: string;
-    }
+    };
     revoker: {
       title: string;
       description: string;
       revokeButton: string;
       cancelButton: string;
       holdHint: string;
-    }
+    };
   };
   footer: {
     copyrightMessage: string;
@@ -224,7 +225,7 @@ export interface Translations {
     hidden: {
       tag: string;
       description: string;
-    }
+    };
   };
   airports: {
     main: {
@@ -253,6 +254,25 @@ export interface Translations {
     helpTitle: string;
     helpText: string;
     helpButton: string;
+  };
+  agenda: {
+    title: string;
+    all: string;
+    more: string;
+    empty: string;
+    emptyUpcoming: string;
+    emptyMonth: string;
+    upcoming: string;
+    today: string;
+    prevMonth: string;
+    nextMonth: string;
+    colors: string;
+    types: {
+      event: string;
+      training: string;
+      exam: string;
+      maintenance: string;
+    };
   };
   FAQ: {
     page: {

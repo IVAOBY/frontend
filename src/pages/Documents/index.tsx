@@ -1,12 +1,13 @@
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
+import type { Documents } from '../../api/model';
+
 import { BreadcrumbLayout, Centered } from '../../components/Layout';
 import { Loader } from '../../components/Loader';
 import { Notification } from '../../components/Notification/Notification';
 import { H3 } from '../../components/Typography/H3';
 import { useCategory } from '../../hooks/query/useDocuments';
-import { DocumentsType } from '../../types/Documents';
 
 export function DocumentsMain() {
   const { t, i18n } = useTranslation();
@@ -14,7 +15,7 @@ export function DocumentsMain() {
   const { data, isLoading, isError, error } = useCategory();
 
   const navigate = useNavigate();
-  const documentsRedirect = (documentsItem: DocumentsType) => {
+  const documentsRedirect = (documentsItem: Documents) => {
     navigate(`/documents/${documentsItem.id}`);
   };
 
@@ -46,7 +47,7 @@ export function DocumentsMain() {
                   .map((document) => (
                     <div
                       key={document.id}
-                      className="hover:-scale-10 flex max-w-[287px] cursor-pointer flex-col rounded-xl bg-white p-4 shadow-lg duration-300 hover:-translate-y-1 hover:bg-gray-50"
+                      className="squircle-2xl shadow-figma flex max-w-[287px] cursor-pointer flex-col bg-white p-4 duration-300 hover:-translate-y-1 hover:bg-gray-50"
                       onClick={() => documentsRedirect(document)}
                     >
                       <p className="text-2xl font-bold text-black">

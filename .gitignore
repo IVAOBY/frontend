@@ -12,6 +12,11 @@
 
 # production
 /dist
+/dist-staging
+
+# деплой: логи скрипта scripts/deploy.sh и файл с секретом уведомлений
+/logs
+.deploy-notify.env
 
 # misc
 .DS_Store
@@ -30,3 +35,6 @@ yarn.lock
 package-lock.json
 
 .npmrc
+
+# локальный кэш состояния установки yarn (перезаписывается на каждой машине)
+.yarn/install-state.gz

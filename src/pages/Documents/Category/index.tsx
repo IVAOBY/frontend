@@ -1,11 +1,12 @@
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import type { Documents } from '../../../api/model';
+
 import { BreadcrumbLayout, Centered } from '../../../components/Layout';
 import { Loader } from '../../../components/Loader';
 import { Notification } from '../../../components/Notification/Notification';
 import { useCategoryId } from '../../../hooks/query/useDocuments';
-import { DocumentsType } from '../../../types/Documents';
 
 export function DocumentsCategory() {
   const { t, i18n } = useTranslation();
@@ -13,7 +14,7 @@ export function DocumentsCategory() {
   const { data, isLoading, isError, error } = useCategoryId(id);
 
   const navigate = useNavigate();
-  const documentsRedirect = (documentsItem: DocumentsType) => {
+  const documentsRedirect = (documentsItem: Documents) => {
     navigate(`/documents/${documentsItem.id}`);
   };
 
@@ -59,12 +60,11 @@ export function DocumentsCategory() {
               ))}
           </div>
         ) : (
-            <div className="mt-0 text-base leading-5 text-neutral-400 md:text-xl">
-              {t('documents.error.nodoc')}
-            </div>
-          )
-        )
-        )}
+          <div className="mt-0 text-base leading-5 text-neutral-400 md:text-xl">
+            {t('documents.error.nodoc')}
+          </div>
+        ))
+      )}
     </BreadcrumbLayout>
   );
 }

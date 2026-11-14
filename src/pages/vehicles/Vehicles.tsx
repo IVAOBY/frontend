@@ -1,13 +1,18 @@
 import { useContext, useEffect, useMemo, useState } from 'react';
+
 import { IconCopy, IconPlus, IconX } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 
 import { BreadcrumbLayout, Centered } from '../../components/Layout';
 import { Loader } from '../../components/Loader';
-import { useMe } from '../../hooks/query/useMe'
 import { Notification } from '../../components/Notification/Notification';
 import { AuthContext } from '../../context/UserContext';
-import { useCreateVehiclePermission, useRevokeVehiclePermission, useVehicles } from '../../hooks/query/useVehicles';
+import { useMe } from '../../hooks/query/useMe';
+import {
+  useCreateVehiclePermission,
+  useRevokeVehiclePermission,
+  useVehicles,
+} from '../../hooks/query/useVehicles';
 
 const ALLOWED_DEPARTMENTS = ['AO', 'TA', 'WD', 'HQ'] as const;
 const HOLD_DURATION = 1200;
@@ -15,15 +20,15 @@ const HOLD_DURATION = 1200;
 /* ---------- utils ---------- */
 
 function canUseVehiclesAdmin(me: any): boolean {
-  if (!me?.staffPositions) return false
+  if (!me?.staffPositions) return false;
 
   const departments = me.staffPositions.map(
-    (sp: any) => sp.staffDepartment?.id
-  )
+    (sp: any) => sp.staffDepartment?.id,
+  );
 
   return departments.some((dep: string) =>
-    ALLOWED_DEPARTMENTS.includes(dep as any)
-  )
+    ALLOWED_DEPARTMENTS.includes(dep as any),
+  );
 }
 
 const formatDate = (value: Date | string | null | undefined) => {
@@ -52,9 +57,9 @@ const copyToClipboard = async (text: string) => {
 export function VehiclesPage() {
   const { t } = useTranslation();
   const { signed } = useContext(AuthContext);
-  const { data: me, isLoading: isLoadingMe } = useMe()
+  const { data: me, isLoading: isLoadingMe } = useMe();
 
-  const canAdmin = signed && !!me && canUseVehiclesAdmin(me)
+  const canAdmin = signed && !!me && canUseVehiclesAdmin(me);
   const [adminMode, setAdminMode] = useState(false);
   const effectiveAdminMode = canAdmin && adminMode;
 
@@ -74,8 +79,12 @@ export function VehiclesPage() {
   const [holdTimer, setHoldTimer] = useState<number | null>(null);
 
   /* ---------- data ---------- */
-  const { data: vehicles, isLoading, isError, error } =
-    useVehicles(effectiveAdminMode);
+  const {
+    data: vehicles,
+    isLoading,
+    isError,
+    error,
+  } = useVehicles(effectiveAdminMode);
 
   const createMutation = useCreateVehiclePermission();
   const revokeMutation = useRevokeVehiclePermission();
@@ -146,16 +155,19 @@ export function VehiclesPage() {
         clearInterval(timer);
         setHoldTimer(null);
 
-        revokeMutation.mutate(revokeTargetId, {
-          onSuccess: () => {
-            closeRevoke();
+        revokeMutation.mutate(
+          { data: { id: revokeTargetId } },
+          {
+            onSuccess: () => {
+              closeRevoke();
+            },
+            onError: () => {
+              // оставляем окно открытым и показываем подсказку
+              setHoldHint(true);
+              setHoldProgress(0);
+            },
           },
-          onError: () => {
-            // оставляем окно открытым и показываем подсказку
-            setHoldHint(true);
-            setHoldProgress(0);
-          },
-        });
+        );
       }
     }, 16);
 
@@ -179,17 +191,18 @@ export function VehiclesPage() {
 
     createMutation.mutate(
       {
-        vid: Number(newVid),
-        validFrom: newValidFrom,
-        validUntil: isUnlimited ? null : newValidUntil || null,
-        issueReason: newReason || null,
+        data: {
+          vid: Number(newVid),
+          validFrom: newValidFrom,
+          validUntil: isUnlimited ? undefined : newValidUntil || undefined,
+          issueReason: newReason || undefined,
+        },
       },
       {
         onSuccess: () => {
           closeCreate();
         },
-        onError: () => {
-        },
+        onError: () => {},
       },
     );
   };
@@ -253,58 +266,62 @@ export function VehiclesPage() {
       {!vehicles || vehicles.length === 0 ? (
         <div className="mt-6 text-neutral-500">{t('vehicles.empty')}</div>
       ) : (
-        <div className="mt-6 overflow-x-auto rounded-2xl bg-white shadow text-neutral-900">
+        <div className="mt-6 overflow-x-auto rounded-2xl bg-white text-neutral-900 shadow">
           <table className="w-full border-collapse text-sm">
             <thead className="bg-gray-100 text-neutral-800">
-            <tr>
-              <th className={`px-4 py-3 ${!effectiveAdminMode && 'hidden'}`}>
-                ID
-              </th>
-              <th className="px-4 py-3">VID</th>
-              <th className="px-4 py-3">{t('vehicles.validFrom')}</th>
-              <th className="px-4 py-3">{t('vehicles.validUntil')}</th>
-              <th className="px-4 py-3">{t('vehicles.status')}</th>
-              <th className={`px-4 py-3 ${!effectiveAdminMode && 'hidden'}`}>
-                {t('vehicles.issuedBy')}
-              </th>
-              <th className={`px-4 py-3 ${!effectiveAdminMode && 'hidden'}`}>
-                {t('vehicles.issueReason')}
-              </th>
-              <th className={`px-4 py-3 ${!effectiveAdminMode && 'hidden'}`}>
-                {t('vehicles.revokedAt')}
-              </th>
-              <th className={`px-4 py-3 ${!effectiveAdminMode && 'hidden'}`}>
-                {t('vehicles.revokedBy')}
-              </th>
-              <th className={`px-4 py-3 text-right ${!effectiveAdminMode && 'hidden'}`}>
-                {t('vehicles.actions')}
-              </th>
-            </tr>
+              <tr>
+                <th className={`px-4 py-3 ${!effectiveAdminMode && 'hidden'}`}>
+                  ID
+                </th>
+                <th className="px-4 py-3">VID</th>
+                <th className="px-4 py-3">{t('vehicles.validFrom')}</th>
+                <th className="px-4 py-3">{t('vehicles.validUntil')}</th>
+                <th className="px-4 py-3">{t('vehicles.status')}</th>
+                <th className={`px-4 py-3 ${!effectiveAdminMode && 'hidden'}`}>
+                  {t('vehicles.issuedBy')}
+                </th>
+                <th className={`px-4 py-3 ${!effectiveAdminMode && 'hidden'}`}>
+                  {t('vehicles.issueReason')}
+                </th>
+                <th className={`px-4 py-3 ${!effectiveAdminMode && 'hidden'}`}>
+                  {t('vehicles.revokedAt')}
+                </th>
+                <th className={`px-4 py-3 ${!effectiveAdminMode && 'hidden'}`}>
+                  {t('vehicles.revokedBy')}
+                </th>
+                <th
+                  className={`px-4 py-3 text-right ${!effectiveAdminMode && 'hidden'}`}
+                >
+                  {t('vehicles.actions')}
+                </th>
+              </tr>
             </thead>
 
             <tbody>
-            {vehicles.map((p) => (
-              <tr
-                key={p.id}
-                className={`border-t ${
-                  p.status === 'inactive'
-                    ? 'bg-gray-100'
-                    : p.status === 'revoked'
-                      ? 'bg-red-50'
-                      : ''
-                }`}
-              >
-                <td className={`px-4 py-3 text-center ${!effectiveAdminMode && 'hidden'}`}>
-                  <button
-                    onClick={() => copyToClipboard(p.id)}
-                    className="rounded p-1 text-neutral-600 hover:bg-gray-200"
-                    title={t('common.copy')}
+              {vehicles.map((p) => (
+                <tr
+                  key={p.id}
+                  className={`border-t ${
+                    p.status === 'inactive'
+                      ? 'bg-gray-100'
+                      : p.status === 'revoked'
+                        ? 'bg-red-50'
+                        : ''
+                  }`}
+                >
+                  <td
+                    className={`px-4 py-3 text-center ${!effectiveAdminMode && 'hidden'}`}
                   >
-                    <IconCopy size={14} />
-                  </button>
-                </td>
+                    <button
+                      onClick={() => copyToClipboard(p.id)}
+                      className="rounded p-1 text-neutral-600 hover:bg-gray-200"
+                      title={t('common.copy')}
+                    >
+                      <IconCopy size={14} />
+                    </button>
+                  </td>
 
-                <td className="px-4 py-3">
+                  <td className="px-4 py-3">
                     <a
                       href={`https://ivao.aero/Member.aspx?Id=${p.vid}`}
                       target="_blank"
@@ -313,83 +330,92 @@ export function VehiclesPage() {
                     >
                       {p.vid}
                     </a>
-                </td>
+                  </td>
 
-                <td className="px-4 py-3">{formatDate(p.validFrom)}</td>
+                  <td className="px-4 py-3">{formatDate(p.validFrom)}</td>
 
-                <td className="px-4 py-3">
-                  {p.validUntil ? formatDate(p.validUntil) : t('vehicles.unlimited')}
-                </td>
+                  <td className="px-4 py-3">
+                    {p.validUntil
+                      ? formatDate(p.validUntil)
+                      : t('vehicles.unlimited')}
+                  </td>
 
-                <td className="px-4 py-3">
-                  {p.status === 'active' && (
-
-                    <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-800">
+                  <td className="px-4 py-3">
+                    {p.status === 'active' && (
+                      <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-800">
                         {t('vehicles.active')}
                       </span>
-                  )}
-                  {p.status === 'inactive' && (
-                    <span className="rounded-full bg-gray-200 px-3 py-1 text-xs font-semibold text-gray-700">
+                    )}
+                    {p.status === 'inactive' && (
+                      <span className="rounded-full bg-gray-200 px-3 py-1 text-xs font-semibold text-gray-700">
                         {t('vehicles.inactive')}
                       </span>
-                  )}
-                  {p.status === 'revoked' && (
-                    <span className="rounded-full bg-red-100 px-3 py-1 text-xs font-semibold text-red-700">
+                    )}
+                    {p.status === 'revoked' && (
+                      <span className="rounded-full bg-red-100 px-3 py-1 text-xs font-semibold text-red-700">
                         {t('vehicles.revoked')}
                       </span>
-                  )}
-                </td>
+                    )}
+                  </td>
 
-
-                <td className={`px-4 py-3 ${!effectiveAdminMode && 'hidden'}`}>
-                  <a
-                    href={`https://ivao.aero/Member.aspx?Id=${p.issuedByVid}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-600 hover:underline"
+                  <td
+                    className={`px-4 py-3 ${!effectiveAdminMode && 'hidden'}`}
                   >
-                    {p.issuedByVid}
-                  </a>
-                </td>
-
-                <td className={`px-4 py-3 max-w-xs truncate ${!effectiveAdminMode && 'hidden'}`}>
-                  {p.issueReason ?? '—'}
-                </td>
-
-                <td className={`px-4 py-3 ${!effectiveAdminMode && 'hidden'}`}>
-                  {formatDate(p.revokedAt)}
-                </td>
-
-                <td className={`px-4 py-3 ${!effectiveAdminMode && 'hidden'}`}>
-                  {p.revokedByVid ? (
                     <a
-                      href={`https://ivao.aero/Member.aspx?Id=${p.revokedByVid}`}
+                      href={`https://ivao.aero/Member.aspx?Id=${p.issuedByVid}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-blue-600 hover:underline"
                     >
-                      {p.revokedByVid}
+                      {p.issuedByVid}
                     </a>
-                  ) : (
-                    '—'
-                  )}
-                </td>
+                  </td>
 
-                <td className={`px-4 py-3 text-right ${!effectiveAdminMode && 'hidden'}`}>
-                  {p.status === 'active' && (
-                    <button
-                      className="rounded-lg p-1.5 text-red-700 hover:bg-red-100 disabled:opacity-50"
-                      onClick={() => setRevokeTargetId(p.id)}
-                      disabled={revokeMutation.isPending}
-                      title={t('common.revoke')}
-                    >
-                      <IconX size={18} />
-                    </button>
-                  )}
-                </td>
+                  <td
+                    className={`max-w-xs truncate px-4 py-3 ${!effectiveAdminMode && 'hidden'}`}
+                  >
+                    {p.issueReason ?? '—'}
+                  </td>
 
-              </tr>
-            ))}
+                  <td
+                    className={`px-4 py-3 ${!effectiveAdminMode && 'hidden'}`}
+                  >
+                    {formatDate(p.revokedAt)}
+                  </td>
+
+                  <td
+                    className={`px-4 py-3 ${!effectiveAdminMode && 'hidden'}`}
+                  >
+                    {p.revokedByVid ? (
+                      <a
+                        href={`https://ivao.aero/Member.aspx?Id=${p.revokedByVid}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:underline"
+                      >
+                        {p.revokedByVid}
+                      </a>
+                    ) : (
+                      '—'
+                    )}
+                  </td>
+
+                  <td
+                    className={`px-4 py-3 text-right ${!effectiveAdminMode && 'hidden'}`}
+                  >
+                    {p.status === 'active' && (
+                      <button
+                        className="rounded-lg p-1.5 text-red-700 hover:bg-red-100 disabled:opacity-50"
+                        onClick={() => setRevokeTargetId(p.id)}
+                        disabled={revokeMutation.isPending}
+                        title={t('common.revoke')}
+                      >
+                        <IconX size={18} />
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
@@ -402,7 +428,7 @@ export function VehiclesPage() {
           onClick={closeCreate}
         >
           <div
-            className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl text-neutral-900"
+            className="w-full max-w-lg rounded-2xl bg-white p-6 text-neutral-900 shadow-xl"
             onClick={(e) => e.stopPropagation()}
           >
             <h3 className="text-xl font-semibold text-black">
@@ -500,7 +526,7 @@ export function VehiclesPage() {
           onClick={closeRevoke}
         >
           <div
-            className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl text-neutral-900"
+            className="w-full max-w-md rounded-2xl bg-white p-6 text-neutral-900 shadow-xl"
             onClick={(e) => e.stopPropagation()}
           >
             <h3 className="text-xl font-semibold text-black">
@@ -526,7 +552,7 @@ export function VehiclesPage() {
                   style={{ width: `${holdProgress * 100}%` }}
                 />
                 <button
-                  className="relative z-10 w-full px-4 py-2 text-sm font-semibold text-white select-none disabled:opacity-60"
+                  className="relative z-10 w-full select-none px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
                   disabled={revokeMutation.isPending}
                   onMouseDown={startHold}
                   onMouseUp={stopHold}

@@ -35,7 +35,7 @@ export function Tooltip({ children, content, position = 'top' }: TooltipProps) {
         <div
           className={classNames(
             tooltipStyles[position],
-            'z-10 min-w-[200px] rounded-lg bg-black px-3 py-2 text-white font-semibold text-sm shadow-xl transition-opacity opacity-100',
+            'z-10 min-w-[200px] rounded-lg bg-black px-3 py-2 text-sm font-semibold text-white opacity-100 shadow-xl transition-opacity',
           )}
         >
           {content}

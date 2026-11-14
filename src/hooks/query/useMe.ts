@@ -1,15 +1,16 @@
-import { useQuery } from '@tanstack/react-query';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import Http from '../../utils/Http';
-import { Me } from '../../types/Me';
+import type { User } from '../../api/model';
 
-export const getMe = async (): Promise<Me | null> => {
+import { authLogout } from '../../api/authentication/authentication';
+import {
+  getUsersGetMyProfileQueryKey,
+  usersGetMyProfile,
+} from '../../api/users/users';
+
+const getMe = async (): Promise<User | null> => {
   try {
-    return await Http<Me>({
-      method: 'GET',
-      url: '/users/me',
-    });
+    return await usersGetMyProfile();
   } catch (error) {
     if (error?.response?.status === 401 || error?.response?.status === 403) {
       return null;
@@ -20,7 +21,7 @@ export const getMe = async (): Promise<Me | null> => {
 
 export const useMe = () => {
   return useQuery({
-    queryKey: ['me'],
+    queryKey: getUsersGetMyProfileQueryKey(),
     queryFn: getMe,
     retry: false,
     staleTime: 0,
@@ -29,21 +30,13 @@ export const useMe = () => {
   });
 };
 
-export const logout = async () => {
-  return Http({
-    method: 'POST',
-    url: '/auth/logout',
-    withCredentials: true,
-  });
-};
-
 export const useLogout = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: logout,
+    mutationFn: () => authLogout({ goto: window.location.href }),
     onSuccess: () => {
-      queryClient.removeQueries({ queryKey: ['me'] });
+      queryClient.removeQueries({ queryKey: getUsersGetMyProfileQueryKey() });
     },
   });
 };

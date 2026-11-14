@@ -14,15 +14,20 @@ import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
+import type {
+  BookingEntity,
+  EventAtcPositions,
+  PartsEntity,
+} from '../../../api/model';
+
 import { Notification } from '../../../components/Notification/Notification';
 import { AuthContext } from '../../../context/UserContext';
-import { useMe } from '../../../hooks/query/useMe';
 import {
   useBookEvent,
   useUnbookEvent,
 } from '../../../hooks/query/useBookingMutations';
 import { useEventParts } from '../../../hooks/query/useEvents';
-import { BookingEntity, EventAtcPositions, PartsEntity } from '../../../types/Events';
+import { useMe } from '../../../hooks/query/useMe';
 
 const positionIcons = {
   ground: <IconCar size={41} />,
@@ -92,8 +97,8 @@ export function ShiftComponent() {
   const { data: me, isLoading: isLoadingMe } = useMe();
   const { data, error, isError, isLoading } = useEventParts(id);
 
-  const { mutate: bookEvent } = useBookEvent();
-  const { mutate: unbookEvent } = useUnbookEvent();
+  const { mutate: bookEvent } = useBookEvent(Number(id));
+  const { mutate: unbookEvent } = useUnbookEvent(Number(id));
 
   const userId = toNumber(me?.id);
   const userRating = normalizeAtcRating(me?.ratings?.atc);
@@ -121,7 +126,8 @@ export function ShiftComponent() {
 
     const bookingCallsign =
       bookingPosition?.position?.callsign?.toLowerCase() ?? '';
-    const eventCallsign = eventPosition?.position?.callsign?.toLowerCase() ?? '';
+    const eventCallsign =
+      eventPosition?.position?.callsign?.toLowerCase() ?? '';
     return !!bookingCallsign && bookingCallsign === eventCallsign;
   };
 
@@ -160,9 +166,11 @@ export function ShiftComponent() {
       const part = data.find((p) => p.id === partId);
       if (part) {
         bookEvent({
-          atcPositionId,
-          eventId: part.eventId,
-          eventPartId: part.id,
+          data: {
+            atcPositionId,
+            eventId: part.eventId,
+            eventPartId: part.id,
+          },
         });
       }
     }
@@ -170,7 +178,7 @@ export function ShiftComponent() {
 
   const handleUnbook = (bookingId: number) => {
     if (signed) {
-      unbookEvent(bookingId);
+      unbookEvent({ id: bookingId });
     }
   };
 
@@ -229,7 +237,6 @@ export function ShiftComponent() {
                   hour: '2-digit',
                   minute: '2-digit',
                 })}`}
-                z
                 {` – ${new Date(part.endDate).toLocaleTimeString('eu', {
                   timeZone: 'UTC',
                   hour12: false,
@@ -293,12 +300,15 @@ export function ShiftComponent() {
                     const positionFra = normalizeAtcRating(
                       position.position.fra,
                     );
-                    const canBook = hasSufficientRating(userRating, positionFra);
+                    const canBook = hasSufficientRating(
+                      userRating,
+                      positionFra,
+                    );
 
                     return (
                       <div
                         key={position.id}
-                        className="flex w-[300px] flex-col rounded-2xl bg-white p-[19px] shadow-lg"
+                        className="squircle-3xl shadow-figma flex w-[363px] flex-col bg-white p-[19px]"
                       >
                         <div
                           className={
@@ -306,7 +316,7 @@ export function ShiftComponent() {
                           }
                         >
                           <div
-                            className={`flex size-14 items-center justify-center rounded-2xl ${positionColors[type]}`}
+                            className={`squircle-2xl flex size-14 items-center justify-center ${positionColors[type]}`}
                           >
                             {positionIcons[type]}
                           </div>
@@ -388,14 +398,14 @@ export function ShiftComponent() {
                                     }
                                   }
                                 }}
-                                className={`leading-16 flex gap-3 rounded-xl px-1.5 pr-3 text-lg font-semibold text-white backdrop-blur-[5px] transition duration-500 ${
+                                className={`flex gap-1.5 self-start whitespace-nowrap rounded-xl px-1.5 py-1 pr-3 text-lg font-semibold leading-4 text-white backdrop-blur-[5px] transition duration-300 ${
                                   !userHasBooking ||
                                   new Date() > new Date(part.endDate)
-                                    ? 'cursor-not-allowed bg-gray-500'
+                                    ? 'cursor-not-allowed bg-gray-300'
                                     : 'bg-[#E93434] hover:cursor-pointer hover:opacity-80'
                                 }`}
                               >
-                                <IconSquareRoundedMinus className="ml-1.5 mt-0.5" />
+                                <IconSquareRoundedMinus />
                                 <div className="my-auto flex-auto">
                                   {t('events.booking.unbook')}
                                 </div>
@@ -411,20 +421,20 @@ export function ShiftComponent() {
                                     handleBookClick(part.id, position);
                                   }
                                 }}
-                                className={`leading-16 flex gap-1.5 rounded-xl px-1.5 pr-3 text-lg font-semibold text-white backdrop-blur-[5px] transition duration-500 ${
+                                className={`flex gap-1.5 self-start whitespace-nowrap rounded-xl px-1.5 py-1 pr-3 text-lg font-semibold leading-4 text-white backdrop-blur-[5px] transition duration-300 ${
                                   !canBook ||
                                   acceptedByOther ||
                                   new Date() > new Date(part.endDate)
-                                    ? 'cursor-not-allowed bg-gray-500'
-                                    : 'bg-atmos-700 hover:cursor-pointer hover:opacity-80'
+                                    ? 'cursor-not-allowed bg-gray-300'
+                                    : 'hover:opacity-t80 bg-atmos-700 hover:cursor-pointer'
                                 }`}
                               >
                                 {!canBook ||
                                 acceptedByOther ||
                                 new Date() > new Date(part.endDate) ? (
-                                  <IconSquareRoundedX className="ml-1.5 mt-0.5" />
+                                  <IconSquareRoundedX />
                                 ) : (
-                                  <IconSquareRoundedPlus className="ml-1.5 mt-0.5" />
+                                  <IconSquareRoundedPlus />
                                 )}
                                 <div className="my-auto flex-auto">
                                   {t('events.booking.book')}

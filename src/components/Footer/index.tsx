@@ -84,7 +84,7 @@ const DonateButton = () => {
       href="https://www.ivao.aero/hq/donate.asp"
       target="_blank"
       rel="noopener noreferrer"
-      className="bg-atmos-700 relative mx-2 inline-flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-[13px] leading-none font-medium !text-white no-underline transition hover:!text-white hover:opacity-90"
+      className="relative mx-2 inline-flex items-center justify-center gap-2 rounded-lg bg-atmos-700 px-3 py-2 text-[13px] font-medium leading-none !text-white no-underline transition hover:!text-white hover:opacity-90"
     >
       <img src={donateIcon} alt="" className="size-[18px]" />
       {t('footer.donate')}

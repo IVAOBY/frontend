@@ -1,10 +1,23 @@
-import React, { useCallback, useContext, useEffect, useState, useMemo } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 
-import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react';
+import {
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+  Transition,
+} from '@headlessui/react';
 import {
   IconAirTrafficControl,
   IconArticle,
   IconBook,
+  IconCalendarWeek,
   IconCar,
   IconEye,
   IconFileInfo,
@@ -150,6 +163,11 @@ const categories = [
     icon: <IconUsersGroup size={20} />,
     links: [
       {
+        href: '/agenda',
+        label: 'navbar.community.agenda',
+        icon: <IconCalendarWeek size={20} />,
+      },
+      {
         href: '/documents',
         label: 'navbar.atc.docs',
         icon: <IconArticle size={20} />,
@@ -232,10 +250,13 @@ export function HeaderResponsive() {
     window.scrollTo(0, 0);
   }, [navigate]);
 
-  const changeLanguage = useCallback((newLanguage: string) => {
-    void i18n.changeLanguage(newLanguage);
-    localStorage.setItem(STORAGE_KEYS.LANGUAGE, newLanguage);
-  }, [i18n]);
+  const changeLanguage = useCallback(
+    (newLanguage: string) => {
+      void i18n.changeLanguage(newLanguage);
+      localStorage.setItem(STORAGE_KEYS.LANGUAGE, newLanguage);
+    },
+    [i18n],
+  );
 
   const handleAuthAction = useCallback(() => {
     if (!signed) {

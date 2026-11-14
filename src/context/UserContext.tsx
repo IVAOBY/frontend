@@ -1,13 +1,15 @@
 import React, { createContext, useCallback, useMemo } from 'react';
+
 import { useLocation, useNavigate } from 'react-router-dom';
+
+import type { User } from '../api/model';
 
 import { getAuthLoginUrl } from '../constants/app';
 import { useLogout, useMe } from '../hooks/query/useMe';
-import { Me } from '../types/Me';
 
 interface AuthContextType {
   signed: boolean;
-  user: Me | null;
+  user: User | null;
   isLoading: boolean;
   signIn: () => void;
   signOut: () => void;
@@ -52,7 +54,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       signIn,
       signOut,
     }),
-    [signed, user, isLoading, signIn, signOut]
+    [signed, user, isLoading, signIn, signOut],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useContext, useMemo } from 'react';
+import React, { lazy, Suspense, useContext } from 'react';
 
 import { AppShell, MantineProvider } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
@@ -23,6 +23,16 @@ import { AirportPage } from './components/AirportPage/AirportPage';
 import { Centered } from './components/Layout';
 import { Loader } from './components/Loader';
 import ScrollToTop from './utils/ScrollToTop';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {},
+  },
+});
+
+const persister = createSyncStoragePersister({
+  storage: window.localStorage,
+});
 
 const MainPage = lazy(() =>
   import('./components/MainPage/MainPage').then((module) => ({
@@ -99,12 +109,17 @@ const GetInTouchSimple = lazy(() =>
     default: module.GetInTouchSimple,
   })),
 );
+const Agenda = lazy(() =>
+  import('./pages/agenda').then((module) => ({
+    default: module.Agenda,
+  })),
+);
 
 export default function App() {
   const CONTACT_US_ENABLED = 0;
   const PrivateRoute: React.FC<{ path: string; element: React.ReactNode }> = ({
-                                                                                element,
-                                                                              }) => {
+    element,
+  }) => {
     const { signed } = useContext(AuthContext);
     if (!signed) {
       window.location.href = getAuthLoginUrl();
@@ -118,24 +133,6 @@ export default function App() {
 
     return <>{element}</>;
   };
-
-  const queryClient = useMemo(
-    () =>
-      new QueryClient({
-        defaultOptions: {
-          queries: {},
-        },
-      }),
-    [],
-  );
-
-  const persister = useMemo(
-    () =>
-      createSyncStoragePersister({
-        storage: window.localStorage,
-      }),
-    [],
-  );
 
   return (
     <MantineProvider theme={ivaoTheme}>
@@ -172,6 +169,7 @@ export default function App() {
                     <Route path="/staff" element={<StaffPage />} />
                     <Route path="/vehicles" element={<VehiclesPage />} />
                     <Route path="/training" element={<Training />} />
+                    <Route path="/agenda" element={<Agenda />} />
 
                     {/* Документы */}
                     <Route path="/documents" element={<DocumentsMain />} />

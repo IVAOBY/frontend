@@ -62,16 +62,16 @@ export function AirportsPage() {
               .map((airport) => (
                 <div
                   key={airport.icao}
-                  className="flex flex-col rounded-xl font-semibold"
+                  className="flex flex-col rounded-2xl font-semibold"
                 >
                   {airport.airportTypeId === 1 && (
                     <img
-                      className="rounded-t-xl"
+                      className="squircle-t-2xl shadow-figma"
                       alt={airport.name}
                       src={`https://cdn.by.ivao.aero/images/airports/${airport.icao}.webp`}
                     />
                   )}
-                  <div className="flex w-full flex-col rounded-b-xl bg-white py-6 pl-6 pr-16 max-md:max-w-full max-md:px-5">
+                  <div className="squircle-b-2xl shadow-figma flex w-full flex-col bg-white py-6 pl-6 pr-16 max-md:max-w-full max-md:px-5">
                     <div className="flex gap-4 font-bold">
                       <div className="justify-center whitespace-nowrap rounded-xl bg-black px-4 py-2 text-center text-xl leading-4 tracking-tighter text-white">
                         {airport.icao}
@@ -84,7 +84,7 @@ export function AirportsPage() {
                       {airport.description}
                     </div>
                     <div
-                      className="mt-5 flex gap-1.5 self-start whitespace-nowrap rounded-xl bg-blue-900 px-1.5 py-1 text-xl leading-4 text-white hover:cursor-pointer"
+                      className="mt-5 flex gap-1.5 self-start whitespace-nowrap rounded-xl bg-atmos-700 px-1.5 py-1 pr-3 text-xl font-semibold leading-4 text-white backdrop-blur-[5px] transition duration-300 hover:scale-105 hover:cursor-pointer hover:opacity-90"
                       onClick={() => aboutAirport(airport.icao)}
                     >
                       <IconInfoSquareRounded />
@@ -126,9 +126,9 @@ export function AirportsPage() {
               .map((airport) => (
                 <div
                   key={airport.icao}
-                  className="flex flex-col rounded-xl font-semibold"
+                  className="squircle-2xl shadow-figma flex flex-col bg-white p-4 font-semibold max-md:max-w-full max-md:px-4"
                 >
-                  <div className="flex w-full flex-col rounded-xl bg-white p-4 max-md:max-w-full max-md:px-4">
+                  <div className="flex w-full flex-col">
                     <div className="flex gap-4 font-bold">
                       <div className="size-min justify-center whitespace-nowrap rounded-xl bg-black px-3 py-2 text-center text-lg leading-4 tracking-tighter text-white">
                         {airport.icao}
@@ -142,7 +142,7 @@ export function AirportsPage() {
                     </div>
                     <div
                       onClick={() => aboutAirport(airport.icao)}
-                      className="mt-3 flex gap-1.5 self-start whitespace-nowrap rounded-xl bg-blue-900 px-1.5 py-1 text-lg leading-4 text-white hover:cursor-pointer"
+                      className="mt-4 flex gap-1.5 self-start whitespace-nowrap rounded-xl bg-atmos-700 px-1.5 py-1 pr-3 text-lg font-semibold leading-4 text-white backdrop-blur-[5px] transition duration-300 hover:scale-105 hover:cursor-pointer hover:opacity-90"
                     >
                       <IconInfoSquareRounded />
                       <div className="mt-1 flex-auto">
@@ -183,11 +183,11 @@ export function AirportsPage() {
               .map((airport) => (
                 <div
                   key={airport.icao}
-                  className="flex flex-col rounded-3xl bg-zinc-900 font-semibold"
+                  className="flex flex-col rounded-2xl font-semibold"
                 >
-                  <div className="flex w-full flex-col rounded-xl bg-semantic-military-700 p-4 max-md:max-w-full max-md:px-4">
+                  <div className="squircle-2xl shadow-figma flex w-full flex-col bg-semantic-military-700 p-4 max-md:max-w-full max-md:px-4">
                     <div className="flex gap-4 font-bold">
-                      <div className="justify-center whitespace-nowrap rounded-xl border-2 px-3 py-2 text-center text-lg leading-4 tracking-tighter text-white">
+                      <div className="squircle-xl justify-center whitespace-nowrap border-2 px-3 py-2 text-center text-lg leading-4 tracking-tighter text-white">
                         {airport.icao}
                       </div>
                       <div className="my-auto flex-auto text-xl leading-7 text-white">
@@ -199,7 +199,7 @@ export function AirportsPage() {
                     </div>
                     <div
                       onClick={() => aboutAirport(airport.icao)}
-                      className="mt-3 flex gap-1.5 self-start whitespace-nowrap rounded-xl border-2 px-1.5 py-1 text-lg leading-4 text-white hover:cursor-pointer"
+                      className="squircle-xl mt-3 flex gap-1.5 self-start whitespace-nowrap border-2 px-1.5 py-1 text-lg leading-4 text-white transition duration-300 hover:scale-105 hover:cursor-pointer hover:bg-white/15"
                     >
                       <IconInfoSquareRounded />
                       <div className="mt-1 flex-auto">

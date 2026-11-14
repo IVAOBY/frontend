@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from 'react';
+import React, { lazy, Suspense } from 'react';
 
 import ReactDOM from 'react-dom/client';
 
@@ -17,7 +17,7 @@ const isSnowfallSeason = () => {
 
   return (
     (m === 11 && d >= 25) || // 25–31 декабря
-    (m === 0 && d <= 5)      // 1–5 января
+    (m === 0 && d <= 5) // 1–5 января
   );
 };
 
