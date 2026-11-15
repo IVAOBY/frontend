@@ -245,6 +245,9 @@ export interface Translations {
         airport: string;
       };
       sceneries: string;
+      weather: {
+        unavailable: string;
+      };
     };
   };
   Scenery: {
