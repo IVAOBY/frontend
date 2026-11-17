@@ -76,7 +76,7 @@ export function StaffPage() {
                       const imageSrc =
                         !hasUserId || isVacant
                           ? 'https://cdn.by.ivao.aero/images/staff/vacant.webp'
-                          : `https://cdn.by.ivao.aero/images/staff/${position.user!.id}.webp`;
+                          : `https://cdn.by.ivao.aero/images/staff/${position.user.id}.webp`;
 
                       return (
                         <div

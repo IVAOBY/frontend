@@ -74,7 +74,7 @@ export function Widgets() {
               </p>
               <img
                 src="https://cdn.by.ivao.aero/images/widget_charts.webp"
-                alt="Charts image"
+                alt="Charts"
                 className="rounded-l-b-2xl absolute left-0 top-[52px] z-10 mb-0 hidden h-[65%] w-full pb-0 duration-700 group-hover:-translate-x-2 group-hover:-translate-y-2 group-hover:-rotate-2 group-hover:scale-110 xl:-top-0 xl:block xl:size-full"
               />
             </div>

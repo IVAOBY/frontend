@@ -137,7 +137,7 @@ export function VehiclesPage() {
 
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [createOpen, revokeTargetId, holdTimer]);
+  }, [createOpen, revokeTargetId, holdTimer, closeCreate, closeRevoke]);
 
   /* ---------- revoke hold ---------- */
 
@@ -313,7 +313,7 @@ export function VehiclesPage() {
                     className={`px-4 py-3 text-center ${!effectiveAdminMode && 'hidden'}`}
                   >
                     <button
-                      onClick={() => copyToClipboard(p.id)}
+                      onClick={() => void copyToClipboard(p.id)}
                       className="rounded p-1 text-neutral-600 hover:bg-gray-200"
                       title={t('common.copy')}
                     >

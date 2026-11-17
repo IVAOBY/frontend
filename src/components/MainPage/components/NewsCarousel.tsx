@@ -306,7 +306,7 @@ function NewsCard({
         </div>
 
         <div className="flex aspect-video w-full shrink-0 flex-col gap-[1.8cqw] overflow-hidden p-[4.5cqw]">
-          <span className="w-fit rounded-lg bg-neutral-900 px-[3cqw] pb-[0.5cqw] pt-[0.6cqw] text-[3.2cqw] font-semibold leading-[1.5] text-white">
+          <span className="w-fit rounded-lg bg-neutral-900 px-[3cqw] pb-[0.5cqw] pt-[0.6cqw] text-[3.2cqw] font-semibold leading-normal text-white">
             {format(new Date(item.publishedAt), 'dd.MM.yyyy')}
           </span>
 
@@ -439,7 +439,7 @@ export function NewsCarousel({
     // тап без свайпа: открываем новость или выводим карточку вперёд
     const target = tapTarget.current;
     tapTarget.current = null;
-    const cardEl = target?.closest('[data-card-index]') as HTMLElement | null;
+    const cardEl = target?.closest<HTMLElement>('[data-card-index]');
     if (!cardEl) return;
 
     const idx = parseInt(cardEl.dataset.cardIndex ?? '-1', 10);
