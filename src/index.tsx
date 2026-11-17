@@ -21,14 +21,22 @@ const isSnowfallSeason = () => {
   );
 };
 
-root.render(
-  <React.StrictMode>
-    <App />
-    {isSnowfallSeason() && (
-      <Suspense fallback={null}>
-        <Snowfall color="#D7D7DC" />
-      </Suspense>
-    )}
-  </React.StrictMode>,
-);
-reportWebVitals();
+const enableApiMocks = async () => {
+  if (import.meta.env.VITE_API_MOCK !== 'true') return;
+  const { startMockWorker } = await import('./mocks/browser');
+  await startMockWorker();
+};
+
+void enableApiMocks().then(() => {
+  root.render(
+    <React.StrictMode>
+      <App />
+      {isSnowfallSeason() && (
+        <Suspense fallback={null}>
+          <Snowfall color="#D7D7DC" />
+        </Suspense>
+      )}
+    </React.StrictMode>,
+  );
+  reportWebVitals();
+});

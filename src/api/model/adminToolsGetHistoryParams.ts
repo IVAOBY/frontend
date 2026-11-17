@@ -3,30 +3,30 @@
  * Do not edit manually.
  * IVAO Belarus API
  * API service for handling IVAO Belarus Divisions Web infrastructure.
- * OpenAPI spec version: 1.13.2
+ * OpenAPI spec version: 1.16.3
  */
 import type { AdminToolsGetHistoryStatus } from './adminToolsGetHistoryStatus';
 
 export type AdminToolsGetHistoryParams = {
-  /** Filter by performer user ID */
+  /** Фильтр по VID исполнителя */
   performerId?: number;
-  /** Filter by status */
+  /** Фильтр по статусу */
   status?: AdminToolsGetHistoryStatus;
-  /** Filter by target user ID */
+  /** Фильтр по VID целевого пользователя */
   targetUserId?: number;
   /**
-   * Page number (1-indexed)
+   * Номер страницы (с 1)
    * @minimum 1
    */
   page?: number;
   /**
-   * Number of items per page
+   * Количество элементов на странице
    * @minimum 1
    * @maximum 100
    */
   limit?: number;
-  /** Start date for filtering (ISO 8601) */
+  /** Начало диапазона дат (ISO 8601) */
   startDate?: string;
-  /** End date for filtering (ISO 8601) */
+  /** Конец диапазона дат (ISO 8601) */
   endDate?: string;
 };

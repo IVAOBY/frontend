@@ -3,7 +3,7 @@
  * Do not edit manually.
  * IVAO Belarus API
  * API service for handling IVAO Belarus Divisions Web infrastructure.
- * OpenAPI spec version: 1.13.2
+ * OpenAPI spec version: 1.16.3
  */
 import type { NewsGetAllNewsSort } from './newsGetAllNewsSort';
 
@@ -16,4 +16,9 @@ export type NewsGetAllNewsParams = {
   limit?: number;
   /** Направление сортировки новостей */
   sort?: NewsGetAllNewsSort;
+  /**
+   * ID категорий через запятую. Внутри одного типа категорий — OR, между типами — AND.
+   * @maxItems 50
+   */
+  categories?: string;
 };

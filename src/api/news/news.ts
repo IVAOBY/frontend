@@ -3,7 +3,7 @@
  * Do not edit manually.
  * IVAO Belarus API
  * API service for handling IVAO Belarus Divisions Web infrastructure.
- * OpenAPI spec version: 1.13.2
+ * OpenAPI spec version: 1.16.3
  */
 import { useMutation, useQuery } from '@tanstack/react-query';
 
@@ -73,7 +73,7 @@ export const getNewsGetAllNewsQueryKey = (params?: NewsGetAllNewsParams) => {
 
 export const getNewsGetAllNewsQueryOptions = <
   TData = Awaited<ReturnType<typeof newsGetAllNews>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
 >(
   params?: NewsGetAllNewsParams,
   options?: {
@@ -101,11 +101,11 @@ export const getNewsGetAllNewsQueryOptions = <
 export type NewsGetAllNewsQueryResult = NonNullable<
   Awaited<ReturnType<typeof newsGetAllNews>>
 >;
-export type NewsGetAllNewsQueryError = ErrorType<unknown>;
+export type NewsGetAllNewsQueryError = ErrorType<ErrorResponseDto>;
 
 export function useNewsGetAllNews<
   TData = Awaited<ReturnType<typeof newsGetAllNews>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
 >(
   params: undefined | NewsGetAllNewsParams,
   options: {
@@ -128,7 +128,7 @@ export function useNewsGetAllNews<
 };
 export function useNewsGetAllNews<
   TData = Awaited<ReturnType<typeof newsGetAllNews>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
 >(
   params?: NewsGetAllNewsParams,
   options?: {
@@ -151,7 +151,7 @@ export function useNewsGetAllNews<
 };
 export function useNewsGetAllNews<
   TData = Awaited<ReturnType<typeof newsGetAllNews>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
 >(
   params?: NewsGetAllNewsParams,
   options?: {
@@ -170,7 +170,7 @@ export function useNewsGetAllNews<
 
 export function useNewsGetAllNews<
   TData = Awaited<ReturnType<typeof newsGetAllNews>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
 >(
   params?: NewsGetAllNewsParams,
   options?: {

@@ -100,6 +100,26 @@ yarn dev
 
 The app runs at `http://localhost:3310` and the browser opens automatically.
 
+#### Without the API (mock mode)
+
+```bash
+yarn dev:mock
+```
+
+Every request to the API is intercepted in the browser by [MSW](https://mswjs.io) and answered from hand-written fixtures, so the app works without a running backend or network access to it. Mock mode is only active in the dev server — nothing from it ends up in the production build.
+
+- **Data** lives in `src/mocks/data/` (news, agenda, events with ATC shifts and bookings, documents, staff, vehicle permissions, airports). Dates are relative to today, so upcoming events stay upcoming. The airport directory mirrors the real division data.
+- **Handlers** are in `src/mocks/handlers.ts`. Bookings and vehicle permissions can be created and removed; changes live in memory until the page is reloaded. A request to an endpoint that is not mocked fails with `501 Not mocked` and a console warning instead of silently reaching the real API.
+- **Who you are** is controlled by the `mock_user` query parameter and remembered in `localStorage`:
+
+  | `?mock_user=` | Profile                                                                   |
+  | ------------- | ------------------------------------------------------------------------- |
+  | `staff`       | Default. BY-AWM, ATC rating APC — can book event positions, vehicles admin mode |
+  | `member`      | Regular member, ATC rating AS2 — not enough to book event positions        |
+  | `guest`       | Signed out (`/users/me` → 401)                                            |
+
+  The **Login** button signs you in as `staff`; logging out switches to `guest`.
+
 ### Production build
 
 ```bash
@@ -114,6 +134,7 @@ The build is emitted to `dist/`. Deployment to production (the divisional hostin
 | Command        | What it does                                                                       |
 | -------------- | ---------------------------------------------------------------------------------- |
 | `yarn dev`     | Start the development server on port 3310                                          |
+| `yarn dev:mock` | Start the development server with the API mocked (no backend needed)              |
 | `yarn build`   | Type-check with `tsc` and compile to `dist/`                                       |
 | `yarn preview` | Serve the production build locally                                                 |
 | `yarn lint`    | ESLint over `src/`                                                                 |

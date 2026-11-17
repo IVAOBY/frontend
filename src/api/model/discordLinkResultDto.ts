@@ -3,12 +3,12 @@
  * Do not edit manually.
  * IVAO Belarus API
  * API service for handling IVAO Belarus Divisions Web infrastructure.
- * OpenAPI spec version: 1.13.2
+ * OpenAPI spec version: 1.16.3
  */
 
 export interface DiscordLinkResultDto {
   /** Успешно ли привязан аккаунт */
   success: boolean;
-  /** Сообщение об ошибке (HTML) — присутствует, если `success = false` */
+  /** Сообщение об ошибке (текст без разметки) — присутствует, если `success = false` */
   msg?: string;
 }

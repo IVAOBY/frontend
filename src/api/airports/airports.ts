@@ -3,7 +3,7 @@
  * Do not edit manually.
  * IVAO Belarus API
  * API service for handling IVAO Belarus Divisions Web infrastructure.
- * OpenAPI spec version: 1.13.2
+ * OpenAPI spec version: 1.16.3
  */
 import { useMutation, useQuery } from '@tanstack/react-query';
 
@@ -73,7 +73,7 @@ export const getAirportsSearchAirportQueryKey = (
 
 export const getAirportsSearchAirportQueryOptions = <
   TData = Awaited<ReturnType<typeof airportsSearchAirport>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
 >(
   params: AirportsSearchAirportParams,
   options?: {
@@ -106,11 +106,11 @@ export const getAirportsSearchAirportQueryOptions = <
 export type AirportsSearchAirportQueryResult = NonNullable<
   Awaited<ReturnType<typeof airportsSearchAirport>>
 >;
-export type AirportsSearchAirportQueryError = ErrorType<unknown>;
+export type AirportsSearchAirportQueryError = ErrorType<ErrorResponseDto>;
 
 export function useAirportsSearchAirport<
   TData = Awaited<ReturnType<typeof airportsSearchAirport>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
 >(
   params: AirportsSearchAirportParams,
   options: {
@@ -137,7 +137,7 @@ export function useAirportsSearchAirport<
 };
 export function useAirportsSearchAirport<
   TData = Awaited<ReturnType<typeof airportsSearchAirport>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
 >(
   params: AirportsSearchAirportParams,
   options?: {
@@ -164,7 +164,7 @@ export function useAirportsSearchAirport<
 };
 export function useAirportsSearchAirport<
   TData = Awaited<ReturnType<typeof airportsSearchAirport>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
 >(
   params: AirportsSearchAirportParams,
   options?: {
@@ -187,7 +187,7 @@ export function useAirportsSearchAirport<
 
 export function useAirportsSearchAirport<
   TData = Awaited<ReturnType<typeof airportsSearchAirport>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
 >(
   params: AirportsSearchAirportParams,
   options?: {

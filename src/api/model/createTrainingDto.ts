@@ -3,9 +3,16 @@
  * Do not edit manually.
  * IVAO Belarus API
  * API service for handling IVAO Belarus Divisions Web infrastructure.
- * OpenAPI spec version: 1.13.2
+ * OpenAPI spec version: 1.16.3
  */
 
 export interface CreateTrainingDto {
-  [key: string]: unknown;
+  trainingTypeId: number;
+  atcPosition: string;
+  /** @nullable */
+  userId?: number | null;
+  /** @nullable */
+  trainerId?: number | null;
+  date: string;
+  link: string;
 }

@@ -3,14 +3,14 @@
  * Do not edit manually.
  * IVAO Belarus API
  * API service for handling IVAO Belarus Divisions Web infrastructure.
- * OpenAPI spec version: 1.13.2
+ * OpenAPI spec version: 1.16.3
  */
 import type { AirportRunwaysEntity } from './airportRunwaysEntity';
 import type { AirportTypeEntity } from './airportTypeEntity';
 import type { AtcEntity } from './atcEntity';
 import type { IvaoMetar } from './ivaoMetar';
 import type { IvaoTAF } from './ivaoTAF';
-import type { SceneriesEntity } from './sceneriesEntity';
+import type { SceneryEntity } from './sceneryEntity';
 
 export interface AirportsEntity {
   /** Текущий METAR (только в результатах поиска) */
@@ -32,6 +32,6 @@ export interface AirportsEntity {
   magnetic: number | null;
   status: boolean;
   atcPositions?: AtcEntity[];
-  sceneries?: SceneriesEntity[];
+  sceneries?: SceneryEntity[];
   runways?: AirportRunwaysEntity[];
 }

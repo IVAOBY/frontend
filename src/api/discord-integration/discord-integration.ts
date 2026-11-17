@@ -3,7 +3,7 @@
  * Do not edit manually.
  * IVAO Belarus API
  * API service for handling IVAO Belarus Divisions Web infrastructure.
- * OpenAPI spec version: 1.13.2
+ * OpenAPI spec version: 1.16.3
  */
 import { useMutation, useQuery } from '@tanstack/react-query';
 
@@ -237,7 +237,7 @@ export const getDiscordAuthorizePreQueryKey = (
 
 export const getDiscordAuthorizePreQueryOptions = <
   TData = Awaited<ReturnType<typeof discordAuthorizePre>>,
-  TError = ErrorType<void>,
+  TError = ErrorType<void | ErrorResponseDto>,
 >(
   params: DiscordAuthorizePreParams,
   options?: {
@@ -270,11 +270,11 @@ export const getDiscordAuthorizePreQueryOptions = <
 export type DiscordAuthorizePreQueryResult = NonNullable<
   Awaited<ReturnType<typeof discordAuthorizePre>>
 >;
-export type DiscordAuthorizePreQueryError = ErrorType<void>;
+export type DiscordAuthorizePreQueryError = ErrorType<void | ErrorResponseDto>;
 
 export function useDiscordAuthorizePre<
   TData = Awaited<ReturnType<typeof discordAuthorizePre>>,
-  TError = ErrorType<void>,
+  TError = ErrorType<void | ErrorResponseDto>,
 >(
   params: DiscordAuthorizePreParams,
   options: {
@@ -301,7 +301,7 @@ export function useDiscordAuthorizePre<
 };
 export function useDiscordAuthorizePre<
   TData = Awaited<ReturnType<typeof discordAuthorizePre>>,
-  TError = ErrorType<void>,
+  TError = ErrorType<void | ErrorResponseDto>,
 >(
   params: DiscordAuthorizePreParams,
   options?: {
@@ -328,7 +328,7 @@ export function useDiscordAuthorizePre<
 };
 export function useDiscordAuthorizePre<
   TData = Awaited<ReturnType<typeof discordAuthorizePre>>,
-  TError = ErrorType<void>,
+  TError = ErrorType<void | ErrorResponseDto>,
 >(
   params: DiscordAuthorizePreParams,
   options?: {
@@ -351,7 +351,7 @@ export function useDiscordAuthorizePre<
 
 export function useDiscordAuthorizePre<
   TData = Awaited<ReturnType<typeof discordAuthorizePre>>,
-  TError = ErrorType<void>,
+  TError = ErrorType<void | ErrorResponseDto>,
 >(
   params: DiscordAuthorizePreParams,
   options?: {
