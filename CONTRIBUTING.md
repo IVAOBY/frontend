@@ -18,14 +18,18 @@ Thanks for your interest in improving the IVAO Belarus website! This guide expla
 
 ## Development Setup
 
-Requirements: Node.js (LTS) and yarn.
+Requirements: Node.js (LTS) and Yarn 4. The Yarn version is pinned in `package.json` (`packageManager`), so enable Corepack instead of installing Yarn globally:
 
-```
+```bash
 git clone https://github.com/IVAOBY/frontend.git
 cd frontend
-yarn
+git switch dev
+corepack enable
+yarn install
 yarn dev:mock
 ```
+
+Development happens on the `dev` branch; mock mode is not available on `main` yet.
 
 `dev:mock` starts the Vite dev server with MSW intercepting API requests, so everything works offline with fictional data.
 
@@ -33,20 +37,20 @@ Mock handlers live in `src/mocks/handlers.ts`. If you add or change a frontend f
 
 ## Important Rules
 
-- **Never commit secrets:** no API keys, tokens, `.env` files, or `client_secret` values.
+- **Never commit secrets:** no API keys, tokens, `client_secret` values, or local `.env` files (only the existing `.env.example` and `.env.mock`, which contain no secrets, are tracked).
 - **Use fictional data only** in mocks, tests, and screenshots. Do not include real VIDs, names, emails, or any other member data.
 - **Do not call the production API** from your local setup or tests.
-- Follow [IVAO's rules](https://www.ivao.aero) and branding guidelines. Logos and brand assets are not covered by the project license (see the license section of the README).
+- Follow [IVAO's rules](https://www.ivao.aero) and branding guidelines. IVAO and IVAO Belarus logos and other brand assets are not covered by the project license.
 
 ## Workflow
 
 1. **Fork** the repository and create a branch from `dev`:
-   ```
-   git checkout -b feature/short-description
+   ```bash
+   git switch -c feature/short-description dev
    ```
 2. Make your changes in small, focused commits.
-3. Run the checks locally (adjust to the scripts in `package.json`):
-   ```
+3. Run the checks locally:
+   ```bash
    yarn lint && yarn build
    ```
 4. Push your branch and open a **pull request** against `dev`.
@@ -55,7 +59,7 @@ Mock handlers live in `src/mocks/handlers.ts`. If you add or change a frontend f
 
 We use [Conventional Commits](https://www.conventionalcommits.org/):
 
-```
+```text
 feat: add METAR widget to airport page
 fix: correct timezone in event list
 docs: update contributing guide
@@ -72,7 +76,8 @@ docs: update contributing guide
 
 ## Code Style
 
-- TypeScript with strict typing; avoid `any` where possible.
+- TypeScript. The compiler currently runs with `strict: false`, but please write new code as if strict mode were on: explicit types, null checks, and no `any` where it can be avoided.
+- User-facing strings go through i18next and must be added to all three locales (`be`, `en`, `ru`).
 - Follow the existing project structure and naming conventions.
 - Formatting and linting are enforced by the project's ESLint/Prettier config. Please don't reformat unrelated code.
 - Don't add new dependencies without a good reason. Mention it in the PR if you do.
