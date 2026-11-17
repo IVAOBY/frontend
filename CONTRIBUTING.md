@@ -21,8 +21,8 @@ Thanks for your interest in improving the IVAO Belarus website! This guide expla
 Requirements: Node.js (LTS) and yarn.
 
 ```
-git clone https://github.com/<org>/<repo>.git
-cd <repo>
+git clone https://github.com/IVAOBY/frontend.git
+cd frontend
 yarn
 yarn dev:mock
 ```
