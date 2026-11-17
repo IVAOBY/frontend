@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security vulnerability
+    url: https://github.com/IVAOBY/frontend/security/advisories/new
+    about: Please report security issues privately, not as public issues.
+  - name: IVAO Belarus Discord
+    url: https://discord.by.ivao.aero
+    about: Questions about the division, events, or training.
