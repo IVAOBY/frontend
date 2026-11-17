@@ -31,10 +31,11 @@ yarn-debug.log*
 yarn-error.log*
 /src/components/header/txt.tsx
 
-yarn.lock
 package-lock.json
+.eslintcache
 
 .npmrc
 
 # локальный кэш состояния установки yarn (перезаписывается на каждой машине)
 .yarn/install-state.gz
+.vite/
