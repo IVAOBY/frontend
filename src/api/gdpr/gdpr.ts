@@ -3,7 +3,7 @@
  * Do not edit manually.
  * IVAO Belarus API
  * API service for handling IVAO Belarus Divisions Web infrastructure.
- * OpenAPI spec version: 1.13.2
+ * OpenAPI spec version: 1.16.3
  */
 import { useMutation, useQuery } from '@tanstack/react-query';
 
@@ -55,8 +55,8 @@ const withQueryKey = <T extends object, K>(
 };
 
 /**
- * Export and/or delete user data in compliance with GDPR regulations
- * @summary Process GDPR data requests
+ * Выгружает и/или удаляет данные пользователей в соответствии с GDPR. Требует свежих прав (`gdpr.process`, без кеша).
+ * @summary Обработать GDPR-запросы
  */
 export const adminToolsProcessGdpr = (
   gdprRequestDto: BodyType<GdprRequestDto>,
@@ -126,7 +126,7 @@ export type AdminToolsProcessGdprMutationVariables = {
 };
 
 /**
- * @summary Process GDPR data requests
+ * @summary Обработать GDPR-запросы
  */
 export const useAdminToolsProcessGdpr = <
   TError = ErrorType<ErrorResponseDto>,
@@ -154,8 +154,8 @@ export const useAdminToolsProcessGdpr = <
   );
 };
 /**
- * Retrieve paginated and filtered GDPR request history
- * @summary Get GDPR request history
+ * Постраничная история GDPR-запросов с фильтрами.
+ * @summary История GDPR-запросов
  */
 export const adminToolsGetHistory = (
   params?: AdminToolsGetHistoryParams,
@@ -285,7 +285,7 @@ export function useAdminToolsGetHistory<
   queryKey: DataTag<QueryKey, TData, TError>;
 };
 /**
- * @summary Get GDPR request history
+ * @summary История GDPR-запросов
  */
 
 export function useAdminToolsGetHistory<
@@ -318,8 +318,8 @@ export function useAdminToolsGetHistory<
 }
 
 /**
- * Retrieve a specific GDPR request by its UUID
- * @summary Get GDPR request by UUID
+ * Возвращает один GDPR-запрос по его UUID.
+ * @summary GDPR-запрос по UUID
  */
 export const adminToolsGetHistoryById = (
   uuid: string,
@@ -452,7 +452,7 @@ export function useAdminToolsGetHistoryById<
   queryKey: DataTag<QueryKey, TData, TError>;
 };
 /**
- * @summary Get GDPR request by UUID
+ * @summary GDPR-запрос по UUID
  */
 
 export function useAdminToolsGetHistoryById<
@@ -485,8 +485,8 @@ export function useAdminToolsGetHistoryById<
 }
 
 /**
- * Retrieve overall statistics about GDPR requests
- * @summary Get GDPR statistics
+ * Общая статистика по GDPR-запросам.
+ * @summary Статистика GDPR-запросов
  */
 export const adminToolsGetStatistics = (
   options?: SecondParameter<typeof customInstance>,
@@ -607,7 +607,7 @@ export function useAdminToolsGetStatistics<
   queryKey: DataTag<QueryKey, TData, TError>;
 };
 /**
- * @summary Get GDPR statistics
+ * @summary Статистика GDPR-запросов
  */
 
 export function useAdminToolsGetStatistics<
@@ -639,8 +639,8 @@ export function useAdminToolsGetStatistics<
 }
 
 /**
- * Retrieve all GDPR requests that included a specific user
- * @summary Get GDPR history for a specific user
+ * Все GDPR-запросы, в которые входил указанный пользователь.
+ * @summary История GDPR-запросов по пользователю
  */
 export const adminToolsGetHistoryForUser = (
   userId: number,
@@ -774,7 +774,7 @@ export function useAdminToolsGetHistoryForUser<
   queryKey: DataTag<QueryKey, TData, TError>;
 };
 /**
- * @summary Get GDPR history for a specific user
+ * @summary История GDPR-запросов по пользователю
  */
 
 export function useAdminToolsGetHistoryForUser<

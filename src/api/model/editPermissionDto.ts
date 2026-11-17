@@ -3,16 +3,19 @@
  * Do not edit manually.
  * IVAO Belarus API
  * API service for handling IVAO Belarus Divisions Web infrastructure.
- * OpenAPI spec version: 1.13.2
+ * OpenAPI spec version: 1.16.3
  */
 
 export interface EditPermissionDto {
   /** UUID разрешения на Follow Me Car */
   id: string;
   /** Дата начала действия разрешения (ISO 8601) */
-  validFrom: string;
-  /** Дата окончания действия разрешения (ISO 8601). Null для бессрочного */
-  validUntil?: string;
+  validFrom?: string;
+  /**
+   * Дата окончания действия разрешения (ISO 8601). Null для бессрочного
+   * @nullable
+   */
+  validUntil?: string | null;
   /** Причина выдачи разрешения */
   issueReason?: string;
 }

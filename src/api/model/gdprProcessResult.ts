@@ -3,20 +3,20 @@
  * Do not edit manually.
  * IVAO Belarus API
  * API service for handling IVAO Belarus Divisions Web infrastructure.
- * OpenAPI spec version: 1.13.2
+ * OpenAPI spec version: 1.16.3
  */
 
 export interface GdprProcessResult {
-  /** User ID that was processed */
+  /** VID обработанного пользователя */
   userId: number;
-  /** Whether data was found for the user */
+  /** Найдены ли данные пользователя */
   dataFound: boolean;
-  /** Whether data was successfully exported */
+  /** Успешно ли выгружены данные */
   dataExported: boolean;
-  /** Whether data was successfully deleted */
+  /** Успешно ли удалены данные */
   dataDeleted: boolean;
-  /** Human-readable message about the operation result */
+  /** Сообщение о результате операции */
   message: string;
-  /** Error message if operation failed */
+  /** Сообщение об ошибке, если операция не удалась */
   error?: string;
 }

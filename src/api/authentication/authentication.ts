@@ -3,7 +3,7 @@
  * Do not edit manually.
  * IVAO Belarus API
  * API service for handling IVAO Belarus Divisions Web infrastructure.
- * OpenAPI spec version: 1.13.2
+ * OpenAPI spec version: 1.16.3
  */
 import { useMutation, useQuery } from '@tanstack/react-query';
 
@@ -371,7 +371,7 @@ export const authLogout = (
 export const getAuthLogoutMutationKey = () => ['authLogout'] as const;
 
 export const getAuthLogoutMutationOptions = <
-  TError = ErrorType<void>,
+  TError = ErrorType<void | ErrorResponseDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -412,13 +412,16 @@ export type AuthLogoutMutationResult = NonNullable<
   Awaited<ReturnType<typeof authLogout>>
 >;
 
-export type AuthLogoutMutationError = ErrorType<void>;
+export type AuthLogoutMutationError = ErrorType<void | ErrorResponseDto>;
 export type AuthLogoutMutationVariables = { params?: AuthLogoutParams };
 
 /**
  * @summary Выход из системы
  */
-export const useAuthLogout = <TError = ErrorType<void>, TContext = unknown>(
+export const useAuthLogout = <
+  TError = ErrorType<void | ErrorResponseDto>,
+  TContext = unknown,
+>(
   options?: {
     mutation?: UseMutationOptions<
       Awaited<ReturnType<typeof authLogout>>,

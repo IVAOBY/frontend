@@ -1,5 +1,8 @@
+import {readFileSync} from 'node:fs';
+import {createRequire} from 'node:module';
+
 import react from '@vitejs/plugin-react';
-import {defineConfig} from 'vite';
+import {defineConfig, type Plugin} from 'vite';
 import viteTsconfigPaths from 'vite-tsconfig-paths';
 
 // Маркер сборки: короткий хэш коммита попадает в собранный JS. По нему
@@ -28,10 +31,23 @@ const buildCommitMarker = () => ({
 // /assets/index-[A-Za-z0-9_-]*\.js.
 const assetNamePattern = '[name]-[hash]-' + buildCommit;
 
+// Service worker MSW отдаётся только dev-сервером, чтобы не класть его в public/ и не тащить в прод.
+const mswWorkerPath = createRequire(import.meta.url).resolve('msw/mockServiceWorker.js');
+const mswWorker = (): Plugin => ({
+    name: 'msw-worker',
+    apply: 'serve',
+    configureServer(server) {
+        server.middlewares.use('/mockServiceWorker.js', (_req, res) => {
+            res.setHeader('Content-Type', 'application/javascript');
+            res.end(readFileSync(mswWorkerPath));
+        });
+    },
+});
+
 export default defineConfig({
     // depending on your application, base can also be "/"
     base: '/',
-    plugins: [react(), viteTsconfigPaths(), buildCommitMarker()],
+    plugins: [react(), viteTsconfigPaths(), buildCommitMarker(), mswWorker()],
     build: {
         rollupOptions: {
             output: {

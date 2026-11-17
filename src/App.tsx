@@ -32,6 +32,9 @@ const queryClient = new QueryClient({
 
 const persister = createSyncStoragePersister({
   storage: window.localStorage,
+  ...(import.meta.env.VITE_API_MOCK === 'true' && {
+    key: 'REACT_QUERY_OFFLINE_CACHE_MOCK',
+  }),
 });
 
 const MainPage = lazy(() =>

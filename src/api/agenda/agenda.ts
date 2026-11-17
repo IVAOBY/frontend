@@ -3,7 +3,7 @@
  * Do not edit manually.
  * IVAO Belarus API
  * API service for handling IVAO Belarus Divisions Web infrastructure.
- * OpenAPI spec version: 1.13.2
+ * OpenAPI spec version: 1.16.3
  */
 import { useQuery } from '@tanstack/react-query';
 
@@ -69,7 +69,7 @@ export const getAgendaGetAgendaQueryKey = (params?: AgendaGetAgendaParams) => {
 
 export const getAgendaGetAgendaQueryOptions = <
   TData = Awaited<ReturnType<typeof agendaGetAgenda>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
 >(
   params?: AgendaGetAgendaParams,
   options?: {
@@ -101,11 +101,11 @@ export const getAgendaGetAgendaQueryOptions = <
 export type AgendaGetAgendaQueryResult = NonNullable<
   Awaited<ReturnType<typeof agendaGetAgenda>>
 >;
-export type AgendaGetAgendaQueryError = ErrorType<unknown>;
+export type AgendaGetAgendaQueryError = ErrorType<ErrorResponseDto>;
 
 export function useAgendaGetAgenda<
   TData = Awaited<ReturnType<typeof agendaGetAgenda>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
 >(
   params: undefined | AgendaGetAgendaParams,
   options: {
@@ -132,7 +132,7 @@ export function useAgendaGetAgenda<
 };
 export function useAgendaGetAgenda<
   TData = Awaited<ReturnType<typeof agendaGetAgenda>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
 >(
   params?: AgendaGetAgendaParams,
   options?: {
@@ -159,7 +159,7 @@ export function useAgendaGetAgenda<
 };
 export function useAgendaGetAgenda<
   TData = Awaited<ReturnType<typeof agendaGetAgenda>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
 >(
   params?: AgendaGetAgendaParams,
   options?: {
@@ -182,7 +182,7 @@ export function useAgendaGetAgenda<
 
 export function useAgendaGetAgenda<
   TData = Awaited<ReturnType<typeof agendaGetAgenda>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
 >(
   params?: AgendaGetAgendaParams,
   options?: {

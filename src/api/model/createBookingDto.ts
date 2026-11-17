@@ -3,9 +3,14 @@
  * Do not edit manually.
  * IVAO Belarus API
  * API service for handling IVAO Belarus Divisions Web infrastructure.
- * OpenAPI spec version: 1.13.2
+ * OpenAPI spec version: 1.16.3
  */
 
 export interface CreateBookingDto {
-  [key: string]: unknown;
+  /** @minimum 1 */
+  atcPositionId: number;
+  /** @minimum 1 */
+  eventId: number;
+  /** @minimum 1 */
+  eventPartId: number;
 }
