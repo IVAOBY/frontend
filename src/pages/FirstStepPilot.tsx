@@ -1,85 +1,173 @@
-import { BreadcrumbLayout } from '../components/Layout';
+import { ReactElement } from 'react';
 
-// TODO: вынести текст страницы в переводы (по ключам, а не целиком одним HTML-блоком)
-const subtitleClass = 'mt-6 text-2xl font-bold text-atmos-700 first:mt-0';
-const paragraphClass = 'mt-2 text-[15px] leading-6';
+import { Trans, useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+
+import { BreadcrumbLayout } from '../components/Layout';
+import { FIRST_STEP_PILOT_NS as NS } from '../i18n/locales/pages/firstStepPilot';
+
+// URL не зависят от языка, в переводах ссылка пишется как <имя>текст</имя>
+const LINKS = {
+  discord: 'https://discord.by.ivao.aero',
+  telegram: 'https://t.me/ivaoby',
+  instagram: 'https://www.instagram.com/ivao_by/',
+  threads: 'https://www.threads.net/@ivao_by',
+  facebook: 'https://www.facebook.com/ivaobelarus',
+  twitter: 'https://x.com/ivao_by',
+  family: 'https://family.ivao.aero',
+  tours: 'https://tours.by.ivao.aero',
+  worldtours: 'https://wt.ivao.aero',
+  altitude: 'https://wiki.ivao.aero/en/home/devops/manuals/altitude-first-step',
+  aurora: 'https://wiki.ivao.aero/en/home/devops/manuals/aurora-first-steps',
+  aurorabelarus: 'https://aurora.by.ivao.aero',
+  pilotranks: 'https://wiki.ivao.aero/en/home/training/main/pilot_rank',
+  atcranks: 'https://wiki.ivao.aero/en/home/training/main/rank_atc',
+  policy: '/documents/13',
+  ivao: 'https://ivao.aero',
+  trainingstatus: 'https://ivao.aero/training/training/statustraining.asp',
+  cornflower: 'https://cornflower.by.ivao.aero',
+};
+
+const linkClass = 'font-bold text-atmos-700 underline';
+
+function createLink(href: string): ReactElement {
+  // внутренние ссылки — через роутер, внешние — в новой вкладке
+  return href.startsWith('/') ? (
+    <Link to={href} className={linkClass} />
+  ) : (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={linkClass}
+    />
+  );
+}
+
+// Теги, доступные в переводах (см. i18n/locales/pages/firstStepPilot/types.ts)
+const components: Record<string, ReactElement> = {
+  b: <b className="text-base font-bold" />,
+  h: <strong className="text-[17px] font-bold" />,
+  i: <i />,
+  br: <br />,
+  ...Object.fromEntries(
+    Object.entries(LINKS).map(([name, href]) => [name, createLink(href)]),
+  ),
+};
+
+function Text({ i18nKey }: { i18nKey: string }) {
+  return <Trans ns={NS} i18nKey={i18nKey} components={components} />;
+}
+
+function Paragraph({
+  i18nKey,
+  className = '',
+}: {
+  i18nKey: string;
+  className?: string;
+}) {
+  return (
+    <p className={`mb-3 ${className}`}>
+      <Text i18nKey={i18nKey} />
+    </p>
+  );
+}
+
+function Heading({ i18nKey }: { i18nKey: string }) {
+  const { t } = useTranslation(NS);
+  return (
+    <h2 className="mb-3 pb-2 pt-6 text-[29px] font-bold leading-[1.15] text-atmos-700 first:pt-0">
+      {t(i18nKey)}
+    </h2>
+  );
+}
+
+function Subheading({ i18nKey }: { i18nKey: string }) {
+  const { t } = useTranslation(NS);
+  return <h3 className="mb-2 mt-6 text-base font-bold">{t(i18nKey)}</h3>;
+}
+
+function Items({
+  i18nKey,
+  ordered = false,
+}: {
+  i18nKey: string;
+  ordered?: boolean;
+}) {
+  const { t } = useTranslation(NS);
+  const items = t(i18nKey, { returnObjects: true }) as string[];
+  const Tag = ordered ? 'ol' : 'ul';
+
+  return (
+    <Tag className={`mb-4 ml-6 ${ordered ? 'list-decimal' : 'list-disc'}`}>
+      {items.map((_, index) => (
+        <li key={index} className="mb-2 last:mb-0">
+          <Text i18nKey={`${i18nKey}.${index}`} />
+        </li>
+      ))}
+    </Tag>
+  );
+}
 
 export function FirstStepP() {
+  const { t } = useTranslation(NS);
+
   return (
     <BreadcrumbLayout>
       <div className="mt-[30px] flex flex-col gap-[50px]">
-        <h4 className="text-3xl font-bold leading-8 text-black md:text-[55px]">
-          Первые шаги пилота
-        </h4>
-        <div className="squircle-3xl shadow-figma bg-white px-[32px] py-[41px] text-[#494949]">
-          <h2 className={subtitleClass}>Регистрация в IVAO</h2>
-          <p className={paragraphClass}>
-            В данном руководстве изложена пошаговая инструкция, которая поможет
-            вам подключиться к IVAO в качестве виртуального пилота. Здесь
-            представлен краткий обзор используемого программного обеспечения, а
-            также некоторые основные инструкции о правилах поведения в
-            виртуальном сообществе IVAO.
-          </p>
-          <p className={paragraphClass}>
-            Первое что требуется сделать –{' '}
-            <a
-              href="https://ivao.aero/members/person/register.htm"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-atmos-700 hover:underline"
-            >
-              зарегистрироваться на сайте IVAO
-            </a>
-          </p>
-          <p className={paragraphClass}>
-            Обращаем внимание, что у вас должна быть только одна учетная запись,
-            которая будет действительна для участия в сети IVAO как в качестве
-            пилота, так и в качестве авиадиспетчера.
-          </p>
-          <p className={paragraphClass}>
-            Более подробно остановимся на следующих аспектах:
-          </p>
-          <ul className="mt-2 list-disc pl-8 text-sm leading-6">
-            <li>
-              загрузка, установка и настройка требуемого программного
-              обеспечения
-            </li>
-            <li>подключение к виртуальной сети IVAO</li>
-            <li>подача полетного плана (основы)</li>
-            <li>
-              взаимодействие с виртуальным авиадиспетчером (ATC), а также работа
-              при отсутствии виртуального авиадиспетчера
-            </li>
-            <li>получение дополнительной информации и тренинг</li>
-          </ul>
+        <h1 className="text-3xl font-bold leading-8 text-black md:text-[55px]">
+          {t('title')}
+        </h1>
+        <div className="squircle-3xl shadow-figma bg-white px-[32px] py-[41px] text-[15px] leading-6 text-black">
+          <Heading i18nKey="welcome.title" />
+          <Paragraph i18nKey="welcome.intro" />
+          <Paragraph i18nKey="welcome.whatIs" />
+          <Paragraph i18nKey="welcome.division" />
 
-          <h2 className={subtitleClass}>Загрузка программы клиента Altitude</h2>
-          <div className="mt-2 grid gap-5 md:grid-cols-2">
-            <div>
-              <p className={paragraphClass}>
-                Первое, что вам необходимо сделать, это загрузить клиент
-                виртуального пилота программу ALTITUDE, с помощью которой вы
-                сможете подключаться к сети. Данный клиент может быть загружен
-                со страницы Pilot Client: Altitude.
-              </p>
-              <p className={paragraphClass}>
-                После загрузки клиента вам необходимо запустить исполняемый файл
-                и установить программу.
-              </p>
-            </div>
-            <img
-              src="https://media.discordapp.net/attachments/757343581408329729/1158130098713665706/image.png?ex=651b2034&is=6519ceb4&hm=3a5b2bcdcd6f216287ef0b8459a7f03b28592dd765e5565d7a3339a97cb94b10&="
-              alt="Изображение"
-              className="md:ml-auto md:max-w-[50%]"
-            />
-          </div>
+          <Heading i18nKey="community.title" />
+          <Paragraph i18nKey="community.intro" />
+          <Items i18nKey="community.items" />
 
-          <h2 className={subtitleClass}>MTL (Multiplayer Traffic Library)</h2>
-          <p className={paragraphClass}>
-            MTL (Multiplayer Traffic Library) позволяет видеть находящиеся радом
-            с вами воздушные суда путем установки сотен моделей и их ливрей в
-            ваш симулятор полетов.
-          </p>
+          <Heading i18nKey="tours.title" />
+          <Paragraph i18nKey="tours.intro" />
+          <Items i18nKey="tours.items" />
+
+          <Heading i18nKey="software.title" />
+          <Paragraph i18nKey="software.intro" />
+
+          <Subheading i18nKey="software.pilots.title" />
+          <Paragraph i18nKey="software.pilots.text" />
+          <Paragraph i18nKey="software.pilots.manual" />
+
+          <Subheading i18nKey="software.atc.title" />
+          <Paragraph i18nKey="software.atc.text" />
+          <Paragraph i18nKey="software.atc.prepare" />
+          <Items i18nKey="software.atc.steps" ordered />
+          <Paragraph i18nKey="software.atc.special" />
+          <Paragraph i18nKey="software.atc.specialText" />
+
+          <Heading i18nKey="training.title" />
+          <Paragraph i18nKey="training.intro" />
+          <Items i18nKey="training.ranks" />
+          <Paragraph i18nKey="training.more" />
+          <Paragraph i18nKey="training.policy" />
+
+          <Subheading i18nKey="training.firstControl.title" />
+          <Paragraph i18nKey="training.firstControl.intro" />
+          <Paragraph i18nKey="training.firstControl.method1Title" />
+          <Items i18nKey="training.firstControl.method1Steps" ordered />
+          <Paragraph i18nKey="training.firstControl.method2Title" />
+          <Paragraph
+            i18nKey="training.firstControl.method2Text"
+            className="ml-5 mr-10"
+          />
+          <Paragraph i18nKey="training.firstControl.afterRequest" />
+
+          <Subheading i18nKey="training.academy.title" />
+          <Paragraph i18nKey="training.academy.text" />
+          <Paragraph i18nKey="training.academy.go" />
+
+          <Paragraph i18nKey="training.bye" className="mt-6" />
         </div>
       </div>
     </BreadcrumbLayout>

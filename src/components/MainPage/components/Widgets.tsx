@@ -20,7 +20,7 @@ export function Widgets() {
     <>
       <div className="mt-[-180px] flex flex-col gap-6 lg:flex-row">
         <div
-          onClick={() => handleInternalLink('/pilots/first-step')}
+          onClick={() => handleInternalLink('/first-steps')}
           className="squircle-3xl group relative inline-flex h-[148px] cursor-pointer flex-col items-center justify-start overflow-hidden bg-atmos-700 pt-[25px] duration-700 hover:scale-[103%] md:pt-[50px] lg:h-[320px] xl:h-[564px] xl:min-w-[362px] xl:pt-[4.375rem]"
         >
           <img

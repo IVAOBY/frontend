@@ -166,7 +166,7 @@ export default function App() {
                     <Route path="/airport/:icao" element={<AirportPage />} />
                     <Route path="/about-us" element={<AboutUs />} />
                     <Route path="/faq" element={<FAQ />} />
-                    <Route path="/pilots/first-step" element={<FirstStepP />} />
+                    <Route path="/first-steps" element={<FirstStepP />} />
                     <Route path="/news/:id" element={<NewsPage />} />
                     {/*<Route path="/map" element={<MapPage />} />*/}
                     <Route path="/staff" element={<StaffPage />} />

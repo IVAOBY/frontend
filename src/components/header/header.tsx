@@ -96,6 +96,11 @@ const categories = [
     icon: <IconAirTrafficControl size={20} />,
     links: [
       {
+        href: '/first-steps',
+        label: 'navbar.atc.start',
+        icon: <img src={steps} width={20} alt="PilotFS Icon" />,
+      },
+      {
         href: 'https://www.ban.by/en/aeronautical-information-aip/amdt',
         label: 'navbar.atc.charts',
         icon: <IconFileInfo size={20} />,
@@ -129,10 +134,9 @@ const categories = [
     icon: <IconPlaneTilt size={20} />,
     links: [
       {
-        href: 'https://wiki.ivao.aero/en/home/devops/manuals/altitude-first-step',
+        href: '/first-steps',
         label: 'navbar.pilots.start',
         icon: <img src={steps} width={20} alt="PilotFS Icon" />,
-        external: true,
       },
       {
         href: '/airports',
