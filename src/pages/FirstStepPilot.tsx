@@ -6,32 +6,32 @@ import { Link } from 'react-router-dom';
 import { BreadcrumbLayout } from '../components/Layout';
 import { FIRST_STEP_PILOT_NS as NS } from '../i18n/locales/pages/firstStepPilot';
 
-// URL РЅРµ Р·Р°РІРёСЃСЏС‚ РѕС‚ СЏР·С‹РєР°, РІ РїРµСЂРµРІРѕРґР°С… СЃСЃС‹Р»РєР° РїРёС€РµС‚СЃСЏ РєР°Рє <РёРјСЏ>С‚РµРєСЃС‚</РёРјСЏ>
+// URL не зависят от языка, в переводах ссылка пишется как <имя>текст</имя>
 const LINKS = {
-  discord: 'http://discord.by.ivao.aero',
-  telegram: 'http://t.me/ivaoby',
+  discord: 'https://discord.by.ivao.aero',
+  telegram: 'https://t.me/ivaoby',
   instagram: 'https://www.instagram.com/ivao_by/',
-  threads: 'https://www.threads.com/@ivao_by',
+  threads: 'https://www.threads.net/@ivao_by',
   facebook: 'https://www.facebook.com/ivaobelarus',
   twitter: 'https://x.com/ivao_by',
-  family: 'http://family.ivao.aero',
-  tours: 'http://tours.by.ivao.aero',
-  worldtours: 'http://wt.ivao.aero',
+  family: 'https://family.ivao.aero',
+  tours: 'https://tours.by.ivao.aero',
+  worldtours: 'https://wt.ivao.aero',
   altitude: 'https://wiki.ivao.aero/en/home/devops/manuals/altitude-first-step',
   aurora: 'https://wiki.ivao.aero/en/home/devops/manuals/aurora-first-steps',
-  aurorabelarus: 'http://aurora.by.ivao.aero',
+  aurorabelarus: 'https://aurora.by.ivao.aero',
   pilotranks: 'https://wiki.ivao.aero/en/home/training/main/pilot_rank',
   atcranks: 'https://wiki.ivao.aero/en/home/training/main/rank_atc',
   policy: '/documents/13',
-  ivao: 'http://ivao.aero',
+  ivao: 'https://ivao.aero',
   trainingstatus: 'https://ivao.aero/training/training/statustraining.asp',
-  cornflower: 'http://cornflower.by.ivao.aero',
+  cornflower: 'https://cornflower.by.ivao.aero',
 };
 
 const linkClass = 'font-bold text-atmos-700 underline';
 
 function createLink(href: string): ReactElement {
-  // РІРЅСѓС‚СЂРµРЅРЅРёРµ СЃСЃС‹Р»РєРё вЂ” С‡РµСЂРµР· СЂРѕСѓС‚РµСЂ, РІРЅРµС€РЅРёРµ вЂ” РІ РЅРѕРІРѕР№ РІРєР»Р°РґРєРµ
+  // внутренние ссылки — через роутер, внешние — в новой вкладке
   return href.startsWith('/') ? (
     <Link to={href} className={linkClass} />
   ) : (
@@ -44,7 +44,7 @@ function createLink(href: string): ReactElement {
   );
 }
 
-// РўРµРіРё, РґРѕСЃС‚СѓРїРЅС‹Рµ РІ РїРµСЂРµРІРѕРґР°С… (СЃРј. i18n/locales/pages/firstStepPilot/types.ts)
+// Теги, доступные в переводах (см. i18n/locales/pages/firstStepPilot/types.ts)
 const components: Record<string, ReactElement> = {
   b: <b className="text-base font-bold" />,
   h: <strong className="text-[17px] font-bold" />,
@@ -115,9 +115,9 @@ export function FirstStepP() {
   return (
     <BreadcrumbLayout>
       <div className="mt-[30px] flex flex-col gap-[50px]">
-        <h4 className="text-3xl font-bold leading-8 text-black md:text-[55px]">
+        <h1 className="text-3xl font-bold leading-8 text-black md:text-[55px]">
           {t('title')}
-        </h4>
+        </h1>
         <div className="squircle-3xl shadow-figma bg-white px-[32px] py-[41px] text-[15px] leading-6 text-black">
           <Heading i18nKey="welcome.title" />
           <Paragraph i18nKey="welcome.intro" />
