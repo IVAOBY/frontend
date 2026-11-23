@@ -16,87 +16,117 @@ const person = (id: number, first: string): PublicUser => ({
 });
 
 export const people = {
-  director: person(700101, 'Andrei'),
-  atcOps: person(700102, 'Mikita'),
-  flightOps: person(700103, 'Dzianis'),
-  training: person(700104, 'Siarhei'),
-  trainingAdvisor: person(700105, 'Volha'),
-  events: person(700106, 'Yauhen'),
-  eventsAssistant: person(700107, 'Hanna'),
-  prAssistant: person(700108, 'Kiryl'),
-  membership: person(700109, 'Maksim'),
-  membershipAssistant: person(700110, 'Darya'),
-  webmaster: person(700111, 'Uladzimir'),
+  director: person(700101, 'Capt. Bulba'),
+  atcOps: person(700102, 'Major Squawk'),
+  flightOps: person(700103, 'Baron Flaps'),
+  training: person(700104, 'Sgt. Go-Around'),
+  trainingAdvisor: person(700105, 'Volha "QNH"'),
+  events: person(700106, 'Yauhen "Direct"'),
+  eventsAssistant: person(700107, 'Hanna "Hold"'),
+  prAssistant: person(700108, 'Kiryl "ATIS"'),
+  membership: person(700109, 'Maksim "Push"'),
+  membershipAssistant: person(700110, 'Darya "Taxi"'),
+  webmaster: person(700111, 'Uladzimir 404'),
   // Текущий пользователь в профиле «staff» — он же BY-AWM.
-  me: person(712345, 'Ales'),
+  me: person(712345, 'Ales "Ctrl+Z"'),
   // Участники событий, не входящие в staff.
-  controllerA: person(720001, 'Artsiom'),
-  controllerB: person(720002, 'Palina'),
-  controllerC: person(720003, 'Ihar'),
+  controllerA: person(720001, 'Artsiom "Butter"'),
+  controllerB: person(720002, 'Palina "Wilco"'),
+  controllerC: person(720003, 'Ihar "Say Again"'),
 };
 
 const departments: StaffDepartment[] = [
-  { id: 'HQ', order: 1, name: 'Headquarters', email: 'by-hq@ivao.aero' },
+  {
+    id: 'HQ',
+    order: 1,
+    name: 'Headquarters (Supreme Sofa Council)',
+    email: 'by-hq@ivao.aero',
+  },
   {
     id: 'AO',
     order: 2,
-    name: 'ATC Operations Department',
+    name: 'ATC Operations & Microphone Whisperers',
     email: 'by-atcops@ivao.aero',
   },
   {
     id: 'FO',
     order: 3,
-    name: 'Flight Operations Department',
+    name: 'Flight Operations & Hard Landings Dept.',
     email: 'by-flightops@ivao.aero',
   },
   {
     id: 'SO',
     order: 4,
-    name: 'Special Operations Department',
+    name: 'Special Operations (Top Secret Potatoes)',
     email: 'by-specialops@ivao.aero',
   },
   {
     id: 'TD',
     order: 5,
-    name: 'Training Department',
+    name: 'Training & Stress-Testing Department',
     email: 'by-training@ivao.aero',
   },
   {
     id: 'ED',
     order: 6,
-    name: 'Events Department',
+    name: 'Events & Airspace Chaos Department',
     email: 'by-events@ivao.aero',
   },
   {
     id: 'PR',
     order: 7,
-    name: 'Public Relations Department',
+    name: 'Public Relations & Meme Department',
     email: 'by-publicrelations@ivao.aero',
   },
   {
     id: 'MD',
     order: 8,
-    name: 'Membership Department',
+    name: 'Membership & Cookie Distribution Dept.',
     email: 'by-membership@ivao.aero',
   },
-  { id: 'WD', order: 9, name: 'Web Department', email: 'by-web@ivao.aero' },
+  {
+    id: 'WD',
+    order: 9,
+    name: 'Web & Server Hamster Care Department',
+    email: 'by-web@ivao.aero',
+  },
 ];
 
 const titles = {
-  director: lt('Director', 'Директор', 'Дырэктар'),
-  coordinator: lt('Coordinator', 'Координатор', 'Каардынатар'),
-  assistant: lt(
-    'Assistant Coordinator',
-    'Ассистент координатора',
-    'Асістэнт каардынатара',
+  director: lt(
+    'Chief Sky Boss',
+    'Главный по небу и драникам',
+    'Галоўны па небе і драніках',
   ),
-  advisor: lt('Advisor', 'Советник', 'Дарадца'),
-  trainer: lt('Trainer', 'Тренер', 'Трэнер'),
-  webmaster: lt('Webmaster', 'Вебмастер', 'Вэбмайстар'),
+  coordinator: lt(
+    'Grand Coordinator of Chaos',
+    'Великий координатор хаоса',
+    'Вялікі каардынатар хаосу',
+  ),
+  assistant: lt(
+    'Deputy Coffee Carrier',
+    'Заместитель по кофе и панике',
+    'Намеснік па каве і паніцы',
+  ),
+  advisor: lt(
+    'Voice of Reason (Ignored)',
+    'Голос разума (редко слушают)',
+    'Голас розуму (рэдка слухаюць)',
+  ),
+  trainer: lt(
+    'Certified Nerve Tester',
+    'Сертифицированный испытатель нервов',
+    'Сертыфікаваны выпрабавальнік нерваў',
+  ),
+  webmaster: lt(
+    'Prod Breaker in Chief',
+    'Главный по падению прода',
+    'Галоўны па падзенні прода',
+  ),
   assistantWebmaster: lt(
-    'Assistant Webmaster',
-    'Ассистент вебмастера',
-    'Асістэнт вэбмайстра',
+    'Professional Ctrl+Z Specialist',
+    'Мастер экстренного Ctrl+Z',
+    'Майстар экстраннага Ctrl+Z',
   ),
 };
 
@@ -149,12 +179,12 @@ export const profiles = {
   // BY-AWM: есть доступ к админ-режиму /vehicles, рейтинг ATC — APC.
   staff: {
     id: people.me.id,
-    name: { first: 'Ales', last: 'Kavalenka' },
+    name: { first: 'Ales "Ctrl+Z"', last: 'Kavalenka' },
     centerId: null,
     countryId: 'BY',
     divisionId: 'BY',
     ratings: { atc: 6, pilot: 4 },
-    email: 'ales.kavalenka@example.com',
+    email: 'ales.ctrlz@example.com',
     staffPositions: positions
       .filter((p) => p.user?.id === people.me.id)
       .map(({ user: _user, ...p }) => ({
@@ -165,12 +195,12 @@ export const profiles = {
   // Обычный участник: без staff-позиций, рейтинг ATC — AS2 (на TWR/APP не хватает).
   member: {
     id: 712346,
-    name: { first: 'Iryna', last: 'Savich' },
+    name: { first: 'Iryna "No-ILS"', last: 'Savich' },
     centerId: null,
     countryId: 'BY',
     divisionId: 'BY',
     ratings: { atc: 3, pilot: 3 },
-    email: 'iryna.savich@example.com',
+    email: 'iryna.visualonly@example.com',
     staffPositions: [],
   },
 } satisfies Record<string, User>;
