@@ -171,7 +171,8 @@ export function AirportPage() {
                         </>
                       ) : (
                         <p className="text-red-500">
-                          {airport.metar?.message ?? t('airports.current.weather.unavailable')}
+                          {airport.metar?.message ??
+                            t('airports.current.weather.unavailable')}
                         </p>
                       )}
                     </div>
@@ -189,7 +190,8 @@ export function AirportPage() {
                       </>
                     ) : (
                       <p className="text-red-500">
-                        {airport.taf?.message ?? t('airports.current.weather.unavailable')}
+                        {airport.taf?.message ??
+                          t('airports.current.weather.unavailable')}
                       </p>
                     )}
                   </div>

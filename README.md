@@ -12,7 +12,7 @@
 
 <p align="center">
   <a href="https://github.com/IVAOBY/frontend/blob/main/package.json">
-    <img src="https://img.shields.io/badge/license-UNLICENSED-red" alt="License" />
+    <img src="https://img.shields.io/badge/license-MIT-blue" alt="License" />
   </a>
   <a href="https://react.dev">
     <img src="https://img.shields.io/badge/built%20with-React%2018-61DAFB" alt="Built with React" />
@@ -65,7 +65,7 @@ The site is trilingual: Belarusian (`be`), English (`en`) and Russian (`ru`). Th
 
 - Node.js 18+ (Vite 5 requires Node 18 or newer)
 - Yarn 4. It is pinned in `package.json`, so `corepack enable` is enough.
-- A running [`ivaoby/api`](https://github.com/IVAOBY/api) instance to serve data — the production API is the default, so you can develop against it out of the box.
+- No backend is needed for development: [mock mode](#without-the-api-mock-mode) serves fictional data. The division API is closed-source; staff with access can point the app at their own instance.
 
 ### Setup
 
@@ -88,7 +88,7 @@ The site is trilingual: Belarusian (`be`), English (`en`) and Russian (`ru`). Th
    | -------------- | ------------------------------------ | ------------------------------ |
    | `VITE_API_URL` | Base URL of the division backend API | `https://api.by.ivao.aero`     |
 
-   To develop against a local backend, point `VITE_API_URL` at your instance, e.g. `http://localhost:3000`.
+   This step is only needed to run against a real backend. To develop against a local instance, point `VITE_API_URL` at it, e.g. `http://localhost:3000`. External contributors should use mock mode and must not send test traffic to the production API.
 
 ## 🚀 Usage
 
@@ -127,7 +127,7 @@ yarn build    # type-checks with tsc, then builds with vite
 yarn preview  # serves the production build locally
 ```
 
-The build is emitted to `dist/`. Deployment to production (the divisional hosting) is handled by the division leadership — production actions are not automated from this repository (see [AGENTS.md](./AGENTS.md)).
+The build is emitted to `dist/`. Deployment to production (the divisional hosting) is handled by the division leadership — production actions are not triggered from pull requests.
 
 ### Scripts
 
@@ -190,13 +190,9 @@ src/
 
 ## 🤝 Contributing
 
-This is a private project of IVAO Belarus Division; contributions come from division staff.
+Contributions are welcome. Please read [CONTRIBUTING.md](./CONTRIBUTING.md) for setup, workflow and PR rules, and follow the [Code of Conduct](./CODE_OF_CONDUCT.md).
 
-- Branch off `main` and open a pull request into `main`.
-- Before opening a PR, run `yarn lint` and `yarn build`, and manually check the affected pages in the dev server.
-- Translate every new or changed string into all three locales (see [Localization](#-localization)).
-- There are no pre-commit hooks in this repository: run `yarn format` before committing.
-- Conventions for AI coding agents and repository working rules are in [AGENTS.md](./AGENTS.md); known issues are collected in [BUGS.md](./BUGS.md).
+To report a vulnerability, do not open a public issue: see [SECURITY.md](./SECURITY.md).
 
 ## 📧 Contact
 
@@ -205,7 +201,9 @@ This is a private project of IVAO Belarus Division; contributions come from divi
 
 ## 📄 License
 
-UNLICENSED. This software is proprietary to IVAO Belarus Division.
+The source code is released under the [MIT License](./LICENSE).
+
+The IVAO and IVAO Belarus names, logos, and other brand assets are **not** covered by this license and remain the property of their respective owners. Forks must not present themselves as an official IVAO or IVAO Belarus website.
 
 ---
 

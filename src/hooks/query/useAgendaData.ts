@@ -187,7 +187,11 @@ export function useAgendaData({ cursor, selectedDay }: UseAgendaDataParams) {
         })
         .catch((err: unknown) => {
           if (generation !== generationRef.current) return;
-          setError(err instanceof Error ? err : new Error(String(err)));
+          setError(
+            err instanceof Error
+              ? err
+              : new Error(typeof err === 'string' ? err : 'Unknown error'),
+          );
         })
         .finally(() => {
           pendingRef.current.delete(pendingKey);

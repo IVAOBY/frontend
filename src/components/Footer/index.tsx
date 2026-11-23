@@ -140,7 +140,7 @@ export const Footer = () => {
               ]}
             />
           </div>
-          <div className="flex hidden flex-col gap-2 lg:flex">
+          <div className="hidden flex-col gap-2 lg:flex">
             <div className="flex flex-row">
               <SocialIcon
                 href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"

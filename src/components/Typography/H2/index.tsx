@@ -5,7 +5,7 @@ import { classNames } from '../../../utils/styles';
 export const H2 = forwardRef<
   HTMLHeadingElement,
   ComponentPropsWithoutRef<'h2'>
->(({ className, ...props }, ref) => (
+>(({ className, children, ...props }, ref) => (
   <h2
     ref={ref}
     className={classNames(
@@ -13,6 +13,8 @@ export const H2 = forwardRef<
       className,
     )}
     {...props}
-  />
+  >
+    {children}
+  </h2>
 ));
 H2.displayName = 'H2';
