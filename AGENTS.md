@@ -67,36 +67,28 @@ yarn format       # prettier src -w
 
 ## Известные ловушки
 
-1. **🔴 Сборка сейчас падает.** Коммит `a4c7e84` (20.10.2026) удалил `@ivaoby/common`
-   из `package.json` и `yarn.lock`, но импорты остались:
-   - `src/types/Airport.ts:4` — `@ivaoby/common/types/data/internal/ivao-weather`
-   - `src/components/MainPage/components/OnlineInfo.tsx:4-5` — `@ivaoby/common/types/tracker/internal/…`
-
-   `types/Airport.ts` входит в граф сборки (`useAirports.ts` → `AirportPage`) → ожидается TS2307.
-   Варианты: вернуть зависимость, либо убрать импорты и заменить типы локальными.
-   **Это первое, что надо починить в этом репозитории.**
-2. **`origin/main` отстаёт от `origin/dev` на 8 коммитов**, а `dev` обновлялся позже
+1. **`origin/main` отстаёт от `origin/dev` на 8 коммитов**, а `dev` обновлялся позже
    (24.10.2026). Сначала выяснить, какой ветке принадлежит прод.
-3. **Ветка-зомби** `IVAOBY-Добавить-проверку-доступов-по-департаменту` (+2 / **−89** от `main`,
+2. **Ветка-зомби** `IVAOBY-Добавить-проверку-доступов-по-департаменту` (+2 / **−89** от `main`,
    последний коммит 15.08.2025) содержит незавершённую реализацию доступа по департаментам:
    `src/hooks/useDepAccess.ts`, `src/components/Private/index.tsx`, сильно переписанные
    `useBookingMutations.tsx` и `ShiftComponent.tsx` (+860 строк). В `main` этой идеи нет —
    если она нужна, её надо дописать, а не просто смержить.
-4. **Дублирование ESLint-конфига**: правила есть и в `package.json`, и в `.eslintrc` — и они различаются.
-5. **Скрипт `commitmsg` мёртвый**: ссылается на `commitlint`/`husky`, которых в зависимостях нет.
-6. **`.gitignore` игнорирует `yarn.lock`**, хотя файл tracked — противоречие, приводит к расхождениям.
-7. **Неиспользуемые зависимости**: `jwt-decode`, `mapbox-gl`/`react-map-gl` (маршрут `/map` закомментирован),
+3. **Дублирование ESLint-конфига**: правила есть и в `package.json`, и в `.eslintrc` — и они различаются.
+4. **Скрипт `commitmsg` мёртвый**: ссылается на `commitlint`/`husky`, которых в зависимостях нет.
+5. **`.gitignore` игнорирует `yarn.lock`**, хотя файл tracked — противоречие, приводит к расхождениям.
+6. **Неиспользуемые зависимости**: `jwt-decode`, `mapbox-gl`/`react-map-gl` (маршрут `/map` закомментирован),
    `@mantine/form` (только в отключённом `ContactUs.tsx`).
-8. **Ошибки обрабатываются не везде**: Error Boundary в `App.tsx` нет, `pages/training/index.tsx` —
+7. **Ошибки обрабатываются не везде**: Error Boundary в `App.tsx` нет, `pages/training/index.tsx` —
    заглушка из пустых `<div>`.
-9. **Дублирование обработки ошибок 401**: axios-интерсептор и `UserContext` дублируют редирект на логин.
-10. **Мёртвый код**: `src/pages/MapPage.tsx`, `src/components/MainPage/components/OnlineInfo.tsx`,
-    `src/hooks/types.ts` (`DecodedTokenInt` — следы прежней JWT-схемы), `src/components/MessageOverlay.tsx`.
+8. **Дублирование обработки ошибок 401**: axios-интерсептор и `UserContext` дублируют редирект на логин.
+9. **Мёртвый код**: `src/pages/MapPage.tsx`,
+   `src/hooks/types.ts` (`DecodedTokenInt` — следы прежней JWT-схемы), `src/components/MessageOverlay.tsx`.
 
 ## Что считается готовым изменением
 
 - `yarn lint` — без ошибок
-- `yarn build` — **проходит** (сейчас не проходит — см. ловушку 1)
+- `yarn build` — **проходит**
 - ручная проверка затронутых страниц в dev-режиме
 - новые/изменённые строки переведены во **все три** локали
 - никаких новых секретов в tracked-файлах
