@@ -1,0 +1,48 @@
+name: Bug report
+description: Something on the site does not work as expected
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Security issues must **not** be reported here. See [SECURITY.md](https://github.com/IVAOBY/frontend/blob/main/SECURITY.md).
+        Do not include real VIDs, emails, or other personal data in screenshots or logs.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open /airports
+        2. Click on ...
+        3. See error
+    validations:
+      required: true
+  - type: input
+    id: page
+    attributes:
+      label: Page URL
+      placeholder: https://by.ivao.aero/...
+  - type: input
+    id: environment
+    attributes:
+      label: Browser, OS, and screen size
+      placeholder: Firefox 140, Windows 11, 1920×1080
+    validations:
+      required: true
+  - type: dropdown
+    id: language
+    attributes:
+      label: Interface language
+      options: [be, en, ru]
+  - type: textarea
+    id: extra
+    attributes:
+      label: Screenshots or console errors
+      description: Optional. Remove any personal data first.

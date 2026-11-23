@@ -254,6 +254,9 @@ const enTranslations: { translations: Translations } = {
           airport: 'RUNWAY`S',
         },
         sceneries: 'Sceneries',
+        weather: {
+          unavailable: 'Data unavailable',
+        },
       },
     },
     Scenery: {

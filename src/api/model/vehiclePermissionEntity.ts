@@ -3,9 +3,22 @@
  * Do not edit manually.
  * IVAO Belarus API
  * API service for handling IVAO Belarus Divisions Web infrastructure.
- * OpenAPI spec version: 1.13.2
+ * OpenAPI spec version: 1.16.3
  */
 
 export interface VehiclePermissionEntity {
-  [key: string]: unknown;
+  id: string;
+  vid: number;
+  validFrom: string;
+  /** @nullable */
+  validUntil: string | null;
+  issuedByVid: number;
+  issuedVia: string;
+  /** @nullable */
+  issueReason: string | null;
+  createdAt: string;
+  /** @nullable */
+  revokedAt: string | null;
+  /** @nullable */
+  revokedByVid: number | null;
 }

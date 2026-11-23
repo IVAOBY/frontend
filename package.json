@@ -1,7 +1,7 @@
 {
   "name": "by-frontend",
   "version": "0.1.0",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -47,55 +47,12 @@
   },
   "scripts": {
     "dev": "vite --host",
+    "dev:mock": "vite --host --mode mock",
     "build": "tsc && vite build",
-    "commitmsg": "commitlint -E HUSKY_GIT_PARAMS",
     "preview": "vite preview",
     "format": "prettier src -w --log-level warn",
-    "lint": "eslint src/ --cache --report-unused-disable-directives --no-ignore",
+    "lint": "eslint src/ --cache --report-unused-disable-directives",
     "gen:api": "orval"
-  },
-  "eslintConfig": {
-    "extends": [
-      "@ivao/eslint-config",
-      "@ivao/eslint-config/tailwind",
-      "@ivao/eslint-config/react",
-      "@ivao/eslint-config/storybook"
-    ],
-    "parserOptions": {
-      "tsconfigRootDir": "./",
-      "project": [
-        "./tsconfig.json"
-      ],
-      "extraFileExtensions": [
-        ".json",
-        ".lock"
-      ]
-    },
-    "rules": {
-      "yarn.lock": "off",
-      "@typescript-eslint/no-explicit-any": "off",
-      "@typescript-eslint/no-unsafe-call": "off",
-      "@typescript-eslint/no-unsafe-member-access": "off",
-      "@typescript-eslint/no-unsafe-assignment": "off"
-    },
-    "ignorePatterns": [
-      "yarn.lock",
-      "*.json"
-    ],
-    "overrides": [
-      {
-        "files": [
-          "yarn.lock",
-          "./.eslintcache",
-          "./.lintstagedrc",
-          "./package.json",
-          "**/*.{js,cjs}"
-        ],
-        "extends": [
-          "plugin:@typescript-eslint/disable-type-checked"
-        ]
-      }
-    ]
   },
   "browserslist": {
     "production": [
@@ -111,20 +68,12 @@
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.1.1",
-    "@ivao/eslint-config": "^1.1.0",
+    "@ivao/eslint-config": "1.2.0",
     "@ivao/prettier-config": "^1.1.0",
     "@testing-library/dom": "^10.4.0",
-    "@typescript-eslint/eslint-plugin": "^6.19.1",
     "autoprefixer": "^10.4.16",
-    "eslint": "^8.56.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-jsx-a11y": "^6.8.0",
-    "eslint-plugin-prettier": "^5.1.3",
-    "eslint-plugin-react": "^7.33.2",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.5",
-    "eslint-plugin-storybook": "^0.6.15",
-    "eslint-plugin-tailwindcss": "^3.14.1",
+    "eslint": "9.22.0",
+    "msw": "^3.0.6",
     "orval": "8.46.0",
     "postcss": "^8.1.0",
     "prettier": "^3.2.4",

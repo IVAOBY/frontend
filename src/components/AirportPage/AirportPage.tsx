@@ -164,13 +164,16 @@ export function AirportPage() {
                       <img alt={airport.name} src={metaricon} />
                     </div>
                     <div className="min-h-[80px] w-full content-center bg-white px-4 py-2 text-xl font-semibold text-black">
-                      {airport.metar.metar ? (
+                      {airport.metar?.metar ? (
                         <>
                           <span className="text-atmos-700">METAR</span>{' '}
                           {airport.metar.metar}{' '}
                         </>
                       ) : (
-                        <p className="text-red-500">{airport.metar.message}</p>
+                        <p className="text-red-500">
+                          {airport.metar?.message ??
+                            t('airports.current.weather.unavailable')}
+                        </p>
                       )}
                     </div>
                   </div>
@@ -180,13 +183,16 @@ export function AirportPage() {
                     <IconRadar2 size={47} stroke-width={1.5} />
                   </div>
                   <div className="min-h-[122px] w-[855px] content-center bg-white px-4 py-2 text-xl font-semibold text-black">
-                    {airport.taf.taf ? (
+                    {airport.taf?.taf ? (
                       <>
                         <span className="text-atmos-700">TAF</span>{' '}
                         {airport.taf.taf}{' '}
                       </>
                     ) : (
-                      <p className="text-red-500">{airport.taf.message}</p>
+                      <p className="text-red-500">
+                        {airport.taf?.message ??
+                          t('airports.current.weather.unavailable')}
+                      </p>
                     )}
                   </div>
                 </div>

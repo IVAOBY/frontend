@@ -253,6 +253,9 @@ const beTranslations: { translations: Translations } = {
           airport: 'аэрадрома',
         },
         sceneries: 'Сцэнарыі',
+        weather: {
+          unavailable: 'Дадзеныя недаступныя',
+        },
       },
     },
     Scenery: {

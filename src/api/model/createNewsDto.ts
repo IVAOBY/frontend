@@ -3,7 +3,7 @@
  * Do not edit manually.
  * IVAO Belarus API
  * API service for handling IVAO Belarus Divisions Web infrastructure.
- * OpenAPI spec version: 1.13.2
+ * OpenAPI spec version: 1.16.3
  */
 import type { LocalizableTextDto } from './localizableTextDto';
 import type { LocalizableVarcharDto } from './localizableVarcharDto';
@@ -12,4 +12,6 @@ export interface CreateNewsDto {
   name: LocalizableVarcharDto;
   description: LocalizableTextDto;
   image_url: string;
+  /** ID категорий новости. При редактировании пустой массив снимает все категории, отсутствие поля их не трогает. */
+  categoryIds?: number[];
 }

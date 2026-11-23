@@ -3,21 +3,21 @@
  * Do not edit manually.
  * IVAO Belarus API
  * API service for handling IVAO Belarus Divisions Web infrastructure.
- * OpenAPI spec version: 1.13.2
+ * OpenAPI spec version: 1.16.3
  */
 import type { GdprStatisticsResponseByMonth } from './gdprStatisticsResponseByMonth';
 
 export interface GdprStatisticsResponse {
-  /** Total number of GDPR requests */
+  /** Всего GDPR-запросов */
   totalRequests: number;
-  /** Number of completed requests */
+  /** Завершённых запросов */
   completedRequests: number;
-  /** Number of failed requests */
+  /** Запросов с ошибкой */
   failedRequests: number;
-  /** Number of in-progress requests */
+  /** Запросов в процессе */
   inProgressRequests: number;
-  /** Total number of users processed */
+  /** Всего обработано пользователей */
   totalUsersProcessed: number;
-  /** Statistics by month (key — `YYYY-MM`) */
+  /** Статистика по месяцам (ключ — `YYYY-MM`) */
   byMonth: GdprStatisticsResponseByMonth;
 }

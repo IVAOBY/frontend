@@ -113,7 +113,7 @@ export const EventHeader = ({ data, registrationStatus, t }) => {
             <img
               src={categoryInfo.imageUrl}
               alt={categoryInfo.label}
-              className="h-5 w-5 object-contain"
+              className="size-5 object-contain"
             />
           )}
         </Tag>

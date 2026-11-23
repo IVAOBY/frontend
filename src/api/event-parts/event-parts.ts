@@ -3,7 +3,7 @@
  * Do not edit manually.
  * IVAO Belarus API
  * API service for handling IVAO Belarus Divisions Web infrastructure.
- * OpenAPI spec version: 1.13.2
+ * OpenAPI spec version: 1.16.3
  */
 import { useMutation, useQuery } from '@tanstack/react-query';
 
@@ -297,7 +297,7 @@ export const getPartFindOneEventQueryKey = (id: number) => {
 
 export const getPartFindOneEventQueryOptions = <
   TData = Awaited<ReturnType<typeof partFindOneEvent>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
 >(
   id: number,
   options?: {
@@ -334,11 +334,11 @@ export const getPartFindOneEventQueryOptions = <
 export type PartFindOneEventQueryResult = NonNullable<
   Awaited<ReturnType<typeof partFindOneEvent>>
 >;
-export type PartFindOneEventQueryError = ErrorType<unknown>;
+export type PartFindOneEventQueryError = ErrorType<ErrorResponseDto>;
 
 export function usePartFindOneEvent<
   TData = Awaited<ReturnType<typeof partFindOneEvent>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
 >(
   id: number,
   options: {
@@ -365,7 +365,7 @@ export function usePartFindOneEvent<
 };
 export function usePartFindOneEvent<
   TData = Awaited<ReturnType<typeof partFindOneEvent>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
 >(
   id: number,
   options?: {
@@ -392,7 +392,7 @@ export function usePartFindOneEvent<
 };
 export function usePartFindOneEvent<
   TData = Awaited<ReturnType<typeof partFindOneEvent>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
 >(
   id: number,
   options?: {
@@ -415,7 +415,7 @@ export function usePartFindOneEvent<
 
 export function usePartFindOneEvent<
   TData = Awaited<ReturnType<typeof partFindOneEvent>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
 >(
   id: number,
   options?: {

@@ -3,7 +3,7 @@
  * Do not edit manually.
  * IVAO Belarus API
  * API service for handling IVAO Belarus Divisions Web infrastructure.
- * OpenAPI spec version: 1.13.2
+ * OpenAPI spec version: 1.16.3
  */
 import { useMutation, useQuery } from '@tanstack/react-query';
 
@@ -72,7 +72,7 @@ export const getTrainingFindAllQueryKey = (params?: TrainingFindAllParams) => {
 
 export const getTrainingFindAllQueryOptions = <
   TData = Awaited<ReturnType<typeof trainingFindAll>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
 >(
   params?: TrainingFindAllParams,
   options?: {
@@ -104,11 +104,11 @@ export const getTrainingFindAllQueryOptions = <
 export type TrainingFindAllQueryResult = NonNullable<
   Awaited<ReturnType<typeof trainingFindAll>>
 >;
-export type TrainingFindAllQueryError = ErrorType<unknown>;
+export type TrainingFindAllQueryError = ErrorType<ErrorResponseDto>;
 
 export function useTrainingFindAll<
   TData = Awaited<ReturnType<typeof trainingFindAll>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
 >(
   params: undefined | TrainingFindAllParams,
   options: {
@@ -135,7 +135,7 @@ export function useTrainingFindAll<
 };
 export function useTrainingFindAll<
   TData = Awaited<ReturnType<typeof trainingFindAll>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
 >(
   params?: TrainingFindAllParams,
   options?: {
@@ -162,7 +162,7 @@ export function useTrainingFindAll<
 };
 export function useTrainingFindAll<
   TData = Awaited<ReturnType<typeof trainingFindAll>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
 >(
   params?: TrainingFindAllParams,
   options?: {
@@ -185,7 +185,7 @@ export function useTrainingFindAll<
 
 export function useTrainingFindAll<
   TData = Awaited<ReturnType<typeof trainingFindAll>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
 >(
   params?: TrainingFindAllParams,
   options?: {

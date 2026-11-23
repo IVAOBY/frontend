@@ -3,9 +3,10 @@
  * Do not edit manually.
  * IVAO Belarus API
  * API service for handling IVAO Belarus Divisions Web infrastructure.
- * OpenAPI spec version: 1.13.2
+ * OpenAPI spec version: 1.16.3
  */
 import type { LocalizableText } from './localizableText';
+import type { NewsCategory } from './newsCategory';
 import type { User } from './user';
 
 export interface NewsEntity {
@@ -17,4 +18,5 @@ export interface NewsEntity {
   description: LocalizableText;
   image_url: string;
   publishedAt: string;
+  categories?: NewsCategory[];
 }

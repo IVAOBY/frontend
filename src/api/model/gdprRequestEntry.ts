@@ -3,17 +3,17 @@
  * Do not edit manually.
  * IVAO Belarus API
  * API service for handling IVAO Belarus Divisions Web infrastructure.
- * OpenAPI spec version: 1.13.2
+ * OpenAPI spec version: 1.16.3
  */
 
 export interface GdprRequestEntry {
   /**
-   * User ID for GDPR data request
+   * VID пользователя, для которого выполняется GDPR-запрос
    * @minimum 1
    */
   userId: number;
-  /** Whether to export/copy user data */
+  /** Выгрузить (скопировать) данные пользователя */
   copy?: boolean;
-  /** Whether to delete user data */
+  /** Удалить данные пользователя */
   delete?: boolean;
 }

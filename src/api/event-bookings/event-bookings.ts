@@ -3,7 +3,7 @@
  * Do not edit manually.
  * IVAO Belarus API
  * API service for handling IVAO Belarus Divisions Web infrastructure.
- * OpenAPI spec version: 1.13.2
+ * OpenAPI spec version: 1.16.3
  */
 import { useMutation, useQuery } from '@tanstack/react-query';
 
@@ -71,7 +71,7 @@ export const getBookingFindOneQueryKey = (id: number) => {
 
 export const getBookingFindOneQueryOptions = <
   TData = Awaited<ReturnType<typeof bookingFindOne>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
 >(
   id: number,
   options?: {
@@ -104,11 +104,11 @@ export const getBookingFindOneQueryOptions = <
 export type BookingFindOneQueryResult = NonNullable<
   Awaited<ReturnType<typeof bookingFindOne>>
 >;
-export type BookingFindOneQueryError = ErrorType<unknown>;
+export type BookingFindOneQueryError = ErrorType<ErrorResponseDto>;
 
 export function useBookingFindOne<
   TData = Awaited<ReturnType<typeof bookingFindOne>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
 >(
   id: number,
   options: {
@@ -131,7 +131,7 @@ export function useBookingFindOne<
 };
 export function useBookingFindOne<
   TData = Awaited<ReturnType<typeof bookingFindOne>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
 >(
   id: number,
   options?: {
@@ -154,7 +154,7 @@ export function useBookingFindOne<
 };
 export function useBookingFindOne<
   TData = Awaited<ReturnType<typeof bookingFindOne>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
 >(
   id: number,
   options?: {
@@ -173,7 +173,7 @@ export function useBookingFindOne<
 
 export function useBookingFindOne<
   TData = Awaited<ReturnType<typeof bookingFindOne>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
 >(
   id: number,
   options?: {
@@ -217,7 +217,7 @@ export const getBookingFindOneEventQueryKey = (id: number) => {
 
 export const getBookingFindOneEventQueryOptions = <
   TData = Awaited<ReturnType<typeof bookingFindOneEvent>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
 >(
   id: number,
   options?: {
@@ -254,11 +254,11 @@ export const getBookingFindOneEventQueryOptions = <
 export type BookingFindOneEventQueryResult = NonNullable<
   Awaited<ReturnType<typeof bookingFindOneEvent>>
 >;
-export type BookingFindOneEventQueryError = ErrorType<unknown>;
+export type BookingFindOneEventQueryError = ErrorType<ErrorResponseDto>;
 
 export function useBookingFindOneEvent<
   TData = Awaited<ReturnType<typeof bookingFindOneEvent>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
 >(
   id: number,
   options: {
@@ -285,7 +285,7 @@ export function useBookingFindOneEvent<
 };
 export function useBookingFindOneEvent<
   TData = Awaited<ReturnType<typeof bookingFindOneEvent>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
 >(
   id: number,
   options?: {
@@ -312,7 +312,7 @@ export function useBookingFindOneEvent<
 };
 export function useBookingFindOneEvent<
   TData = Awaited<ReturnType<typeof bookingFindOneEvent>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
 >(
   id: number,
   options?: {
@@ -335,7 +335,7 @@ export function useBookingFindOneEvent<
 
 export function useBookingFindOneEvent<
   TData = Awaited<ReturnType<typeof bookingFindOneEvent>>,
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
 >(
   id: number,
   options?: {

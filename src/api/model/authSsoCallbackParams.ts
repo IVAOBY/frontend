@@ -3,11 +3,12 @@
  * Do not edit manually.
  * IVAO Belarus API
  * API service for handling IVAO Belarus Divisions Web infrastructure.
- * OpenAPI spec version: 1.13.2
+ * OpenAPI spec version: 1.16.3
  */
 
 export type AuthSsoCallbackParams = {
   /** Код авторизации от IVAO SSO */
   code: string;
+  /** CSRF-состояние, выданное при `/auth/login`; сверяется с cookie `auth_state` */
   state: string;
 };

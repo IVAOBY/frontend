@@ -3,7 +3,7 @@
  * Do not edit manually.
  * IVAO Belarus API
  * API service for handling IVAO Belarus Divisions Web infrastructure.
- * OpenAPI spec version: 1.13.2
+ * OpenAPI spec version: 1.16.3
  */
 import { useMutation, useQuery } from '@tanstack/react-query';
 
@@ -17,6 +17,7 @@ import type {
   CreateVehiclePermissionResponseDto,
   EditPermissionDto,
   ErrorResponseDto,
+  PurgeVehicleCachesResponseDto,
   RevokePermissionDto,
   RevokeVehiclePermissionResponseDto,
   VehiclePermissionEntity,
@@ -713,7 +714,7 @@ export const vehiclesCheck = (
 export const getVehiclesCheckMutationKey = () => ['vehiclesCheck'] as const;
 
 export const getVehiclesCheckMutationOptions = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
   TContext = unknown,
 >(options?: {
   mutation?: UseMutationOptions<
@@ -754,7 +755,7 @@ export type VehiclesCheckMutationResult = NonNullable<
   Awaited<ReturnType<typeof vehiclesCheck>>
 >;
 export type VehiclesCheckMutationBody = BodyType<CheckPermissionDto>;
-export type VehiclesCheckMutationError = ErrorType<unknown>;
+export type VehiclesCheckMutationError = ErrorType<ErrorResponseDto>;
 export type VehiclesCheckMutationVariables = {
   data: BodyType<CheckPermissionDto>;
 };
@@ -763,7 +764,7 @@ export type VehiclesCheckMutationVariables = {
  * @summary Проверить наличие активного разрешения
  */
 export const useVehiclesCheck = <
-  TError = ErrorType<unknown>,
+  TError = ErrorType<ErrorResponseDto>,
   TContext = unknown,
 >(
   options?: {
@@ -882,7 +883,7 @@ export const useVehiclesRevoke = <
   return useMutation(getVehiclesRevokeMutationOptions(options), queryClient);
 };
 /**
- * Отменяет существующее будущее разрешение.
+ * Отменяет (физически удаляет) разрешение, которое ещё не начало действовать.
  * @summary Отменить разрешение
  */
 export const vehiclesCancel = (
@@ -989,7 +990,7 @@ export const vehiclesCleanup = (
   options?: SecondParameter<typeof customInstance>,
   signal?: AbortSignal,
 ) => {
-  return customInstance<CancelVehiclePermissionResponseDto>(
+  return customInstance<PurgeVehicleCachesResponseDto>(
     { url: `/vehicles/caches/purge`, method: 'DELETE', signal },
     options,
   );

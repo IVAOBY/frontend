@@ -253,6 +253,9 @@ const ruTranslations: { translations: Translations } = {
           airport: 'Аэродрома',
         },
         sceneries: 'Сценарии',
+        weather: {
+          unavailable: 'Данные недоступны',
+        },
       },
     },
     Scenery: {

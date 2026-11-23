@@ -3,11 +3,11 @@
  * Do not edit manually.
  * IVAO Belarus API
  * API service for handling IVAO Belarus Divisions Web infrastructure.
- * OpenAPI spec version: 1.13.2
+ * OpenAPI spec version: 1.16.3
  */
 
 export type DiscordAuthorizePreParams = {
-  /** Состояние OAuth2 (auth token и goto). */
+  /** CSRF-состояние OAuth2 (nonce из cookie `discord_nonce`). Не передаётся дальше на `authorize-final`. */
   state?: string;
   /** Код от Discord OAuth2. */
   code: string;

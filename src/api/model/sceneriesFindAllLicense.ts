@@ -3,13 +3,13 @@
  * Do not edit manually.
  * IVAO Belarus API
  * API service for handling IVAO Belarus Divisions Web infrastructure.
- * OpenAPI spec version: 1.13.2
+ * OpenAPI spec version: 1.16.3
  */
 
-export type SceneriesEntityLicense =
-  (typeof SceneriesEntityLicense)[keyof typeof SceneriesEntityLicense];
+export type SceneriesFindAllLicense =
+  (typeof SceneriesFindAllLicense)[keyof typeof SceneriesFindAllLicense];
 
-export const SceneriesEntityLicense = {
+export const SceneriesFindAllLicense = {
   freeware: 'freeware',
   payware: 'payware',
 } as const;

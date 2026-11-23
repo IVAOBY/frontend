@@ -3,7 +3,7 @@
  * Do not edit manually.
  * IVAO Belarus API
  * API service for handling IVAO Belarus Divisions Web infrastructure.
- * OpenAPI spec version: 1.13.2
+ * OpenAPI spec version: 1.16.3
  */
 import { useMutation, useQuery } from '@tanstack/react-query';
 
@@ -52,7 +52,7 @@ const withQueryKey = <T extends object, K>(
 };
 
 /**
- * @summary Получить allowlist Telegram-бота (HQ, WD)
+ * @summary Получить allowlist Telegram-бота
  */
 export const telegramAllowlistGetAll = (
   options?: SecondParameter<typeof customInstance>,
@@ -173,7 +173,7 @@ export function useTelegramAllowlistGetAll<
   queryKey: DataTag<QueryKey, TData, TError>;
 };
 /**
- * @summary Получить allowlist Telegram-бота (HQ, WD)
+ * @summary Получить allowlist Telegram-бота
  */
 
 export function useTelegramAllowlistGetAll<
@@ -205,7 +205,7 @@ export function useTelegramAllowlistGetAll<
 }
 
 /**
- * @summary Добавить Telegram ID в allowlist (HQ, WD)
+ * @summary Добавить Telegram ID в allowlist
  */
 export const telegramAllowlistAdd = (
   id: string,
@@ -267,7 +267,7 @@ export type TelegramAllowlistAddMutationError = ErrorType<ErrorResponseDto>;
 export type TelegramAllowlistAddMutationVariables = { id: string };
 
 /**
- * @summary Добавить Telegram ID в allowlist (HQ, WD)
+ * @summary Добавить Telegram ID в allowlist
  */
 export const useTelegramAllowlistAdd = <
   TError = ErrorType<ErrorResponseDto>,
@@ -295,7 +295,7 @@ export const useTelegramAllowlistAdd = <
   );
 };
 /**
- * @summary Удалить Telegram ID из allowlist (HQ, WD)
+ * @summary Удалить Telegram ID из allowlist
  */
 export const telegramAllowlistRemove = (
   id: string,
@@ -357,7 +357,7 @@ export type TelegramAllowlistRemoveMutationError = ErrorType<ErrorResponseDto>;
 export type TelegramAllowlistRemoveMutationVariables = { id: string };
 
 /**
- * @summary Удалить Telegram ID из allowlist (HQ, WD)
+ * @summary Удалить Telegram ID из allowlist
  */
 export const useTelegramAllowlistRemove = <
   TError = ErrorType<ErrorResponseDto>,
