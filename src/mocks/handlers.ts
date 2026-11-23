@@ -214,12 +214,16 @@ export const handlers = [
       const eventPosition = part?.positions.find(
         (p) => p.id === body.atcPositionId,
       );
-      if (!part || !eventPosition) return error(404, 'Position not found');
+      if (!part || !eventPosition)
+        return error(404, 'Position vanished into thin air');
       if (new Date(part.endDate) < new Date()) {
-        return error(400, 'Booking for this shift is closed');
+        return error(400, 'Too late — this shift has already departed');
       }
       if (user.ratings.atc < eventPosition.position.fra) {
-        return error(403, 'Insufficient ATC rating for this position');
+        return error(
+          403,
+          'Insufficient ATC rating for this position (nice try, cadet!)',
+        );
       }
       if (
         bookings.some(
@@ -229,7 +233,10 @@ export const handlers = [
             (b.user.id === user.id || b.status === BookingStatus.accepted),
         )
       ) {
-        return error(409, 'Position is already booked');
+        return error(
+          409,
+          'Position already taken — first come, first vectored',
+        );
       }
 
       const booking: MockBooking = {

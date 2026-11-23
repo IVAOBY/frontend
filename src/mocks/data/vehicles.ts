@@ -12,7 +12,8 @@ export const vehiclePermissions: VehiclePermissionEntity[] = [
     validUntil: null,
     issuedByVid: people.atcOps.id,
     issuedVia: 'web',
-    issueReason: 'Completed Follow-Me Car training',
+    issueReason:
+      'Successfully parallel-parked between two Boeing 737s without scratching a single winglet',
     createdAt: at(-120, 9),
     revokedAt: null,
     revokedByVid: null,
@@ -24,7 +25,8 @@ export const vehiclePermissions: VehiclePermissionEntity[] = [
     validUntil: at(50, 0),
     issuedByVid: people.atcOps.id,
     issuedVia: 'web',
-    issueReason: 'Temporary permission for Minsk RFE',
+    issueReason:
+      'Temporary permit for Minsk RFE — signed a blood oath not to drag-race A320s on RWY 31R',
     createdAt: at(-10, 12),
     revokedAt: null,
     revokedByVid: null,
@@ -48,7 +50,7 @@ export const vehiclePermissions: VehiclePermissionEntity[] = [
     validUntil: at(-30, 0),
     issuedByVid: people.atcOps.id,
     issuedVia: 'web',
-    issueReason: 'Summer event season',
+    issueReason: 'Summer apron drift season (strictly under 15 kt, allegedly)',
     createdAt: at(-90, 10),
     revokedAt: null,
     revokedByVid: null,
@@ -60,7 +62,8 @@ export const vehiclePermissions: VehiclePermissionEntity[] = [
     validUntil: null,
     issuedByVid: people.atcOps.id,
     issuedVia: 'web',
-    issueReason: null,
+    issueReason:
+      'Revoked after attempting to give a Follow-Me escort to a hovering helicopter',
     createdAt: at(-60, 18),
     revokedAt: at(-5, 20),
     revokedByVid: people.director.id,

@@ -1,6 +1,6 @@
 import type { AirportsEntity, SceneryEntity } from '../../api/model';
 
-// Справочник аэродромов дивизиона (снят с публичного API). Детали — только у части аэродромов, как и в реальных данных.
+// Справочник аэродромов дивизиона (с юмористическими описаниями, сценариями и погодой).
 export type MockAirport = Omit<
   AirportsEntity,
   'sceneries' | 'metar' | 'taf'
@@ -16,7 +16,7 @@ export const airports: MockAirport[] = [
     airportTypeId: 1,
     name: 'Minsk 1',
     description:
-      "Minsk-1 is a former airport in Minsk, operating from 1933 to 2015. From 1933 to 1982, it was the city's only civilian airport.",
+      'Former downtown airport (1933–2015). Now replaced by apartment towers, so please do not attempt an ILS approach into somebody’s balcony.',
     latitude: 53.86,
     longitude: 27.54,
     elevation: 749,
@@ -59,9 +59,9 @@ export const airports: MockAirport[] = [
         id: 44,
         callsign: 'UMMM_TWR',
         name: {
-          en: 'Minsk 1 Tower',
-          ru: 'Minsk 1 Tower',
-          be: 'Minsk 1 Tower',
+          en: 'Minsk 1 Ghost Tower',
+          ru: 'Башня-призрак Минск-1',
+          be: 'Вежа-прывід Мінск-1',
         },
         frequency: '128.000',
         airportIcao: 'UMMM',
@@ -71,9 +71,9 @@ export const airports: MockAirport[] = [
         id: 45,
         callsign: 'UMMM_R_APP',
         name: {
-          en: 'Minsk Radar',
-          ru: 'Minsk Radar',
-          be: 'Minsk Radar',
+          en: 'Minsk Retro Radar',
+          ru: 'Минск Ретро-Радар',
+          be: 'Мінск Рэтра-Радар',
         },
         frequency: '125.250',
         airportIcao: 'UMMM',
@@ -89,7 +89,7 @@ export const airports: MockAirport[] = [
     airportTypeId: 1,
     name: 'Minsk 2',
     description:
-      'Minsk National Airport is the main international airport in Belarus. It is located 21 km (41 km by highway) from Minsk.',
+      'Main international gateway of Belarus, famously 41 km from the city so passengers have plenty of time to remember if they turned off the iron.',
     latitude: 53.8825,
     longitude: 28.03083,
     elevation: 681,
@@ -162,9 +162,9 @@ export const airports: MockAirport[] = [
         id: 1,
         callsign: 'UMMS_TWR',
         name: {
-          en: 'Minsk Tower',
-          ru: 'Minsk Tower',
-          be: 'Minsk Tower',
+          en: 'Minsk Tower (Go-Around HQ)',
+          ru: 'Minsk Tower (Штаб уходов)',
+          be: 'Minsk Tower (Штаб сыходаў)',
         },
         frequency: '130.400',
         airportIcao: 'UMMS',
@@ -174,9 +174,9 @@ export const airports: MockAirport[] = [
         id: 3,
         callsign: 'UMMS_GND',
         name: {
-          en: 'Minsk Ground',
-          ru: 'Minsk Ground',
-          be: 'Minsk Ground',
+          en: 'Minsk Ground (Taxi Maze)',
+          ru: 'Minsk Ground (Лабиринт)',
+          be: 'Minsk Ground (Лабірынт)',
         },
         frequency: '129.950',
         airportIcao: 'UMMS',
@@ -186,9 +186,9 @@ export const airports: MockAirport[] = [
         id: 4,
         callsign: 'UMMS_R_APP',
         name: {
-          en: 'Minsk Radar',
-          ru: 'Minsk Radar',
-          be: 'Minsk Radar',
+          en: 'Minsk Radar (Vector Boss)',
+          ru: 'Minsk Radar (Босс векторов)',
+          be: 'Minsk Radar (Бос вектараў)',
         },
         frequency: '125.250',
         airportIcao: 'UMMS',
@@ -198,9 +198,9 @@ export const airports: MockAirport[] = [
         id: 19,
         callsign: 'UMMS_APP',
         name: {
-          en: 'Minsk Approach',
-          ru: 'Minsk Approach',
-          be: 'Minsk Approach',
+          en: 'Minsk Approach (Hold Fan)',
+          ru: 'Minsk Approach (Фан зон)',
+          be: 'Minsk Approach (Фан зон)',
         },
         frequency: '125.900',
         airportIcao: 'UMMS',
@@ -210,9 +210,9 @@ export const airports: MockAirport[] = [
         id: 40,
         callsign: 'UMMSFM1',
         name: {
-          en: 'Follow-Me Car',
-          ru: 'Follow-Me Car',
-          be: 'Follow-Me Car',
+          en: 'Follow-Me Car (Turbo)',
+          ru: 'Follow-Me Car (Турбо)',
+          be: 'Follow-Me Car (Турба)',
         },
         frequency: '129.950',
         airportIcao: 'UMMS',
@@ -222,9 +222,9 @@ export const airports: MockAirport[] = [
         id: 50,
         callsign: 'UMMSFM2',
         name: {
-          en: 'Follow-Me Car',
-          ru: 'Follow-Me Car',
-          be: 'Follow-Me Car',
+          en: 'Follow-Me Car (No Drift)',
+          ru: 'Follow-Me Car (Без дрифта)',
+          be: 'Follow-Me Car (Без дрыфту)',
         },
         frequency: '129.950',
         airportIcao: 'UMMS',
@@ -234,7 +234,7 @@ export const airports: MockAirport[] = [
     sceneries: [
       {
         id: 1,
-        title: 'Minsk 2 - FSX',
+        title: 'Minsk 2 - FSX (Runs on a Potato)',
         license: 'freeware',
         link: 'https://www.avsimrus.com/f/fsx-sceneries-83/scenery-minsk-2-umms-73218.html',
         simulator: 'FSX',
@@ -242,7 +242,7 @@ export const airports: MockAirport[] = [
       },
       {
         id: 2,
-        title: 'MINSK NATIONAL AIRPORT - AVSIM',
+        title: 'MINSK NATIONAL - MSFS (Bye-bye 60 FPS)',
         license: 'payware',
         link: 'https://secure.simmarket.com/amsim-minsk-national-airport-umms-msfs2020.phtml',
         simulator: 'MSFS',
@@ -250,7 +250,7 @@ export const airports: MockAirport[] = [
       },
       {
         id: 3,
-        title: 'Minsk 2 - P3Dv3',
+        title: 'Minsk 2 - P3Dv3 (Vintage Classic)',
         license: 'freeware',
         link: 'https://drive.google.com/file/d/1Zylgz6pIZcfwU6tARTavpeaxH6okS40S/view?usp=sharing',
         simulator: 'P3D3',
@@ -258,7 +258,7 @@ export const airports: MockAirport[] = [
       },
       {
         id: 4,
-        title: 'Minsk 2 - P3Dv4',
+        title: 'Minsk 2 - P3Dv4 (Slightly Shinier Asphalt)',
         license: 'freeware',
         link: 'https://drive.google.com/file/d/1FggyiVxiCoRIfXwrSb1V4BcYbjD7li9r/view?usp=drive_link',
         simulator: 'P3D4',
@@ -266,7 +266,7 @@ export const airports: MockAirport[] = [
       },
       {
         id: 5,
-        title: 'Minsk 2 - Xplane 11',
+        title: 'Minsk 2 - X-Plane 11 (Extra Fog Included)',
         license: 'freeware',
         link: 'https://drive.google.com/file/d/1WZS1RiZFtwhQq36vMw4jjIOPyevCPYug/view?usp=share_link',
         simulator: 'X-Plane11',
@@ -281,7 +281,7 @@ export const airports: MockAirport[] = [
     airportTypeId: 1,
     name: 'Homiel',
     description:
-      'Homiel Airport is an international airport in Homiel, Belarus. It is located ten kilometres north of the city centre.',
+      'Homiel International Airport: ten kilometers north of the city and home to the friendliest crosswind in southeastern Belarus.',
     latitude: 52.52694,
     longitude: 31.01667,
     elevation: 471,
@@ -324,9 +324,9 @@ export const airports: MockAirport[] = [
         id: 7,
         callsign: 'UMGG_TWR',
         name: {
-          en: 'Homiel Tower',
-          ru: 'Homiel Tower',
-          be: 'Homiel Tower',
+          en: 'Homiel Tower (Sunny Vibes)',
+          ru: 'Homiel Tower (На чилле)',
+          be: 'Homiel Tower (На чыле)',
         },
         frequency: '118.100',
         airportIcao: 'UMGG',
@@ -336,9 +336,9 @@ export const airports: MockAirport[] = [
         id: 8,
         callsign: 'UMGG_APP',
         name: {
-          en: 'Homiel Approach',
-          ru: 'Homiel Approach',
-          be: 'Homiel Approach',
+          en: 'Homiel Approach (Wind Boss)',
+          ru: 'Homiel Approach (Боковой)',
+          be: 'Homiel Approach (Бакавы)',
         },
         frequency: '126.100',
         airportIcao: 'UMGG',
@@ -348,7 +348,7 @@ export const airports: MockAirport[] = [
     sceneries: [
       {
         id: 7,
-        title: 'Homiel  (VMP12147)',
+        title: 'Homiel - MSFS (Extra Butter Runway)',
         license: 'freeware',
         link: 'https://flightsim.to/addon/66455/umgg-airport-gomel',
         simulator: 'MSFS',
@@ -356,7 +356,7 @@ export const airports: MockAirport[] = [
       },
       {
         id: 16,
-        title: 'Homiel (Xplane 12)',
+        title: 'Homiel - X-Plane 12 (Puddles DLC Free)',
         license: 'freeware',
         link: 'https://forums.x-plane.org/files/file/99945-umgg-gomel-airport-of-belarus-for-xp12/',
         simulator: 'X-Plane12',
@@ -364,7 +364,7 @@ export const airports: MockAirport[] = [
       },
       {
         id: 17,
-        title: 'Homiel (Xplane 11)',
+        title: 'Homiel - X-Plane 11 (Old School Cool)',
         license: 'freeware',
         link: 'https://forums.x-plane.org/files/file/54840-umgg-gomel-belarus/',
         simulator: 'X-Plane11',
@@ -379,7 +379,7 @@ export const airports: MockAirport[] = [
     airportTypeId: 2,
     name: 'Shcuchyn',
     description:
-      'Former secret airbase in Hrodna region. Formed in 1939, it got a 2500m concrete runway for nuclear aviation in the Soviet era. Today it is a revived, thriving civilian hub for general aviation.',
+      'Former super-secret airbase with a 2500m concrete strip. Originally built for heavy bombers, now happily hosting Cessnas that only need the first 300 meters.',
     latitude: 53.59282,
     longitude: 24.76287,
     elevation: 564,
@@ -396,7 +396,7 @@ export const airports: MockAirport[] = [
     airportTypeId: 1,
     name: 'Brest',
     description:
-      'Brest Airport is an all-weather airport. It has an asphalt runway and provides ground technical services.',
+      'All-weather western gateway of Belarus. So close to the border that one wide base turn accidentally counts as an international flight.',
     latitude: 52.10833,
     longitude: 23.89639,
     elevation: 469,
@@ -439,9 +439,9 @@ export const airports: MockAirport[] = [
         id: 6,
         callsign: 'UMBB_A_TWR',
         name: {
-          en: 'Brest Tower',
-          ru: 'Brest Tower',
-          be: 'Brest Tower',
+          en: 'Brest Tower (Border Watch)',
+          ru: 'Brest Tower (На границе)',
+          be: 'Brest Tower (На мяжы)',
         },
         frequency: '127.700',
         airportIcao: 'UMBB',
@@ -451,7 +451,7 @@ export const airports: MockAirport[] = [
     sceneries: [
       {
         id: 6,
-        title: 'Brest (VMP12147)',
+        title: 'Brest - MSFS (Storks Not Included)',
         license: 'freeware',
         link: 'https://flightsim.to/file/73116/umbb-brest-airport',
         simulator: 'MSFS',
@@ -465,7 +465,8 @@ export const airports: MockAirport[] = [
     iata: null,
     airportTypeId: 3,
     name: 'Borisovo Air Base',
-    description: '',
+    description:
+      'Nothing to see here, civilian pilot. Definitely just an unusually flat, 2.5 km long concrete potato field.',
     latitude: 52.164,
     longitude: 24.3999,
     elevation: 463,
@@ -481,7 +482,8 @@ export const airports: MockAirport[] = [
     iata: null,
     airportTypeId: 3,
     name: 'Lida Air Base',
-    description: '',
+    description:
+      'Home to fast jets and extremely loud alarm clocks for anyone living within five kilometers of the runway threshold.',
     latitude: 53.877,
     longitude: 25.377,
     elevation: 465,
@@ -498,7 +500,7 @@ export const airports: MockAirport[] = [
     airportTypeId: 2,
     name: 'Minkou',
     description:
-      'Active sports airfield of Babrujsk DOSAAF club near Rahachou. Its grass field structure hosts annual national parachute and rocketry championships. It serves as a vital heart for aviation tourism in Palesie.',
+      'Sports grass airfield near Rahachou where skydivers jump out of perfectly functional airplanes and model rockets try to beat Minsk Control’s ceiling.',
     latitude: 53.01471,
     longitude: 29.87852,
     elevation: 475,
@@ -515,7 +517,7 @@ export const airports: MockAirport[] = [
     airportTypeId: 1,
     name: 'Viciebsk',
     description:
-      'Viciebsk Airport has been an international airport since 1996. It is able to receive aircraft with a weight of up to 196 tonnes. It has an asphalt runway.',
+      'International airport since 1996, certified for aircraft up to 196 tonnes — roughly 490,000 sacks of fresh Belarusian potatoes.',
     latitude: 55.12639,
     longitude: 30.34972,
     elevation: 682,
@@ -558,9 +560,9 @@ export const airports: MockAirport[] = [
         id: 46,
         callsign: 'UMII_A_TWR',
         name: {
-          en: 'Viciebsk Tower',
-          ru: 'Viciebsk Tower',
-          be: 'Viciebsk Tower',
+          en: 'Viciebsk Tower (Artistic)',
+          ru: 'Viciebsk Tower (Арт-вышка)',
+          be: 'Viciebsk Tower (Арт-вежа)',
         },
         frequency: '120.400',
         airportIcao: 'UMII',
@@ -570,7 +572,7 @@ export const airports: MockAirport[] = [
     sceneries: [
       {
         id: 8,
-        title: 'Viciebsk  (VMP12147)',
+        title: 'Viciebsk - MSFS (Chagall Edition)',
         license: 'freeware',
         link: 'https://flightsim.to/file/49084/umii-vitebsk-airport-vostochny',
         simulator: 'MSFS',
@@ -578,7 +580,7 @@ export const airports: MockAirport[] = [
       },
       {
         id: 18,
-        title: 'Viciebsk (Xplane 11)',
+        title: 'Viciebsk - X-Plane 11 (Zero Lag Guaranteed*)',
         license: 'freeware',
         link: 'https://forums.x-plane.org/files/file/54093-umii-vitebsk-belarus/',
         simulator: 'X-Plane11',
@@ -593,7 +595,7 @@ export const airports: MockAirport[] = [
     airportTypeId: 1,
     name: 'Orsha',
     description:
-      'Orsha airport "Bolbasovo" - cargo aerodrome. It is a branch of Minsk-2 airport. It was opened for civil aviation flights after reconstruction in 2020.',
+      'Orsha "Bolbasovo" cargo hub with a glorious 3121m runway — long enough to land a 747, forget the spoilers, make tea, and still stop in time.',
     latitude: 54.43972,
     longitude: 30.29611,
     elevation: 658,
@@ -636,9 +638,9 @@ export const airports: MockAirport[] = [
         id: 41,
         callsign: 'UMIO_APP',
         name: {
-          en: 'Orsha Approach',
-          ru: 'Orsha Approach',
-          be: 'Orsha Approach',
+          en: 'Orsha Approach (Heavy Only)',
+          ru: 'Orsha Approach (Тяжёлым)',
+          be: 'Orsha Approach (Цяжкім)',
         },
         frequency: '118.400',
         airportIcao: 'UMIO',
@@ -648,9 +650,9 @@ export const airports: MockAirport[] = [
         id: 47,
         callsign: 'UMIO_TWR',
         name: {
-          en: 'Orsha Tower',
-          ru: 'Orsha Tower',
-          be: 'Orsha Tower',
+          en: 'Orsha Tower (Cargo Boss)',
+          ru: 'Orsha Tower (Карго-шеф)',
+          be: 'Orsha Tower (Карга-шэф)',
         },
         frequency: '119.000',
         airportIcao: 'UMIO',
@@ -660,7 +662,7 @@ export const airports: MockAirport[] = [
     sceneries: [
       {
         id: 10,
-        title: 'Orsha (VMP12147)',
+        title: 'Orsha - MSFS (Rubber Burn Marks Included)',
         license: 'freeware',
         link: 'https://flightsim.to/addon/60020/umio-airfield-orsha-bolbasovo',
         simulator: 'MSFS',
@@ -668,7 +670,7 @@ export const airports: MockAirport[] = [
       },
       {
         id: 13,
-        title: 'Orsha (VMP12147)',
+        title: 'Orsha - MSFS 2024 (Cloud-Streamed Concrete)',
         license: 'freeware',
         link: 'https://flightsim.to/addon/60020/umio-airfield-orsha-bolbasovo',
         simulator: 'MSFS2024',
@@ -682,7 +684,8 @@ export const airports: MockAirport[] = [
     iata: null,
     airportTypeId: 3,
     name: 'Machulishchi',
-    description: '',
+    description:
+      'Air base right next to Minsk. If you accidentally line up here instead of UMMS, prepare for a very memorable debriefing.',
     latitude: 53.77,
     longitude: 27.58,
     elevation: 702,
@@ -698,7 +701,8 @@ export const airports: MockAirport[] = [
     iata: null,
     airportTypeId: 3,
     name: 'Baranavichi',
-    description: '',
+    description:
+      'Military air base where afterburners double as the local weather forecast and bird repellent.',
     latitude: 53.1,
     longitude: 26.05,
     elevation: 604,
@@ -715,7 +719,7 @@ export const airports: MockAirport[] = [
     airportTypeId: 2,
     name: 'Borovaya',
     description:
-      'Legendary cradle of Minsk DOSAAF club since 1934. It served as a major base for skydivers and a unique open-air aviation museum. Due to rapid urban development, the airfield was closed.',
+      'Legendary DOSAAF airfield since 1934. Eventually defeated by apartment complexes, though nostalgic pilots still try to spot the old grass strip from 5000 ft.',
     latitude: 53.96046,
     longitude: 27.6506,
     elevation: 774,
@@ -732,7 +736,7 @@ export const airports: MockAirport[] = [
     airportTypeId: 1,
     name: 'Hrodna',
     description:
-      'Hrodna "Obuchovo" airport started operating since 1984. The total area of the aerodrome does not exceed 225.2 hectares. It is capable of receiving aircraft weighing up to 200 tonnes.',
+      'Hrodna "Obuchovo" airport: operating since 1984 with zero ILS and 100% pure NDB character building. Real pilots don’t need pink magenta lines.',
     latitude: 53.60194,
     longitude: 24.05389,
     elevation: 443,
@@ -775,9 +779,9 @@ export const airports: MockAirport[] = [
         id: 48,
         callsign: 'UMMG_A_TWR',
         name: {
-          en: 'Hrodna Tower',
-          ru: 'Hrodna Tower',
-          be: 'Hrodna Tower',
+          en: 'Hrodna Tower (NDB Purist)',
+          ru: 'Hrodna Tower (Олдскул)',
+          be: 'Hrodna Tower (Олдскул)',
         },
         frequency: '134.500',
         airportIcao: 'UMMG',
@@ -787,7 +791,7 @@ export const airports: MockAirport[] = [
     sceneries: [
       {
         id: 9,
-        title: 'Hrodna (VMP12147)',
+        title: 'Hrodna - MSFS (ILS Sold Separately)',
         license: 'freeware',
         link: 'https://flightsim.to/addon/36943/ummg-grodno-obukhovo-airport',
         simulator: 'MSFS',
@@ -802,7 +806,7 @@ export const airports: MockAirport[] = [
     airportTypeId: 2,
     name: 'Lipki',
     description:
-      'Modern joint-use complex for MES and DOSAAF near Minsk. The old base was rebuilt with a new aprone and hangars. Since 2024, it hosts a massive, upgraded Aviation and Space Museum. ',
+      'Shinier than your new joystick: rebuilt MES/DOSAAF hub near Minsk with a massive Aviation & Space Museum. Please park outside the rocket exhibit.',
     latitude: 53.91355,
     longitude: 27.70878,
     elevation: 751,
@@ -845,9 +849,9 @@ export const airports: MockAirport[] = [
         id: 49,
         callsign: 'UMMI_I_TWR',
         name: {
-          en: 'Lipki',
-          ru: 'Lipki',
-          be: 'Lipki',
+          en: 'Lipki Info (Museum Guard)',
+          ru: 'Lipki Info (Охрана музея)',
+          be: 'Lipki Info (Ахова музея)',
         },
         frequency: '134.750',
         airportIcao: 'UMMI',
@@ -863,7 +867,7 @@ export const airports: MockAirport[] = [
     airportTypeId: 2,
     name: 'Ozerki',
     description:
-      'Critical strategic facility of Belarusian MES in Postavy district, using former border guard assets. Equipped with a solid concrete runway, it serves year-round as a main alert base for northern rescue flights. ',
+      'Northern rescue alert base in Postavy district. Equipped with a solid concrete runway and a strict rule against disturbing the local moose.',
     latitude: 55.14454,
     longitude: 26.82936,
     elevation: 452,
@@ -879,7 +883,8 @@ export const airports: MockAirport[] = [
     iata: null,
     airportTypeId: 3,
     name: 'Osovtsy Air Base',
-    description: '',
+    description:
+      'Classified concrete strip in the Brest region. Rumor says ATC answers only if you know the secret potato password.',
     latitude: 52.557,
     longitude: 24.884,
     elevation: 521,
@@ -895,7 +900,8 @@ export const airports: MockAirport[] = [
     iata: null,
     airportTypeId: 3,
     name: 'Ross Air Base',
-    description: '',
+    description:
+      'Retired air base currently enjoying peaceful silence, zero holding patterns, and 100% CAVOK nostalgia.',
     latitude: 53.303,
     longitude: 24.369,
     elevation: 524,
@@ -911,7 +917,8 @@ export const airports: MockAirport[] = [
     iata: null,
     airportTypeId: 3,
     name: 'Nosovka',
-    description: '',
+    description:
+      'Mysterious military strip so discreet even most flight-sim GPS databases pretend it is a forest.',
     latitude: 53.105,
     longitude: 29.205,
     elevation: 502,
@@ -928,7 +935,7 @@ export const airports: MockAirport[] = [
     airportTypeId: 2,
     name: 'Karalino',
     description:
-      'The oldest active airfield in Belarus near Hrodna, built in 1912 for a fortress aviation unit. It survived WWI and features a compact grass layout. Today, it remains a busy training base for local pilots.',
+      'Belarus’s oldest active airfield (since 1912!). If your landing gear complains about the grass, remind it that biplanes handled it without crying.',
     latitude: 53.63306,
     longitude: 23.73333,
     elevation: 387,
@@ -945,7 +952,7 @@ export const airports: MockAirport[] = [
     airportTypeId: 2,
     name: 'Kukovyachino',
     description:
-      'Historic Viciebsk aero club base, built by volunteers in spring 1931. Famous for its long traditions of training flight instructors, the site features a versatile grass field tailored for gliding and skydiving.',
+      'Historic Viciebsk aero club built by volunteers in 1931. Ideal for gliders, skydivers, and realizing you forgot to turn on the pitot heat.',
     latitude: 55.16019,
     longitude: 29.98339,
     elevation: 462,
@@ -961,7 +968,8 @@ export const airports: MockAirport[] = [
     iata: null,
     airportTypeId: 3,
     name: 'Luninets Air Base',
-    description: '',
+    description:
+      'Deep in Palesie: famous for strawberries in summer and extremely strict airspace boundaries all year round.',
     latitude: 52.275,
     longitude: 26.775,
     elevation: 472,
@@ -978,7 +986,7 @@ export const airports: MockAirport[] = [
     airportTypeId: 2,
     name: 'Novo-pashkovo',
     description:
-      'Mahilou aviation sports center located northwest of the city. It became the key facility for the local DOSAAF aero club. It has a classic grass field layout optimized for training Yak-52 and An-2 aircraft.',
+      'Classic grass field near Mahiliou tailored for Yak-52s, An-2s, and pilots who enjoy smelling fresh-cut lawn during flare.',
     latitude: 53.945,
     longitude: 30.244,
     elevation: 606,
@@ -995,7 +1003,7 @@ export const airports: MockAirport[] = [
     airportTypeId: 2,
     name: 'Sychkava',
     description:
-      'Bobruisk airbase with a rich history, founded in 1934 to train military pilots. Today, the facility has a strong gliding and parachute profile, attracting extreme sports fans for regular civilian jumps.',
+      'Bobruisk aero club since 1934. Popular with adrenaline junkies who prefer exiting aircraft at 4000 meters instead of waiting for taxi clearance.',
     latitude: 53.21128,
     longitude: 29.12869,
     elevation: 511,
@@ -1012,7 +1020,7 @@ export const airports: MockAirport[] = [
     airportTypeId: 2,
     name: 'Kamianiec',
     description:
-      'Regional landing ground in Brest area, originally built for crop dusting and medical tasks. Its layout includes lightweight support structures focused on MES forest monitoring over Bialowieza Forest.',
+      'Cozy strip right beside Belovezhskaya Pushcha. Watch for low-flying storks and VIP bison refusing to vacate the runway.',
     latitude: 52.41417,
     longitude: 23.79694,
     elevation: 518,
@@ -1028,7 +1036,8 @@ export const airports: MockAirport[] = [
     iata: null,
     airportTypeId: 3,
     name: 'Pruzhany Air Base',
-    description: '',
+    description:
+      'Closed military base. Now officially operated by local sparrows with zero ATC delays.',
     latitude: 52.5823,
     longitude: 24.37986,
     elevation: 554,
@@ -1045,7 +1054,7 @@ export const airports: MockAirport[] = [
     airportTypeId: 1,
     name: 'Mahiliou',
     description:
-      '"Mahiliou" is the airport of the city of the same name in Belarus. In 1998 it was granted the status of international airport. There is border and customs control.',
+      'International airport with full customs control and an unspoken division tradition: if you survive an event night here, you earn honorary tea.',
     latitude: 53.95528,
     longitude: 30.09417,
     elevation: 637,
@@ -1057,9 +1066,9 @@ export const airports: MockAirport[] = [
         id: 5,
         callsign: 'UMOO_A_TWR',
         name: {
-          en: 'Mahiliou Tower',
-          ru: 'Mahiliou Tower',
-          be: 'Mahiliou Tower',
+          en: 'Mahiliou Tower (Tea Time)',
+          ru: 'Mahiliou Tower (Чайная)',
+          be: 'Mahiliou Tower (Гарбатная)',
         },
         frequency: '127.100',
         airportIcao: 'UMOO',
@@ -1069,7 +1078,7 @@ export const airports: MockAirport[] = [
     sceneries: [
       {
         id: 11,
-        title: 'Mahilou (VMP12147)',
+        title: 'Mahiliou - MSFS (Cozy Apron)',
         license: 'freeware',
         link: 'https://flightsim.to/addon/87815/umoo-airport-mogilev',
         simulator: 'MSFS',
@@ -1077,7 +1086,7 @@ export const airports: MockAirport[] = [
       },
       {
         id: 14,
-        title: 'Mahilou (VMP12147)',
+        title: 'Mahiliou - MSFS 2024 (Now With Extra Trees)',
         license: 'freeware',
         link: 'https://flightsim.to/addon/87815/umoo-airport-mogilev',
         simulator: 'MSFS2024',
@@ -1085,7 +1094,7 @@ export const airports: MockAirport[] = [
       },
       {
         id: 19,
-        title: 'Mahilou (Xplane 11)',
+        title: 'Mahiliou - X-Plane 11 (Certified Nostalgia)',
         license: 'freeware',
         link: 'https://forums.x-plane.org/files/file/54094-umoo-mogilev-belarus/',
         simulator: 'X-Plane11',
@@ -1100,7 +1109,7 @@ export const airports: MockAirport[] = [
     airportTypeId: 2,
     name: 'Khozhevo',
     description:
-      'Active civilian airfield near Maladzechna, known as the historic hub for Belarusian GA. The site was recently modernized and equipped with new hangars, hosting national contests and scenic flights.',
+      'Modernized GA paradise near Maladzechna with shiny new hangars and scenic flights where passengers take 400 photos of the same cloud.',
     latitude: 54.25002,
     longitude: 26.86933,
     elevation: 643,
@@ -1117,7 +1126,7 @@ export const airports: MockAirport[] = [
     airportTypeId: 2,
     name: 'Sivitsa',
     description:
-      'Cozy private general aviation airfield in Barysau district on a former agricultural site. It features a compact 425-meter asphalt runway surrounded by deep forest, creating an ideal spot for light aircraft.',
+      'Cozy 425-meter asphalt strip hugged by deep pine forest. Perfect for light aircraft — and strictly NOT recommended for your Airbus A380.',
     latitude: 54.10358,
     longitude: 28.57748,
     elevation: 577,
@@ -1129,9 +1138,9 @@ export const airports: MockAirport[] = [
         id: 42,
         callsign: 'UMSP_I_TWR',
         name: {
-          en: 'Sivitsa',
-          ru: 'Sivitsa',
-          be: 'Sivitsa',
+          en: 'Sivitsa Info (Pine Watch)',
+          ru: 'Sivitsa Info (Среди сосен)',
+          be: 'Sivitsa Info (Сярод соснаў)',
         },
         frequency: '119.900',
         airportIcao: 'UMSP',
@@ -1141,7 +1150,7 @@ export const airports: MockAirport[] = [
     sceneries: [
       {
         id: 12,
-        title: 'Sivica (VMP12147)',
+        title: 'Sivitsa - MSFS (Mind the Pine Trees!)',
         license: 'freeware',
         link: 'https://flightsim.to/addon/67416/umsp',
         simulator: 'MSFS',
@@ -1156,7 +1165,7 @@ export const airports: MockAirport[] = [
     airportTypeId: 2,
     name: 'Starynki',
     description:
-      'Field facility with deep WWII partisan roots, once used to connect with the Soviet rear and deliver vital cargo. Its layout utilizes a hidden natural landscape adapted for historical and military needs.',
+      'Historic field hidden so well in the landscape that spotting the runway counts as a VFR final exam by itself.',
     latitude: 54.02861,
     longitude: 26.92472,
     elevation: 689,
@@ -1172,7 +1181,8 @@ export const airports: MockAirport[] = [
     iata: null,
     airportTypeId: 3,
     name: 'Borovtsy',
-    description: '',
+    description:
+      'Northern military strip. Clearance requires a working transponder and at least mild confidence in your altimeter.',
     latitude: 55.60869,
     longitude: 28.6785,
     elevation: 462,
@@ -1188,7 +1198,8 @@ export const airports: MockAirport[] = [
     iata: null,
     airportTypeId: 3,
     name: 'Mikhalin',
-    description: '',
+    description:
+      'Mikhalin’s top-secret twin entry in the database — we keep it around just to confuse pilots doing Ctrl+F.',
     latitude: 51.98528,
     longitude: 23.90222,
     elevation: 472,
@@ -1199,7 +1210,7 @@ export const airports: MockAirport[] = [
     sceneries: [
       {
         id: 15,
-        title: 'Mihalin (VMP12147)',
+        title: 'Mikhalin - MSFS (Campfire Included)',
         license: 'freeware',
         link: 'https://flightsim.to/addon/91074/umbm-airfield-mihalin',
         simulator: 'MSFS',
@@ -1214,7 +1225,7 @@ export const airports: MockAirport[] = [
     airportTypeId: 2,
     name: 'Mikhalin',
     description:
-      'The newest sports airfield near Brest, opened in 2023. Spanning over 11 hectares, it features a grass runway, a control tower, and a cozy campsite, serving as a growing tourist hub for the Brest aero club.',
+      'Opened in 2023 near Brest with a grass runway, tower, and campsite — because nothing says luxury aviation like roasting marshmallows by the windsock.',
     latitude: 51.98527,
     longitude: 23.90222,
     elevation: 472,
@@ -1225,7 +1236,7 @@ export const airports: MockAirport[] = [
     sceneries: [
       {
         id: 15,
-        title: 'Mihalin (VMP12147)',
+        title: 'Mikhalin - MSFS (Campfire Included)',
         license: 'freeware',
         link: 'https://flightsim.to/addon/91074/umbm-airfield-mihalin',
         simulator: 'MSFS',
@@ -1240,35 +1251,38 @@ export const weather: Record<
   { metar: string | null; taf: string | null }
 > = {
   UMBB: {
-    metar: 'UMBB 171600Z 22002MPS 6000 SCT016 SCT100 05/04 Q0995 NOSIG',
-    taf: 'UMBB 171403Z 1715/1724 20003MPS 6000 BKN011 TEMPO 1715/1718 19004G09MPS 4000 -SHRA BKN010CB TEMPO 1718/1724 3100 -SHRASN BR BKN007CB',
+    metar:
+      'UMBB 171600Z 22002MPS 6000 SCT016 SCT100 05/04 Q0995 NOSIG RMK STORKS ON SHORT FINAL RWY29',
+    taf: 'UMBB 171403Z 1715/1724 20003MPS 6000 BKN011 TEMPO 1715/1718 19004G09MPS 4000 -SHRA BKN010CB RMK BRING UMBRELLA AND HOT TEA',
   },
   UMGG: {
     metar:
-      'UMGG 171900Z 14004MPS 7000 -DZ OVC002 04/04 Q0997 TEMPO 1200 RMK QBB070',
-    taf: 'UMGG 171701Z 1718/1818 15006MPS 5000 BR BKN004 TEMPO 1718/1806 0400 -SHRA FG BKN002 BKN012CB TEMPO 1806/1818 2000 SHRA BKN003 BKN015CB',
+      'UMGG 171900Z 14004MPS 7000 -DZ OVC002 04/04 Q0997 TEMPO 1200 RMK PILOT FORGOT QNH AGAIN',
+    taf: 'UMGG 171701Z 1718/1818 15006MPS 5000 BR BKN004 TEMPO 1718/1806 0400 -SHRA FG BKN002 RMK AUTOLAND HIGHLY ADVISED',
   },
   UMII: {
     metar:
-      'UMII 171300Z 16005G08MPS 5000 -RA BR OVC004 03/02 Q0998 TEMPO 2000 RA BKN003 RMK QBB140',
-    taf: 'UMII 171103Z 1712/1721 16005G10MPS 3000 -RA BR OVC004 TEMPO 1712/1721 17007G12MPS 1400 SHRASN BKN002 BKN010CB',
+      'UMII 171300Z 16005G08MPS 5000 -RA BR OVC004 03/02 Q0998 RMK SLAVIANSKI BAZAR NOISE ABATEMENT',
+    taf: 'UMII 171103Z 1712/1721 16005G10MPS 3000 -RA BR OVC004 TEMPO 1712/1721 17007G12MPS 1400 SHRASN RMK 100 PERCENT CHANCE OF GO-AROUNDS',
   },
   UMIO: {
     metar:
-      'UMIO 171900Z 17004G07MPS 3100 -DZ BR OVC002 02/02 Q0996 NOSIG RMK QBB080 QFE730/0974',
-    taf: 'UMIO 171106Z 1712/1721 16006G11MPS 3000 -RA BKN005 TEMPO 1712/1721 18008G13MPS 1100 SHRASN BR BKN002 BKN012CB',
+      'UMIO 171900Z 17004G07MPS 3100 -DZ BR OVC002 02/02 Q0996 NOSIG RMK HEAVY CARGO ONLY NO TOURISTS',
+    taf: 'UMIO 171106Z 1712/1721 16006G11MPS 3000 -RA BKN005 TEMPO 1712/1721 18008G13MPS 1100 SHRASN RMK RWY STILL LONGER THAN YOUR EXCUSE',
   },
   UMMG: {
-    metar: 'UMMG 171300Z 27002MPS 9000 BKN013 BKN100 06/04 Q0995 NOSIG',
-    taf: 'UMMG 171104Z 1712/1721 23004G09MPS 8000 BKN015 TEMPO 1712/1716 21004G09MPS 4600 -SHRA BKN008 BKN010CB TEMPO 1716/1718 19003G08MPS',
+    metar:
+      'UMMG 171300Z 27002MPS 9000 BKN013 BKN100 06/04 Q0995 NOSIG RMK ILS INOP SINCE 1984 USE NDB',
+    taf: 'UMMG 171104Z 1712/1721 23004G09MPS 8000 BKN015 TEMPO 1712/1716 4600 -SHRA BKN008CB RMK MAGENTA LINE NOT SUPPORTED',
   },
   UMMS: {
     metar:
-      'UMMS 171900Z 16003MPS 4600 BR BKN003 BKN036 05/04 Q0994 NOSIG RMK QBB090',
-    taf: 'UMMS 171705Z 1718/1818 VRB02MPS 3000 -RA BR BKN004 TEMPO 1718/1808 0200 SHRA FG FEW001 BKN002 BKN012CB FM180800 16005G10MPS 8000 BKN007 TEMPO 1808/1818 3000 -SHRA BR FEW001 BKN003 BKN012CB',
+      'UMMS 171900Z 16003MPS 4600 BR BKN003 BKN036 05/04 Q0994 NOSIG RMK DRANIKI READY AT GATE 4',
+    taf: 'UMMS 171705Z 1718/1818 VRB02MPS 3000 -RA BR BKN004 TEMPO 1718/1808 0200 FG FEW001 BKN002 FM180800 8000 BKN007 RMK FOLLOW-ME CAR ON STANDBY',
   },
   UMOO: {
-    metar: 'UMOO 171300Z 15007G10MPS 5000 -RA BR OVC008 03/02 Q1000 NOSIG',
-    taf: 'UMOO 171109Z 1712/1721 15005G10MPS 4000 -RA BR BKN005 TEMPO 1712/1721 19008G13MPS 2000 SHRASN BKN003 BKN012CB',
+    metar:
+      'UMOO 171300Z 15007G10MPS 5000 -RA BR OVC008 03/02 Q1000 NOSIG RMK TWR COFFEE MACHINE INOP',
+    taf: 'UMOO 171109Z 1712/1721 15005G10MPS 4000 -RA BR BKN005 TEMPO 1712/1721 19008G13MPS 2000 SHRASN RMK EXPECT SCENIC HOLDING',
   },
 };
