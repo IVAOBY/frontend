@@ -1,13 +1,20 @@
-import { useNewsGetAllNews, useNewsGetNewsById } from '../../../api/news/news';
+import { useNewsGetAllNews, useNewsGetNewsById } from '../../../api';
 
-const useNews = () => {
-  return useNewsGetAllNews(undefined, {
-    query: {
-      retry: (failureCount) => failureCount <= 5,
-      staleTime: 60 * 1000,
-      gcTime: 5 * 60 * 1000,
+const useNews = (params?: Parameters<typeof useNewsGetAllNews>[0]) => {
+  return useNewsGetAllNews(
+    {
+      limit: 7,
+      sort: 'DESC',
+      ...params,
     },
-  });
+    {
+      query: {
+        retry: (failureCount) => failureCount <= 5,
+        staleTime: 60 * 1000,
+        gcTime: 5 * 60 * 1000,
+      },
+    },
+  );
 };
 
 export const useNewsById = (id: string | undefined = undefined) => {
