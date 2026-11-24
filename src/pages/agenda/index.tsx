@@ -1,6 +1,13 @@
-import { useCallback, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 
 import {
+  IconArrowUp,
   IconBooks,
   IconCalendarEvent,
   IconCertificate,
@@ -181,7 +188,7 @@ function AgendaCard({
     >
       {/* Баннер слева — только если есть картинка (размеры и скругления как раньше) */}
       {hasImage && (
-        <div className="md:h-full lg:w-[45%]">
+        <div className="aspect-video md:aspect-auto md:h-full lg:w-[45%]">
           {imageUrl ? (
             <img
               src={imageUrl}
@@ -282,14 +289,98 @@ export function Agenda() {
   // выбранный день (клик по календарю фильтрует список)
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
 
-  const changeMonth = (delta: number) =>
+  const listRef = useRef<HTMLDivElement>(null);
+  const calendarRef = useRef<HTMLDivElement>(null);
+  const pinnedCalendarTopRef = useRef<number | null>(null);
+
+  const syncCalendarPin = useCallback(() => {
+    if (pinnedCalendarTopRef.current === null || !calendarRef.current) return;
+    const delta =
+      calendarRef.current.getBoundingClientRect().top -
+      pinnedCalendarTopRef.current;
+    if (Math.abs(delta) > 0.5) {
+      window.scrollBy(0, delta);
+    }
+  }, []);
+
+  // кнопка «Наверх» (только на мобилке): появляется, когда доскроллили до календаря
+  const [showScrollTop, setShowScrollTop] = useState(false);
+  const updateScrollTop = useCallback(() => {
+    const cal = calendarRef.current;
+    if (!cal) return;
+    const reachedCalendar =
+      cal.getBoundingClientRect().top <= window.innerHeight * 0.85;
+    setShowScrollTop(reachedCalendar && window.scrollY > 150);
+  }, []);
+
+  // при смене выбранной даты снимаем привязку и возвращаем страницу наверх
+  const prevSelectedDay = useRef<string | null>(selectedDay);
+  useEffect(() => {
+    if (prevSelectedDay.current === selectedDay) return;
+    prevSelectedDay.current = selectedDay;
+    pinnedCalendarTopRef.current = null;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [selectedDay]);
+
+  // следим за скроллом, ручным выходом из привязки и изменением высоты списка при догрузке
+  useEffect(() => {
+    const releasePin = () => {
+      pinnedCalendarTopRef.current = null;
+    };
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (
+        [
+          'ArrowUp',
+          'ArrowDown',
+          'PageUp',
+          'PageDown',
+          'Space',
+          'Home',
+          'End',
+        ].includes(e.code)
+      ) {
+        releasePin();
+      }
+    };
+
+    updateScrollTop();
+    window.addEventListener('scroll', updateScrollTop, { passive: true });
+    window.addEventListener('resize', updateScrollTop, { passive: true });
+    window.addEventListener('wheel', releasePin, { passive: true });
+    window.addEventListener('touchmove', releasePin, { passive: true });
+    window.addEventListener('keydown', onKeyDown);
+
+    const observer = new ResizeObserver(() => {
+      syncCalendarPin();
+      updateScrollTop();
+    });
+    if (listRef.current) observer.observe(listRef.current);
+
+    return () => {
+      window.removeEventListener('scroll', updateScrollTop);
+      window.removeEventListener('resize', updateScrollTop);
+      window.removeEventListener('wheel', releasePin);
+      window.removeEventListener('touchmove', releasePin);
+      window.removeEventListener('keydown', onKeyDown);
+      observer.disconnect();
+    };
+  }, [syncCalendarPin, updateScrollTop]);
+
+  const changeMonth = (delta: number) => {
+    // на мобилке фиксируем положение календаря на экране, чтобы он не прыгал при смене месяца
+    if (window.innerWidth < 1024 && calendarRef.current) {
+      pinnedCalendarTopRef.current =
+        calendarRef.current.getBoundingClientRect().top;
+    }
     setCursor(({ year, month }) => {
       const d = new Date(Date.UTC(year, month + delta, 1));
       return { year: d.getUTCFullYear(), month: d.getUTCMonth() };
     });
+  };
 
   // «Сегодня»: возвращает текущий месяц и снимает выбранный день
   const resetToToday = () => {
+    pinnedCalendarTopRef.current = null;
     setCursor(currentMonth);
     setSelectedDay(null);
   };
@@ -330,6 +421,12 @@ export function Agenda() {
       : mode === 'month'
         ? isMonthLoading
         : isUpcomingLoading;
+
+  // синхронно до отрисовки удерживаем календарь на месте после смены месяца
+  useLayoutEffect(() => {
+    syncCalendarPin();
+    updateScrollTop();
+  }, [cursor, isLoading, visibleEvents, syncCalendarPin, updateScrollTop]);
 
   // кнопка «Сегодня» нужна, только когда ушли из режима «предстоящие»
   const showReset = mode !== 'upcoming';
@@ -390,27 +487,32 @@ export function Agenda() {
       )}
 
       {/* Заголовок + кнопка «Сегодня» */}
-      <div className="mb-8 flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
-        <div className="text-3xl font-bold text-black md:text-5xl">
-          {t('agenda.title')}{' '}
-          <span className="ml-2 text-neutral-400">{subtitle}</span>
-        </div>
+      <div className="mb-8 flex flex-col gap-y-1 md:flex-row md:flex-wrap md:items-baseline md:gap-x-4">
+        <h1 className="text-3xl font-bold text-black md:text-5xl">
+          {t('agenda.title')}
+        </h1>
 
-        {showReset && (
-          <button
-            type="button"
-            onClick={resetToToday}
-            className="mb-1 text-lg font-semibold text-neutral-400 transition hover:text-black"
-          >
-            {t('agenda.today')}
-          </button>
-        )}
+        <div className="flex flex-1 flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+          <span className="text-3xl font-bold text-neutral-400 md:text-5xl">
+            {subtitle}
+          </span>
+
+          {showReset && (
+            <button
+              type="button"
+              onClick={resetToToday}
+              className="shrink-0 text-lg font-semibold leading-none text-neutral-400 transition hover:text-black"
+            >
+              {t('agenda.today')}
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Двухколоночная сетка: список слева, календарь справа */}
       <div className="grid grid-cols-1 gap-6 font-['Montserrat'] text-black lg:grid-cols-[1fr_420px] lg:items-start [&>div]:min-w-0">
         {/* ===== ЛЕВАЯ КОЛОНКА ===== */}
-        <div className="flex flex-col gap-5">
+        <div ref={listRef} className="flex flex-col gap-5">
           {isLoading &&
             Array.from({ length: 2 }).map((_, i) => (
               <div
@@ -436,7 +538,10 @@ export function Agenda() {
 
         {/* ===== ПРАВАЯ КОЛОНКА: календарь + цветовые коды ===== */}
         <div className="flex flex-col gap-5 lg:sticky lg:top-36">
-          <div className="squircle-3xl shadow-figma bg-white p-6">
+          <div
+            ref={calendarRef}
+            className="squircle-3xl shadow-figma bg-white p-6"
+          >
             <div className="-mt-1 mb-4 flex items-center justify-between">
               <div className="text-2xl font-bold capitalize text-black">
                 {monthTitle}{' '}
@@ -513,6 +618,24 @@ export function Agenda() {
           </div>
         </div>
       </div>
+
+      {/* Плавающая кнопка возврата наверх (только на мобилке) */}
+      <button
+        type="button"
+        aria-label="Scroll to top"
+        tabIndex={showScrollTop ? 0 : -1}
+        onClick={() => {
+          pinnedCalendarTopRef.current = null;
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+        className={`squircle-2xl shadow-figma fixed bottom-6 right-5 z-40 flex size-12 items-center justify-center bg-atmos-700 text-white transition duration-300 hover:scale-105 hover:opacity-90 lg:hidden ${
+          showScrollTop
+            ? 'translate-y-0 opacity-100'
+            : 'pointer-events-none translate-y-4 opacity-0'
+        }`}
+      >
+        <IconArrowUp size={24} stroke={2} />
+      </button>
     </BreadcrumbLayout>
   );
 }
