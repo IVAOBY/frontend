@@ -278,6 +278,7 @@ const beTranslations: { translations: Translations } = {
       today: 'Сёння',
       prevMonth: 'Папярэдні месяц',
       nextMonth: 'Наступны месяц',
+      scrollToTop: 'Уверх',
       colors: 'Каляровыя коды',
       types: {
         event: 'Івент',

@@ -29,7 +29,7 @@ export function Widgets() {
             className="squircle-3xl absolute left-0 top-[93px] z-10 mb-0 hidden h-[70%] w-full pb-0 duration-700 group-hover:-translate-y-2 group-hover:translate-x-2 group-hover:scale-[107%] xl:top-[153.5px] xl:block xl:h-[73%]"
           />
           <div className="flex flex-col items-center md:justify-center xl:-mt-6">
-            <p className="font-['Futura PT'] z-4 relative text-center text-[60px] font-bold uppercase leading-[50px] tracking-tighter text-white duration-700 group-hover:-translate-y-3 group-hover:-rotate-2 md:text-[90px] md:leading-10 lg:mt-7 lg:leading-[80px] xl:mx-3 xl:text-7xl">
+            <p className="font-['Futura PT'] z-4 relative text-center text-[60px] font-bold uppercase leading-[50px] tracking-tighter text-white duration-700 md:text-[90px] md:leading-10 lg:mt-7 lg:leading-[80px] xl:mx-3 xl:text-7xl xl:group-hover:-translate-y-3 xl:group-hover:-rotate-2">
               {t('mainpage.widgets.first')}
             </p>
           </div>
@@ -69,7 +69,7 @@ export function Widgets() {
               }
               className="squircle-3xl group relative inline-flex h-[148px] w-full cursor-pointer flex-col items-center justify-center overflow-hidden bg-gray-900 duration-700 hover:scale-[103%] md:justify-start xl:h-[270px] xl:w-[355px]"
             >
-              <p className="text-center font-['Montserrat'] text-[60px] font-bold uppercase tracking-tighter text-white duration-700 group-hover:-translate-y-2 group-hover:translate-x-2 group-hover:rotate-2 md:mt-0 md:text-[90px] xl:mt-[15px] xl:text-[60px]">
+              <p className="text-center font-['Montserrat'] text-[60px] font-bold uppercase tracking-tighter text-white duration-700 md:mt-0 md:text-[90px] xl:mt-[15px] xl:text-[60px] xl:group-hover:-translate-y-2 xl:group-hover:translate-x-2 xl:group-hover:rotate-2">
                 {t('mainpage.widgets.charts')}
               </p>
               <img

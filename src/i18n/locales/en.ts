@@ -279,6 +279,7 @@ const enTranslations: { translations: Translations } = {
       today: 'Today',
       prevMonth: 'Previous month',
       nextMonth: 'Next month',
+      scrollToTop: 'Scroll to top',
       colors: 'Color codes',
       types: {
         event: 'Event',

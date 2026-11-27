@@ -269,6 +269,7 @@ export interface Translations {
     today: string;
     prevMonth: string;
     nextMonth: string;
+    scrollToTop: string;
     colors: string;
     types: {
       event: string;

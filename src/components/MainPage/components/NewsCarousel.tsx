@@ -17,7 +17,7 @@ const AUTOPLAY_MS = 6000;
 const SWIPE_PX = 40; // минимальный сдвиг, чтобы считать жест свайпом
 const WHEEL_MIN = 30; // минимальный горизонтальный сдвиг колеса/тачпада
 const WHEEL_LOCK_MS = 600; // пауза между переключениями колесом
-const DOTS_VISIBLE = 5; // точек в окне всегда 5
+const DOTS_VISIBLE = 7; // точек в окне всегда 7
 const DOT_STEP = 20; // ширина одной точки вместе с отступами, px
 // Сколько карточек по каждую сторону от активной держим в DOM. Дальше карточки
 // не рендерим: их всё равно не видно (закрыты соседями). Три нужно, чтобы карточка
@@ -35,14 +35,14 @@ const HIDDEN_SCALE = 0.8; // спрятанные: заметно меньше �
 // проглядывает сквозь него. Отступ уводит её край под плотную часть соседа.
 const HIDDEN_INSET = 0.08;
 
-// Строка под стадией (точки). Высота h-10 = нижний отступ, который родитель резервирует через lg:pb-10.
+// Строка под стадией (точки), высота h-10 = 40px.
 const BOTTOM_ROW = 'flex h-10 shrink-0 items-center justify-center';
 
 // Карточка: высота = высоте стадии (lg), ширина из пропорции 8:9.
 // 8:9 = картинка 16:9 + текстовый блок 16:9 друг под другом.
 // Все карточки лежат в left:0, а по горизонтали их двигает только transform.
 const CARD_BOX =
-  'absolute left-0 top-1/2 aspect-[8/9] w-[80%] lg:h-full lg:w-auto';
+  'absolute left-0 top-1/2 aspect-[8/9] w-[88%] lg:h-full lg:w-auto';
 
 /* ---------- Раскладка карточек ---------- */
 type Mode = 'single' | 'start' | 'middle' | 'end';
@@ -145,9 +145,9 @@ const toText = (html: string) =>
   new DOMParser().parseFromString(html, 'text/html').body.textContent?.trim() ??
   '';
 
-/* ---------- Точки: окно из 5 штук ---------- */
-// Синяя точка стоит на 1-й, 2-й позиции в начале, на 3-й в середине,
-// на 4-й и 5-й в конце. В середине сами точки «листаются» внутри окна.
+/* ---------- Точки: окно из DOTS_VISIBLE штук ---------- */
+// Синяя точка двигается от края к центру окна, а в середине списка
+// сами точки «листаются» внутри окна, удерживая активную по центру.
 function Dots({
   count,
   active,
@@ -158,10 +158,11 @@ function Dots({
   onSelect: (i: number) => void;
 }) {
   const visible = Math.min(count, DOTS_VISIBLE);
+  const half = Math.floor(DOTS_VISIBLE / 2);
   const start =
     count <= DOTS_VISIBLE
       ? 0
-      : Math.max(0, Math.min(active - 2, count - DOTS_VISIBLE));
+      : Math.max(0, Math.min(active - half, count - DOTS_VISIBLE));
 
   return (
     <div className="overflow-hidden" style={{ width: visible * DOT_STEP }}>
@@ -216,7 +217,7 @@ export function NewsCarouselSkeleton() {
 
   return (
     <div className="flex h-full min-h-0 flex-col" aria-hidden>
-      <div className="relative aspect-[20/19] w-full lg:aspect-auto lg:min-h-0 lg:flex-1">
+      <div className="relative aspect-[19/20] w-full lg:aspect-auto lg:min-h-0 lg:flex-1">
         <div className={`${card} left-auto right-0 z-0 opacity-60`}>{body}</div>
         <div className={`${card} left-1/2 z-10 -translate-x-1/2 opacity-80`}>
           {body}
@@ -495,7 +496,7 @@ export function NewsCarousel({
     >
       <div
         ref={stageRef}
-        className="relative aspect-[20/19] w-full touch-pan-y select-none lg:aspect-auto lg:min-h-0 lg:flex-1"
+        className="relative aspect-[19/20] w-full touch-pan-y select-none lg:aspect-auto lg:min-h-0 lg:flex-1"
         onPointerDown={onPointerDown}
         onPointerUp={onPointerUp}
         onPointerCancel={() => {
