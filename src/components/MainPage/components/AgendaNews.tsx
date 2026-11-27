@@ -8,7 +8,7 @@ import {
   IconSettings,
 } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import type { NewsEntity } from '../../../api/model';
 
@@ -17,6 +17,22 @@ import useAgenda from '../../../hooks/query/useAgenda';
 import { Notification } from '../../Notification/Notification';
 import { NewsCarousel } from './NewsCarousel';
 
+const SkeletonItem = () => (
+  <div className="flex animate-pulse flex-col gap-2 drop-shadow-md">
+    <div className="flex flex-row gap-3.5 rounded-3xl bg-gray-200 p-3.5 lg:gap-5 lg:p-5">
+      <div className="size-[50px] shrink-0 rounded-xl bg-gray-300 lg:size-[70px]"></div>
+      <div className="my-auto flex flex-col items-center">
+        <div className="h-6 w-10 rounded-md bg-gray-300"></div>
+        <div className="mt-2 h-4 w-8 rounded-md bg-gray-300"></div>
+      </div>
+      <div className="mt-1 flex flex-col">
+        <div className="h-6 w-40 rounded-md bg-gray-300"></div>
+        <div className="mt-2 h-4 w-28 rounded-md bg-gray-300"></div>
+      </div>
+    </div>
+  </div>
+);
+
 export function AgendaNews() {
   const { t, i18n } = useTranslation();
 
@@ -24,22 +40,6 @@ export function AgendaNews() {
   const newsRedirect = (newsItem: NewsEntity) => {
     navigate(`/news/${newsItem.id}`);
   };
-
-  const SkeletonItem = () => (
-    <div className="flex animate-pulse flex-col gap-2 drop-shadow-md">
-      <div className="flex flex-row gap-3.5 rounded-3xl bg-gray-200 p-3.5 lg:gap-5 lg:p-5">
-        <div className="size-[50px] shrink-0 rounded-xl bg-gray-300 lg:size-[70px]"></div>
-        <div className="my-auto flex flex-col items-center">
-          <div className="h-6 w-10 rounded-md bg-gray-300"></div>
-          <div className="mt-2 h-4 w-8 rounded-md bg-gray-300"></div>
-        </div>
-        <div className="mt-1 flex flex-col">
-          <div className="h-6 w-40 rounded-md bg-gray-300"></div>
-          <div className="mt-2 h-4 w-28 rounded-md bg-gray-300"></div>
-        </div>
-      </div>
-    </div>
-  );
 
   const {
     data: newsData,
@@ -117,7 +117,11 @@ export function AgendaNews() {
                           EventNavigate(item.id);
                         } else {
                           if (/^https:\/\//.test(item.link))
-                            window.open(item.link, '_blank');
+                            window.open(
+                              item.link,
+                              '_blank',
+                              'noopener,noreferrer',
+                            );
                         }
                       }}
                     >
@@ -210,19 +214,17 @@ export function AgendaNews() {
 
           {/* Кнопка «Все события» */}
           <div className="flex justify-center">
-            <div
-              onClick={() => {
-                navigate('/agenda');
-                window.scrollTo(0, 0);
-              }}
-              className="mx-6 flex w-fit items-center gap-1 rounded-lg bg-atmos-700 px-1.5 py-0.5 pr-2 text-sm font-medium text-white transition duration-300 hover:scale-105 hover:cursor-pointer hover:opacity-90 lg:rounded-xl lg:py-0 lg:pr-2.5 lg:text-lg"
+            <Link
+              to="/agenda"
+              onClick={() => window.scrollTo(0, 0)}
+              className="mx-6 flex w-fit items-center gap-1 rounded-lg bg-atmos-700 px-1.5 py-0.5 pr-2 text-sm font-medium !text-white no-underline transition duration-300 hover:scale-105 hover:!text-white hover:opacity-90 lg:rounded-xl lg:py-0 lg:pr-2.5 lg:text-lg"
             >
               <IconCalendarWeek
                 className="size-[18px] lg:size-6"
                 stroke={1.7}
               />
-              <div className="my-auto flex-auto">{t('agenda.all')}</div>
-            </div>
+              <span className="my-auto flex-auto">{t('agenda.all')}</span>
+            </Link>
           </div>
         </div>
 

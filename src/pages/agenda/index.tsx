@@ -184,11 +184,11 @@ function AgendaCard({
 
   return (
     <div
-      className={`squircle-3xl shadow-figma flex flex-col bg-white text-black transition md:flex-row`}
+      className={`squircle-3xl shadow-figma flex flex-col bg-white text-black transition lg:flex-row`}
     >
       {/* Баннер слева — только если есть картинка (размеры и скругления как раньше) */}
       {hasImage && (
-        <div className="aspect-video md:aspect-auto md:h-full lg:w-[45%]">
+        <div className="aspect-video lg:aspect-auto lg:h-full lg:w-[45%]">
           {imageUrl ? (
             <img
               src={imageUrl}
@@ -253,7 +253,7 @@ function AgendaCard({
 
         {hasImage && description && (
           <div
-            className="line-clamp-5 break-words text-justify text-base font-medium leading-6 text-neutral-600 md:line-clamp-2 lg:line-clamp-2 xl:line-clamp-3 2xl:line-clamp-4 [&_*]:!text-inherit"
+            className="line-clamp-5 break-words text-justify text-base font-medium leading-6 text-neutral-600 lg:line-clamp-2 xl:line-clamp-3 2xl:line-clamp-4 [&_*]:!text-inherit"
             dangerouslySetInnerHTML={{
               __html: DOMPurify.sanitize(description),
             }}
@@ -293,19 +293,40 @@ export function Agenda() {
   const calendarRef = useRef<HTMLDivElement>(null);
   const pinnedCalendarTopRef = useRef<number | null>(null);
 
+  const scrollToTop = useCallback(() => {
+    const reduceMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    ).matches;
+    window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+  }, []);
+
   const syncCalendarPin = useCallback(() => {
     if (pinnedCalendarTopRef.current === null || !calendarRef.current) return;
+    if (window.innerWidth >= 1024) {
+      pinnedCalendarTopRef.current = null;
+      return;
+    }
     const delta =
       calendarRef.current.getBoundingClientRect().top -
       pinnedCalendarTopRef.current;
     if (Math.abs(delta) > 0.5) {
       window.scrollBy(0, delta);
+      if (window.scrollY === 0) {
+        const clampedTop = calendarRef.current.getBoundingClientRect().top;
+        if (Math.abs(clampedTop - pinnedCalendarTopRef.current) > 0.5) {
+          pinnedCalendarTopRef.current = clampedTop;
+        }
+      }
     }
   }, []);
 
   // кнопка «Наверх» (только на мобилке): появляется, когда доскроллили до календаря
   const [showScrollTop, setShowScrollTop] = useState(false);
   const updateScrollTop = useCallback(() => {
+    if (window.innerWidth >= 1024) {
+      setShowScrollTop(false);
+      return;
+    }
     const cal = calendarRef.current;
     if (!cal) return;
     const reachedCalendar =
@@ -319,13 +340,17 @@ export function Agenda() {
     if (prevSelectedDay.current === selectedDay) return;
     prevSelectedDay.current = selectedDay;
     pinnedCalendarTopRef.current = null;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [selectedDay]);
+    scrollToTop();
+  }, [selectedDay, scrollToTop]);
 
   // следим за скроллом, ручным выходом из привязки и изменением высоты списка при догрузке
   useEffect(() => {
     const releasePin = () => {
       pinnedCalendarTopRef.current = null;
+    };
+    const onResize = () => {
+      releasePin();
+      updateScrollTop();
     };
     const onKeyDown = (e: KeyboardEvent) => {
       if (
@@ -345,7 +370,7 @@ export function Agenda() {
 
     updateScrollTop();
     window.addEventListener('scroll', updateScrollTop, { passive: true });
-    window.addEventListener('resize', updateScrollTop, { passive: true });
+    window.addEventListener('resize', onResize, { passive: true });
     window.addEventListener('wheel', releasePin, { passive: true });
     window.addEventListener('touchmove', releasePin, { passive: true });
     window.addEventListener('keydown', onKeyDown);
@@ -358,7 +383,7 @@ export function Agenda() {
 
     return () => {
       window.removeEventListener('scroll', updateScrollTop);
-      window.removeEventListener('resize', updateScrollTop);
+      window.removeEventListener('resize', onResize);
       window.removeEventListener('wheel', releasePin);
       window.removeEventListener('touchmove', releasePin);
       window.removeEventListener('keydown', onKeyDown);
@@ -622,11 +647,11 @@ export function Agenda() {
       {/* Плавающая кнопка возврата наверх (только на мобилке) */}
       <button
         type="button"
-        aria-label="Scroll to top"
+        aria-label={t('agenda.scrollToTop', 'Наверх')}
         tabIndex={showScrollTop ? 0 : -1}
         onClick={() => {
           pinnedCalendarTopRef.current = null;
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+          scrollToTop();
         }}
         className={`squircle-2xl shadow-figma fixed bottom-6 right-5 z-40 flex size-12 items-center justify-center bg-atmos-700 text-white transition duration-300 hover:scale-105 hover:opacity-90 lg:hidden ${
           showScrollTop

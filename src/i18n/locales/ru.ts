@@ -278,6 +278,7 @@ const ruTranslations: { translations: Translations } = {
       today: 'Сегодня',
       prevMonth: 'Предыдущий месяц',
       nextMonth: 'Следующий месяц',
+      scrollToTop: 'Наверх',
       colors: 'Цветовые коды',
       types: {
         event: 'Мероприятие',

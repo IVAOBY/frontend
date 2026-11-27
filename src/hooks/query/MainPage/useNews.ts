@@ -1,6 +1,8 @@
-import { useNewsGetAllNews, useNewsGetNewsById } from '../../../api';
+import type { NewsGetAllNewsParams } from '../../../api/model';
 
-const useNews = (params?: Parameters<typeof useNewsGetAllNews>[0]) => {
+import { useNewsGetAllNews, useNewsGetNewsById } from '../../../api/news/news';
+
+const useNews = (params?: NewsGetAllNewsParams) => {
   return useNewsGetAllNews(
     {
       limit: 7,
